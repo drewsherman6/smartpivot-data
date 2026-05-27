@@ -1,0 +1,306 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated": "2026-05-27",
+    "total_skills": 28
+  },
+  "skills": [
+    {
+      "name": "Critical Thinking",
+      "category": "future_proof",
+      "risk_level": "low",
+      "importance": 72,
+      "short_rationale": "Essential for evaluating AI outputs and solving novel problems.",
+      "top_3_occupations": [
+        "15-1252.00 Software Developers",
+        "17-2081.00 Environmental Engineers"
+      ]
+    },
+    {
+      "name": "Complex Problem Solving",
+      "category": "future_proof",
+      "risk_level": "low",
+      "importance": 60,
+      "short_rationale": "AI struggles with ambiguous, multi-stakeholder problems.",
+      "top_3_occupations": [
+        "15-1252.00 Software Developers",
+        "17-2081.00 Environmental Engineers"
+      ]
+    },
+    {
+      "name": "Systems Thinking & Systems Analysis",
+      "category": "future_proof",
+      "risk_level": "low",
+      "importance": 63,
+      "short_rationale": "Critical for managing AI agent ecosystems and socio-technical systems.",
+      "top_3_occupations": [
+        "15-1252.00 Software Developers",
+        "15-1251.00 Computer Systems Analysts"
+      ]
+    },
+    {
+      "name": "Active Learning",
+      "category": "future_proof",
+      "risk_level": "low",
+      "importance": 63,
+      "short_rationale": "39% of core skills will transform by 2030. Rapid learning is essential.",
+      "top_3_occupations": [
+        "15-1252.00 Software Developers",
+        "17-2081.00 Environmental Engineers"
+      ]
+    },
+    {
+      "name": "Technology Design & Programming",
+      "category": "future_proof",
+      "risk_level": "low",
+      "importance": 75,
+      "short_rationale": "Building and orchestrating AI systems remains high-value.",
+      "top_3_occupations": [
+        "15-1252.00 Software Developers"
+      ]
+    },
+    {
+      "name": "Judgment and Decision Making",
+      "category": "future_proof",
+      "risk_level": "low",
+      "importance": 66,
+      "short_rationale": "Humans retain accountability for ethical and high-stakes decisions.",
+      "top_3_occupations": [
+        "15-1252.00 Software Developers",
+        "17-2081.00 Environmental Engineers",
+        "11-1021.00 General and Operations Managers"
+      ]
+    },
+    {
+      "name": "Coordination & Collaboration",
+      "category": "future_proof",
+      "risk_level": "low",
+      "importance": 69,
+      "short_rationale": "Human-AI teaming and stakeholder alignment are hard to automate.",
+      "top_3_occupations": [
+        "17-2081.00 Environmental Engineers",
+        "11-1021.00 General and Operations Managers"
+      ]
+    },
+    {
+      "name": "Environmental & Sustainability Analysis",
+      "category": "future_proof",
+      "risk_level": "low",
+      "importance": 75,
+      "short_rationale": "Green transition is a major structural driver through 2030.",
+      "top_3_occupations": [
+        "17-2081.00 Environmental Engineers",
+        "19-2041.00 Environmental Scientists and Specialists"
+      ]
+    },
+    {
+      "name": "AI Literacy & Human-AI Collaboration",
+      "category": "future_proof",
+      "risk_level": "low",
+      "importance": 70,
+      "short_rationale": "Directing and integrating AI tools into workflows is becoming baseline.",
+      "top_3_occupations": [
+        "15-1252.00 Software Developers",
+        "15-1251.00 Computer Systems Analysts"
+      ]
+    },
+    {
+      "name": "Creativity & Originality",
+      "category": "future_proof",
+      "risk_level": "low",
+      "importance": 65,
+      "short_rationale": "True novelty and cultural resonance remain human strengths.",
+      "top_3_occupations": [
+        "27-1024.00 Graphic Designers",
+        "27-3043.00 Writers and Authors"
+      ]
+    },
+    {
+      "name": "Emotional Intelligence & Social Perceptiveness",
+      "category": "future_proof",
+      "risk_level": "low",
+      "importance": 75,
+      "short_rationale": "Empathy and leadership are core to management and care roles.",
+      "top_3_occupations": [
+        "11-1021.00 General and Operations Managers"
+      ]
+    },
+    {
+      "name": "Resilience & Adaptability",
+      "category": "future_proof",
+      "risk_level": "low",
+      "importance": 65,
+      "short_rationale": "Constant disruption requires psychological resilience.",
+      "top_3_occupations": [
+        "29-1141.00 Registered Nurses",
+        "33-3051.00 Police and Sheriff's Patrol Officers"
+      ]
+    },
+    {
+      "name": "Data Literacy & Statistical Reasoning",
+      "category": "future_proof",
+      "risk_level": "low",
+      "importance": 68,
+      "short_rationale": "Interpreting AI-generated insights and making data-informed decisions.",
+      "top_3_occupations": [
+        "15-2051.00 Data Scientists",
+        "15-1251.00 Computer Systems Analysts"
+      ]
+    },
+    {
+      "name": "Cybersecurity Awareness & Risk Assessment",
+      "category": "future_proof",
+      "risk_level": "low",
+      "importance": 70,
+      "short_rationale": "Human oversight of security and ethical risk is critical.",
+      "top_3_occupations": [
+        "15-1212.00 Computer Occupations, All Other"
+      ]
+    },
+    {
+      "name": "Ethical Reasoning & Responsible AI",
+      "category": "future_proof",
+      "risk_level": "low",
+      "importance": 68,
+      "short_rationale": "AI raises new ethical and governance challenges requiring human judgment.",
+      "top_3_occupations": [
+        "15-1252.00 Software Developers"
+      ]
+    },
+    {
+      "name": "Leadership & Influence",
+      "category": "future_proof",
+      "risk_level": "low",
+      "importance": 70,
+      "short_rationale": "Inspiring teams and aligning stakeholders in AI-transformed organizations.",
+      "top_3_occupations": [
+        "11-1021.00 General and Operations Managers",
+        "13-1111.00 Management Analysts"
+      ]
+    },
+    {
+      "name": "Scientific Reasoning & Research Skills",
+      "category": "future_proof",
+      "risk_level": "low",
+      "importance": 72,
+      "short_rationale": "Advancing knowledge in AI, biotech, and climate fields.",
+      "top_3_occupations": [
+        "19-1042.00 Medical Scientists",
+        "19-2041.00 Environmental Scientists"
+      ]
+    },
+    {
+      "name": "Project & Workflow Orchestration",
+      "category": "future_proof",
+      "risk_level": "low",
+      "importance": 68,
+      "short_rationale": "Managing hybrid human-AI workflows and complex projects.",
+      "top_3_occupations": [
+        "15-1252.00 Software Developers",
+        "13-1111.00 Management Analysts"
+      ]
+    },
+    {
+      "name": "Routine Data Entry & Administrative Processing",
+      "category": "at_risk",
+      "risk_level": "very_high",
+      "importance": null,
+      "short_rationale": "AI agents and RPA can perform these tasks faster and more accurately.",
+      "top_3_occupations": [
+        "43-9061.00 Office Clerks, General",
+        "43-6014.00 Secretaries and Administrative Assistants"
+      ]
+    },
+    {
+      "name": "Basic Content Generation (Reports, Summaries)",
+      "category": "at_risk",
+      "risk_level": "high",
+      "importance": null,
+      "short_rationale": "LLMs generate first drafts of reports and documentation at scale.",
+      "top_3_occupations": [
+        "43-4171.00 Receptionists and Information Clerks"
+      ]
+    },
+    {
+      "name": "Simple Customer Service & Query Handling",
+      "category": "at_risk",
+      "risk_level": "high",
+      "importance": null,
+      "short_rationale": "AI chatbots handle increasing volumes of routine support.",
+      "top_3_occupations": [
+        "43-4051.00 Customer Service Representatives"
+      ]
+    },
+    {
+      "name": "Basic Code Generation & Maintenance",
+      "category": "at_risk",
+      "risk_level": "high",
+      "importance": null,
+      "short_rationale": "AI coding assistants generate and debug boilerplate code.",
+      "top_3_occupations": [
+        "15-1256.00 Computer Programmers"
+      ]
+    },
+    {
+      "name": "Manual Quality Inspection (Visual/Repetitive)",
+      "category": "at_risk",
+      "risk_level": "high",
+      "importance": null,
+      "short_rationale": "Computer vision and robotics are replacing human inspection.",
+      "top_3_occupations": [
+        "51-9061.00 Inspectors, Testers, Sorters, Samplers, and Weighers"
+      ]
+    },
+    {
+      "name": "Basic Data Analysis & Reporting",
+      "category": "at_risk",
+      "risk_level": "medium_high",
+      "importance": null,
+      "short_rationale": "AI tools now automatically generate dashboards and basic insights.",
+      "top_3_occupations": [
+        "43-9111.00 Statistical Assistants"
+      ]
+    },
+    {
+      "name": "Routine Scheduling & Coordination",
+      "category": "at_risk",
+      "risk_level": "high",
+      "importance": null,
+      "short_rationale": "AI agents manage calendars and logistics with minimal input.",
+      "top_3_occupations": [
+        "43-6011.00 Executive Secretaries and Executive Administrative Assistants"
+      ]
+    },
+    {
+      "name": "Basic Translation & Language Processing",
+      "category": "at_risk",
+      "risk_level": "high",
+      "importance": null,
+      "short_rationale": "Neural machine translation has reached near-human quality.",
+      "top_3_occupations": [
+        "27-3091.00 Interpreters and Translators"
+      ]
+    },
+    {
+      "name": "Repetitive Physical Tasks (Manufacturing & Logistics)",
+      "category": "at_risk",
+      "risk_level": "very_high",
+      "importance": null,
+      "short_rationale": "Robotics and cobots continue to displace repetitive manual labor.",
+      "top_3_occupations": [
+        "51-9199.00 Production Workers, All Other",
+        "53-7062.00 Laborers and Freight, Stock, and Material Movers, Hand"
+      ]
+    },
+    {
+      "name": "Basic Financial Transaction Processing",
+      "category": "at_risk",
+      "risk_level": "high",
+      "importance": null,
+      "short_rationale": "AI accounting systems and blockchain reduce manual transaction handling.",
+      "top_3_occupations": [
+        "43-3031.00 Bookkeeping, Accounting, and Auditing Clerks"
+      ]
+    }
+  ]
+}

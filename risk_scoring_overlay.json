@@ -1,0 +1,41 @@
+{
+  "version": "2026-05-27",
+  "generated_date": "2026-05-27",
+  "trend_summary": "AI adoption is accelerating across knowledge work while robotics continues to displace routine physical and administrative tasks. The WEF Future of Jobs 2025 projects 39% of core skills will transform by 2030, with strong growth in analytical thinking, systems thinking, and AI literacy.",
+  "skill_adjustments": {
+    "Critical Thinking": {
+      "multiplier": 1.35,
+      "risk_delta": -12,
+      "reason": "Strongly future-proof. AI increases the value of evaluating outputs."
+    },
+    "Complex Problem Solving": {
+      "multiplier": 1.3,
+      "risk_delta": -10,
+      "reason": "High demand as AI creates more complex challenges."
+    },
+    "Data Entry": {
+      "multiplier": 0.55,
+      "risk_delta": 22,
+      "reason": "Highly automatable by RPA and AI agents."
+    },
+    "Routine Data Entry & Administrative Processing": {
+      "multiplier": 0.5,
+      "risk_delta": 25,
+      "reason": "Very high automation risk."
+    }
+  },
+  "new_emerging_skills": [
+    "AI Literacy & Human-AI Collaboration",
+    "Systems Thinking",
+    "Ethical Reasoning & Responsible AI"
+  ],
+  "high_risk_signals": [
+    "basic prompt writing",
+    "routine data processing",
+    "repetitive physical tasks"
+  ],
+  "future_career_pathways": [
+    "Transition from routine admin into AI coordination roles"
+  ],
+  "general_guidance": "Prioritize skills with multipliers above 1.20. Suggest upskilling in Critical Thinking and Systems Thinking."
+}

@@ -1,0 +1,636 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated": "2026-05-27",
+    "source": "O*NET Web Services API v2 + WEF Future of Jobs Report 2025",
+    "total_future_proof_skills": 18,
+    "total_at_risk_skills": 10
+  },
+  "skills": [
+    {
+      "id": "fp_001",
+      "name": "Critical Thinking",
+      "category": "future_proof",
+      "onet_skills": [
+        "Critical Thinking"
+      ],
+      "importance": 72,
+      "risk_level": "low",
+      "rationale": "Essential for evaluating AI outputs, identifying biases, and solving novel problems that large language models struggle with.",
+      "short_rationale": "Essential for evaluating AI outputs and solving novel problems.",
+      "related_occupations": [
+        {
+          "soc": "15-1252.00",
+          "title": "Software Developers"
+        },
+        {
+          "soc": "17-2081.00",
+          "title": "Environmental Engineers"
+        }
+      ]
+    },
+    {
+      "id": "fp_002",
+      "name": "Complex Problem Solving",
+      "category": "future_proof",
+      "onet_skills": [
+        "Complex Problem Solving"
+      ],
+      "importance": 60,
+      "risk_level": "low",
+      "rationale": "AI excels at narrow tasks but struggles with highly interconnected, ambiguous, or multi-stakeholder problems.",
+      "short_rationale": "AI struggles with ambiguous, multi-stakeholder problems.",
+      "related_occupations": [
+        {
+          "soc": "15-1252.00",
+          "title": "Software Developers"
+        },
+        {
+          "soc": "17-2081.00",
+          "title": "Environmental Engineers"
+        }
+      ]
+    },
+    {
+      "id": "fp_003",
+      "name": "Systems Thinking & Systems Analysis",
+      "category": "future_proof",
+      "onet_skills": [
+        "Systems Analysis",
+        "Systems Evaluation"
+      ],
+      "importance": 63,
+      "risk_level": "low",
+      "rationale": "Critical for designing and managing AI agent ecosystems, supply chains, and socio-technical systems.",
+      "short_rationale": "Critical for managing AI agent ecosystems and socio-technical systems.",
+      "related_occupations": [
+        {
+          "soc": "15-1252.00",
+          "title": "Software Developers"
+        },
+        {
+          "soc": "15-1251.00",
+          "title": "Computer Systems Analysts"
+        }
+      ]
+    },
+    {
+      "id": "fp_004",
+      "name": "Active Learning",
+      "category": "future_proof",
+      "onet_skills": [
+        "Active Learning"
+      ],
+      "importance": 63,
+      "risk_level": "low",
+      "rationale": "39% of core skills will transform by 2030 (WEF). Rapid learning is the meta-skill for staying relevant.",
+      "short_rationale": "39% of core skills will transform by 2030. Rapid learning is essential.",
+      "related_occupations": [
+        {
+          "soc": "15-1252.00",
+          "title": "Software Developers"
+        },
+        {
+          "soc": "17-2081.00",
+          "title": "Environmental Engineers"
+        }
+      ]
+    },
+    {
+      "id": "fp_005",
+      "name": "Technology Design & Programming",
+      "category": "future_proof",
+      "onet_skills": [
+        "Programming",
+        "Technology Design"
+      ],
+      "importance": 75,
+      "risk_level": "low",
+      "rationale": "Building, fine-tuning, and orchestrating AI systems remains a high-value human capability.",
+      "short_rationale": "Building and orchestrating AI systems remains high-value.",
+      "related_occupations": [
+        {
+          "soc": "15-1252.00",
+          "title": "Software Developers"
+        }
+      ]
+    },
+    {
+      "id": "fp_006",
+      "name": "Judgment and Decision Making",
+      "category": "future_proof",
+      "onet_skills": [
+        "Judgment and Decision Making"
+      ],
+      "importance": 66,
+      "risk_level": "low",
+      "rationale": "AI provides recommendations, but final accountability, ethical trade-offs, and high-stakes decisions remain human responsibilities.",
+      "short_rationale": "Humans retain accountability for ethical and high-stakes decisions.",
+      "related_occupations": [
+        {
+          "soc": "15-1252.00",
+          "title": "Software Developers"
+        },
+        {
+          "soc": "17-2081.00",
+          "title": "Environmental Engineers"
+        },
+        {
+          "soc": "11-1021.00",
+          "title": "General and Operations Managers"
+        }
+      ]
+    },
+    {
+      "id": "fp_007",
+      "name": "Coordination & Collaboration",
+      "category": "future_proof",
+      "onet_skills": [
+        "Coordination"
+      ],
+      "importance": 69,
+      "risk_level": "low",
+      "rationale": "Human-AI teaming, cross-functional leadership, and stakeholder alignment are difficult to automate.",
+      "short_rationale": "Human-AI teaming and stakeholder alignment are hard to automate.",
+      "related_occupations": [
+        {
+          "soc": "17-2081.00",
+          "title": "Environmental Engineers"
+        },
+        {
+          "soc": "11-1021.00",
+          "title": "General and Operations Managers"
+        }
+      ]
+    },
+    {
+      "id": "fp_008",
+      "name": "Environmental & Sustainability Analysis",
+      "category": "future_proof",
+      "onet_skills": [
+        "Critical Thinking",
+        "Monitoring",
+        "Complex Problem Solving"
+      ],
+      "importance": 75,
+      "risk_level": "low",
+      "rationale": "The green transition is a major WEF driver through 2030. Skills in environmental systems and sustainable design are seeing structural demand growth.",
+      "short_rationale": "Green transition is a major structural driver through 2030.",
+      "related_occupations": [
+        {
+          "soc": "17-2081.00",
+          "title": "Environmental Engineers"
+        },
+        {
+          "soc": "19-2041.00",
+          "title": "Environmental Scientists and Specialists"
+        }
+      ]
+    },
+    {
+      "id": "fp_009",
+      "name": "AI Literacy & Human-AI Collaboration",
+      "category": "future_proof",
+      "onet_skills": [
+        "Technology Design",
+        "Systems Analysis",
+        "Active Learning",
+        "Judgment and Decision Making"
+      ],
+      "importance": 70,
+      "risk_level": "low",
+      "rationale": "The ability to effectively direct, evaluate, and integrate AI tools into workflows is becoming a baseline requirement.",
+      "short_rationale": "Directing and integrating AI tools into workflows is becoming baseline.",
+      "related_occupations": [
+        {
+          "soc": "15-1252.00",
+          "title": "Software Developers"
+        },
+        {
+          "soc": "15-1251.00",
+          "title": "Computer Systems Analysts"
+        }
+      ]
+    },
+    {
+      "id": "fp_010",
+      "name": "Creativity & Originality",
+      "category": "future_proof",
+      "onet_skills": [
+        "Originality",
+        "Fluency of Ideas"
+      ],
+      "importance": 65,
+      "risk_level": "low",
+      "rationale": "While AI can generate content, true novelty, cultural resonance, and breakthrough innovation remain distinctly human strengths.",
+      "short_rationale": "True novelty and cultural resonance remain human strengths.",
+      "related_occupations": [
+        {
+          "soc": "27-1024.00",
+          "title": "Graphic Designers"
+        },
+        {
+          "soc": "27-3043.00",
+          "title": "Writers and Authors"
+        }
+      ]
+    },
+    {
+      "id": "fp_011",
+      "name": "Emotional Intelligence & Social Perceptiveness",
+      "category": "future_proof",
+      "onet_skills": [
+        "Social Perceptiveness",
+        "Active Listening"
+      ],
+      "importance": 75,
+      "risk_level": "low",
+      "rationale": "Empathy, negotiation, leadership, and reading subtle social cues are core to management, healthcare, and education roles.",
+      "short_rationale": "Empathy and leadership are core to management and care roles.",
+      "related_occupations": [
+        {
+          "soc": "11-1021.00",
+          "title": "General and Operations Managers"
+        }
+      ]
+    },
+    {
+      "id": "fp_012",
+      "name": "Resilience & Adaptability",
+      "category": "future_proof",
+      "onet_skills": [
+        "Stress Tolerance",
+        "Adaptability/Flexibility"
+      ],
+      "importance": 65,
+      "risk_level": "low",
+      "rationale": "Constant technological and economic disruption requires psychological resilience and flexibility.",
+      "short_rationale": "Constant disruption requires psychological resilience.",
+      "related_occupations": [
+        {
+          "soc": "29-1141.00",
+          "title": "Registered Nurses"
+        },
+        {
+          "soc": "33-3051.00",
+          "title": "Police and Sheriff's Patrol Officers"
+        }
+      ]
+    },
+    {
+      "id": "fp_013",
+      "name": "Data Literacy & Statistical Reasoning",
+      "category": "future_proof",
+      "onet_skills": [
+        "Critical Thinking",
+        "Mathematics",
+        "Complex Problem Solving"
+      ],
+      "importance": 68,
+      "risk_level": "low",
+      "rationale": "Interpreting AI-generated insights, understanding uncertainty, and making data-informed decisions.",
+      "short_rationale": "Interpreting AI-generated insights and making data-informed decisions.",
+      "related_occupations": [
+        {
+          "soc": "15-2051.00",
+          "title": "Data Scientists"
+        },
+        {
+          "soc": "15-1251.00",
+          "title": "Computer Systems Analysts"
+        }
+      ]
+    },
+    {
+      "id": "fp_014",
+      "name": "Cybersecurity Awareness & Risk Assessment",
+      "category": "future_proof",
+      "onet_skills": [
+        "Information Security Analysis",
+        "Risk Assessment"
+      ],
+      "importance": 70,
+      "risk_level": "low",
+      "rationale": "As AI systems expand attack surfaces, human oversight of security and ethical risk becomes increasingly critical.",
+      "short_rationale": "Human oversight of security and ethical risk is critical.",
+      "related_occupations": [
+        {
+          "soc": "15-1212.00",
+          "title": "Computer Occupations, All Other"
+        }
+      ]
+    },
+    {
+      "id": "fp_015",
+      "name": "Ethical Reasoning & Responsible AI",
+      "category": "future_proof",
+      "onet_skills": [
+        "Judgment and Decision Making",
+        "Critical Thinking"
+      ],
+      "importance": 68,
+      "risk_level": "low",
+      "rationale": "AI deployment raises new ethical, bias, fairness, and governance challenges that require human judgment.",
+      "short_rationale": "AI raises new ethical and governance challenges requiring human judgment.",
+      "related_occupations": [
+        {
+          "soc": "15-1252.00",
+          "title": "Software Developers"
+        }
+      ]
+    },
+    {
+      "id": "fp_016",
+      "name": "Leadership & Influence",
+      "category": "future_proof",
+      "onet_skills": [
+        "Coordination",
+        "Persuasion",
+        "Social Perceptiveness"
+      ],
+      "importance": 70,
+      "risk_level": "low",
+      "rationale": "Inspiring teams, navigating organizational change, and aligning diverse stakeholders in AI-transformed organizations.",
+      "short_rationale": "Inspiring teams and aligning stakeholders in AI-transformed organizations.",
+      "related_occupations": [
+        {
+          "soc": "11-1021.00",
+          "title": "General and Operations Managers"
+        },
+        {
+          "soc": "13-1111.00",
+          "title": "Management Analysts"
+        }
+      ]
+    },
+    {
+      "id": "fp_017",
+      "name": "Scientific Reasoning & Research Skills",
+      "category": "future_proof",
+      "onet_skills": [
+        "Critical Thinking",
+        "Active Learning",
+        "Complex Problem Solving"
+      ],
+      "importance": 72,
+      "risk_level": "low",
+      "rationale": "Designing experiments, interpreting results, and advancing knowledge in AI, biotech, and climate science.",
+      "short_rationale": "Advancing knowledge in AI, biotech, and climate fields.",
+      "related_occupations": [
+        {
+          "soc": "19-1042.00",
+          "title": "Medical Scientists"
+        },
+        {
+          "soc": "19-2041.00",
+          "title": "Environmental Scientists"
+        }
+      ]
+    },
+    {
+      "id": "fp_018",
+      "name": "Project & Workflow Orchestration",
+      "category": "future_proof",
+      "onet_skills": [
+        "Coordination",
+        "Systems Analysis",
+        "Judgment and Decision Making"
+      ],
+      "importance": 68,
+      "risk_level": "low",
+      "rationale": "Managing hybrid human-AI workflows and orchestrating complex projects across humans and AI.",
+      "short_rationale": "Managing hybrid human-AI workflows and complex projects.",
+      "related_occupations": [
+        {
+          "soc": "15-1252.00",
+          "title": "Software Developers"
+        },
+        {
+          "soc": "13-1111.00",
+          "title": "Management Analysts"
+        }
+      ]
+    },
+    {
+      "id": "ar_001",
+      "name": "Routine Data Entry & Administrative Processing",
+      "category": "at_risk",
+      "onet_skills": [
+        "Data Entry",
+        "Record Keeping"
+      ],
+      "importance": null,
+      "risk_level": "very_high",
+      "rationale": "AI agents and RPA systems can already perform these tasks faster and more accurately.",
+      "short_rationale": "AI agents and RPA can perform these tasks faster and more accurately.",
+      "related_occupations": [
+        {
+          "soc": "43-9061.00",
+          "title": "Office Clerks, General"
+        },
+        {
+          "soc": "43-6014.00",
+          "title": "Secretaries and Administrative Assistants"
+        }
+      ]
+    },
+    {
+      "id": "ar_002",
+      "name": "Basic Content Generation (Reports, Summaries)",
+      "category": "at_risk",
+      "onet_skills": [
+        "Writing (routine)",
+        "Information Ordering"
+      ],
+      "importance": null,
+      "risk_level": "high",
+      "rationale": "Large language models now generate first drafts of reports, marketing copy, and documentation at scale.",
+      "short_rationale": "LLMs generate first drafts of reports and documentation at scale.",
+      "related_occupations": [
+        {
+          "soc": "43-4171.00",
+          "title": "Receptionists and Information Clerks"
+        }
+      ]
+    },
+    {
+      "id": "ar_003",
+      "name": "Simple Customer Service & Query Handling",
+      "category": "at_risk",
+      "onet_skills": [
+        "Customer Service",
+        "Query Resolution"
+      ],
+      "importance": null,
+      "risk_level": "high",
+      "rationale": "AI chatbots and voice agents handle increasing volumes of routine support.",
+      "short_rationale": "AI chatbots handle increasing volumes of routine support.",
+      "related_occupations": [
+        {
+          "soc": "43-4051.00",
+          "title": "Customer Service Representatives"
+        }
+      ]
+    },
+    {
+      "id": "ar_004",
+      "name": "Basic Code Generation & Maintenance",
+      "category": "at_risk",
+      "onet_skills": [
+        "Programming (routine)"
+      ],
+      "importance": null,
+      "risk_level": "high",
+      "rationale": "AI coding assistants now generate and debug boilerplate and standard patterns.",
+      "short_rationale": "AI coding assistants generate and debug boilerplate code.",
+      "related_occupations": [
+        {
+          "soc": "15-1256.00",
+          "title": "Computer Programmers"
+        }
+      ]
+    },
+    {
+      "id": "ar_005",
+      "name": "Manual Quality Inspection (Visual/Repetitive)",
+      "category": "at_risk",
+      "onet_skills": [
+        "Quality Control Analysis (routine)"
+      ],
+      "importance": null,
+      "risk_level": "high",
+      "rationale": "Computer vision and robotics are rapidly replacing human inspection on assembly lines.",
+      "short_rationale": "Computer vision and robotics are replacing human inspection.",
+      "related_occupations": [
+        {
+          "soc": "51-9061.00",
+          "title": "Inspectors, Testers, Sorters, Samplers, and Weighers"
+        }
+      ]
+    },
+    {
+      "id": "ar_006",
+      "name": "Basic Data Analysis & Reporting",
+      "category": "at_risk",
+      "onet_skills": [
+        "Data Analysis (routine)"
+      ],
+      "importance": null,
+      "risk_level": "medium_high",
+      "rationale": "AI tools now automatically generate dashboards, trend reports, and basic insights.",
+      "short_rationale": "AI tools now automatically generate dashboards and basic insights.",
+      "related_occupations": [
+        {
+          "soc": "43-9111.00",
+          "title": "Statistical Assistants"
+        }
+      ]
+    },
+    {
+      "id": "ar_007",
+      "name": "Routine Scheduling & Coordination",
+      "category": "at_risk",
+      "onet_skills": [
+        "Scheduling",
+        "Calendar Management"
+      ],
+      "importance": null,
+      "risk_level": "high",
+      "rationale": "AI agents manage calendars, book meetings, and handle logistics with minimal human input.",
+      "short_rationale": "AI agents manage calendars and logistics with minimal input.",
+      "related_occupations": [
+        {
+          "soc": "43-6011.00",
+          "title": "Executive Secretaries and Executive Administrative Assistants"
+        }
+      ]
+    },
+    {
+      "id": "ar_008",
+      "name": "Basic Translation & Language Processing",
+      "category": "at_risk",
+      "onet_skills": [
+        "Foreign Language (routine)"
+      ],
+      "importance": null,
+      "risk_level": "high",
+      "rationale": "Neural machine translation has reached near-human quality for many language pairs.",
+      "short_rationale": "Neural machine translation has reached near-human quality.",
+      "related_occupations": [
+        {
+          "soc": "27-3091.00",
+          "title": "Interpreters and Translators"
+        }
+      ]
+    },
+    {
+      "id": "ar_009",
+      "name": "Repetitive Physical Tasks (Manufacturing & Logistics)",
+      "category": "at_risk",
+      "onet_skills": [
+        "Manual Dexterity",
+        "Finger Dexterity (routine)"
+      ],
+      "importance": null,
+      "risk_level": "very_high",
+      "rationale": "Advances in robotics and cobots continue to displace repetitive manual labor.",
+      "short_rationale": "Robotics and cobots continue to displace repetitive manual labor.",
+      "related_occupations": [
+        {
+          "soc": "51-9199.00",
+          "title": "Production Workers, All Other"
+        },
+        {
+          "soc": "53-7062.00",
+          "title": "Laborers and Freight, Stock, and Material Movers, Hand"
+        }
+      ]
+    },
+    {
+      "id": "ar_010",
+      "name": "Basic Financial Transaction Processing",
+      "category": "at_risk",
+      "onet_skills": [
+        "Bookkeeping",
+        "Transaction Processing"
+      ],
+      "importance": null,
+      "risk_level": "high",
+      "rationale": "AI-powered accounting systems and blockchain reduce the need for manual transaction handling.",
+      "short_rationale": "AI accounting systems and blockchain reduce manual transaction handling.",
+      "related_occupations": [
+        {
+          "soc": "43-3031.00",
+          "title": "Bookkeeping, Accounting, and Auditing Clerks"
+        }
+      ]
+    }
+  ],
+  "key_occupations": [
+    {
+      "soc": "15-1252.00",
+      "title": "Software Developers",
+      "outlook": "bright"
+    },
+    {
+      "soc": "15-2051.00",
+      "title": "Data Scientists",
+      "outlook": "bright"
+    },
+    {
+      "soc": "17-2081.00",
+      "title": "Environmental Engineers",
+      "outlook": "bright"
+    },
+    {
+      "soc": "11-1021.00",
+      "title": "General and Operations Managers",
+      "outlook": "stable"
+    },
+    {
+      "soc": "43-4051.00",
+      "title": "Customer Service Representatives",
+      "outlook": "declining"
+    }
+  ]
+}
