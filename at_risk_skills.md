@@ -77,5 +77,5 @@ This document identifies skills and tasks with high probability of significant a
   - 43-3031.00 Bookkeeping, Accounting, and Auditing Clerks
 
 
-**Last Updated:** 2026-05-27
+**Last Updated:** 2026-05-28
 **Data Sources:** WEF Future of Jobs 2025 + O*NET API v2
