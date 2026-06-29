@@ -146,5 +146,5 @@ This document identifies the most resilient and high-value skills for the coming
   - 13-1111.00 Management Analysts
 
 
-**Last Updated:** 2026-06-22
+**Last Updated:** 2026-06-29
 **Data Sources:** WEF Future of Jobs 2025 + O*NET API v2
