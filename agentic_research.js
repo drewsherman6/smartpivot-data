@@ -297,6 +297,21 @@ async function collectDeepAgenticData() {
   console.log(`  Platforms tracked: ${platforms.length}`);
   console.log(`  Normalized skills: ${agent_skills_catalog.length}`);
   console.log(`  Prebuilt agents documented: ${prebuilt_agents.length}`);
+
+  // ============================================
+  // AUTO COMMIT + PUSH TO MAIN (for weekly automation)
+  // ============================================
+  try {
+    const { execSync } = require('child_process');
+    console.log('\nCommitting and pushing to main branch...');
+    execSync('git add agentic_capabilities.json', { stdio: 'inherit' });
+    execSync('git commit -m "Weekly deep agentic research update - ' + new Date().toISOString().split('T')[0] + '"', { stdio: 'inherit' });
+    execSync('git push origin HEAD:main --force-with-lease', { stdio: 'inherit', timeout: 30000 });
+    console.log('✓ Successfully pushed to main branch');
+  } catch (gitErr) {
+    console.error('Git push failed (will retry next run):', gitErr.message);
+  }
+
   console.log(`\nNext steps: Add more platforms and agents in future weekly runs.`);
 }
 
