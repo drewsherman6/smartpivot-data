@@ -19,6 +19,12 @@ const OUTPUT_FILE = path.join(__dirname, 'agentic_capabilities.json');
 console.log('=== Starting DEEP Agentic Capabilities Research ===\n');
 
 async function collectDeepAgenticData() {
+  // Ensure we're in the correct directory
+  const scriptDir = path.dirname(__filename);
+  if (process.cwd() !== scriptDir) {
+    process.chdir(scriptDir);
+    console.log(`Changed working directory to: ${scriptDir}`);
+  }
   // ============================================
   // PLATFORMS - Add new platforms here weekly
   // ============================================
