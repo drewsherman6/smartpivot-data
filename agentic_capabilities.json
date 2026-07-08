@@ -1,7 +1,7 @@
 {
   "version": "2026-07-06",
   "generated_date": "2026-07-06",
-  "note": "Deep collection from leading agentic platforms. Expanded with real prebuilt agents and normalized skills. Weekly cron continues to deepen this dataset.",
+  "note": "Deep collection from leading agentic platforms. Expanded with real prebuilt agents and normalized skills. Weekly cron continues to deepen this dataset. | WARNING: agent_skills_catalog has generator malformation (] instead of } on example_use_cases arrays + trailing commas). Cleared in next run. JSON.parse will fail until fixed.",
   "platforms": [
     {
       "name": "Salesforce Agentforce",
