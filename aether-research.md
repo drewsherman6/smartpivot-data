@@ -59,6 +59,29 @@
 
 **Workflow Note**: Triangulate macro forecasts (WEF/McKinsey) with empirical data (NBER/OECD) and real-time signals (LinkedIn). Watch for regional and sectoral differences. **New**: Also triangulate against real agent capabilities from Tier 6 platforms.
 
+### Tier 7: Robotics & Physical Automation Manufacturers (NEW)
+**Primary weekly targets** (manufacturer capability pages, product datasheets, case studies, industry applications):
+- Boston Dynamics (Spot, Atlas, Stretch)
+- ABB Robotics
+- Fanuc
+- Universal Robots (Teradyne)
+- KUKA
+- Yaskawa Motoman
+- iRobot
+- Intuitive Surgical (da Vinci)
+- Other major players: Rockwell Automation, Omron, Mitsubishi Electric, Epson Robots
+
+**Data to extract per manufacturer**:
+- Manufacturer + primary product lines
+- Robotic skills & physical abilities (mobility, manipulation, vision, force control, navigation, human-robot collaboration, etc.)
+- Prebuilt robotic solutions / applications with: name, purpose, target industries/roles, specific tasks automated, automation scope (full/partial replacement)
+- Skills/abilities that enable automation of physical or hybrid roles
+- Any public matrices of automatable occupations or task categories
+
+**Goal of this tier**: Enable direct mapping of physical and hybrid roles → specific robotic capabilities and manufacturers. Complement the software/agentic view from Tier 6 with physical automation coverage.
+
+**Integration note**: Robotics data should feed into both the risk scoring overlay (physical task displacement) and the agentic_capabilities.json catalog (as a distinct but related category of automation agents).
+
 ---
 
 ## Output Format Requirements (Do Not Deviate)
@@ -168,4 +191,4 @@
 
 ---
 
-*Last updated: 2026-06-15*
+*Last updated: 2026-07-13*
