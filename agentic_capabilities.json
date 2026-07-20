@@ -1,75 +1,12 @@
 {
-  "version": "2026-07-13",
-  "generated_date": "2026-07-13",
-  "note": "Deep collection from leading agentic platforms + robotics manufacturers. Expanded with real prebuilt agents, robotic capabilities, and normalized skills. Weekly cron continues to deepen this dataset.",
-  "robotics_manufacturers": [
-    {
-      "name": "Boston Dynamics",
-      "url": "https://bostondynamics.com/",
-      "last_checked": "2026-07-13",
-      "robots": [
-        {
-          "name": "Spot",
-          "purpose": "Mobile inspection and data capture in unstructured and hazardous environments",
-          "target_tasks": ["Industrial equipment inspection", "Hazardous gas detection", "Site data capture", "Remote operation in dangerous areas"],
-          "skills_used": ["mobility", "perception", "autonomous_navigation", "data_capture", "remote_operation"],
-          "automation_scope": "High",
-          "source_url": "https://bostondynamics.com/products/spot/"
-        },
-        {
-          "name": "Stretch",
-          "purpose": "Warehouse automation - case handling, trailer unloading, and logistics",
-          "target_tasks": ["Case handling", "Trailer unloading", "Warehouse material movement"],
-          "skills_used": ["manipulation", "vision", "mobility", "gripping"],
-          "automation_scope": "High",
-          "source_url": "https://bostondynamics.com/products/stretch/"
-        },
-        {
-          "name": "Atlas",
-          "purpose": "Enterprise humanoid for flexible industrial material handling and manipulation",
-          "target_tasks": ["Material handling", "Part sequencing", "Machine tending", "Order building"],
-          "skills_used": ["humanoid_manipulation", "mobility", "perception", "AI_learning", "autonomous_operation"],
-          "automation_scope": "Very High",
-          "source_url": "https://bostondynamics.com/products/atlas/"
-        }
-      ]
-    },
-    {
-      "name": "ABB Robotics",
-      "url": "https://www.abb.com/robotics",
-      "last_checked": "2026-07-13",
-      "robots": [
-        {
-          "name": "Industrial Robots & AMRs",
-          "purpose": "Wide range of industrial automation across manufacturing",
-          "target_tasks": ["Welding", "Painting", "Assembly", "Packaging", "Palletizing", "Machine tending", "Material handling"],
-          "skills_used": ["precision_manipulation", "welding", "painting", "autonomous_mobile_robots", "assembly"],
-          "automation_scope": "High",
-          "source_url": "https://www.abb.com/global/en/areas/robotics/applications"
-        }
-      ]
-    },
-    {
-      "name": "Universal Robots",
-      "url": "https://www.universal-robots.com/",
-      "last_checked": "2026-07-13",
-      "robots": [
-        {
-          "name": "UR Cobots",
-          "purpose": "Collaborative robots for flexible manufacturing automation",
-          "target_tasks": ["Assembly", "Palletizing", "Screw-driving", "Welding", "Painting", "Polishing", "Packaging", "Injection molding", "Machine tending"],
-          "skills_used": ["collaborative_manipulation", "force_control", "vision", "flexible_deployment"],
-          "automation_scope": "High",
-          "source_url": "https://www.universal-robots.com/applications/"
-        }
-      ]
-    }
-  ],
+  "version": "2026-07-20",
+  "generated_date": "2026-07-20",
+  "note": "Deep collection from leading agentic platforms. Expanded with real prebuilt agents and normalized skills. Weekly cron continues to deepen this dataset.",
   "platforms": [
     {
       "name": "Salesforce Agentforce",
       "url": "https://www.salesforce.com/agentforce/",
-      "last_checked": "2026-07-09",
+      "last_checked": "2026-07-20",
       "skills": [
         "crm_actions",
         "workflow_orchestration",
@@ -87,7 +24,7 @@
     {
       "name": "Anthropic",
       "url": "https://www.anthropic.com/news/3-5-models-and-computer-use",
-      "last_checked": "2026-07-09",
+      "last_checked": "2026-07-20",
       "skills": [
         "computer_use",
         "mouse_keyboard_control",
@@ -102,7 +39,7 @@
     {
       "name": "UiPath",
       "url": "https://www.uipath.com/automation/agentic-automation",
-      "last_checked": "2026-07-09",
+      "last_checked": "2026-07-20",
       "skills": [
         "rpa_actions",
         "document_processing",
@@ -117,7 +54,7 @@
     {
       "name": "OpenAI",
       "url": "https://platform.openai.com/docs/assistants",
-      "last_checked": "2026-07-09",
+      "last_checked": "2026-07-20",
       "skills": [
         "function_calling",
         "code_interpreter",
@@ -132,7 +69,7 @@
     {
       "name": "CrewAI",
       "url": "https://crewai.com",
-      "last_checked": "2026-07-09",
+      "last_checked": "2026-07-20",
       "skills": [
         "multi_agent_orchestration",
         "role_based_agents",
@@ -146,7 +83,7 @@
     {
       "name": "LangChain / LangGraph",
       "url": "https://www.langchain.com",
-      "last_checked": "2026-07-09",
+      "last_checked": "2026-07-20",
       "skills": [
         "agent_builder_templates",
         "graph_based_workflows",
