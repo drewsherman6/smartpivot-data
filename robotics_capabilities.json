@@ -1,0 +1,136 @@
+{
+  "last_updated": "2026-07-20T17:31:05.489Z",
+  "platforms": [
+    {
+      "name": "Boston Dynamics",
+      "url": "https://bostondynamics.com/",
+      "last_checked": "2026-07-20",
+      "robots": [
+        "Spot",
+        "Atlas",
+        "Stretch"
+      ],
+      "skills": [
+        "dynamic_balance",
+        "manipulation",
+        "navigation",
+        "inspection",
+        "material_handling"
+      ],
+      "current_tasks": [
+        "industrial_inspection",
+        "warehouse_logistics",
+        "search_rescue",
+        "construction_assistance"
+      ]
+    },
+    {
+      "name": "Figure AI",
+      "url": "https://www.figure.ai/",
+      "last_checked": "2026-07-20",
+      "robots": [
+        "Figure 01",
+        "Figure 02"
+      ],
+      "skills": [
+        "humanoid_dexterity",
+        "natural_language_interaction",
+        "task_learning",
+        "multi_step_reasoning"
+      ],
+      "current_tasks": [
+        "factory_assembly",
+        "warehouse_operations",
+        "eldercare_assistance",
+        "household_chores"
+      ]
+    },
+    {
+      "name": "Tesla Optimus",
+      "url": "https://www.tesla.com/optimus",
+      "last_checked": "2026-07-20",
+      "robots": [
+        "Optimus Gen 2"
+      ],
+      "skills": [
+        "general_purpose_manipulation",
+        "vision_based_learning",
+        "end_to_end_neural_control"
+      ],
+      "current_tasks": [
+        "factory_tasks",
+        "household_chores",
+        "repetitive_manual_labor"
+      ]
+    },
+    {
+      "name": "Agility Robotics",
+      "url": "https://agilityrobotics.com/",
+      "last_checked": "2026-07-20",
+      "robots": [
+        "Digit"
+      ],
+      "skills": [
+        "bipedal_locomotion",
+        "object_manipulation",
+        "warehouse_navigation"
+      ],
+      "current_tasks": [
+        "warehouse_picking_packing",
+        "last_mile_delivery",
+        "factory_material_transport"
+      ]
+    }
+  ],
+  "skills_catalog": [
+    {
+      "skill": "dynamic_balance",
+      "description": "Maintain stability while walking, running, or recovering from disturbances",
+      "platforms": [
+        "Boston Dynamics"
+      ],
+      "example_tasks": [
+        "Uneven terrain navigation",
+        "Stair climbing",
+        "Push recovery"
+      ]
+    },
+    {
+      "skill": "humanoid_dexterity",
+      "description": "Fine motor control and human-like hand manipulation",
+      "platforms": [
+        "Figure AI",
+        "Tesla Optimus"
+      ],
+      "example_tasks": [
+        "Tool use",
+        "Object grasping",
+        "Assembly tasks"
+      ]
+    },
+    {
+      "skill": "vision_based_learning",
+      "description": "End-to-end learning from visual input for new tasks",
+      "platforms": [
+        "Tesla Optimus"
+      ],
+      "example_tasks": [
+        "Learning new manipulation skills from video"
+      ]
+    },
+    {
+      "skill": "industrial_inspection",
+      "description": "Autonomous inspection of facilities, equipment, and infrastructure",
+      "platforms": [
+        "Boston Dynamics Spot"
+      ],
+      "example_tasks": [
+        "Oil & gas sites",
+        "Construction progress",
+        "Electrical substations"
+      ]
+    }
+  ],
+  "total_robots_tracked": 7,
+  "notes": "Exhaustive weekly robotics capabilities research. Expand with more platforms (Unitree, Apptronik, Sanctuary AI, etc.) and real task data."
+}
