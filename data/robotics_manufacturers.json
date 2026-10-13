@@ -1,0 +1,157 @@
+{
+  "schema_version": "1.0.0",
+  "dataset": "robotics_manufacturers",
+  "updated": "2026-10-13",
+  "manufacturers": [
+    {
+      "id": "abb",
+      "name": "ABB Robotics",
+      "url": "https://new.abb.com/products/robotics",
+      "product_lines": [],
+      "facts": [
+        "SoftBank to acquire ABB's robotics business for $5.375B (announced Oct 8, 2025); closing expected mid-to-late 2026."
+      ],
+      "source": {
+        "name": "ABB News center",
+        "url": "https://new.abb.com/news/detail/129685/abb-to-divest-robotics-division-to-softbank-group",
+        "publication_date": "2025-10-08",
+        "tier": 5
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "fanuc",
+      "name": "FANUC",
+      "url": "https://www.fanuc.co.jp/",
+      "product_lines": [],
+      "facts": [
+        "Total shipment of 1 million FANUC robots reached (Aug 2023), 46 years after first robot."
+      ],
+      "source": {
+        "name": "FANUC news release",
+        "url": "https://www.fanuc.co.jp/en/profile/pr/newsrelease/2023/notice20230915.html",
+        "publication_date": "2023-09-15",
+        "tier": 5
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "universal-robots",
+      "name": "Universal Robots (Teradyne)",
+      "url": "https://www.universal-robots.com/",
+      "product_lines": [
+        "cobots"
+      ],
+      "facts": [
+        "Surpassed 100,000 cobots sold (Feb 2025)."
+      ],
+      "source": {
+        "name": "A3 / Universal Robots news",
+        "url": "https://www.automate.org/news/100k-cobots-proof-that-the-future-of-manufacturing-is-collaborative-universal-robots",
+        "publication_date": "2025-02",
+        "tier": 5
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "intuitive",
+      "name": "Intuitive Surgical",
+      "url": "https://www.intuitive.com/",
+      "product_lines": [
+        "da Vinci",
+        "Ion"
+      ],
+      "facts": [
+        "3.153 million da Vinci procedures in FY2025, up 18% from 2.683M in 2024."
+      ],
+      "source": {
+        "name": "Intuitive preliminary Q4/FY2025 results",
+        "url": "http://investor.intuitivesurgical.com/news-releases/news-release-details/intuitive-announces-preliminary-fourth-quarter-and-full-year-5",
+        "publication_date": "2026-01",
+        "tier": 5
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "boston-dynamics",
+      "name": "Boston Dynamics",
+      "url": "https://bostondynamics.com/",
+      "product_lines": [
+        "Spot",
+        "Atlas",
+        "Stretch"
+      ],
+      "facts": [
+        "Production of electric Atlas began in 2026; Hyundai plans parts-sequencing deployment at HMGMA in 2028."
+      ],
+      "source": {
+        "name": "Hyundai Motor Group Journal",
+        "url": "https://www.hyundaimotorgroup.com/en/story/hyundai-motor-group-bloomberg-atlas-boston-dynamics-rmac",
+        "publication_date": "2026",
+        "tier": 5
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "medium"
+    },
+    {
+      "id": "figure-ai",
+      "name": "Figure AI",
+      "url": "https://www.figure.ai/",
+      "product_lines": [
+        "Figure 02",
+        "Figure 03"
+      ],
+      "facts": [
+        "Figure 02 completed an 11-month BMW Spartanburg pilot handling 90,000+ parts; Figure 03 testing logistics sequencing."
+      ],
+      "source": {
+        "name": "The Robot Report",
+        "url": "https://www.therobotreport.com/bmw-group-deploys-figure-03-humanoid-after-tests-previous-version/",
+        "publication_date": "2026",
+        "tier": 5
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "medium"
+    },
+    {
+      "id": "agility",
+      "name": "Agility Robotics",
+      "url": "https://agilityrobotics.com/",
+      "product_lines": [
+        "Digit"
+      ],
+      "facts": [
+        "Digit operating commercially at GXO Flowery Branch since June 2024, moving 100,000+ totes under RaaS."
+      ],
+      "source": {
+        "name": "DEPLOY registry",
+        "url": "https://registry.deploy.report/deployments/marquee/gxo-flowery-branch-digit",
+        "publication_date": null,
+        "tier": 5
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "medium"
+    },
+    {
+      "id": "kuka",
+      "name": "KUKA",
+      "url": "https://www.kuka.com/",
+      "product_lines": [],
+      "facts": [
+        "Owned by China's Midea Group since 2017 (search synthesis; unverified this run)."
+      ],
+      "source": {
+        "name": "ABI Research insight",
+        "url": "https://www.abiresearch.com/market-research/insight/7787013-softbank-acquires-abb-robotics-death-knell",
+        "publication_date": null,
+        "tier": 5
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-07-20T17:31:05.489Z",
+  "last_updated": "2026-10-13T19:23:46.222Z",
   "platforms": [
     {
       "name": "Boston Dynamics",
@@ -80,6 +80,51 @@
         "last_mile_delivery",
         "factory_material_transport"
       ]
+    },
+    {
+      "name": "ABB Robotics",
+      "url": "https://new.abb.com/products/robotics",
+      "last_checked": "2026-10-13",
+      "robots": [],
+      "skills": [],
+      "current_tasks": []
+    },
+    {
+      "name": "FANUC",
+      "url": "https://www.fanuc.co.jp/",
+      "last_checked": "2026-10-13",
+      "robots": [],
+      "skills": [],
+      "current_tasks": []
+    },
+    {
+      "name": "Universal Robots",
+      "url": "https://www.universal-robots.com/",
+      "last_checked": "2026-10-13",
+      "robots": [
+        "UR cobots"
+      ],
+      "skills": [],
+      "current_tasks": []
+    },
+    {
+      "name": "KUKA",
+      "url": "https://www.kuka.com/",
+      "last_checked": "2026-10-13",
+      "robots": [],
+      "skills": [],
+      "current_tasks": []
+    },
+    {
+      "name": "Intuitive Surgical",
+      "url": "https://www.intuitive.com/",
+      "last_checked": "2026-10-13",
+      "robots": [
+        "da Vinci",
+        "Ion"
+      ],
+      "skills": [],
+      "current_tasks": []
     }
   ],
   "skills_catalog": [
@@ -131,6 +176,6 @@
       ]
     }
   ],
-  "total_robots_tracked": 7,
-  "notes": "Exhaustive weekly robotics capabilities research. Expand with more platforms (Unitree, Apptronik, Sanctuary AI, etc.) and real task data."
+  "total_robots_tracked": 10,
+  "notes": "Exhaustive weekly robotics capabilities research. Expand with more platforms (Unitree, Apptronik, Sanctuary AI, etc.) and real task data. 2026-10-13: added ABB, FANUC, Universal Robots, KUKA, Intuitive Surgical; sourced facts live in data/robotics_manufacturers.json."
 }

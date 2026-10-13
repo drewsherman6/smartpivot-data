@@ -1,0 +1,3 @@
+{"$schema":"http://json-schema.org/draft-07/schema#","$id":"robotics_capabilities.schema.json","type":"object","required":["last_updated","platforms","skills_catalog","total_robots_tracked"],
+"properties":{"platforms":{"type":"array","items":{"type":"object","required":["name","url","last_checked","robots","skills","current_tasks"]}},
+"skills_catalog":{"type":"array","items":{"type":"object","required":["skill","description","platforms","example_tasks"]}},"total_robots_tracked":{"type":"integer"}}}

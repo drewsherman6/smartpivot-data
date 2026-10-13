@@ -1,0 +1,13 @@
+{
+  "name": "smartpivot-data",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Versioned workforce x AI/robotics research datasets consumed by the SmartPivot frontend via raw GitHub URLs.",
+  "scripts": {
+    "test": "node scripts/validate.js",
+    "validate": "node scripts/validate.js",
+    "update": "node scripts/update.js",
+    "manifest": "node scripts/build-manifest.js"
+  },
+  "devDependencies": { "ajv": "^8.17.1", "ajv-formats": "^3.0.1" }
+}

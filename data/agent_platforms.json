@@ -1,0 +1,1777 @@
+{
+  "schema_version": "1.0.0",
+  "dataset": "agent_platforms",
+  "updated": "2026-10-13",
+  "platforms": [
+    {
+      "id": "salesforce-agentforce",
+      "name": "Salesforce Agentforce",
+      "url": "https://www.salesforce.com/agentforce/",
+      "category": "enterprise_agents",
+      "skills": [],
+      "facts": [
+        "Q4 FY2026: $800M Agentforce ARR and 29,000+ Agentforce deals.",
+        "Q2 FY2027: Agentforce ARR exceeded $1.5B."
+      ],
+      "status": "verified",
+      "source": {
+        "name": "Salesforce Q2 FY2027 results",
+        "url": "https://www.salesforce.com/news/press-releases/2026/08/26/fy27-q2-earnings/",
+        "publication_date": "2026-08-26",
+        "tier": 5
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "medium"
+    },
+    {
+      "id": "servicenow-ai-agents",
+      "name": "ServiceNow AI Agents",
+      "url": "https://www.servicenow.com/",
+      "category": "enterprise_agents",
+      "skills": [],
+      "facts": [
+        "AI ACV surpassed $1B in Q2 2026 (earnings call, via search synthesis)."
+      ],
+      "status": "verified",
+      "source": {
+        "name": "ServiceNow FY2026 Q2 earnings call transcript",
+        "url": "https://exa.ai/library/markets/stocks/NOW/earnings/FY2026/Q2/transcript",
+        "publication_date": "2026-07",
+        "tier": 5
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "microsoft-agent-framework",
+      "name": "Microsoft Agent Framework (AutoGen + Semantic Kernel)",
+      "url": "https://azure.microsoft.com/en-us/blog/introducing-microsoft-agent-framework/",
+      "category": "agent_framework",
+      "skills": [
+        "multi_agent_orchestration",
+        "tool_use"
+      ],
+      "facts": [
+        "Announced Oct 1, 2025; unifies AutoGen multi-agent orchestration with Semantic Kernel enterprise SDK."
+      ],
+      "status": "verified",
+      "source": {
+        "name": "Microsoft Azure Blog",
+        "url": "https://azure.microsoft.com/en-us/blog/introducing-microsoft-agent-framework/",
+        "publication_date": "2025-10-01",
+        "tier": 5
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "n8n",
+      "name": "n8n",
+      "url": "https://n8n.io/",
+      "category": "workflow_automation",
+      "skills": [
+        "workflow_orchestration",
+        "agent_orchestration"
+      ],
+      "facts": [
+        "Raised $180M Series C (Oct 2025) led by Accel at $2.5B valuation."
+      ],
+      "status": "verified",
+      "source": {
+        "name": "n8n Blog - Series C",
+        "url": "https://blog.n8n.io/series-c/",
+        "publication_date": "2025-10-09",
+        "tier": 5
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "zapier-agents",
+      "name": "Zapier Agents",
+      "url": "https://zapier.com/agents",
+      "category": "workflow_automation",
+      "skills": [
+        "workflow_orchestration",
+        "tool_use"
+      ],
+      "facts": [
+        "Launched January 2025 as AI agents working across 9,000+ apps; later added Pods and dashboards."
+      ],
+      "status": "verified",
+      "source": {
+        "name": "Zapier Blog",
+        "url": "https://zapier.com/blog/introducing-zapier-ai-agents/",
+        "publication_date": "2025-01",
+        "tier": 5
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "medium"
+    },
+    {
+      "id": "lindy",
+      "name": "Lindy",
+      "url": "https://www.lindy.ai/",
+      "category": "no_code_agents",
+      "skills": [
+        "email_management",
+        "calendar_scheduling"
+      ],
+      "facts": [
+        "Lindy 3.0 added prompt-based Agent Builder, cloud Autopilot and team deployment for no-code 'AI employees'."
+      ],
+      "status": "verified",
+      "source": {
+        "name": "Lindy Blog - Lindy 3.0",
+        "url": "http://www.lindy.ai/blog/lindy-3-0",
+        "publication_date": null,
+        "tier": 5
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "medium"
+    },
+    {
+      "id": "anthropic-claude",
+      "name": "Anthropic Claude (Claude Code / Cowork)",
+      "url": "https://www.anthropic.com/",
+      "category": "ai_lab",
+      "skills": [
+        "computer_use",
+        "tool_use"
+      ],
+      "facts": [
+        "Claude sessions increasingly consist of long-running agentic work with growth of Claude Code and Cowork (Economic Index, June 2026)."
+      ],
+      "status": "verified",
+      "source": {
+        "name": "Anthropic Economic Index report: Cadences",
+        "url": "https://www.anthropic.com/research/economic-index-june-2026-report",
+        "publication_date": "2026-06-26",
+        "tier": 5
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "medium"
+    },
+    {
+      "id": "restored-anthropic",
+      "name": "Anthropic",
+      "url": "https://www.anthropic.com/news/3-5-models-and-computer-use",
+      "category": "restored_from_history",
+      "skills": [
+        "computer_use",
+        "mouse_keyboard_control",
+        "screenshot_analysis",
+        "desktop_automation",
+        "web_navigation",
+        "multi_step_planning",
+        "tool_use"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-uipath",
+      "name": "UiPath",
+      "url": "https://www.uipath.com/automation/agentic-automation",
+      "category": "restored_from_history",
+      "skills": [
+        "rpa_actions",
+        "document_processing",
+        "browser_automation",
+        "unattended_agents",
+        "agentic_orchestration",
+        "process_mining",
+        "intelligent_document_processing"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-openai",
+      "name": "OpenAI",
+      "url": "https://platform.openai.com/docs/assistants",
+      "category": "restored_from_history",
+      "skills": [
+        "function_calling",
+        "code_interpreter",
+        "file_search",
+        "multi_step_reasoning",
+        "tool_use",
+        "agent_orchestration",
+        "responses_api"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-crewai",
+      "name": "CrewAI",
+      "url": "https://crewai.com",
+      "category": "restored_from_history",
+      "skills": [
+        "multi_agent_orchestration",
+        "role_based_agents",
+        "task_decomposition",
+        "collaborative_reasoning",
+        "sequential_process",
+        "hierarchical_process"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-langchain---langgraph",
+      "name": "LangChain / LangGraph",
+      "url": "https://www.langchain.com",
+      "category": "restored_from_history",
+      "skills": [
+        "agent_builder_templates",
+        "graph_based_workflows",
+        "tool_integration",
+        "memory_management",
+        "retrieval_augmented_generation"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-microsoft-copilot-studio",
+      "name": "Microsoft Copilot Studio",
+      "url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/",
+      "category": "restored_from_history",
+      "skills": [
+        "prebuilt_agent_templates",
+        "enterprise_data_grounding",
+        "topic_management",
+        "generative_answers",
+        "power_automate_integration",
+        "sharepoint_knowledge",
+        "dataverse_actions",
+        "teams_integration",
+        "approval_workflows",
+        "case_management"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-microsoft-365-copilot-agents",
+      "name": "Microsoft 365 Copilot Agents",
+      "url": "https://adoption.microsoft.com/en-us/ai-agents/build-agents/",
+      "category": "restored_from_history",
+      "skills": [
+        "researcher_agent",
+        "analyst_agent",
+        "meeting_facilitator",
+        "presentation_creator",
+        "email_drafting",
+        "document_summarization",
+        "data_analysis",
+        "project_management_support"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-multion",
+      "name": "MultiOn",
+      "url": "https://docs.multion.ai/",
+      "category": "restored_from_history",
+      "skills": [
+        "web_automation",
+        "browser_control",
+        "form_filling",
+        "data_extraction",
+        "multi_step_web_tasks",
+        "natural_language_web_actions",
+        "agent_q_self_improvement"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-lindy-ai",
+      "name": "Lindy.ai",
+      "url": "https://docs.lindy.ai/",
+      "category": "restored_from_history",
+      "skills": [
+        "email_management",
+        "calendar_scheduling",
+        "crm_updates",
+        "research_automation",
+        "meeting_notes",
+        "follow_up_sequences",
+        "multi_tool_orchestration",
+        "inbox_zero_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-smythos",
+      "name": "SmythOS",
+      "url": "https://smythos.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "multi_agent_swarms",
+        "enterprise_rag",
+        "agent_orchestration",
+        "model_agnostic_deployment",
+        "governed_execution",
+        "complex_workflow_automation",
+        "secure_agent_infrastructure"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-bardeen",
+      "name": "Bardeen",
+      "url": "https://www.bardeen.ai/",
+      "category": "restored_from_history",
+      "skills": [
+        "browser_automation_playbooks",
+        "ai_powered_workflows",
+        "data_enrichment",
+        "lead_research",
+        "content_creation_automation",
+        "crm_sync"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-workday-skills-cloud---ai-agents",
+      "name": "Workday Skills Cloud / AI Agents",
+      "url": "https://www.workday.com/en-us/products/skills-cloud.html",
+      "category": "restored_from_history",
+      "skills": [
+        "talent_management",
+        "recruiting_agents",
+        "performance_management",
+        "learning_recommendations",
+        "compensation_planning",
+        "succession_planning"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-adept--fuyu---act-1",
+      "name": "Adept (Fuyu / ACT-1)",
+      "url": "https://www.adept.ai/",
+      "category": "restored_from_history",
+      "skills": [
+        "computer_use",
+        "ui_interaction",
+        "software_automation",
+        "action_modeling"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-replit-agent",
+      "name": "Replit Agent",
+      "url": "https://replit.com/agent",
+      "category": "restored_from_history",
+      "skills": [
+        "code_generation",
+        "full_stack_app_building",
+        "debugging",
+        "deployment_automation",
+        "project_scaffolding"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-google-vertex-ai-agent-builder",
+      "name": "Google Vertex AI Agent Builder",
+      "url": "https://cloud.google.com/vertex-ai/generative-ai/docs/agent-builder/overview",
+      "category": "restored_from_history",
+      "skills": [
+        "enterprise_search",
+        "conversational_agents",
+        "tool_integration",
+        "grounded_responses",
+        "multi_turn_reasoning"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-aws-strands-agents",
+      "name": "AWS Strands Agents",
+      "url": "https://aws.amazon.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "model_driven_agents",
+        "bedrock_integration",
+        "multi_agent_collaboration",
+        "tool_use_framework"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-openai-swarm",
+      "name": "OpenAI Swarm",
+      "url": "https://github.com/openai/swarm",
+      "category": "restored_from_history",
+      "skills": [
+        "lightweight_agent_handoffs",
+        "function_calling_patterns",
+        "multi_agent_coordination",
+        "minimal_orchestration"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-autogen---ag2",
+      "name": "AutoGen / AG2",
+      "url": "https://microsoft.github.io/autogen/",
+      "category": "restored_from_history",
+      "skills": [
+        "multi_agent_conversation",
+        "agent_debate",
+        "code_execution_agents",
+        "human_in_the_loop",
+        "group_chat_patterns"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-browserbase---stagehand",
+      "name": "Browserbase / Stagehand",
+      "url": "https://browserbase.com",
+      "category": "restored_from_history",
+      "skills": [
+        "browser_automation",
+        "web_scraping",
+        "form_interaction",
+        "session_management"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-llamaindex-workflows",
+      "name": "LlamaIndex Workflows",
+      "url": "https://www.llamaindex.ai/",
+      "category": "restored_from_history",
+      "skills": [
+        "rag_agents",
+        "workflow_orchestration",
+        "data_indexing_agents",
+        "query_planning"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-semantic-kernel",
+      "name": "Semantic Kernel",
+      "url": "https://learn.microsoft.com/en-us/semantic-kernel/",
+      "category": "restored_from_history",
+      "skills": [
+        "plugin_based_agents",
+        "memory_stores",
+        "function_calling",
+        "orchestration_patterns"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-pydantic-ai",
+      "name": "Pydantic AI",
+      "url": "https://docs.pydantic.dev/",
+      "category": "restored_from_history",
+      "skills": [
+        "type_safe_agents",
+        "structured_outputs",
+        "validation_focused_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-anthropic-computer-use---claude-agents",
+      "name": "Anthropic Computer Use + Claude Agents",
+      "url": "https://www.anthropic.com/news/3-5-models-and-computer-use",
+      "category": "restored_from_history",
+      "skills": [
+        "computer_use",
+        "tool_use",
+        "desktop_control",
+        "web_browsing_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-openai-assistants-api",
+      "name": "OpenAI Assistants API",
+      "url": "https://platform.openai.com/docs/assistants",
+      "category": "restored_from_history",
+      "skills": [
+        "function_calling",
+        "code_interpreter",
+        "file_search",
+        "retrieval_augmented_agents",
+        "persistent_threads"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-cognition-devin",
+      "name": "Cognition Devin",
+      "url": "https://cognition.ai/",
+      "category": "restored_from_history",
+      "skills": [
+        "software_engineering_agents",
+        "autonomous_coding",
+        "repository_level_changes",
+        "debugging"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-aider",
+      "name": "Aider",
+      "url": "https://aider.chat/",
+      "category": "restored_from_history",
+      "skills": [
+        "pair_programming",
+        "git_integration",
+        "code_editing_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-cursor-composer---agent",
+      "name": "Cursor Composer / Agent",
+      "url": "https://cursor.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "ai_code_editing",
+        "multi_file_changes",
+        "chat_driven_development",
+        "terminal_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-github-copilot-workspace",
+      "name": "GitHub Copilot Workspace",
+      "url": "https://github.com/features/copilot",
+      "category": "restored_from_history",
+      "skills": [
+        "issue_to_pr_agents",
+        "repository_wide_changes",
+        "planning_agents",
+        "code_review_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-sourcegraph-cody",
+      "name": "Sourcegraph Cody",
+      "url": "https://sourcegraph.com/cody",
+      "category": "restored_from_history",
+      "skills": [
+        "codebase_understanding",
+        "chat_agents",
+        "large_context_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-perplexity-agents",
+      "name": "Perplexity Agents",
+      "url": "https://www.perplexity.ai/",
+      "category": "restored_from_history",
+      "skills": [
+        "research_agents",
+        "web_search_agents",
+        "citation_grounded_agents",
+        "deep_research"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-you-com-agents",
+      "name": "You.com Agents",
+      "url": "https://you.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "personal_assistants",
+        "research_agents",
+        "shopping_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-poe-bots---agents",
+      "name": "Poe Bots / Agents",
+      "url": "https://poe.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "custom_bots",
+        "multi_model_agents",
+        "community_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-hugging-face-agents",
+      "name": "Hugging Face Agents",
+      "url": "https://huggingface.co/agents",
+      "category": "restored_from_history",
+      "skills": [
+        "open_source_agents",
+        "tool_use_agents",
+        "multi_modal_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-langsmith---langgraph-cloud",
+      "name": "LangSmith + LangGraph Cloud",
+      "url": "https://www.langchain.com/langsmith",
+      "category": "restored_from_history",
+      "skills": [
+        "production_agents",
+        "tracing",
+        "evaluation",
+        "deployment"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-babyagi---task-driven-agents",
+      "name": "BabyAGI / Task-driven Agents",
+      "url": "https://github.com/yoheinakajima/babyagi",
+      "category": "restored_from_history",
+      "skills": [
+        "task_generation",
+        "task_prioritization",
+        "autonomous_loop"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-metagpt",
+      "name": "MetaGPT",
+      "url": "https://github.com/geekan/MetaGPT",
+      "category": "restored_from_history",
+      "skills": [
+        "role_based_software_agents",
+        "multi_agent_software_team"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-autogpt",
+      "name": "AutoGPT",
+      "url": "https://github.com/Significant-Gravitas/AutoGPT",
+      "category": "restored_from_history",
+      "skills": [
+        "autonomous_goal_pursuit",
+        "plugin_system",
+        "memory_management"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-godmode---godmode2",
+      "name": "GodMode / GodMode2",
+      "url": "https://godmode.space/",
+      "category": "restored_from_history",
+      "skills": [
+        "multi_agent_collaboration",
+        "web_browsing",
+        "file_management"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-superagi",
+      "name": "SuperAGI",
+      "url": "https://github.com/TransformerOptimus/SuperAGI",
+      "category": "restored_from_history",
+      "skills": [
+        "open_source_agent_framework",
+        "tool_integration",
+        "memory_management"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-agentgpt",
+      "name": "AgentGPT",
+      "url": "https://agentgpt.reworkd.ai/",
+      "category": "restored_from_history",
+      "skills": [
+        "browser_based_agents",
+        "goal_oriented_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-dust-tt",
+      "name": "Dust.tt",
+      "url": "https://dust.tt/",
+      "category": "restored_from_history",
+      "skills": [
+        "enterprise_agents",
+        "knowledge_base_agents",
+        "custom_actions"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-glean-agents",
+      "name": "Glean Agents",
+      "url": "https://www.glean.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "enterprise_search_agents",
+        "workplace_knowledge_agents",
+        "action_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-notion-ai-agents",
+      "name": "Notion AI Agents",
+      "url": "https://www.notion.so/",
+      "category": "restored_from_history",
+      "skills": [
+        "knowledge_management_agents",
+        "content_generation",
+        "database_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-coda-ai-agents",
+      "name": "Coda AI Agents",
+      "url": "https://coda.io/",
+      "category": "restored_from_history",
+      "skills": [
+        "doc_agents",
+        "automation_agents",
+        "data_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-harvey-ai--legal",
+      "name": "Harvey AI (Legal)",
+      "url": "https://www.harvey.ai/",
+      "category": "restored_from_history",
+      "skills": [
+        "legal_research_agents",
+        "contract_analysis",
+        "due_diligence_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-casetext-cocounsel",
+      "name": "Casetext CoCounsel",
+      "url": "https://casetext.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "legal_research",
+        "deposition_prep",
+        "document_review"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-klarna-ai-assistant",
+      "name": "Klarna AI Assistant",
+      "url": "https://www.klarna.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "shopping_agents",
+        "customer_service",
+        "payment_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-intercom-fin-ai-agent",
+      "name": "Intercom Fin AI Agent",
+      "url": "https://www.intercom.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "customer_support_agents",
+        "resolution_agents",
+        "knowledge_base_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-drift---salesloft-ai-agents",
+      "name": "Drift / Salesloft AI Agents",
+      "url": "https://www.drift.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "sales_conversation_agents",
+        "meeting_booking",
+        "lead_qualification"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-gong-ai-agents",
+      "name": "Gong AI Agents",
+      "url": "https://www.gong.io/",
+      "category": "restored_from_history",
+      "skills": [
+        "conversation_intelligence",
+        "deal_coaching_agents",
+        "forecasting_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-tableau-ai-agents",
+      "name": "Tableau AI Agents",
+      "url": "https://www.tableau.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "data_visualization_agents",
+        "insight_generation",
+        "dashboard_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-power-bi-copilot",
+      "name": "Power BI Copilot",
+      "url": "https://powerbi.microsoft.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "business_intelligence_agents",
+        "report_generation",
+        "data_analysis_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-looker-ai-agents",
+      "name": "Looker AI Agents",
+      "url": "https://cloud.google.com/looker",
+      "category": "restored_from_history",
+      "skills": [
+        "analytics_agents",
+        "embedded_analytics",
+        "data_storytelling"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-amplitude-ai-agents",
+      "name": "Amplitude AI Agents",
+      "url": "https://amplitude.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "product_analytics_agents",
+        "user_behavior_agents",
+        "experimentation_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-mixpanel-ai-agents",
+      "name": "Mixpanel AI Agents",
+      "url": "https://mixpanel.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "event_analytics_agents",
+        "funnel_analysis",
+        "retention_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-segment-ai-agents",
+      "name": "Segment AI Agents",
+      "url": "https://segment.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "customer_data_platform_agents",
+        "identity_resolution",
+        "data_activation_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-mparticle-ai-agents",
+      "name": "mParticle AI Agents",
+      "url": "https://www.mparticle.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "cdp_agents",
+        "data_quality_agents",
+        "audience_building"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-tealium-ai-agents",
+      "name": "Tealium AI Agents",
+      "url": "https://tealium.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "tag_management_agents",
+        "customer_data_agents",
+        "real_time_personalization"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-fullstory-ai-agents",
+      "name": "FullStory AI Agents",
+      "url": "https://www.fullstory.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "session_replay_agents",
+        "friction_detection",
+        "journey_analytics_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-contentsquare-ai-agents",
+      "name": "Contentsquare AI Agents",
+      "url": "https://contentsquare.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "digital_experience_agents",
+        "heatmaps_agents",
+        "conversion_optimization"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-hotjar-ai-agents",
+      "name": "Hotjar AI Agents",
+      "url": "https://www.hotjar.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "feedback_agents",
+        "survey_agents",
+        "behavioral_insights"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-quickbooks---xero-ai-agents",
+      "name": "QuickBooks / Xero AI Agents",
+      "url": "https://quickbooks.intuit.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "accounting_agents",
+        "invoice_processing",
+        "expense_categorization",
+        "financial_reporting_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-ramp-ai-agents",
+      "name": "Ramp AI Agents",
+      "url": "https://ramp.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "spend_management_agents",
+        "receipt_processing",
+        "vendor_management_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-brex-ai-agents",
+      "name": "Brex AI Agents",
+      "url": "https://www.brex.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "corporate_card_agents",
+        "expense_policy_agents",
+        "travel_booking_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-greenhouse-ai-agents",
+      "name": "Greenhouse AI Agents",
+      "url": "https://www.greenhouse.io/",
+      "category": "restored_from_history",
+      "skills": [
+        "recruiting_agents",
+        "candidate_screening",
+        "interview_scheduling_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-lever-ai-agents",
+      "name": "Lever AI Agents",
+      "url": "https://www.lever.co/",
+      "category": "restored_from_history",
+      "skills": [
+        "ats_agents",
+        "talent_pipeline_agents",
+        "offer_management_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-workday-recruiting-agents",
+      "name": "Workday Recruiting Agents",
+      "url": "https://www.workday.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "talent_acquisition_agents",
+        "candidate_experience_agents",
+        "onboarding_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-bamboohr-ai-agents",
+      "name": "BambooHR AI Agents",
+      "url": "https://www.bamboohr.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "hris_agents",
+        "employee_onboarding_agents",
+        "time_tracking_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-rippling-ai-agents",
+      "name": "Rippling AI Agents",
+      "url": "https://www.rippling.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "people_operations_agents",
+        "it_onboarding_agents",
+        "compliance_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-deel-ai-agents",
+      "name": "Deel AI Agents",
+      "url": "https://www.deel.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "global_employment_agents",
+        "contractor_management_agents",
+        "compliance_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-remote-com-ai-agents",
+      "name": "Remote.com AI Agents",
+      "url": "https://remote.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "global_hr_agents",
+        "payroll_agents",
+        "compliance_management_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-lattice-ai-agents",
+      "name": "Lattice AI Agents",
+      "url": "https://lattice.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "performance_management_agents",
+        "engagement_agents",
+        "goal_tracking_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-15five-ai-agents",
+      "name": "15Five AI Agents",
+      "url": "https://www.15five.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "performance_agents",
+        "check_in_agents",
+        "development_planning_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    },
+    {
+      "id": "restored-culture-amp-ai-agents",
+      "name": "Culture Amp AI Agents",
+      "url": "https://www.cultureamp.com/",
+      "category": "restored_from_history",
+      "skills": [
+        "employee_engagement_agents",
+        "survey_agents",
+        "sentiment_analysis_agents"
+      ],
+      "facts": [],
+      "status": "restored_unverified",
+      "source": {
+        "name": "smartpivot-data git history, commit d4344e7 (2026-07-08)",
+        "url": "https://github.com/drewsherman6/smartpivot-data/commit/d4344e790e5d45934e977f81479b782655875ccf",
+        "publication_date": "2026-07-08",
+        "tier": 0
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "low"
+    }
+  ]
+}

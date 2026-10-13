@@ -1,0 +1,5 @@
+{"$schema":"http://json-schema.org/draft-07/schema#","$id":"skills_summary.schema.json","type":"object","required":["metadata","skills"],
+"properties":{"metadata":{"type":"object","required":["version","generated","total_skills"],"properties":{"total_skills":{"type":"integer"}}},
+"skills":{"type":"array","items":{"type":"object","required":["name","category","risk_level","importance","short_rationale","top_3_occupations"],
+"properties":{"category":{"enum":["future_proof","at_risk"]},"risk_level":{"enum":["low","medium","medium_high","high","very_high"]},"importance":{"type":["number","null"]},"top_3_occupations":{"type":"array","items":{"type":"string"},"maxItems":3}},
+"if":{"properties":{"category":{"const":"at_risk"}}},"then":{"properties":{"importance":{"type":"null"}}},"else":{"properties":{"importance":{"type":"number"}}}}}}}

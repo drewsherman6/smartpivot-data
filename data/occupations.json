@@ -1,0 +1,376 @@
+{
+  "schema_version": "1.0.0",
+  "dataset": "occupations",
+  "updated": "2026-10-13",
+  "records": [
+    {
+      "id": "bls-word-processors",
+      "title": "Word processors and typists",
+      "soc_code": "43-9022",
+      "trend": "declining",
+      "statement": "Projected -36.1% 2024-34 (40.0k to 25.6k).",
+      "projected_change_percent": -36.1,
+      "source": {
+        "name": "U.S. BLS - Table 1.5 Fastest declining occupations 2024-34",
+        "url": "https://www.bls.gov/emp/tables/fastest-declining-occupations.htm",
+        "publication_date": null,
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-telephone-operators",
+      "title": "Telephone operators",
+      "soc_code": "43-2021",
+      "trend": "declining",
+      "statement": "Projected -27.5% 2024-34.",
+      "projected_change_percent": -27.5,
+      "source": {
+        "name": "U.S. BLS - Table 1.5 Fastest declining occupations 2024-34",
+        "url": "https://www.bls.gov/emp/tables/fastest-declining-occupations.htm",
+        "publication_date": null,
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-switchboard",
+      "title": "Switchboard operators, including answering service",
+      "soc_code": "43-2011",
+      "trend": "declining",
+      "statement": "Projected -26.3% 2024-34.",
+      "projected_change_percent": -26.3,
+      "source": {
+        "name": "U.S. BLS - Table 1.5 Fastest declining occupations 2024-34",
+        "url": "https://www.bls.gov/emp/tables/fastest-declining-occupations.htm",
+        "publication_date": null,
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-data-entry",
+      "title": "Data entry keyers",
+      "soc_code": "43-9021",
+      "trend": "declining",
+      "statement": "Projected -25.9% 2024-34 (141.6k to 104.9k).",
+      "projected_change_percent": -25.9,
+      "source": {
+        "name": "U.S. BLS - Table 1.5 Fastest declining occupations 2024-34",
+        "url": "https://www.bls.gov/emp/tables/fastest-declining-occupations.htm",
+        "publication_date": null,
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-office-machine-ops",
+      "title": "Office machine operators, except computer",
+      "soc_code": "43-9071",
+      "trend": "declining",
+      "statement": "Projected -15.2% 2024-34.",
+      "projected_change_percent": -15.2,
+      "source": {
+        "name": "U.S. BLS - Table 1.5 Fastest declining occupations 2024-34",
+        "url": "https://www.bls.gov/emp/tables/fastest-declining-occupations.htm",
+        "publication_date": null,
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-claims-adjusters",
+      "title": "Claims adjusters, examiners, and investigators",
+      "soc_code": null,
+      "trend": "declining",
+      "statement": "Projected -5.1% 2024-34; AI photo-based damage assessment cited.",
+      "projected_change_percent": -5.1,
+      "source": {
+        "name": "U.S. BLS - Monthly Labor Review: Industry and occupational employment projections overview, 2024-34",
+        "url": "https://www.bls.gov/opub/mlr/2026/article/industry-and-occupational-employment-projections-overview.htm",
+        "publication_date": "2026",
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-csr",
+      "title": "Customer service representatives",
+      "soc_code": "43-4051",
+      "trend": "declining",
+      "statement": "BLS expects decline over 2024-34 as AI limits demand.",
+      "projected_change_percent": null,
+      "source": {
+        "name": "U.S. BLS - TED: Artificial intelligence, information technology, and employment, 2024-34",
+        "url": "http://www.bls.gov/opub/ted/2026/artificial-intelligence-information-technology-and-employment-2024-34.htm",
+        "publication_date": "2026",
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-procurement-clerks",
+      "title": "Procurement clerks",
+      "soc_code": null,
+      "trend": "declining",
+      "statement": "BLS expects decline over 2024-34 due to AI efficiency gains.",
+      "projected_change_percent": null,
+      "source": {
+        "name": "U.S. BLS - TED: Artificial intelligence, information technology, and employment, 2024-34",
+        "url": "http://www.bls.gov/opub/ted/2026/artificial-intelligence-information-technology-and-employment-2024-34.htm",
+        "publication_date": "2026",
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-legal-secretaries",
+      "title": "Legal secretaries and administrative assistants",
+      "soc_code": null,
+      "trend": "declining",
+      "statement": "BLS expects decline over 2024-34 due to AI efficiency gains.",
+      "projected_change_percent": null,
+      "source": {
+        "name": "U.S. BLS - TED: Artificial intelligence, information technology, and employment, 2024-34",
+        "url": "http://www.bls.gov/opub/ted/2026/artificial-intelligence-information-technology-and-employment-2024-34.htm",
+        "publication_date": "2026",
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-data-scientists",
+      "title": "Data scientists",
+      "soc_code": "15-2051",
+      "trend": "emerging",
+      "statement": "Projected +33.5% 2024-34, fourth fastest growing occupation.",
+      "projected_change_percent": 33.5,
+      "source": {
+        "name": "U.S. BLS - TED: Artificial intelligence, information technology, and employment, 2024-34",
+        "url": "http://www.bls.gov/opub/ted/2026/artificial-intelligence-information-technology-and-employment-2024-34.htm",
+        "publication_date": "2026",
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-infosec",
+      "title": "Information security analysts",
+      "soc_code": "15-1212",
+      "trend": "emerging",
+      "statement": "Projected +28.5% 2024-34.",
+      "projected_change_percent": 28.5,
+      "source": {
+        "name": "U.S. BLS - TED: Artificial intelligence, information technology, and employment, 2024-34",
+        "url": "http://www.bls.gov/opub/ted/2026/artificial-intelligence-information-technology-and-employment-2024-34.htm",
+        "publication_date": "2026",
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-ops-research",
+      "title": "Operations research analysts",
+      "soc_code": null,
+      "trend": "emerging",
+      "statement": "Projected +21.5% 2024-34.",
+      "projected_change_percent": 21.5,
+      "source": {
+        "name": "U.S. BLS - TED: Artificial intelligence, information technology, and employment, 2024-34",
+        "url": "http://www.bls.gov/opub/ted/2026/artificial-intelligence-information-technology-and-employment-2024-34.htm",
+        "publication_date": "2026",
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-cirs",
+      "title": "Computer and information research scientists",
+      "soc_code": null,
+      "trend": "emerging",
+      "statement": "Projected +19.7% 2024-34.",
+      "projected_change_percent": 19.7,
+      "source": {
+        "name": "U.S. BLS - TED: Artificial intelligence, information technology, and employment, 2024-34",
+        "url": "http://www.bls.gov/opub/ted/2026/artificial-intelligence-information-technology-and-employment-2024-34.htm",
+        "publication_date": "2026",
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-software-devs",
+      "title": "Software developers",
+      "soc_code": "15-1252",
+      "trend": "emerging",
+      "statement": "Projected +15.8% (+267,700 jobs) 2024-34.",
+      "projected_change_percent": 15.8,
+      "source": {
+        "name": "U.S. BLS - TED: Artificial intelligence, information technology, and employment, 2024-34",
+        "url": "http://www.bls.gov/opub/ted/2026/artificial-intelligence-information-technology-and-employment-2024-34.htm",
+        "publication_date": "2026",
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-wind-techs",
+      "title": "Wind turbine service technicians",
+      "soc_code": null,
+      "trend": "emerging",
+      "statement": "Fastest growing occupation, ~42% 2024-34.",
+      "projected_change_percent": 42,
+      "source": {
+        "name": "U.S. BLS - Occupational Statistics and Employment Projections handout",
+        "url": "https://www.bls.gov/emp/projections-overview-handout.pdf",
+        "publication_date": null,
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-solar",
+      "title": "Solar photovoltaic installers",
+      "soc_code": null,
+      "trend": "emerging",
+      "statement": "Projected ~40% growth 2024-34.",
+      "projected_change_percent": 40,
+      "source": {
+        "name": "U.S. BLS - Occupational Statistics and Employment Projections handout",
+        "url": "https://www.bls.gov/emp/projections-overview-handout.pdf",
+        "publication_date": null,
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "li-ai-engineer",
+      "title": "AI engineer",
+      "soc_code": null,
+      "trend": "emerging",
+      "statement": "#1 on LinkedIn Jobs on the Rise 2026 (US); top skills LangChain, RAG, PyTorch.",
+      "projected_change_percent": null,
+      "source": {
+        "name": "LinkedIn News - Jobs on the Rise 2026 (U.S.)",
+        "url": "https://www.linkedin.com/pulse/linkedin-jobs-rise-2026-25-fastest-growing-roles-us-linkedin-news-dlb1c",
+        "publication_date": "2026-01-07",
+        "tier": 4
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high",
+      "rank": 1
+    },
+    {
+      "id": "li-ai-consultant",
+      "title": "AI consultant / strategist",
+      "soc_code": null,
+      "trend": "emerging",
+      "statement": "Ranked on LinkedIn Jobs on the Rise 2026 (US); top skills LLMs, MLOps, Computer Vision.",
+      "projected_change_percent": null,
+      "source": {
+        "name": "LinkedIn News - Jobs on the Rise 2026 (U.S.)",
+        "url": "https://www.linkedin.com/pulse/linkedin-jobs-rise-2026-25-fastest-growing-roles-us-linkedin-news-dlb1c",
+        "publication_date": "2026-01-07",
+        "tier": 4
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "li-data-annotator",
+      "title": "Data annotator",
+      "soc_code": null,
+      "trend": "emerging",
+      "statement": "Ranked on LinkedIn Jobs on the Rise 2026 (US).",
+      "projected_change_percent": null,
+      "source": {
+        "name": "LinkedIn News - Jobs on the Rise 2026 (U.S.)",
+        "url": "https://www.linkedin.com/pulse/linkedin-jobs-rise-2026-25-fastest-growing-roles-us-linkedin-news-dlb1c",
+        "publication_date": "2026-01-07",
+        "tier": 4
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "li-ai-ml-researcher",
+      "title": "AI/ML researcher",
+      "soc_code": null,
+      "trend": "emerging",
+      "statement": "Ranked on LinkedIn Jobs on the Rise 2026 (US).",
+      "projected_change_percent": null,
+      "source": {
+        "name": "LinkedIn News - Jobs on the Rise 2026 (U.S.)",
+        "url": "https://www.linkedin.com/pulse/linkedin-jobs-rise-2026-25-fastest-growing-roles-us-linkedin-news-dlb1c",
+        "publication_date": "2026-01-07",
+        "tier": 4
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "li-datacenter-tech",
+      "title": "Datacenter technician",
+      "soc_code": null,
+      "trend": "emerging",
+      "statement": "Ranked on LinkedIn Jobs on the Rise 2026 (US).",
+      "projected_change_percent": null,
+      "source": {
+        "name": "LinkedIn News - Jobs on the Rise 2026 (U.S.)",
+        "url": "https://www.linkedin.com/pulse/linkedin-jobs-rise-2026-25-fastest-growing-roles-us-linkedin-news-dlb1c",
+        "publication_date": "2026-01-07",
+        "tier": 4
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "li-commissioning-mgr",
+      "title": "Commissioning manager (e.g. data centers)",
+      "soc_code": null,
+      "trend": "emerging",
+      "statement": "Ranked on LinkedIn Jobs on the Rise 2026 (US).",
+      "projected_change_percent": null,
+      "source": {
+        "name": "LinkedIn News - Jobs on the Rise 2026 (U.S.)",
+        "url": "https://www.linkedin.com/pulse/linkedin-jobs-rise-2026-25-fastest-growing-roles-us-linkedin-news-dlb1c",
+        "publication_date": "2026-01-07",
+        "tier": 4
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "li-founder",
+      "title": "Founder",
+      "soc_code": null,
+      "trend": "emerging",
+      "statement": "Ranked on LinkedIn Jobs on the Rise 2026 (US); 'Founder' titles up 69% YoY on LinkedIn.",
+      "projected_change_percent": null,
+      "source": {
+        "name": "LinkedIn News - Jobs on the Rise 2026 (U.S.)",
+        "url": "https://www.linkedin.com/pulse/linkedin-jobs-rise-2026-25-fastest-growing-roles-us-linkedin-news-dlb1c",
+        "publication_date": "2026-01-07",
+        "tier": 4
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    }
+  ]
+}

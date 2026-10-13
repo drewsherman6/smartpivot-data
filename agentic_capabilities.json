@@ -1,7 +1,7 @@
 {
-  "version": "2026-07-20",
-  "generated_date": "2026-07-20",
-  "note": "Deep collection from leading agentic platforms. Expanded with real prebuilt agents and normalized skills. Weekly cron continues to deepen this dataset.",
+  "version": "2026-10-13",
+  "generated_date": "2026-10-13",
+  "note": "Deep collection from leading agentic platforms. Expanded with real prebuilt agents and normalized skills. Weekly cron continues to deepen this dataset. 2026-10-13: added n8n, Zapier Agents, Lindy, Microsoft Agent Framework (sourced detail in data/agent_platforms.json).",
   "platforms": [
     {
       "name": "Salesforce Agentforce",
@@ -92,6 +92,46 @@
         "retrieval_augmented_generation"
       ],
       "prebuilt_agents_count": 10
+    },
+    {
+      "name": "n8n",
+      "url": "https://n8n.io/",
+      "last_checked": "2026-10-13",
+      "skills": [
+        "workflow_orchestration",
+        "agent_orchestration"
+      ],
+      "prebuilt_agents_count": 0
+    },
+    {
+      "name": "Zapier Agents",
+      "url": "https://zapier.com/agents",
+      "last_checked": "2026-10-13",
+      "skills": [
+        "workflow_orchestration",
+        "tool_use"
+      ],
+      "prebuilt_agents_count": 0
+    },
+    {
+      "name": "Lindy",
+      "url": "https://www.lindy.ai/",
+      "last_checked": "2026-10-13",
+      "skills": [
+        "email_management",
+        "calendar_scheduling"
+      ],
+      "prebuilt_agents_count": 0
+    },
+    {
+      "name": "Microsoft Agent Framework (AutoGen + Semantic Kernel)",
+      "url": "https://azure.microsoft.com/en-us/blog/introducing-microsoft-agent-framework/",
+      "last_checked": "2026-10-13",
+      "skills": [
+        "multi_agent_orchestration",
+        "tool_use"
+      ],
+      "prebuilt_agents_count": 0
     }
   ],
   "agent_skills_catalog": [

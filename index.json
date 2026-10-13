@@ -1,0 +1,109 @@
+{
+  "manifest_version": "1.0.0",
+  "generated": "2026-10-13",
+  "base_raw_url": "https://raw.githubusercontent.com/drewsherman6/smartpivot-data/main/",
+  "datasets": [
+    {
+      "name": "headline_stats",
+      "path": "data/headline_stats.json",
+      "schema": "schemas/headline_stats.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-13",
+      "legacy": false,
+      "record_count": 27,
+      "description": "Headline workforce x AI/robotics statistics, fully sourced"
+    },
+    {
+      "name": "occupations",
+      "path": "data/occupations.json",
+      "schema": "schemas/occupations.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-13",
+      "legacy": false,
+      "record_count": 23,
+      "description": "Emerging and declining occupations, sourced"
+    },
+    {
+      "name": "emerging_skills",
+      "path": "data/emerging_skills.json",
+      "schema": "schemas/emerging_skills.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-13",
+      "legacy": false,
+      "record_count": 16,
+      "description": "Rising/declining skill signals, sourced"
+    },
+    {
+      "name": "agent_platforms",
+      "path": "data/agent_platforms.json",
+      "schema": "schemas/agent_platforms.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-13",
+      "legacy": false,
+      "record_count": 81,
+      "description": "AI agent platforms with sourced facts (incl. restored July-8 list marked restored_unverified)"
+    },
+    {
+      "name": "robotics_manufacturers",
+      "path": "data/robotics_manufacturers.json",
+      "schema": "schemas/robotics_manufacturers.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-13",
+      "legacy": false,
+      "record_count": 8,
+      "description": "Robot makers with sourced facts"
+    },
+    {
+      "name": "skills_export",
+      "path": "skills_export.json",
+      "schema": "schemas/skills_export.schema.json",
+      "schema_version": "legacy-1",
+      "last_updated": "2026-07-06",
+      "legacy": true,
+      "description": "Legacy full skills dataset (shape frozen)"
+    },
+    {
+      "name": "skills_summary",
+      "path": "skills_summary.json",
+      "schema": "schemas/skills_summary.schema.json",
+      "schema_version": "legacy-1",
+      "last_updated": "2026-07-06",
+      "legacy": true,
+      "description": "Legacy skills summary (shape frozen)"
+    },
+    {
+      "name": "risk_scoring_overlay",
+      "path": "risk_scoring_overlay.json",
+      "schema": "schemas/risk_scoring_overlay.schema.json",
+      "schema_version": "legacy-1",
+      "last_updated": "2026-07-06",
+      "legacy": true,
+      "description": "Legacy risk overlay (shape frozen)"
+    },
+    {
+      "name": "agentic_capabilities",
+      "path": "agentic_capabilities.json",
+      "schema": "schemas/agentic_capabilities.schema.json",
+      "schema_version": "legacy-1",
+      "last_updated": "2026-10-13",
+      "legacy": true,
+      "description": "Legacy agentic catalog (shape frozen)"
+    },
+    {
+      "name": "robotics_capabilities",
+      "path": "robotics_capabilities.json",
+      "schema": "schemas/robotics_capabilities.schema.json",
+      "schema_version": "legacy-1",
+      "last_updated": "2026-10-13",
+      "legacy": true,
+      "description": "Legacy robotics catalog (shape frozen)"
+    }
+  ],
+  "docs": [
+    "README.md",
+    "aether-research.md",
+    "future_proof_skills.md",
+    "at_risk_skills.md",
+    "CHANGELOG.md"
+  ]
+}

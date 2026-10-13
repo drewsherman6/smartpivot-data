@@ -1,0 +1,3 @@
+{"$schema":"http://json-schema.org/draft-07/schema#","$id":"skills_export.schema.json","type":"object","required":["metadata","skills"],
+"properties":{"metadata":{"type":"object","required":["version","generated"]},
+"skills":{"type":"array","items":{"type":"object","required":["id","name","category","risk_level","rationale","related_occupations"],"properties":{"category":{"enum":["future_proof","at_risk"]},"risk_level":{"enum":["low","medium","medium_high","high","very_high"]},"importance":{"type":["number","null"]},"related_occupations":{"type":"array","items":{"type":"object","required":["soc","title"]}}}}}}}

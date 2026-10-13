@@ -1,0 +1,231 @@
+{
+  "schema_version": "1.0.0",
+  "dataset": "emerging_skills",
+  "updated": "2026-10-13",
+  "records": [
+    {
+      "id": "wef-ai-bigdata",
+      "name": "AI and big data",
+      "trend": "rising",
+      "statement": "Tops WEF list of fastest-growing skills 2025-2030.",
+      "source": {
+        "name": "World Economic Forum - Future of Jobs Report 2025",
+        "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/",
+        "publication_date": "2025-01-07",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "wef-networks-cyber",
+      "name": "Networks and cybersecurity",
+      "trend": "rising",
+      "statement": "Second among fastest-growing skills (WEF 2025).",
+      "source": {
+        "name": "World Economic Forum - Future of Jobs Report 2025",
+        "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/",
+        "publication_date": "2025-01-07",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "wef-tech-literacy",
+      "name": "Technological literacy",
+      "trend": "rising",
+      "statement": "Among fastest-growing skills (WEF 2025).",
+      "source": {
+        "name": "World Economic Forum - Future of Jobs Report 2025",
+        "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/",
+        "publication_date": "2025-01-07",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "wef-creative-thinking",
+      "name": "Creative thinking",
+      "trend": "rising",
+      "statement": "Expected to rise in importance 2025-2030 (WEF).",
+      "source": {
+        "name": "World Economic Forum - Future of Jobs Report 2025",
+        "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/",
+        "publication_date": "2025-01-07",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "wef-resilience",
+      "name": "Resilience, flexibility and agility",
+      "trend": "rising",
+      "statement": "Expected to rise in importance 2025-2030 (WEF).",
+      "source": {
+        "name": "World Economic Forum - Future of Jobs Report 2025",
+        "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/",
+        "publication_date": "2025-01-07",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "wef-curiosity",
+      "name": "Curiosity and lifelong learning",
+      "trend": "rising",
+      "statement": "Expected to rise in importance 2025-2030 (WEF).",
+      "source": {
+        "name": "World Economic Forum - Future of Jobs Report 2025",
+        "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/",
+        "publication_date": "2025-01-07",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "wef-manual-dexterity",
+      "name": "Manual dexterity, endurance and precision",
+      "trend": "declining",
+      "statement": "Notable net decline; 24% of employers foresee lower importance (WEF).",
+      "source": {
+        "name": "World Economic Forum - Future of Jobs Report 2025",
+        "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/",
+        "publication_date": "2025-01-07",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "li-prompt-eng",
+      "name": "Prompt engineering",
+      "trend": "rising",
+      "statement": "Named in LinkedIn Skills on the Rise 2026 (Technical & Strategic AI).",
+      "source": {
+        "name": "LinkedIn - Skills on the Rise 2026",
+        "url": "https://news.linkedin.com/2026/Skills-on-the-rise-2026",
+        "publication_date": "2026-02-24",
+        "tier": 4
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "li-llms",
+      "name": "Large language models",
+      "trend": "rising",
+      "statement": "Named in LinkedIn Skills on the Rise 2026.",
+      "source": {
+        "name": "LinkedIn - Skills on the Rise 2026",
+        "url": "https://news.linkedin.com/2026/Skills-on-the-rise-2026",
+        "publication_date": "2026-02-24",
+        "tier": 4
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "li-ai-biz-strategy",
+      "name": "AI business strategy",
+      "trend": "rising",
+      "statement": "Named in LinkedIn Skills on the Rise 2026.",
+      "source": {
+        "name": "LinkedIn - Skills on the Rise 2026",
+        "url": "https://news.linkedin.com/2026/Skills-on-the-rise-2026",
+        "publication_date": "2026-02-24",
+        "tier": 4
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "li-cross-functional",
+      "name": "Cross-functional collaboration",
+      "trend": "rising",
+      "statement": "Named in LinkedIn Skills on the Rise 2026 (Leadership & People Management).",
+      "source": {
+        "name": "LinkedIn - Skills on the Rise 2026",
+        "url": "https://news.linkedin.com/2026/Skills-on-the-rise-2026",
+        "publication_date": "2026-02-24",
+        "tier": 4
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "li-stakeholder-comm",
+      "name": "Executive and stakeholder communication",
+      "trend": "rising",
+      "statement": "Named in LinkedIn Skills on the Rise 2026.",
+      "source": {
+        "name": "LinkedIn - Skills on the Rise 2026",
+        "url": "https://news.linkedin.com/2026/Skills-on-the-rise-2026",
+        "publication_date": "2026-02-24",
+        "tier": 4
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "li-gtm",
+      "name": "Go-to-market strategy",
+      "trend": "rising",
+      "statement": "Named in LinkedIn Skills on the Rise 2026.",
+      "source": {
+        "name": "LinkedIn - Skills on the Rise 2026",
+        "url": "https://news.linkedin.com/2026/Skills-on-the-rise-2026",
+        "publication_date": "2026-02-24",
+        "tier": 4
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "li-grc",
+      "name": "Governance, risk management and compliance",
+      "trend": "rising",
+      "statement": "Named in LinkedIn Skills on the Rise 2026.",
+      "source": {
+        "name": "LinkedIn - Skills on the Rise 2026",
+        "url": "https://news.linkedin.com/2026/Skills-on-the-rise-2026",
+        "publication_date": "2026-02-24",
+        "tier": 4
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "li-rag-langchain",
+      "name": "LangChain / Retrieval-Augmented Generation",
+      "trend": "rising",
+      "statement": "Most common skills of AI engineers, #1 LinkedIn Jobs on the Rise 2026 (US).",
+      "source": {
+        "name": "LinkedIn News - Jobs on the Rise 2026 (U.S.)",
+        "url": "https://www.linkedin.com/pulse/linkedin-jobs-rise-2026-25-fastest-growing-roles-us-linkedin-news-dlb1c",
+        "publication_date": "2026-01-07",
+        "tier": 4
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "mgi-skill-partnership",
+      "name": "Skills that add value to AI (framing questions, interpreting results)",
+      "trend": "rising",
+      "statement": "MGI: workers will spend less time preparing documents and more time framing questions and interpreting results.",
+      "source": {
+        "name": "McKinsey Global Institute - Agents, robots, and us: Skill partnerships in the age of AI",
+        "url": "https://www.mckinsey.com/mgi/our-research/agents-robots-and-us-skill-partnerships-in-the-age-of-ai",
+        "publication_date": "2025-11-25",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    }
+  ]
+}
