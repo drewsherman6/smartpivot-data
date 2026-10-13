@@ -1,0 +1,5 @@
+{"$schema":"http://json-schema.org/draft-07/schema#","$id":"agentic_capabilities.schema.json","type":"object","required":["version","generated_date","platforms","agent_skills_catalog","prebuilt_agents"],
+"properties":{"version":{"type":"string","format":"date"},"generated_date":{"type":"string","format":"date"},
+"platforms":{"type":"array","items":{"type":"object","required":["name","url","last_checked","skills","prebuilt_agents_count"],"properties":{"skills":{"type":"array","items":{"type":"string"}},"prebuilt_agents_count":{"type":"integer","minimum":0}}}},
+"agent_skills_catalog":{"type":"array","items":{"type":"object","required":["skill","description","platforms","example_use_cases"]}},
+"prebuilt_agents":{"type":"array","items":{"type":"object","required":["id","name","platform","purpose","target_tasks","skills_used","automation_scope","source_url"]}}}}

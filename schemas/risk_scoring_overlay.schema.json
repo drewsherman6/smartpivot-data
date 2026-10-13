@@ -1,0 +1,5 @@
+{"$schema":"http://json-schema.org/draft-07/schema#","$id":"risk_scoring_overlay.schema.json","type":"object",
+"required":["version","generated_date","trend_summary","skill_adjustments","new_emerging_skills","high_risk_signals","future_career_pathways","general_guidance"],
+"properties":{"version":{"type":"string","format":"date"},"generated_date":{"type":"string","format":"date"},"trend_summary":{"type":"string"},
+"skill_adjustments":{"type":"object","additionalProperties":{"type":"object","required":["multiplier","risk_delta","reason"],"properties":{"multiplier":{"type":"number","exclusiveMinimum":0},"risk_delta":{"type":"number"},"reason":{"type":"string"}}}},
+"new_emerging_skills":{"type":"array","items":{"type":"string"}},"high_risk_signals":{"type":"array","items":{"type":"string"}},"future_career_pathways":{"type":"array","items":{"type":"string"}},"general_guidance":{"type":"string"}}}

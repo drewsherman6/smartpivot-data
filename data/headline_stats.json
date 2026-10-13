@@ -1,0 +1,441 @@
+{
+  "schema_version": "1.0.0",
+  "dataset": "headline_stats",
+  "updated": "2026-10-13",
+  "records": [
+    {
+      "id": "wef-foj25-jobs-created",
+      "statement": "Macrotrend-driven job creation 2025-2030 estimated at 170 million jobs (14% of current employment).",
+      "value": 170000000,
+      "unit": "jobs",
+      "geography": "Global",
+      "period": "2025-2030",
+      "source": {
+        "name": "World Economic Forum - Future of Jobs Report 2025, ch.2 Jobs outlook",
+        "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/in-full/2-jobs-outlook/",
+        "publication_date": "2025-01-07",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "wef-foj25-jobs-displaced",
+      "statement": "Job displacement 2025-2030 estimated at 92 million jobs (8% of current employment).",
+      "value": 92000000,
+      "unit": "jobs",
+      "geography": "Global",
+      "period": "2025-2030",
+      "source": {
+        "name": "World Economic Forum - Future of Jobs Report 2025, ch.2 Jobs outlook",
+        "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/in-full/2-jobs-outlook/",
+        "publication_date": "2025-01-07",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "wef-foj25-net-jobs",
+      "statement": "Net job growth 2025-2030 of 78 million jobs (7% of current employment).",
+      "value": 78000000,
+      "unit": "jobs",
+      "geography": "Global",
+      "period": "2025-2030",
+      "source": {
+        "name": "World Economic Forum - Future of Jobs Report 2025, ch.2 Jobs outlook",
+        "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/in-full/2-jobs-outlook/",
+        "publication_date": "2025-01-07",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "wef-foj25-skill-instability",
+      "statement": "Employers expect 39% of workers' core skills to change or become outdated by 2030 (down from 44% in 2023).",
+      "value": 39,
+      "unit": "percent",
+      "geography": "Global",
+      "period": "2025-2030",
+      "source": {
+        "name": "World Economic Forum - Future of Jobs Report 2025",
+        "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/",
+        "publication_date": "2025-01-07",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "wef-foj25-training",
+      "statement": "50% of workers have completed training, reskilling or upskilling (41% in 2023 edition).",
+      "value": 50,
+      "unit": "percent",
+      "geography": "Global",
+      "period": "2025",
+      "source": {
+        "name": "World Economic Forum - Future of Jobs Report 2025",
+        "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/",
+        "publication_date": "2025-01-07",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "wef-foj25-manual-dexterity-decline",
+      "statement": "24% of respondents foresee a decline in importance of manual dexterity, endurance and precision.",
+      "value": 24,
+      "unit": "percent",
+      "geography": "Global",
+      "period": "2025-2030",
+      "source": {
+        "name": "World Economic Forum - Future of Jobs Report 2025",
+        "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/",
+        "publication_date": "2025-01-07",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "mgi-2025-automatable-hours",
+      "statement": "Currently demonstrated technologies could in theory automate activities accounting for about 57% of US work hours (technical potential, not a job-loss forecast).",
+      "value": 57,
+      "unit": "percent",
+      "geography": "US",
+      "period": "2025",
+      "source": {
+        "name": "McKinsey Global Institute - Agents, robots, and us: Skill partnerships in the age of AI",
+        "url": "https://www.mckinsey.com/mgi/our-research/agents-robots-and-us-skill-partnerships-in-the-age-of-ai",
+        "publication_date": "2025-11-25",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "mgi-2025-agents-hours",
+      "statement": "AI agents could perform tasks occupying 44% of US work hours at current capability.",
+      "value": 44,
+      "unit": "percent",
+      "geography": "US",
+      "period": "2025",
+      "source": {
+        "name": "McKinsey Global Institute - Agents, robots, and us: Skill partnerships in the age of AI",
+        "url": "https://www.mckinsey.com/mgi/our-research/agents-robots-and-us-skill-partnerships-in-the-age-of-ai",
+        "publication_date": "2025-11-25",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "mgi-2025-robots-hours",
+      "statement": "Robots could perform tasks occupying 13% of US work hours at current capability.",
+      "value": 13,
+      "unit": "percent",
+      "geography": "US",
+      "period": "2025",
+      "source": {
+        "name": "McKinsey Global Institute - Agents, robots, and us: Skill partnerships in the age of AI",
+        "url": "https://www.mckinsey.com/mgi/our-research/agents-robots-and-us-skill-partnerships-in-the-age-of-ai",
+        "publication_date": "2025-11-25",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "mgi-2025-skills-transferable",
+      "statement": "More than 70% of today's skills can be applied in both automatable and non-automatable work.",
+      "value": 70,
+      "unit": "percent",
+      "geography": "US",
+      "period": "2025",
+      "source": {
+        "name": "McKinsey Global Institute - Agents, robots, and us: Skill partnerships in the age of AI",
+        "url": "https://www.mckinsey.com/mgi/our-research/agents-robots-and-us-skill-partnerships-in-the-age-of-ai",
+        "publication_date": "2025-11-25",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-2434-total-growth",
+      "statement": "Total US employment projected to grow 3.1% (5.2 million jobs) 2024-2034.",
+      "value": 3.1,
+      "unit": "percent",
+      "geography": "US",
+      "period": "2024-2034",
+      "source": {
+        "name": "U.S. BLS - Table 1.5 Fastest declining occupations 2024-34",
+        "url": "https://www.bls.gov/emp/tables/fastest-declining-occupations.htm",
+        "publication_date": null,
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-2434-comp-math-growth",
+      "statement": "Computer and mathematical occupations projected to grow 10.1%, second fastest occupational group.",
+      "value": 10.1,
+      "unit": "percent",
+      "geography": "US",
+      "period": "2024-2034",
+      "source": {
+        "name": "U.S. BLS - Employment Projections 2024-2034 Summary",
+        "url": "https://www.bls.gov/news.release/ecopro.nr0.htm",
+        "publication_date": null,
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-2434-data-scientists",
+      "statement": "Employment of data scientists projected to increase 33.5% (82,500 jobs).",
+      "value": 33.5,
+      "unit": "percent",
+      "geography": "US",
+      "period": "2024-2034",
+      "source": {
+        "name": "U.S. BLS - TED: Artificial intelligence, information technology, and employment, 2024-34",
+        "url": "http://www.bls.gov/opub/ted/2026/artificial-intelligence-information-technology-and-employment-2024-34.htm",
+        "publication_date": "2026",
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-2434-infosec",
+      "statement": "Information security analysts projected to grow 28.5% (52,100 jobs).",
+      "value": 28.5,
+      "unit": "percent",
+      "geography": "US",
+      "period": "2024-2034",
+      "source": {
+        "name": "U.S. BLS - TED: Artificial intelligence, information technology, and employment, 2024-34",
+        "url": "http://www.bls.gov/opub/ted/2026/artificial-intelligence-information-technology-and-employment-2024-34.htm",
+        "publication_date": "2026",
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-2434-software-devs",
+      "statement": "Software developers projected to grow 15.8% (267,700 jobs), the largest numeric increase among AI/IT occupations.",
+      "value": 15.8,
+      "unit": "percent",
+      "geography": "US",
+      "period": "2024-2034",
+      "source": {
+        "name": "U.S. BLS - TED: Artificial intelligence, information technology, and employment, 2024-34",
+        "url": "http://www.bls.gov/opub/ted/2026/artificial-intelligence-information-technology-and-employment-2024-34.htm",
+        "publication_date": "2026",
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "bls-2434-claims-adjusters",
+      "statement": "Claims adjusters, examiners and investigators projected to decline 5.1%, partly due to AI damage-assessment tools.",
+      "value": -5.1,
+      "unit": "percent",
+      "geography": "US",
+      "period": "2024-2034",
+      "source": {
+        "name": "U.S. BLS - Monthly Labor Review: Industry and occupational employment projections overview, 2024-34",
+        "url": "https://www.bls.gov/opub/mlr/2026/article/industry-and-occupational-employment-projections-overview.htm",
+        "publication_date": "2026",
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "ifr-wr25-installations",
+      "statement": "542,076 industrial robots installed globally in 2024, second highest in history (record 552,946 in 2022).",
+      "value": 542076,
+      "unit": "units",
+      "geography": "Global",
+      "period": "2024",
+      "source": {
+        "name": "IFR World Robotics 2025 - Industrial Robots, Executive Summary",
+        "url": "https://ifr.org/img/worldrobotics/Executive_Summary_WR_2025_Industrial_Robots.pdf",
+        "publication_date": "2025-09",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "ifr-wr25-operational-stock",
+      "statement": "Operational stock of industrial robots reached 4,663,698 units in 2024 (+9%).",
+      "value": 4663698,
+      "unit": "units",
+      "geography": "Global",
+      "period": "2024",
+      "source": {
+        "name": "IFR World Robotics 2025 - Industrial Robots, Executive Summary",
+        "url": "https://ifr.org/img/worldrobotics/Executive_Summary_WR_2025_Industrial_Robots.pdf",
+        "publication_date": "2025-09",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "ifr-wr25-china-stock",
+      "statement": "China's operational stock reached 2,027,190 units, 43% of global stock.",
+      "value": 2027190,
+      "unit": "units",
+      "geography": "China",
+      "period": "2024",
+      "source": {
+        "name": "IFR World Robotics 2025 - Industrial Robots, Executive Summary",
+        "url": "https://ifr.org/img/worldrobotics/Executive_Summary_WR_2025_Industrial_Robots.pdf",
+        "publication_date": "2025-09",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "ifr-wr25-robot-density",
+      "statement": "Global robot density rose from 163 to 177 robots per 10,000 manufacturing employees; Korea highest at 1,220.",
+      "value": 177,
+      "unit": "robots per 10,000 manufacturing employees",
+      "geography": "Global",
+      "period": "2024",
+      "source": {
+        "name": "IFR World Robotics 2025 - Foreword",
+        "url": "https://ifr.org/img/worldrobotics/Foreword_WR_2025_Industrial_Robots.pdf",
+        "publication_date": "2025-09",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "ifr-wr25-prof-service-robots",
+      "statement": "199,000 new professional service robots (incl. AMRs) in 2024 (+9%), based on sample of 293 producers.",
+      "value": 199000,
+      "unit": "units",
+      "geography": "Global",
+      "period": "2024",
+      "source": {
+        "name": "IFR World Robotics 2025 press conference presentation",
+        "url": "https://ifr.org/downloads/press_docs/PressConference2025_presentation.pdf",
+        "publication_date": "2025-09",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "medium"
+    },
+    {
+      "id": "ifr-wr25-medical-robots",
+      "statement": "16,700 new medical robots in 2024 (+91%), sample-based.",
+      "value": 16700,
+      "unit": "units",
+      "geography": "Global",
+      "period": "2024",
+      "source": {
+        "name": "IFR World Robotics 2025 press conference presentation",
+        "url": "https://ifr.org/downloads/press_docs/PressConference2025_presentation.pdf",
+        "publication_date": "2025-09",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "medium"
+    },
+    {
+      "id": "anthropic-aei-mar26-coding-share",
+      "statement": "Computer and Mathematical occupation tasks account for 35% of Claude.ai conversations (Feb 2026).",
+      "value": 35,
+      "unit": "percent",
+      "geography": "Global (Claude.ai users)",
+      "period": "2026-02",
+      "source": {
+        "name": "Anthropic Economic Index report: Learning curves",
+        "url": "https://www.anthropic.com/research/economic-index-march-2026-report",
+        "publication_date": "2026-03-24",
+        "tier": 5
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "anthropic-aei-mar26-top10-concentration",
+      "statement": "Top 10 O*NET tasks fell from 24% to 19% of Claude.ai conversations between Nov 2025 and Feb 2026.",
+      "value": 19,
+      "unit": "percent",
+      "geography": "Global (Claude.ai users)",
+      "period": "2026-02",
+      "source": {
+        "name": "Anthropic Economic Index report: Learning curves",
+        "url": "https://www.anthropic.com/research/economic-index-march-2026-report",
+        "publication_date": "2026-03-24",
+        "tier": 5
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
+    },
+    {
+      "id": "anthropic-aei-jun26-expectations",
+      "statement": "Over a third of surveyed respondents expect AI to be able to do most or nearly all of their work tasks next year.",
+      "value": null,
+      "unit": "qualitative",
+      "geography": "Survey respondents",
+      "period": "2026",
+      "source": {
+        "name": "Anthropic Economic Index report: Cadences",
+        "url": "https://www.anthropic.com/research/economic-index-june-2026-report",
+        "publication_date": "2026-06-26",
+        "tier": 5
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "medium"
+    },
+    {
+      "id": "oecd-genai-exposure",
+      "statement": "About 26% of OECD employment is exposed to generative AI (>=20% of tasks could be done twice as fast).",
+      "value": 26,
+      "unit": "percent",
+      "geography": "OECD",
+      "period": "2024",
+      "source": {
+        "name": "OECD (Job Creation and Local Economic Development 2024 country notes, citing OECD GenAI exposure measure)",
+        "url": "https://www.oecd.org/en/publications/job-creation-and-local-economic-development-2024-country-notes_ad2806c1-en/austria_384a8d65-en.html",
+        "publication_date": "2024",
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "medium",
+      "notes": "Figure from search synthesis of OECD country notes; verify against OECD Employment Outlook 2025."
+    },
+    {
+      "id": "linkedin-2026-ai-jobs",
+      "statement": "Over 1.3 million AI-enabled jobs created since 2022 (LinkedIn data).",
+      "value": 1300000,
+      "unit": "jobs",
+      "geography": "Global",
+      "period": "2022-2026",
+      "source": {
+        "name": "LinkedIn - 2026 Davos press release",
+        "url": "https://news.linkedin.com/2026/2026-Davos-Press-Release",
+        "publication_date": "2026-01",
+        "tier": 4
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "medium",
+      "notes": "From search synthesis; page not fetched."
+    }
+  ]
+}
