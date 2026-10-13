@@ -1,59 +1,46 @@
-# Aether Weekly Research Runbook
+# Aether Weekly Research Runbook (unattended, direct to main)
 
-**Purpose:** Each week, refresh SmartPivot's sourced data on the workforce and AI, agents, robotics and automation.
-**Output:** merge-only updates to `data/*.json` (plus careful hand edits to the legacy files), validated with `npm test` and published through a PR.
-**Golden rules**
-1. **No invented numbers.** Every figure must come from a page you actually opened this run. Give its URL, publication date and today's `retrieved_at`.
-2. **Merge, never overwrite.** Use `scripts/update.js` with a patch file. Never regenerate whole files from hard-coded lists. To retire something, deprecate it; do not delete it.
-3. **Dates move only when data changes.** The updater handles this. Do not touch `updated` or `last_checked` by hand unless you actually re-verified the item.
-4. **Legacy files are frozen in shape** (field names and top-level keys). Additive entries are OK. Whole-role risk scores move at most **±6 points** per week.
-5. **No force-push and no direct pushes to main.** Work on a branch and open a PR.
+**Purpose:** Every week, refresh SmartPivot's sourced data on how AI, AI agents and robotics are affecting every occupation.
+**Mode:** Unattended. The routine commits **straight to `main`**, as Drew authorized on 2026-10-13. It **never force-pushes**, never rewrites history, and never changes the path or top-level shape of a legacy file. `npm test` must pass before every push.
 
-## 1. What to check (in priority order)
-| Tier | Sources | Feeds |
-|---|---|---|
-| 1 | WEF Future of Jobs, McKinsey Global Institute, IFR World Robotics, Deloitte/PwC AI Jobs Barometer/BCG | headline_stats, emerging_skills |
-| 2 | BLS Employment Projections + TED/MLR, O*NET, OECD Employment/Skills Outlook, ILO, IMF, World Bank | occupations, headline_stats |
-| 3 | NBER, Brookings, Stanford AI Index, MIT | headline_stats (confidence follows evidence) |
-| 4 | LinkedIn Economic Graph (Jobs/Skills on the Rise), Lightcast, Indeed Hiring Lab | occupations, emerging_skills |
-| 5 | AI labs (Anthropic Economic Index, OpenAI, Google, Microsoft), company earnings and press releases | headline_stats, agent_platforms, robotics_manufacturers |
-| 6 | Agent platforms: Salesforce Agentforce, ServiceNow, Microsoft (Copilot Studio / Agent Framework), OpenAI, Anthropic, UiPath, Automation Anywhere, n8n, Zapier, Lindy, CrewAI, LangChain, Glean, Kore.ai, Sierra, Decagon, Moveworks | agent_platforms (+ legacy agentic_capabilities.json) |
-| 7 | Robot makers: ABB, FANUC, KUKA, Universal Robots, Yaskawa, Boston Dynamics, Figure, Agility, Tesla Optimus, Intuitive, Omron, Epson, Rockwell | robotics_manufacturers (+ legacy robotics_capabilities.json) |
+## Golden rules
+1. **No invented numbers.** Every figure comes from a bulk file or page retrieved in this run, with its source name, URL and `retrieved_at`.
+2. **Merge, never overwrite.** Bulk datasets are rebuilt by `scripts/refresh.js`. Curated datasets change only through `scripts/update.js` patches. Nothing is deleted; mark it `deprecated` instead.
+3. **Dates move only when data moves.** refresh.js skips writing any file whose content is unchanged, ignoring `generated` and `retrieved_at`.
+4. **Legacy files:** additive edits only. Whole-role risk scores move at most ±6 per week.
 
-Each week, also:
-- Search for anything published in the last 7 days on "AI jobs report", "automation employment", "AI agents enterprise adoption" and "humanoid robot deployment".
-- Re-verify at least 10 `restored_unverified` platforms in `data/agent_platforms.json`. Promote each one to `verified` with a source, or deprecate it.
-
-## 2. How to record
-Build a patch file per dataset:
-```json
-{"dataset":"headline_stats","note":"WEF/BLS refresh 2026-10-20","upsert":[{"id":"bls-2434-data-scientists","statement":"...","value":33.5,"unit":"percent","geography":"US","period":"2024-2034","source":{"name":"...","url":"https://...","publication_date":"2026-..","tier":2},"retrieved_at":"2026-10-20","confidence":"high"}],"deprecate":[]}
+## Weekly steps
 ```
-- Keep ids stable (`<source>-<topic>`). A newer edition of the same figure gets a new id. Deprecate the old id only if it has been superseded.
-- confidence: `high` = you read the figure on the source page; `medium` = taken from a secondary report or a search summary; `low` = unverified.
-
-## 3. Merge and validate
+cd smartpivot-data && git pull --ff-only origin main
+npm ci
+npm run refresh            # downloads O*NET, BLS OEWS + projections, Eloundou, AIOE, Anthropic EI (exposure, task penetration, robot exposure); rebuilds data/occupations, data/exposure, data/robotics, data/signals; verifies agent + robot homepages; rebuilds index.json
+npm test                   # MUST pass; if it fails, fix or `git checkout -- .` and stop (do not push)
 ```
-node scripts/update.js patch.json --dry-run   # review
-node scripts/update.js patch.json             # apply; appends CHANGELOG.md + data/history/changes.jsonl; rebuilds index.json
-npm test                                      # MUST pass
-```
-If you hand-edit a legacy file, run `node scripts/build-manifest.js` and then `npm test`.
+Then do the curated research pass (30–60 min):
+1. **Check for new releases** and update `scripts/sources.js` if any of these appeared:
+   - a new O*NET database (onetcenter.org/database.html, e.g. 31.1)
+   - a new OEWS May release (oesmYYnat.zip)
+   - new BLS projections
+   - new Anthropic Economic Index files on Hugging Face
+   - any new occupation-level exposure dataset
 
-## 4. Publish
-```
-git checkout -b research/YYYY-MM-DD
-git add -A && git commit -m "Weekly research YYYY-MM-DD: <summary>"
-git push -u origin research/YYYY-MM-DD
-gh pr create --base main --title "Weekly research YYYY-MM-DD" --body "<counts added/updated/deprecated, sources>"
-```
-The operator reviews and merges the PR. If nothing changed, commit nothing.
+   After updating, re-run refresh.
+2. **Search the last 7 days** for: "AI jobs report", "AI exposure occupations study", "AI agents launch enterprise", "humanoid robot deployment", "industrial robot installations". Prefer the tier 1–2 sources: WEF, McKinsey, OECD, ILO, IMF, BLS, NBER, IFR, LinkedIn/Lightcast/Indeed, and the AI labs.
+3. **Record new figures** as patches to `headline_stats`, `occupations` (curated) or `emerging_skills`. Each needs a stable id, source{name,url,publication_date,tier}, `retrieved_at` and confidence. Apply each patch with `node scripts/update.js patch.json`.
+4. **Add new products to the catalog:** new agent platforms or robot makers go into `scripts/catalog.js` with name, URL and category. The next refresh verifies them.
+5. **Re-check `needs_review` and `unreachable` platforms.** Fix the URL in `data/agent_platforms.json` (for example, the product page instead of the root domain), or deprecate the entry.
+6. Run `npm test` again.
 
-## Legacy formats (frozen)
-- `risk_scoring_overlay.json`: version, generated_date, trend_summary, skill_adjustments{name:{multiplier,risk_delta,reason}}, new_emerging_skills, high_risk_signals, future_career_pathways, general_guidance.
-- `skills_summary.json`: metadata{version,generated,total_skills}, skills[{name, category future_proof|at_risk, risk_level, importance (null for at_risk), short_rationale, top_3_occupations}].
-- `agentic_capabilities.json`: version, generated_date, platforms[{name,url,last_checked,skills,prebuilt_agents_count}], agent_skills_catalog, prebuilt_agents.
-- `robotics_capabilities.json`: last_updated, platforms[{name,url,last_checked,robots,skills,current_tasks}], skills_catalog, total_robots_tracked.
-Exact schemas: `schemas/`.
+## Commit and push (direct to main)
+```
+git add -A
+git diff --cached --quiet && exit 0          # nothing changed: commit nothing
+git commit -m "Weekly refresh YYYY-MM-DD: <sources changed>, <n records added/updated>"
+git push origin main                          # never --force; if rejected: git pull --rebase origin main, npm test, push again
+```
+Log a summary of the run in the commit message (sources whose version changed, counts). `CHANGELOG.md` is updated automatically for curated patches. For bulk refreshes, add a one-line entry by hand.
 
-*Last updated: 2026-10-13*
+## Failure handling
+- Download failure (for example, BLS returns 403): BLS requires the contact User-Agent that is already set in refresh.js. Retry once, then run `npm run refresh -- --offline` from cache and note "stale <source>" in the commit.
+- Schema failure: do not push. Fix the cause in the script, or revert the files.
+- Never push secrets, `.cache/` or `node_modules/` (all are gitignored).

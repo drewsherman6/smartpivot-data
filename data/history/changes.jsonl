@@ -1,1 +1,2 @@
 {"date":"2026-10-13","dataset":"*","op":"seed","note":"Initial sourced research pass; restored 74 platforms from commit d4344e7 as restored_unverified"}
+{"date":"2026-10-13","dataset":"headline_stats","note":"BLS Employment Projections 2025-35 release supersedes 2024-34 total","op":"add","id":"bls-2535-total-growth"}

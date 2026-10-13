@@ -436,6 +436,22 @@
       "retrieved_at": "2026-10-13",
       "confidence": "medium",
       "notes": "From search synthesis; page not fetched."
+    },
+    {
+      "id": "bls-2535-total-growth",
+      "statement": "Total US employment projected to grow 3.5% (from 170.28M to 176.20M, +5.92M jobs) 2025-2035.",
+      "value": 3.5,
+      "unit": "percent",
+      "geography": "US",
+      "period": "2025-2035",
+      "source": {
+        "name": "U.S. BLS Employment Projections, Occupation.xlsx Table 1.1",
+        "url": "https://www.bls.gov/emp/ind-occ-matrix/occupation.xlsx",
+        "publication_date": null,
+        "tier": 2
+      },
+      "retrieved_at": "2026-10-13",
+      "confidence": "high"
     }
   ]
 }
