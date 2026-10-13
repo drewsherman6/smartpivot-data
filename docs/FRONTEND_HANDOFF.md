@@ -19,11 +19,10 @@ Raw base: `https://raw.githubusercontent.com/drewsherman6/smartpivot-data/main/`
 - The weekly refresh is scheduled for **Mondays 7:35 AM Toronto**, before your 10:00 AM assumption. Your 1-hour cache is fine.
 - The repo has no Actions workflow. The routine is in `aether-research.md`, and the run is scheduled outside the repo.
 
-### ⚠️ Branch: fetch `main` only
-- The default and only maintained branch is **`main`**.
-- A stale **`master`** branch still exists. It is frozen at **2026-07-20** and **returns 200**, so your current "master first, then default" order serves **July data** (`risk_scoring_overlay.json` dated 2026-07-06).
-- **Fix:** fetch `main` directly and drop the `master` attempt.
-- Drew may delete `master`. Until then, never read it.
+### Branch: `main` is canonical, `master` is mirrored
+- The maintained branch is **`main`**.
+- **`master`** was frozen at 2026-07-20, which is why your "master first" order served July data. As of 2026-10-13 it has been fast-forwarded to `main`, and every weekly refresh keeps it in sync.
+- Your current fetch order works. Fetching `main` directly is still recommended, because it saves a request and is the branch we guarantee.
 
 ---
 
@@ -171,9 +170,9 @@ Use the top-level `generated` as the signal date.
 - Schemas live in `schemas/`, with `schema_version` on each dataset. A **patch or minor** version bump means additive changes only. A **major** bump means a breaking change: it ships under a new path, with the old path kept for at least 4 weeks.
 - Dates change only when the data changes. Every push passes `npm test`.
 - Nothing is deleted. Retired items get `status:"deprecated"` (or `deprecated:true`).
-- `main` is the only branch you should read.
+- `main` is canonical. `master` is kept identical to it as a mirror.
 
 **We ask of the frontend:**
-- Read `main` only, with your 1-hour cache and the bundled fallback.
+- Prefer `main` (`master` mirrors it), with your 1-hour cache and the bundled fallback.
 - Hide `deprecated` items. Show provenance.
 - Request new fields or report data issues through a GitHub issue in `drewsherman6/smartpivot-data` labelled **`frontend-request`**.
