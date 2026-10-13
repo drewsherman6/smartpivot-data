@@ -12,6 +12,8 @@ Every figure comes from a named source with a URL and a `retrieved_at` date.
 
 Base raw URL: `https://raw.githubusercontent.com/drewsherman6/smartpivot-data/main/`
 
+**Frontend developers: start with [docs/FRONTEND_HANDOFF.md](docs/FRONTEND_HANDOFF.md).**
+
 ## How the frontend should consume
 1. Load **`index.json`**. It lists every dataset with path, schema, schema_version, last_updated and record_count.
 2. Load **`data/occupations/index.json`**. It holds all 1,016 occupations (`code`, `title`, `shard`, wage, growth, `ai_exposure_composite`, `robot_exposure_index`) and is enough for search and lists.
