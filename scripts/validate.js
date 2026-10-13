@@ -6,11 +6,13 @@ const { ROOT, ajv, readJson } = require('./lib');
 const datasets = require('./datasets');
 const errors = [];
 const a = ajv();
+const compiled = new Map();
+const compile = (rel) => { if (!compiled.has(rel)) compiled.set(rel, a.compile(readJson(rel))); return compiled.get(rel); };
 
 for (const ds of datasets) {
   let data;
   try { data = readJson(ds.path); } catch (e) { errors.push(e.message); continue; }
-  const v = a.compile(readJson(ds.schema));
+  const v = compile(ds.schema);
   if (!v(data)) errors.push(`${ds.path}: ${a.errorsText(v.errors, { separator: '\n  ' })}`);
   if (ds.key && Array.isArray(data[ds.key])) {
     const seen = new Set();
@@ -23,6 +25,17 @@ for (const ds of datasets) {
     }
   }
 }
+// Occupation coverage: every index code must exist in its shard, and vice versa
+try {
+  const idx = readJson('data/occupations/index.json'); let n = 0;
+  const shards = new Map();
+  for (const o of idx.occupations) {
+    if (!shards.has(o.shard)) shards.set(o.shard, new Set(readJson(o.shard).occupations.map((x) => x.code)));
+    if (!shards.get(o.shard).has(o.code)) errors.push(`index lists ${o.code} but ${o.shard} lacks it`);
+  }
+  for (const s of shards.values()) n += s.size;
+  if (n !== idx.count || idx.count !== idx.occupations.length) errors.push(`occupation count mismatch index=${idx.count} shards=${n}`);
+} catch (e) { errors.push(e.message); }
 // Legacy-specific invariants
 try {
   const s = readJson('skills_summary.json');

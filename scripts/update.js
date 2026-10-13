@@ -47,4 +47,4 @@ const cl = path.join(ROOT, 'CHANGELOG.md');
 const lines = changes.map((c) => `- ${ds.name}: ${c.op} \`${c.id}\``).join('\n');
 fs.appendFileSync(cl, `\n## ${today()} - ${ds.name}\n${patch.note ? patch.note + '\n' : ''}${lines}\n`);
 require('child_process').execFileSync(process.execPath, [path.join(__dirname, 'build-manifest.js')], { stdio: 'inherit' });
-console.log(`${changes.length} change(s) applied to ${ds.path}. Now run: npm test, then commit and open a PR.`);
+console.log(`${changes.length} change(s) applied to ${ds.path}. Now run: npm test, then commit and push.`);
