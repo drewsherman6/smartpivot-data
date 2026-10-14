@@ -126,3 +126,24 @@ exports.robotMakers = [
   ['John Deere (autonomy)', 'https://www.deere.com/en/autonomous/', 'agriculture'], ['Built Robotics', 'https://www.builtrobotics.com/', 'construction'],
   ['Skydio', 'https://www.skydio.com/', 'drones_inspection'], ['Hilti (Jaibot)', 'https://www.hilti.com/', 'construction'],
 ];
+// O*NET skill -> rising-skill records in data/emerging_skills.json (used as a future signal for derived.future_skills)
+exports.skillToRising = {
+  Programming: ['wef-ai-bigdata', 'li-llms', 'li-prompt-eng', 'li-rag-langchain'], 'Technology Design': ['wef-tech-literacy', 'wef-ai-bigdata'],
+  'Systems Analysis': ['wef-tech-literacy'], 'Systems Evaluation': ['wef-tech-literacy'],
+  'Active Learning': ['wef-curiosity'], 'Learning Strategies': ['wef-curiosity'], 'Complex Problem Solving': ['wef-creative-thinking', 'mgi-skill-partnership'],
+  'Critical Thinking': ['mgi-skill-partnership'], Coordination: ['li-cross-functional'], Persuasion: ['li-stakeholder-comm', 'li-gtm'],
+  Negotiation: ['li-gtm'], 'Judgment and Decision Making': ['li-grc'], 'Quality Control Analysis': ['li-grc'], Monitoring: ['li-grc'],
+};
+// O*NET skill -> regex over hot/in-demand technology categories+examples and emerging task text
+exports.skillSignals = {
+  Programming: /program|software development|development environment|compiler|database|web platform|object or component|scripting|python|java|sql|cloud/i,
+  'Technology Design': /development environment|design|cad|computer aided/i, 'Systems Analysis': /enterprise|platform|database|analytics|cloud/i,
+  'Systems Evaluation': /enterprise|analytics|business intelligence/i, Mathematics: /analytical|statistic|spreadsheet|data/i,
+  'Operations Analysis': /enterprise resource|project management|analytics/i, Troubleshooting: /network monitoring|diagnostic|security|debug/i,
+  'Quality Control Analysis': /quality|testing|inspection|review|audit/i, Monitoring: /monitor|security|tracking|review/i,
+  Writing: /write|content|document|edit|report/i, Instructing: /train|teach|coach|educat/i, 'Learning Strategies': /train|learn|educat/i,
+  'Service Orientation': /customer|client|patient|guest/i, Persuasion: /sales|market|crm|customer relationship/i,
+  'Operation and Control': /control|automation|navigation|telematic|fleet|electronic logging/i, 'Operations Monitoring': /monitor|telematic|tracking|sensor/i,
+  'Equipment Maintenance': /maintenance|diagnostic/i, Repairing: /repair|diagnostic/i, Installation: /install/i,
+  'Management of Financial Resources': /accounting|financial|budget/i, 'Management of Personnel Resources': /human resources|scheduling|workforce/i,
+};

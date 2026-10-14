@@ -195,6 +195,12 @@ async function main() {
   }
 
   // ---------- Derived: transitions, future skills, skills to develop ----------
+  const SKILL_STATS = new Map();
+  { const acc = new Map(); for (const o of all) for (const s of o.skills) { const a = acc.get(s.name) || []; a.push(s); acc.set(s.name, a); }
+    const ms = (xs) => { const m = xs.reduce((a, b) => a + b, 0) / xs.length; return [m, Math.sqrt(xs.reduce((a, b) => a + (b - m) ** 2, 0) / xs.length)]; };
+    for (const [k, xs] of acc) { const [meanIm, sdIm] = ms(xs.map((x) => x.importance)); const lv = xs.map((x) => x.level).filter((x) => x != null); const [meanLv, sdLv] = lv.length ? ms(lv) : [0, 0]; SKILL_STATS.set(k, { n: xs.length, meanIm, sdIm, meanLv, sdLv }); } }
+  const C = require('./catalog');
+  const RISING = new Map(require('../data/emerging_skills.json').records.filter((r) => r.trend === 'rising' && !r.deprecated).map((r) => [r.id, r]));
   const TIER_W = { 'Primary-Short': 1, 'Primary-Long': 0.7, 'Supplemental': 0.4 };
   const clamp = (x) => Math.max(-1, Math.min(1, x));
   const lv = (o) => new Map(o.skills.map((s) => [s.name, s]));
@@ -210,11 +216,31 @@ async function main() {
       return { code: t.code, title: t.title, relatedness_tier: r.tier, projected_change_percent: tg ?? null, median_annual_wage: tw ?? null, ai_exposure_composite: tc ?? null, robot_exposure_index: t.exposure.robotics.anthropic_robot_exposure_index, score: r2(score), components: Object.fromEntries(Object.entries(comp).map(([k, v]) => [k, r2(v)])), skill_gaps: gaps, growing_faster_than_average: tg != null && epTotal ? tg > epTotal.change_percent : null };
     }).filter(Boolean).sort((a, b) => b.score - a.score);
     const top = cands.slice(0, 8);
-    const fsAcc = new Map();
-    const add = (s, w) => { const a = fsAcc.get(s.name) || { skill: s.name, category: s.category, w: 0, sum: 0 }; a.w += w; a.sum += w * s.importance; fsAcc.set(s.name, a); };
-    o.skills.forEach((s) => add(s, 1));
-    top.slice(0, 5).forEach((t) => { if (t.score > 0) occ.get(t.code).skills.forEach((s) => add(s, t.score)); });
-    const future = [...fsAcc.values()].map((a) => ({ skill: a.skill, category: a.category, kind: 'skill', future_importance: r2(a.sum / a.w), current_importance: self.get(a.skill)?.importance ?? null })).sort((a, b) => b.future_importance - a.future_importance).slice(0, 10);
+    // future_skills: job-distinctive skills (z-score vs all occupations) + future signals; generic baseline -> core_skills
+    const transFut = new Map(); let tw = 0;
+    top.slice(0, 5).forEach((t) => { if (t.score > 0 && (t.projected_change_percent ?? 0) > 0) { tw += t.score; occ.get(t.code).skills.forEach((s) => transFut.set(s.name, (transFut.get(s.name) || 0) + t.score * s.importance)); } });
+    const hotTech = o.technology.filter((t) => t.hot || t.in_demand);
+    const scored = o.skills.map((s) => {
+      const st = SKILL_STATS.get(s.name);
+      const zIm = st.sdIm ? (s.importance - st.meanIm) / st.sdIm : 0, zLv = st.sdLv && s.level != null ? (s.level - st.meanLv) / st.sdLv : 0;
+      const z = (zIm + zLv) / 2;
+      const why = [`importance ${s.importance} vs ${r2(st.meanIm)} avg across ${st.n} occupations`]; const sig = [{ type: 'distinctiveness', source: 'O*NET 31.0 skills (importance/level z-score vs all occupations)', value: r2(z) }];
+      let bonus = 0;
+      const tf = tw ? transFut.get(s.name) / tw - s.importance : 0;
+      if (tw && tf > 0.1) { bonus += Math.min(0.5, tf); why.push(`more important (+${r2(tf)}) in growing transition targets`); sig.push({ type: 'growing_transitions', source: 'BLS Employment Projections + O*NET related occupations', value: r2(tf) }); }
+      const re = C.skillSignals[s.name];
+      const techHits = re ? hotTech.filter((t) => re.test(t.category + ' ' + t.example)).slice(0, 3).map((t) => t.example) : [];
+      if (techHits.length) { bonus += 0.3; why.push(`hot/in-demand tech: ${techHits.join(', ')}`); sig.push({ type: 'hot_technology', source: 'O*NET 31.0 technology skills (Hot Technology / In Demand flags)', items: techHits }); }
+      const emHits = re ? o.emerging_tasks.filter((t) => re.test(t.text)).slice(0, 2).map((t) => t.text) : [];
+      if (emHits.length) { bonus += 0.3; why.push('appears in O*NET emerging tasks'); sig.push({ type: 'emerging_task', source: 'O*NET 31.0 emerging tasks', items: emHits }); }
+      const rising = (C.skillToRising[s.name] || []).map((id) => RISING.get(id)).filter(Boolean);
+      if (rising.length) { bonus += 0.2; why.push(`rising: ${rising.map((r) => r.name).join('; ')}`); sig.push(...rising.map((r) => ({ type: 'rising_skill', source: r.source.name, url: r.source.url, record_id: r.id }))); }
+      return { skill: s.name, category: s.category, kind: 'skill', future_importance: r2(s.importance + Math.max(0, tf)), current_importance: s.importance, level: s.level ?? null, distinctiveness: r2(z), future_score: r2(z + bonus), why: why.join('; '), signal_sources: sig, generic: st.meanIm >= 3 };
+    });
+    let future = scored.filter((x) => x.current_importance >= 2.75 && x.distinctiveness > 0 && !(x.generic && x.distinctiveness < 1)).sort((a, b) => b.future_score - a.future_score);
+    if (future.length < 5) future = future.concat(scored.filter((x) => !future.includes(x) && x.current_importance >= 2.5).sort((a, b) => b.future_score - a.future_score)).slice(0, 5);
+    future = future.slice(0, 8).map(({ generic, ...x }) => x);
+    const core = scored.filter((x) => x.generic).sort((a, b) => b.current_importance - a.current_importance).slice(0, 6).map(({ generic, future_score, signal_sources, ...x }) => ({ ...x, why: `baseline skill: important in most occupations (avg importance ${r2(SKILL_STATS.get(x.skill).meanIm)})` }));
     const dev = new Map();
     top.slice(0, 5).forEach((t) => t.skill_gaps.forEach((g) => { const d = dev.get(g.skill) || { skill: g.skill, kind: 'skill', weighted_gap: 0, for_transitions: [] }; d.weighted_gap += Math.max(t.score, 0.05) * g.gap * g.target_importance / 5; d.for_transitions.push(t.code); dev.set(g.skill, d); }));
     const techAcc = new Map();
@@ -222,9 +248,10 @@ async function main() {
     o.derived = {
       transitions: top,
       future_skills: future,
+      core_skills: core,
       skills_to_develop: [...dev.values()].map((d) => ({ ...d, weighted_gap: r2(d.weighted_gap) })).sort((a, b) => b.weighted_gap - a.weighted_gap).slice(0, 8),
       future_technologies: [...techAcc.entries()].sort((a, b) => b[1] - a[1]).slice(0, 10).map(([name, n]) => ({ name, occurrences: n })),
-      method: 'See README "Derived fields". Inputs: O*NET related occupations, skills (importance/level), BLS projections, OEWS wages, composite AI exposure.',
+      method: 'See README "Derived fields". Inputs: O*NET related occupations, skills (importance/level, z-scored across occupations), technology hot/in-demand flags, emerging tasks, data/emerging_skills.json, BLS projections, OEWS wages, composite AI exposure.',
     };
   }
 

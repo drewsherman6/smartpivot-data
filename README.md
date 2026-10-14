@@ -59,7 +59,16 @@ Base raw URL: `https://raw.githubusercontent.com/drewsherman6/smartpivot-data/ma
   - wage: ln(target median wage / own median wage), clamped
   - The top 8 are kept. Each one lists `skill_gaps`: target skills with importance ≥ 3 whose level is at least 0.25 above the current occupation's level.
   - Together, transitions and skill gaps form the **skill → future-career graph**.
-- **future_skills**: average skill importance over the occupation itself (weight 1) plus its top 5 transitions (weighted by score). Skills only.
+- **future_skills** (up to 8, job-distinctive; skills only):
+  - `distinctiveness` = the mean of the importance z-score and the level z-score for that skill, compared against all 910 occupations that rate it.
+  - `future_score` = distinctiveness plus bonuses:
+    - growing transitions: up to +0.5, when the skill is more important in top-5 transition targets that are projected to grow
+    - hot or in-demand technology: +0.3 (O*NET flags, matched via `catalog.skillSignals`)
+    - O*NET emerging task: +0.3
+    - rising-skill match in `data/emerging_skills.json`: +0.2 (via `catalog.skillToRising`)
+  - Eligible skills have importance ≥ 2.75 and distinctiveness > 0. Generic baseline skills (average importance across occupations ≥ 3) are excluded unless distinctiveness is ≥ 1. If fewer than 5 skills qualify, the list is filled with the best remaining skills of importance ≥ 2.5.
+  - Each item keeps `skill`, `category`, `kind`, `future_importance` and `current_importance`, and adds `level`, `distinctiveness`, `future_score`, `why` and `signal_sources[]` ({type, source, url/items/value}).
+- **core_skills** (up to 6): the generic baseline skills (for example Critical Thinking, Active Listening, Speaking, Reading Comprehension), ranked by the occupation's importance. They are kept so they aren't lost; show them separately as "Core skills".
 - **skills_to_develop**: skill gaps summed over the top 5 transitions, weighted by score × gap × target importance / 5. Skills only, never abilities.
 - **future_technologies**: hot or in-demand technologies across the occupation and its top transitions.
 

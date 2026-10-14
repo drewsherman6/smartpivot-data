@@ -34,3 +34,9 @@ BLS Employment Projections 2025-35 release supersedes 2024-34 total
 - Platforms now carry a `categories[]` list (explicit overrides in `catalog.categoryOverrides`). Fixed the "hr" regex that miscategorized Anthropic.
 - Added Gorgias, NiCE Cognigy, Freshdesk Freddy AI, Amazon Q Developer, JetBrains Junie and Google Jules. Fixed the OpenAI Codex and Ada URLs.
 - Added `exposure.robotics.{total_tasks, rated_tasks, exposed_tasks_count, exposed_task_share, exposed_time_share, task_share_method}` and `exposure.ai.task_share`.
+
+## 2026-10-14 - Job-distinctive future skills
+- `derived.future_skills` now ranks each skill by how distinctive it is for the occupation (importance and level z-scores across all occupations) plus future signals: growing transitions, hot or in-demand technology, O*NET emerging tasks, and rising-skill matches in `data/emerging_skills.json`.
+- Items gain `level`, `distinctiveness`, `future_score`, `why` and `signal_sources[]`. The existing fields are unchanged.
+- New `derived.core_skills` holds the generic baseline skills (Critical Thinking, Active Listening, etc.).
+- Mappings are in `scripts/catalog.js` (`skillSignals`, `skillToRising`).

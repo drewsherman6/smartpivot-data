@@ -88,7 +88,10 @@ These address three problems: the CSR Future Forecast showing ML skills, the thi
 (Real values for 43-4051.00 as of 2026-10-13; arrays truncated.)
 - **Career Matches / pathways:** use `transitions` (up to 8, ranked by `score`).
 - **Skill Evolution Map:** draw an edge from each `skill_gaps[].skill` to its `transitions[].title`. That gives about 5 skills × 8 careers per occupation.
-- **Future Forecast:** use `future_skills` and `future_technologies`. They are specific to each occupation, not generic.
+- **Future Forecast:** use `future_skills`, which ranks skills by how distinctive they are for this job plus future signals, and `future_technologies`. Show each item's `why`, and use `signal_sources[]` for provenance. Put generic baseline skills from **`core_skills`** in a separate "Core skills" row. Example for 15-1252.00:
+```json
+{"skill":"Programming","category":"transferable","kind":"skill","future_importance":4,"current_importance":4,"distinctiveness":2.264,"future_score":2.764,"why":"importance 4 vs 1.602 avg across 910 occupations; hot/in-demand tech: Apache Kafka, C, C#; rising: AI and big data; …","signal_sources":[{"type":"distinctiveness","source":"O*NET 31.0 skills (importance/level z-score vs all occupations)","value":2.264},{"type":"hot_technology","source":"O*NET 31.0 technology skills (Hot Technology / In Demand flags)","items":["Apache Kafka","C","C#"]},{"type":"rising_skill","source":"World Economic Forum - Future of Jobs Report 2025","url":"…","record_id":"wef-ai-bigdata"}]}
+```
 - The formulas are in `README.md` → "Derived fields".
 
 ### 3.3 Exposure
