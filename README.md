@@ -28,7 +28,8 @@ Base raw URL: `https://raw.githubusercontent.com/drewsherman6/smartpivot-data/ma
 | `data/exposure/robot_exposure.json` | Robot exposure per occupation |
 | `data/robotics/platforms.json` | Robot developers/systems cited as task evidence → occupations |
 | `data/robotics_manufacturers.json` | Major robot makers (industrial, cobot, humanoid, surgical, logistics, service, AV, ag, construction) |
-| `data/agent_platforms.json` | AI agent platforms + O*NET work-activity/occupation mapping |
+| `data/agent_platforms.json` | AI agent platforms; `onet_mapping.occupations[]` = every occupation the platform maps to (uncapped) |
+| `data/agents_by_occupation.json` | Reverse index: top 12 verified platforms per occupation |
 | `data/signals/families.json` | Weekly per-family signals |
 | `data/headline_stats.json`, `data/occupations.json`, `data/emerging_skills.json` | Curated headline research (hand-sourced) |
 | Legacy (frozen shapes): `skills_export.json`, `skills_summary.json`, `risk_scoring_overlay.json`, `agentic_capabilities.json`, `robotics_capabilities.json`, `*.md` | Kept for existing UI code |
@@ -44,6 +45,8 @@ Base raw URL: `https://raw.githubusercontent.com/drewsherman6/smartpivot-data/ma
 - `bls.projections`: 2025–35 employment change %, annual openings and typical education.
 - `exposure.ai`: `eloundou_2023` (α/β/γ, rated by both GPT-4 and humans), `felten_aioe` and `anthropic_observed_exposure`, plus `composite` (derived).
 - `exposure.robotics`: `anthropic_robot_exposure_index` (0–3), `onet_degree_of_automation` (1–5), `exposed_tasks[]` and `cited_systems[]`. Each cited system has its developer, maturity and evidence URL.
+- `agents`: `platforms[]` (top 12 verified: id, name, url, status, category, score, relevance, matched_tasks[]), `platform_count`, `category_scores`.
+- `exposure.robotics.total_tasks`, `rated_tasks`, `exposed_tasks_count`, `exposed_task_share`, `exposed_time_share`; `exposure.ai.task_share` {total_tasks, tasks_with_data, tasks_with_ai_usage, share, mean_penetration}.
 - `derived`: `transitions[]`, `future_skills[]`, `skills_to_develop[]` and `future_technologies[]`. See below.
 
 ### Derived fields (documented formulas; no new numbers are invented)
@@ -59,6 +62,16 @@ Base raw URL: `https://raw.githubusercontent.com/drewsherman6/smartpivot-data/ma
 - **future_skills**: average skill importance over the occupation itself (weight 1) plus its top 5 transitions (weighted by score). Skills only.
 - **skills_to_develop**: skill gaps summed over the top 5 transitions, weighted by score × gap × target importance / 5. Skills only, never abilities.
 - **future_technologies**: hot or in-demand technologies across the occupation and its top transitions.
+
+- **agent mapping**: for each occupation, the code matches each task (statement + O*NET Detailed Work Activity titles) against keyword patterns per platform category (`scripts/catalog.js` → `categoryPatterns`).
+  - `category_score` = sum of the matched tasks' weights. A task's weight is its Anthropic `time_share` (normalized), or 1/n when that's missing. Add +0.05 if the occupation's technology categories match.
+  - `platform score` = best category score × (1 for the primary category, 0.8 for others) × the generic-category weight (`genericCategories`) × (0.5 + 0.5 × AI composite).
+  - A platform is listed only when the matched task weight (without the technology bonus) is ≥ 0.05.
+  - `relevance` is high at ≥ 0.30, medium at ≥ 0.15, low otherwise. Only `verified` platforms are mapped. Code: `scripts/agent-mapping.js`.
+- **robot task share**:
+  - `exposed_task_share` = tasks rated E1–E3 ÷ tasks rated in the Anthropic robot exposure data (joined by O*NET task id).
+  - `exposed_time_share` = the sum of Anthropic `time_share` over E1–E3 tasks.
+- **AI task share**: `share` = tasks with Anthropic task penetration > 0 ÷ tasks matched to the Anthropic task-penetration file (exact text match).
 
 ## Sources (see `sources` in each file for exact URL + retrieved_at)
 O*NET 31.0 (Aug 2026, CC BY 4.0) · BLS OEWS May 2025 · BLS Employment Projections 2025–35 · Eloundou et al. "GPTs are GPTs" · Felten, Raj & Seamans AIOE · Anthropic Economic Index (labor-market impacts; robot exposure "What work can robots do?") · vendor homepages (agent/robot catalogs, fetched as evidence).

@@ -98,6 +98,13 @@ These address three problems: the CSR Future Forecast showing ML skills, the thi
 {"code":"47-2061.00","title":"Construction Laborers","anthropic_robot_exposure_index":1.049,"onet_degree_of_automation":1.3,"top_developers":["ZenRobotics / Terex","Bedrock Robotics","Built Robotics", "…"]}
 ```
 
+**Task shares (true percentages):**
+```json
+"exposure":{"robotics":{"total_tasks":27,"rated_tasks":27,"exposed_tasks_count":22,"exposed_task_share":0.815,"exposed_time_share":0.852,"task_share_method":"…"},
+            "ai":{"task_share":{"total_tasks":13,"tasks_with_data":13,"tasks_with_ai_usage":6,"share":0.462,"mean_penetration":0.459,"method":"…"}}}
+```
+(The robotics figures are for 47-2061.00 Construction Laborers; the AI figures are for 43-4051.00 CSR.) Show "X% of tasks", using `exposed_task_share` or `share`. Use `exposed_time_share` when you mean "share of work time".
+
 ### 3.4 Robotics
 - `data/robotics/platforms.json` has 726 robot developers cited as evidence in task ratings. Each has `systems[]`, `occupations[]` (O\*NET codes) and `source_urls[]`.
 - `data/robotics_manufacturers.json` has 54 makers across segments (industrial, cobot, humanoid_mobile, surgical_medical, logistics, service, autonomous_vehicles, agriculture, construction, drones_inspection). Each has `evidence` and `robot_exposure_citations.occupations`.
@@ -106,7 +113,12 @@ These address three problems: the CSR Future Forecast showing ML skills, the thi
 
 ### 3.5 Agent platforms
 `data/agent_platforms.json` has 122 entries with `category`, `skills`, `facts`, `status`, `source`, `evidence` {http_status, title, description, checked_at} and `onet_mapping` {activities[], top_occupations[25]}.
-- To match a platform to an occupation, check whether the occupation's code is in `onet_mapping.top_occupations`. This is better than word-matching.
+- **Per occupation (preferred):** each shard record has `agents.platforms[]`, the top 12 **verified** platforms ranked by task-weighted overlap. `data/agents_by_occupation.json` has the same list for every code. Show `matched_tasks` as the "why".
+```json
+"agents":{"platforms":[{"id":"restored-intercom-fin-ai-agent","name":"Intercom Fin AI Agent","url":"https://www.intercom.com/","status":"verified","category":"customer_service","score":0.791,"relevance":"high","matched_tasks":[{"id":"18565","text":"Confer with customers by telephone or in person to provide information about products or services, take or enter orders, cancel accounts, or obtain details of complaints."}]}],"platform_count":52,"category_scores":{"customer_service":0.847}}
+```
+- **Per platform:** `onet_mapping.occupations[]` lists every mapped occupation as `{code, score}`, with no cap. `onet_mapping.occupation_count` gives the count.
+- Hide `relevance:"low"` by default. 101 occupations with tasks have no platform above the threshold (mostly driving and hands-on manual roles), so show an empty state for them.
 
 ### 3.6 Weekly signals per family
 `data/signals/families.json` has one entry per SOC major group. This fixes the identical, May-28-dated "This week's signal" shown for every role.

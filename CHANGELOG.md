@@ -26,3 +26,11 @@ BLS Employment Projections 2025-35 release supersedes 2024-34 total
 - Added `scripts/refresh.js`, `verify-platforms.js`, `sources.js` and `catalog.js`, plus new schemas. Validation now checks occupation coverage.
 - risk_scoring_overlay.json: dates and trend summary refreshed from sourced figures; LinkedIn 2026 skills added to new_emerging_skills.
 - headline_stats: added the BLS 2025-35 total growth figure.
+
+## 2026-10-13 - Agent mapping rebuild + task shares
+- Rebuilt the agent→occupation mapping (`scripts/agent-mapping.js`). It now uses task-weighted keyword overlap with O*NET task statements, Detailed Work Activities and technology categories, scaled by AI exposure. Generic categories are down-weighted. There is no per-platform cap.
+- Coverage: 822 of the 923 occupations that have tasks now have at least one verified platform, up from 185 of 1,016.
+- Added `occupation.agents` (top 12 per occupation), `data/agents_by_occupation.json`, and `onet_mapping.occupations[]` / `occupation_count` per platform (the old `top_occupations` is removed).
+- Platforms now carry a `categories[]` list (explicit overrides in `catalog.categoryOverrides`). Fixed the "hr" regex that miscategorized Anthropic.
+- Added Gorgias, NiCE Cognigy, Freshdesk Freddy AI, Amazon Q Developer, JetBrains Junie and Google Jules. Fixed the OpenAI Codex and Ada URLs.
+- Added `exposure.robotics.{total_tasks, rated_tasks, exposed_tasks_count, exposed_task_share, exposed_time_share, task_share_method}` and `exposure.ai.task_share`.
