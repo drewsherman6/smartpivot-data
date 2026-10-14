@@ -15,10 +15,55 @@ exports.agentCategories = {
   it_service: ['4.A.3.b.1', '4.A.1.a.2', '4.A.3.b.5', '4.A.4.b.6'],
   personal_assistant: ['4.A.2.b.5', '4.A.4.a.2', '4.A.4.c.1', '4.A.3.b.6'],
   general_assistant: ['4.A.1.a.1', '4.A.2.a.4', '4.A.2.b.2', '4.A.3.b.1'],
+  healthcare_documentation: ['4.A.3.b.6', '4.A.4.a.3', '4.A.4.a.5', '4.A.2.a.2'],
+};
+// Task/DWA text patterns per category, used by scripts/agent-mapping.js (matched against O*NET task statements,
+// their Detailed Work Activity titles, and the occupation's technology-skill categories).
+exports.categoryPatterns = {
+  customer_service: /\b(customers?|clients?|patrons?|guests?|complaints?|inquir\w*|callers?|refunds?|service requests?|answer (questions|telephones?)|public)\b/,
+  sales_marketing: /\b(sell\w*|sales|market\w*|advertis\w*|promot\w*|prospect\w*|leads|campaigns?|quotes?|price quotations?|customer accounts)\b/,
+  workflow_automation: /\b(records?|data entry|enter (data|information)|fil(e|ing) (documents|records)|process(es|ing)? (forms|documents|applications|orders|payments|transactions|claims|paperwork)|compile|forms|clerical|routine reports?|update (records|databases?|files))\b/,
+  software_engineering: /\b(software|programs?|programming|code|coding|debug\w*|computer applications?|applications? development|databases?|web ?sites?|scripts?|algorithms?|source code)\b/,
+  agent_framework: /\b(software|programming|code|computer applications?|automat\w* (systems|processes)|machine learning|artificial intelligence|algorithms?)\b/,
+  research_knowledge: /\b(research\w*|literature|gather (information|data)|review (information|documents|literature)|search\w*|current developments|stay (informed|abreast)|knowledge bases?|information sources)\b/,
+  data_analytics: /\b(analy[sz]e (data|information|statistics|results|trends)|statistic\w*|data analysis|dashboards?|metrics|trends|forecast\w*|reports? on)\b/,
+  computer_use: /\b(computers?|online|internet|web|spreadsheets?|enter (data|information)|word processing|software)\b/,
+  hr_people: /\b(recruit\w*|hire|hiring|interview (applicants|candidates)|job applicants|personnel (records|policies|actions)|employee (records|benefits|relations|relocation|orientation)|payroll|benefits administration|onboard\w*|performance (appraisals?|reviews?))\b/,
+  finance_ops: /\b(invoices?|budgets?|accounts? (payable|receivable)|financial|expenses?|payments?|bill(s|ing)|audit\w*|tax\w*|reconcil\w*|purchas\w*|procure\w*|ledgers?)\b/,
+  legal: /\b(legal|laws?|contracts?|regulat\w*|compliance|litigation|courts?|statutes?|case law)\b/,
+  it_service: /\b(networks?|computer systems?|hardware|help desk|technical support|troubleshoot\w*|user accounts|cyber\w*|information security|servers?)\b/,
+  personal_assistant: /\b(schedul\w*|calendars?|appointments?|meetings?|correspondence|e-?mail|travel arrangements|telephone calls|messages)\b/,
+  general_assistant: /\b(write|writing|draft\w*|prepare (reports?|documents?|correspondence|presentations?)|summar\w*|translat\w*|edit\w*|proofread\w*)\b/,
+  healthcare_documentation: /\b(patients?|medical records?|clinical|charts?|health records?|diagnos\w*)\b/,
+};
+// Generic categories are down-weighted so specialised agents rank first.
+exports.genericCategories = { computer_use: 0.7, general_assistant: 0.75, workflow_automation: 0.75, research_knowledge: 0.8, personal_assistant: 0.75, agent_framework: 0.7 };
+// Explicit category assignments (override keyword rules); first category is primary.
+exports.categoryOverrides = {
+  'Salesforce Agentforce': ['customer_service', 'sales_marketing'], 'ServiceNow AI Agents': ['it_service', 'workflow_automation'],
+  'Anthropic Claude (Claude Code / Cowork)': ['general_assistant', 'software_engineering', 'research_knowledge'], 'Anthropic': ['computer_use', 'general_assistant'],
+  'Anthropic Computer Use + Claude Agents': ['computer_use'], 'OpenAI': ['agent_framework', 'general_assistant'], 'OpenAI Assistants API': ['agent_framework'],
+  'Microsoft 365 Copilot Agents': ['general_assistant', 'research_knowledge', 'personal_assistant'], 'Microsoft Copilot Studio': ['workflow_automation', 'customer_service'],
+  'Klarna AI Assistant': ['customer_service'], 'Segment AI Agents': ['sales_marketing', 'data_analytics'], 'mParticle AI Agents': ['sales_marketing', 'data_analytics'],
+  'Tealium AI Agents': ['sales_marketing', 'data_analytics'], 'Lindy.ai': ['personal_assistant', 'sales_marketing'], 'Lindy': ['personal_assistant', 'sales_marketing'],
+  'Bardeen': ['sales_marketing', 'computer_use'], 'Abridge': ['healthcare_documentation'], 'Hippocratic AI': ['healthcare_documentation', 'customer_service'],
+  'Writer': ['general_assistant', 'sales_marketing'], 'Manus': ['general_assistant', 'computer_use', 'research_knowledge'], 'Hebbia': ['research_knowledge', 'finance_ops'],
+  'Harvey AI (Legal)': ['legal'], 'Casetext CoCounsel': ['legal'], 'UiPath': ['workflow_automation', 'computer_use'], 'Automation Anywhere': ['workflow_automation', 'computer_use'],
+  'Intercom Fin AI Agent': ['customer_service'], 'Zendesk AI agents': ['customer_service'], 'Sierra': ['customer_service'], 'Decagon': ['customer_service'], 'Ada': ['customer_service'],
+  'Kore.ai': ['customer_service', 'it_service'], 'Aisera': ['it_service', 'customer_service'], 'Moveworks': ['it_service', 'hr_people'],
+  'Gong AI Agents': ['sales_marketing'], 'HubSpot Breeze Agents': ['sales_marketing', 'customer_service'], '11x': ['sales_marketing'], 'Clay': ['sales_marketing', 'research_knowledge'],
+  'Glean Agents': ['research_knowledge'], 'Google Gemini Enterprise': ['research_knowledge', 'general_assistant'], 'Amazon Q Business': ['research_knowledge'],
+  'Perplexity Agents': ['research_knowledge'], 'Perplexity Comet': ['computer_use', 'research_knowledge'], 'ChatGPT agent': ['computer_use', 'research_knowledge'],
+  'OpenAI Codex': ['software_engineering'], 'Claude Code': ['software_engineering'], 'Cursor': ['software_engineering'], 'Cursor Composer / Agent': ['software_engineering'],
+  'Cognition Devin': ['software_engineering'], 'GitHub Copilot coding agent': ['software_engineering'], 'GitHub Copilot Workspace': ['software_engineering'],
+  'Replit Agent': ['software_engineering'], 'Bolt.new': ['software_engineering'], 'Lovable': ['software_engineering'], 'Aider': ['software_engineering'], 'Sourcegraph Cody': ['software_engineering'],
+  'MetaGPT': ['software_engineering', 'agent_framework'], 'AutoGen / AG2': ['agent_framework'], 'Power BI Copilot': ['data_analytics'],
+  'Gorgias': ['customer_service'], 'NiCE Cognigy': ['customer_service'], 'Freshdesk Freddy AI': ['customer_service'], 'Amazon Q Developer': ['software_engineering'],
+  'JetBrains Junie': ['software_engineering'], 'Google Jules': ['software_engineering'],
 };
 // keyword rules to categorize restored entries (first match wins)
 exports.categoryRules = [
-  [/legal|cocounsel|harvey/i, 'legal'], [/recruit|talent|hr|people|employ|payroll|performance|engagement|onboarding|culture|lattice|15five|bamboo|rippling|deel|remote\.com|greenhouse|lever|workday/i, 'hr_people'],
+  [/legal|cocounsel|harvey/i, 'legal'], [/recruit|talent|\bhr\b|people|employ|payroll|performance|engagement|onboarding|culture|lattice|15five|bamboo|rippling|deel|remote\.com|greenhouse|lever|workday/i, 'hr_people'],
   [/spend|expense|accounting|invoice|ramp|brex|quickbooks|xero/i, 'finance_ops'], [/support|customer_service|fin ai|klarna|resolution/i, 'customer_service'],
   [/sales|gong|drift|crm|prospect|marketing|campaign|cdp|segment|mparticle|tealium/i, 'sales_marketing'], [/code|coding|devin|aider|cursor|copilot workspace|cody|replit|software|metagpt/i, 'software_engineering'],
   [/analytics|tableau|power bi|looker|amplitude|mixpanel|fullstory|contentsquare|hotjar|insight/i, 'data_analytics'], [/computer_use|browser|desktop|multion|adept|stagehand|bardeen/i, 'computer_use'],
@@ -31,13 +76,13 @@ exports.agentPlatforms = [
   ['Activepieces', 'https://www.activepieces.com/', 'workflow_automation'], ['Gumloop', 'https://www.gumloop.com/', 'workflow_automation'],
   ['Tines', 'https://www.tines.com/', 'workflow_automation'], ['Relevance AI', 'https://relevanceai.com/', 'workflow_automation'],
   ['OpenAI AgentKit', 'https://openai.com/index/introducing-agentkit/', 'agent_framework'], ['ChatGPT agent', 'https://openai.com/index/introducing-chatgpt-agent/', 'computer_use'],
-  ['OpenAI Codex', 'https://openai.com/codex/', 'software_engineering'], ['Claude Code', 'https://www.anthropic.com/claude-code', 'software_engineering'],
+  ['OpenAI Codex', 'https://developers.openai.com/codex', 'software_engineering'], ['Claude Code', 'https://www.anthropic.com/claude-code', 'software_engineering'],
   ['Google Gemini Enterprise', 'https://cloud.google.com/gemini-enterprise', 'research_knowledge'], ['Google Agent Development Kit', 'https://google.github.io/adk-docs/', 'agent_framework'],
   ['Amazon Bedrock AgentCore', 'https://aws.amazon.com/bedrock/agentcore/', 'agent_framework'], ['Amazon Q Business', 'https://aws.amazon.com/q/business/', 'research_knowledge'],
   ['Automation Anywhere', 'https://www.automationanywhere.com/', 'workflow_automation'], ['Kore.ai', 'https://www.kore.ai/', 'customer_service'],
   ['Aisera', 'https://aisera.com/', 'it_service'], ['Moveworks', 'https://www.moveworks.com/', 'it_service'],
   ['Sierra', 'https://sierra.ai/', 'customer_service'], ['Decagon', 'https://decagon.ai/', 'customer_service'],
-  ['Ada', 'https://www.ada.cx/', 'customer_service'], ['Zendesk AI agents', 'https://www.zendesk.com/service/ai/ai-agents/', 'customer_service'],
+  ['Ada', 'https://docs.ada.cx/', 'customer_service'], ['Zendesk AI agents', 'https://www.zendesk.com/service/ai/ai-agents/', 'customer_service'],
   ['HubSpot Breeze Agents', 'https://www.hubspot.com/products/artificial-intelligence/breeze-ai-agents', 'sales_marketing'], ['11x', 'https://www.11x.ai/', 'sales_marketing'],
   ['Clay', 'https://www.clay.com/', 'sales_marketing'], ['Writer', 'https://writer.com/', 'general_assistant'],
   ['Manus', 'https://manus.im/', 'general_assistant'], ['Perplexity Comet', 'https://www.perplexity.ai/comet', 'computer_use'],
@@ -47,6 +92,9 @@ exports.agentPlatforms = [
   ['Hippocratic AI', 'https://www.hippocraticai.com/', 'customer_service'], ['Mastra', 'https://mastra.ai/', 'agent_framework'],
   ['OpenAI Agents SDK', 'https://openai.github.io/openai-agents-python/', 'agent_framework'], ['Microsoft Copilot Studio', 'https://www.microsoft.com/en-us/microsoft-copilot/microsoft-copilot-studio', 'workflow_automation'],
   ['IBM watsonx Orchestrate', 'https://www.ibm.com/products/watsonx-orchestrate', 'workflow_automation'], ['Pega GenAI Blueprint / agents', 'https://www.pega.com/', 'workflow_automation'],
+  ['Gorgias', 'https://www.gorgias.com/', 'customer_service'], ['NiCE Cognigy', 'https://www.cognigy.com/', 'customer_service'],
+  ['Freshdesk Freddy AI', 'https://www.freshworks.com/freshdesk/', 'customer_service'], ['Amazon Q Developer', 'https://aws.amazon.com/q/developer/', 'software_engineering'],
+  ['JetBrains Junie', 'https://www.jetbrains.com/junie/', 'software_engineering'], ['Google Jules', 'https://jules.google/', 'software_engineering'],
   ['Workato', 'https://www.workato.com/', 'workflow_automation'], ['Beam AI', 'https://beam.ai/', 'workflow_automation'],
 ];
 exports.robotMakers = [

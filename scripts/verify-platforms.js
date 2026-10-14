@@ -59,14 +59,17 @@ async function run() {
   const evs = await pool(ap.platforms, 8, (p) => probe(p.url));
   ap.platforms.forEach((p, i) => {
     const ev = evs[i];
-    if (!C.agentCategories[p.category]) p.category = (C.categoryRules.find(([re]) => re.test(p.name + ' ' + p.skills.join(' '))) || [null, 'general_assistant'])[1];
+    if (C.categoryOverrides[p.name]) p.categories = C.categoryOverrides[p.name];
+    else { if (!C.agentCategories[p.category]) p.category = (C.categoryRules.find(([re]) => re.test(p.name + ' ' + p.skills.join(' '))) || [null, 'general_assistant'])[1]; p.categories = [p.category]; }
+    p.category = p.categories[0];
     p.evidence = ev;
     const ok = evidenceMatches(p.name, ev);
     if (ok) {
       if (p.status !== 'verified') { p.status = 'verified'; p.confidence = 'medium'; p.source = src(p.name, ev, p.url); }
       p.retrieved_at = TODAY;
     } else if (!p.facts.length) { p.status = ev.http_status && ev.http_status < 400 ? 'needs_review' : 'unreachable'; p.confidence = 'low'; }
-    p.onet_mapping = { method: 'category -> O*NET Generalized Work Activities (scripts/catalog.js); occupations ranked by mean O*NET importance of those activities. Derived heuristic.', ...map(C.agentCategories[p.category]) };
+    p.onet_mapping = { ...(p.onet_mapping || {}), activities: map([...new Set(p.categories.flatMap((c) => C.agentCategories[c]))]).activities };
+    delete p.onet_mapping.top_occupations;
   });
   ap.updated = TODAY;
   writeJsonValidated('data/agent_platforms.json', ap, 'schemas/agent_platforms.schema.json');

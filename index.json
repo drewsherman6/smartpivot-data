@@ -40,7 +40,7 @@
       "schema_version": "1.0.0",
       "last_updated": "2026-10-13",
       "legacy": false,
-      "record_count": 122,
+      "record_count": 128,
       "description": "AI agent platforms with sourced facts (incl. restored July-8 list marked restored_unverified)"
     },
     {
@@ -292,6 +292,16 @@
       "legacy": false,
       "record_count": 19,
       "description": "Full occupation records for SOC major group 55-0000"
+    },
+    {
+      "name": "agents_by_occupation",
+      "path": "data/agents_by_occupation.json",
+      "schema": "schemas/agents_by_occupation.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-13",
+      "legacy": false,
+      "record_count": 1016,
+      "description": "Reverse index: ranked verified AI agent platforms per occupation (task-weighted)"
     },
     {
       "name": "ai_exposure",

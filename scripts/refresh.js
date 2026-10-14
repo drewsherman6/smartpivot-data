@@ -171,6 +171,22 @@ async function main() {
     const cites = robotByOcc.get(o.code) || []; const seen = new Set();
     o.exposure.robotics.cited_systems = cites.filter((x) => { const k = x.system; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 10);
     o.exposure.robotics.exposed_tasks = o.tasks.filter((t) => ['E1', 'E2', 'E3'].includes(t.robot_tier)).sort((a, b) => (b.time_share || 0) - (a.time_share || 0)).slice(0, 8).map((t) => ({ id: t.id, text: t.text, tier: t.robot_tier }));
+    {
+      const rated = o.tasks.filter((t) => t.robot_tier !== undefined);
+      const exp = rated.filter((t) => ['E1', 'E2', 'E3'].includes(t.robot_tier));
+      Object.assign(o.exposure.robotics, {
+        total_tasks: o.tasks.length, rated_tasks: rated.length, exposed_tasks_count: exp.length,
+        exposed_task_share: rated.length ? r2(exp.length / rated.length) : null,
+        exposed_time_share: rated.length ? r2(exp.reduce((s, t) => s + (t.time_share || 0), 0)) : null,
+        task_share_method: 'exposed_task_share = tasks rated E1-E3 / tasks rated in Anthropic robot exposure (tasks matched by O*NET task id); exposed_time_share = sum of Anthropic time_share over E1-E3 tasks.',
+      });
+      const pen = o.tasks.filter((t) => t.ai_task_penetration != null);
+      o.exposure.ai.task_share = pen.length ? {
+        total_tasks: o.tasks.length, tasks_with_data: pen.length, tasks_with_ai_usage: pen.filter((t) => t.ai_task_penetration > 0).length,
+        share: r2(pen.filter((t) => t.ai_task_penetration > 0).length / pen.length), mean_penetration: r2(pen.reduce((s, t) => s + t.ai_task_penetration, 0) / pen.length),
+        method: 'share = tasks with Anthropic task penetration > 0 / tasks matched to the Anthropic task_penetration file (exact task text match); mean_penetration = average penetration over matched tasks.',
+      } : null;
+    }
     o.bls = { oews: findBls(oews, o.code), projections: findBls(ep, o.code) };
     o.major_group = { code: o.code.slice(0, 2) + '-0000', title: MAJOR[o.code.slice(0, 2)] || null };
     o.skills.sort((a, b) => b.importance - a.importance); o.knowledge.sort((a, b) => b.importance - a.importance); o.abilities.sort((a, b) => b.importance - a.importance);
@@ -211,6 +227,9 @@ async function main() {
       method: 'See README "Derived fields". Inputs: O*NET related occupations, skills (importance/level), BLS projections, OEWS wages, composite AI exposure.',
     };
   }
+
+  // ---------- Agent platform mapping ----------
+  const agentIndex = require('./agent-mapping').mapAgents(all, O.get, S);
 
   // ---------- Write occupation shards ----------
   const meta = { generated: TODAY, sources: S, license_notes: 'O*NET data CC BY 4.0 (U.S. DOL/ETA). BLS public domain. Anthropic Economic Index CC-BY. Eloundou et al. and Felten et al. per their repositories.' };
@@ -258,8 +277,9 @@ async function main() {
   writeIfChanged('data/exposure/ai_exposure.json', { schema_version: '1.0.0', dataset: 'ai_exposure', generated: TODAY, sources: { eloundou: S.eloundou, aioe: S.aioe, aei_exposure: S.aei_exposure }, occupations: all.map((o) => ({ code: o.code, title: o.title, ...o.exposure.ai })) });
   writeIfChanged('data/exposure/robot_exposure.json', { schema_version: '1.0.0', dataset: 'robot_exposure', generated: TODAY, sources: { robot_occ: S.robot_occ, onet: S.onet }, occupations: all.map((o) => ({ code: o.code, title: o.title, anthropic_robot_exposure_index: o.exposure.robotics.anthropic_robot_exposure_index, onet_degree_of_automation: o.exposure.robotics.onet_degree_of_automation, top_developers: [...new Set(o.exposure.robotics.cited_systems.map((s) => s.developer))].slice(0, 5) })) });
 
+  writeIfChanged('data/agents_by_occupation.json', agentIndex);
   console.log(`occupations: ${all.length}, shards: ${groups.size}, robot platforms: ${plat.length}, BLS-OEWS matched: ${all.filter((o) => o.bls.oews).length}, EP matched: ${all.filter((o) => o.bls.projections).length}`);
   console.log(written.length ? 'changed:\n  ' + written.join('\n  ') : 'no data changes');
   fs.writeFileSync(path.join(CACHE, 'last-refresh.json'), JSON.stringify({ date: TODAY, changed: written }, null, 1));
 }
-main().then(() => (process.argv.includes('--no-verify') ? null : require('./verify-platforms').run())).then(() => require('./build-manifest')).catch((e) => { console.error(e); process.exit(1); });
+(process.argv.includes('--no-verify') ? Promise.resolve() : require('./verify-platforms').run()).then(main).then(() => require('./build-manifest')).catch((e) => { console.error(e); process.exit(1); });
