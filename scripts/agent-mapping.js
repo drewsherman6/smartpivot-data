@@ -34,7 +34,7 @@ exports.mapAgents = (occs, onetGet, sources) => {
     const catScore = {}; const catTasks = {}; const taskOnly = {};
     for (const c of cats) {
       const re = C.categoryPatterns[c];
-      const hits = o.tasks.filter((t) => re.test((t.text + ' ' + (dwa.get(o.code + '|' + t.id) || '')).toLowerCase()));
+      const hits = o.tasks.filter((t) => re.test((t.text + ' ' + (dwa.get((t.source_code || o.code) + '|' + t.id) || '')).toLowerCase()));
       taskOnly[c] = hits.reduce((s, t) => s + w(t), 0);
       catScore[c] = Math.min(1, taskOnly[c] + (re.test(techText) ? 0.05 : 0));
       catTasks[c] = hits.sort((a, b) => w(b) - w(a)).slice(0, 3).map((t) => ({ id: t.id, text: t.text }));

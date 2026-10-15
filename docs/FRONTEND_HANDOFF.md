@@ -1,6 +1,6 @@
 # Frontend handoff: launchpad.smartpivot.xyz ← smartpivot-data
 
-**For:** the SmartPivot frontend developer or agent · **Owner of this repo:** Jarvis (Drew's assistant), replacing the old research agent · **Updated:** 2026-10-13
+**For:** the SmartPivot frontend developer or agent · **Owner of this repo:** Jarvis (Drew's assistant), replacing the old research agent · **Updated:** 2026-10-15
 
 Raw base: `https://raw.githubusercontent.com/drewsherman6/smartpivot-data/main/`
 
@@ -130,6 +130,22 @@ These address three problems: the CSR Future Forecast showing ML skills, the thi
 ```
 Use the top-level `generated` as the signal date.
 
+### 3.7 Inferred data: "based on closest related role" (`inferred_from`)
+Every one of the 1,016 occupations now has non-empty `skills`, `derived.future_skills`, `derived.core_skills`, `derived.transitions`, `exposure.ai.task_share` and `exposure.robotics.exposed_task_share` (enforced by `npm test`). For **106** occupations O*NET has no ratings (new roles like Financial and Investment Analysts, Cardiologists, EMTs, Legislators; "All Other" catch-alls; military 55-xxxx), so the data is borrowed from the closest rated role and marked:
+```json
+"inferred_from": {"code":"29-2043.00","title":"Paramedics","method":"onet_soc_2010_crosswalk",
+  "label":"Based on closest related role: Paramedics","sources":[{"code":"29-2043.00","title":"Paramedics"}],
+  "fields":["skills","abilities","knowledge"],
+  "note":"Both this occupation and Paramedics were split from the O*NET-SOC 2010 occupation \"Emergency Medical Technicians and Paramedics\" (29-2041.00)."}
+```
+- **Where it appears:** `occupation.inferred_from` (full), `derived.inferred_from` (`{code,title,method,label,fields}`), `inferred: true` on each derived item, `exposure.ai.task_share.inferred_from` / `exposure.robotics.inferred_from` (only when tasks were borrowed), `exposure.ai.composite.inferred_from`, and `inferred_from` (or `null`) in `data/occupations/index.json`.
+- **What to show:** when `inferred_from` is present, show `inferred_from.label` once (e.g. a small note under the skills / Future Forecast / exposure sections, or on the dashboard header): *"Based on closest related role: Paramedics"*. `fields` tells you which sections it applies to. Keep it as a note, not an error.
+- `method` values: `same_soc_siblings`, `onet_soc_2010_crosswalk`, `military_civilian_equivalent`, `onet_related_top_ranked`, `same_broad_soc_group_most_similar`, `same_minor_soc_group_most_similar` (README → "Inferred data").
+- `kind` is preserved, so `kind === "skill"` filtering still keeps abilities out.
+- **BLS group estimates:** `bls.oews.inferred_from` / `bls.projections.inferred_from` = `{code, title, method: "bls_broad_group"|"bls_minor_group"|"bls_major_group"}` means the figure is a SOC-group aggregate. Label it "group estimate (BLS: {title})". The index has `bls_basis.oews` / `bls_basis.projections` (`"detailed"` or the group method).
+- **Documented BLS gaps:** `bls.unavailable` is a reason string per missing figure: `median_annual` (5 performer occupations: BLS publishes only an hourly wage, so show `bls.oews.median_hourly` as "/hour"), `oews` and `projections` (19 military codes: BLS doesn't cover the armed forces). Show the reason instead of a number, never an estimate.
+- **Friendlier tool names:** `future_skills[].why` now lists recognisable tools first with clean names ("CSS", "AWS", "MATLAB" instead of "Cascading style sheets CSS"). `future_technologies[].display_name` has the same clean name.
+
 ---
 
 ## 4. BLS: recommended switch
@@ -140,7 +156,7 @@ Use the top-level `generated` as the signal date.
 | Fixed 2023–33 projections | `bls.projections` = **2025–35** (`change_percent`, `openings_annual_thousands`, `typical_education`) | Switch. 2023–33 is two releases old |
 
 - Label the evidence class in the UI: "Published national estimate (BLS OEWS, May 2025)" vs "Projection (BLS 2025–35)".
-- Coverage: wage for 990 of 1,016 codes, projection for 997. When either is `null` (mostly "All Other" or military codes), fall back to your proxy and label it "estimate".
+- Coverage: a wage or projection for every civilian code. Some are SOC-group aggregates (`inferred_from` on the block; label them "group estimate"). The only gaps are documented in `bls.unavailable` (19 military codes; 5 hourly-only performer codes have `median_hourly` instead of an annual median). Don't substitute your own estimate. See §3.7.
 - `bls.oews.soc` may be a broad-group code when there is no detailed match. Show it.
 
 ---

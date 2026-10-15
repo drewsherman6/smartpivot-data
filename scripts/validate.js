@@ -36,6 +36,39 @@ try {
   for (const s of shards.values()) n += s.size;
   if (n !== idx.count || idx.count !== idx.occupations.length) errors.push(`occupation count mismatch index=${idx.count} shards=${n}`);
 } catch (e) { errors.push(e.message); }
+// Usable data for every occupation a user can pick (O*NET-rated or inferred, see scripts/infer.js):
+// non-empty skills + future_skills, AI and robot task shares, a BLS median wage (or a documented reason),
+// BLS projections (or a documented reason), provenance on every inferred block, and no abilities in skill fields.
+try {
+  const idx = readJson('data/occupations/index.json'); const shards = new Map();
+  const codes = new Set(idx.occupations.map((o) => o.code));
+  const abilityNames = new Set(); const recs = [];
+  for (const e of idx.occupations) { if (!shards.has(e.shard)) shards.set(e.shard, readJson(e.shard).occupations); }
+  for (const list of shards.values()) for (const o of list) { recs.push(o); o.abilities.forEach((a) => abilityNames.add(a.name)); }
+  const gaps = {};
+  const gap = (k, code) => { (gaps[k] = gaps[k] || []).push(code); };
+  for (const o of recs) {
+    if (!o.skills.length) gap('skills', o.code);
+    if (!o.derived.future_skills.length) gap('derived.future_skills', o.code);
+    if (typeof o.exposure.ai.task_share?.share !== 'number') gap('exposure.ai.task_share', o.code);
+    if (typeof o.exposure.robotics.exposed_task_share !== 'number') gap('exposure.robotics.exposed_task_share', o.code);
+    if (o.bls.oews?.median_annual == null && !(o.bls.unavailable?.median_annual || o.bls.unavailable?.oews)) gap('bls.oews.median_annual (no documented reason)', o.code);
+    if (!o.bls.projections && !o.bls.unavailable?.projections) gap('bls.projections (no documented reason)', o.code);
+    const skillLists = [o.skills.map((s) => s.name), o.derived.future_skills.map((s) => s.skill), o.derived.core_skills.map((s) => s.skill), o.derived.skills_to_develop.map((s) => s.skill), o.derived.transitions.flatMap((t) => t.skill_gaps.map((g) => g.skill))];
+    const leaked = skillLists.flat().filter((n) => abilityNames.has(n));
+    if (leaked.length) errors.push(`${o.code}: abilities in skill fields: ${[...new Set(leaked)].join(', ')}`);
+    const inf = o.inferred_from;
+    if (inf) {
+      if (!codes.has(inf.code) || inf.sources.some((s) => !codes.has(s.code))) errors.push(`${o.code}: inferred_from points at unknown code`);
+      if (inf.sources.some((s) => s.code === o.code)) errors.push(`${o.code}: inferred from itself`);
+      if (inf.fields.includes('skills') && (o.derived.future_skills.some((x) => !x.inferred) || o.derived.inferred_from?.code !== inf.code)) errors.push(`${o.code}: inferred skills but derived.future_skills not marked inferred`);
+      if (inf.fields.includes('tasks') && (o.exposure.robotics.inferred_from?.code !== inf.code || (o.exposure.ai.task_share && o.exposure.ai.task_share.inferred_from?.code !== inf.code))) errors.push(`${o.code}: inferred tasks but exposure task shares lack inferred_from`);
+      const src = recs.find((x) => x.code === inf.code);
+      if (src?.inferred_from) errors.push(`${o.code}: inferred from ${inf.code}, which is itself inferred`);
+    } else if (o.derived.future_skills.some((x) => x.inferred)) errors.push(`${o.code}: future_skills marked inferred without occupation.inferred_from`);
+  }
+  for (const [k, list] of Object.entries(gaps)) errors.push(`${list.length} occupations missing ${k}: ${list.slice(0, 10).join(' ')}${list.length > 10 ? ' …' : ''}`);
+} catch (e) { errors.push('coverage check: ' + e.message); }
 // Legacy-specific invariants
 try {
   const s = readJson('skills_summary.json');

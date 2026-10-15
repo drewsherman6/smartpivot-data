@@ -6,6 +6,11 @@ module.exports = {
     url: 'https://www.onetcenter.org/dl_files/database/db_31_0_csv.zip',
     page: 'https://www.onetcenter.org/database.html', license: 'CC BY 4.0', file: 'onet.zip',
   },
+  onet_crosswalk: {
+    name: 'O*NET-SOC 2010 to O*NET-SOC 2019 taxonomy crosswalk', version: '2019 taxonomy',
+    url: 'https://www.onetcenter.org/taxonomy/2019/walk/2010_to_2019_Crosswalk.csv?fmt=csv',
+    page: 'https://www.onetcenter.org/taxonomy/2019/walk.html', license: 'CC BY 4.0', file: 'onet_2010_2019_crosswalk.csv',
+  },
   oews: {
     name: 'BLS Occupational Employment and Wage Statistics, May 2025 national', version: 'May 2025',
     url: 'https://www.bls.gov/oes/special-requests/oesm25nat.zip', page: 'https://www.bls.gov/oes/tables.htm', file: 'oews.zip',

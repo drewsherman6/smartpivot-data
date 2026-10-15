@@ -2,6 +2,13 @@
 
 Machine-readable history: `data/history/changes.jsonl`. `scripts/update.js` appends entries here automatically.
 
+## 2026-10-15 - Usable data for every occupation (inferred fallbacks)
+- `scripts/infer.js` + `scripts/refresh.js`: the 106 occupations O*NET hasn't rated now borrow skills/abilities/knowledge (and, for 93, tasks/technology/related) from the closest rated role, with provenance in `inferred_from` (methods: same_soc_siblings 24, same_broad_soc_group_most_similar 31, same_minor_soc_group_most_similar 16, military_civilian_equivalent 19, onet_related_top_ranked 9, onet_soc_2010_crosswalk 7). Derived fields and task shares are computed for them and marked inferred.
+- New source: O*NET-SOC 2010→2019 taxonomy crosswalk.
+- BLS: group fallback extended to minor/major SOC groups and now marked with `inferred_from` on `bls.oews` / `bls.projections`; remaining gaps documented in `bls.unavailable`.
+- future_skills `why`: recognisable tools first, friendly names ("CSS", "AWS"); `display_names` / `display_name` added.
+- Schemas: occupation_shard and occupations_index 1.1.0 (additive). `npm test` now enforces per-occupation coverage and no abilities in skill fields.
+
 ## 2026-10-13 - Rebuild of the research pipeline (v2)
 - Added `data/` datasets with per-record sourcing: headline_stats (27), occupations (23), emerging_skills (16), agent_platforms (81: 7 verified + 74 restored_unverified), robotics_manufacturers (8).
 - Restored the agent platform list from commit d4344e7 (2026-07-08). The July 8 file failed JSON.parse; the `platforms` array was recovered and the rest was discarded.

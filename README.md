@@ -41,7 +41,8 @@ Base raw URL: `https://raw.githubusercontent.com/drewsherman6/smartpivot-data/ma
 - `technology[]`: O*NET technology examples, with `hot` and `in_demand` flags.
 - `tasks[]`: each task has `ai_task_penetration` (from Anthropic), and `robot_tier` (E0–E3) plus `time_share` (from Anthropic robot exposure).
 - `emerging_tasks[]`, `related[]`, `job_zone`.
-- `bls.oews`: May 2025 employment, plus median, mean, 10th-percentile and 90th-percentile wages. Matched on the 6-digit SOC, falling back to the broad group.
+- `bls.oews`: May 2025 employment, plus median, mean, 10th-percentile and 90th-percentile wages. Matched on the 6-digit SOC, falling back to the broad, minor, then major group (marked `inferred_from`; see "Inferred data"). `bls.unavailable` documents any remaining gap.
+- `inferred_from` (only on occupations O*NET hasn't rated): where borrowed skills/abilities/tasks came from. See "Inferred data".
 - `bls.projections`: 2025–35 employment change %, annual openings and typical education.
 - `exposure.ai`: `eloundou_2023` (α/β/γ, rated by both GPT-4 and humans), `felten_aioe` and `anthropic_observed_exposure`, plus `composite` (derived).
 - `exposure.robotics`: `anthropic_robot_exposure_index` (0–3), `onet_degree_of_automation` (1–5), `exposed_tasks[]` and `cited_systems[]`. Each cited system has its developer, maturity and evidence URL.
@@ -81,6 +82,33 @@ Base raw URL: `https://raw.githubusercontent.com/drewsherman6/smartpivot-data/ma
   - `exposed_task_share` = tasks rated E1–E3 ÷ tasks rated in the Anthropic robot exposure data (joined by O*NET task id).
   - `exposed_time_share` = the sum of Anthropic `time_share` over E1–E3 tasks.
 - **AI task share**: `share` = tasks with Anthropic task penetration > 0 ÷ tasks matched to the Anthropic task-penetration file (exact text match).
+
+### Inferred data (occupations O*NET hasn't rated) — `inferred_from`
+106 of the 1,016 O*NET-SOC codes have no O*NET skill/ability ratings (and 93 of them no task statements either): new detailed occupations O*NET hasn't surveyed yet (e.g. 13-2051.00 Financial and Investment Analysts, 29-1212.00 Cardiologists, 29-2042.00 EMTs, 11-1031.00 Legislators), "All Other" catch-alls, and military codes (55-xxxx). So that every occupation a user can pick has usable data, `scripts/infer.js` borrows the **empty** blocks (never overwrites real O*NET data) from the best rated source, in this order:
+
+| `method` | When | Source |
+|---|---|---|
+| `same_soc_siblings` | rated O*NET-SOC codes share the 6-digit SOC (e.g. 11-9199.00 ← 11-9199.01, .02 …) | ratings averaged across siblings; tasks/technology combined |
+| `onet_soc_2010_crosswalk` | the O*NET-SOC 2010 predecessor was split (official 2010→2019 crosswalk; "All Other" predecessors ignored) | the rated sibling from the same predecessor (e.g. EMTs ← Paramedics) |
+| `military_civilian_equivalent` | 55-xxxx only (O*NET rates no military occupation) | documented civilian equivalent (`MILITARY` map in `scripts/infer.js`) |
+| `onet_related_top_ranked` | detailed occupation with an O*NET related-occupations list | highest-ranked related occupation that has ratings (e.g. Cardiologists ← General Internal Medicine Physicians) |
+| `same_broad_soc_group_most_similar`, then `same_minor_soc_group_most_similar` | "All Other" codes / no related list | most similar rated detailed occupation in the same broad (then minor) SOC group: TF-IDF cosine of title + description, ties → larger OEWS employment |
+
+Provenance:
+- `occupation.inferred_from` = `{code, title, method, label, sources[{code,title}], fields[], note, predecessor?}`. `fields` lists exactly which blocks were borrowed (`skills`, `abilities`, `knowledge`, `tasks`, `technology`, `related`, `job_zone`). `label` is ready to show, e.g. "Based on closest related role: Paramedics".
+- Borrowed elements keep their `kind` (`skill` / `ability` / `knowledge`), so abilities never enter `skills[]`. Borrowed tasks carry `source_code`.
+- Everything computed from borrowed blocks is marked: `derived.inferred_from` (`{code,title,method,label,fields}`) and `inferred: true` on each `future_skills` / `core_skills` / `skills_to_develop` / `transitions` item; `exposure.ai.task_share.inferred_from` and `exposure.robotics.inferred_from` when tasks were borrowed; `exposure.ai.composite.inferred_from` (`n_measures: 0`) and `exposure.robotics.robot_exposure_index_inferred: true` when those values came from the source.
+- `data/occupations/index.json` entries carry `inferred_from` (or `null`) and `bls_basis`.
+- A transition whose target occupation is itself inferred carries `target_inferred_from` (its skill gaps use the borrowed ratings). Inferred targets never feed the "growing transitions" bonus of another occupation's future_skills.
+- Inferred values are excluded from `skills` z-score statistics (future_skills distinctiveness is computed against the 910 rated occupations) and from `data/signals/families.json` aggregates.
+
+BLS fallbacks:
+- `bls.oews` / `bls.projections` use the detailed SOC; otherwise the broad (xx-xxx0), minor (xx-xx00) or major (xx-0000) group aggregate, marked `inferred_from: {code, title, method: "bls_broad_group" | "bls_minor_group" | "bls_major_group"}`. Show these as "group estimate".
+- When a figure still doesn't exist, `bls.unavailable` documents why: `oews` / `projections` (military: BLS doesn't cover the armed forces) or `median_annual` (performers etc.: BLS publishes only an hourly wage; use `bls.oews.median_hourly`).
+
+`npm test` fails if any occupation lacks non-empty `skills`, `derived.future_skills`, `exposure.ai.task_share.share`, `exposure.robotics.exposed_task_share`, a BLS median wage (or a documented reason), or projections (or a documented reason); if an ability name appears in any skill field; or if an inferred block lacks provenance.
+
+**future_skills `why` tools:** in-demand tools are ranked by how many rated occupations list them (more recognisable first) and shown with friendly names (`scripts/infer.js` `friendlyTool`: "Cascading style sheets CSS" → "CSS", "Amazon Web Services AWS software" → "AWS", "The MathWorks MATLAB" → "MATLAB"). `signal_sources[].items` keep the raw O*NET names; `display_names` has the friendly ones. `future_technologies[]` also has `display_name`.
 
 ## Sources (see `sources` in each file for exact URL + retrieved_at)
 O*NET 31.0 (Aug 2026, CC BY 4.0) · BLS OEWS May 2025 · BLS Employment Projections 2025–35 · Eloundou et al. "GPTs are GPTs" · Felten, Raj & Seamans AIOE · Anthropic Economic Index (labor-market impacts; robot exposure "What work can robots do?") · vendor homepages (agent/robot catalogs, fetched as evidence).
