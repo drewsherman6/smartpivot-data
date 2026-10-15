@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "dataset": "agent_platforms",
-  "updated": "2026-10-13",
+  "updated": "2026-10-15",
   "platforms": [
     {
       "id": "salesforce-agentforce",
@@ -20,14 +20,14 @@
         "publication_date": "2026-08-26",
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.salesforce.com/agentforce/",
         "title": "Agentforce: The AI Agent Platform | Salesforce",
         "description": "Build and customize autonomous AI agents to support your employees and customers 24/7, including full integration with the Salesforce ecosystem.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -1846,14 +1846,14 @@
         "publication_date": "2026-07",
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "low",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.servicenow.com/",
         "title": "ServiceNow - Put AI to Work",
         "description": "Streamline your enterprise workflows with the ServiceNow AI Platform—empowering both customers and employees in every corner of your business.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -3971,14 +3971,14 @@
         "publication_date": "2025-10-01",
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "high",
       "evidence": {
         "http_status": 200,
         "final_url": "https://azure.microsoft.com/en-us/blog/introducing-microsoft-agent-framework/",
         "title": "Introducing Microsoft Agent Framework | Microsoft Azure Blog",
         "description": "Find out how Microsoft Agent Framework can help simplify the orchestration of multi-agent systems and keep developers in flow.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -4511,14 +4511,14 @@
         "publication_date": "2025-10-09",
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "high",
       "evidence": {
         "http_status": 200,
         "final_url": "https://n8n.io/",
         "title": "AI Workflow Automation Platform - n8n",
         "description": "n8n is a workflow automation platform that uniquely combines AI capabilities with business process automation, giving technical teams the flexibility of code with the speed of no-code.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -6487,14 +6487,14 @@
         "publication_date": "2025-01",
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://zapier.com/agents",
         "title": "Build AI teammates with Zapier Agents",
         "description": "Create your custom AI agent in minutes. Equip your agents with live business data and have them do work across 8,000+ apps — on command and while you sleep.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -8463,14 +8463,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.lindy.ai/",
         "title": "Lindy – The AI Teammate That Lets You Do More",
         "description": "Lindy is the AI employee that connects to all your tools, knows everything about your company, and does real work for the whole team.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -9932,14 +9932,14 @@
         "publication_date": "2026-06-26",
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.anthropic.com/",
         "title": "Home \\ Anthropic",
         "description": "Anthropic is an AI safety and research company that's working to build reliable, interpretable, and steerable AI systems.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -11913,14 +11913,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.anthropic.com/news/3-5-models-and-computer-use",
         "title": "Introducing computer use, a new Claude 3.5 Sonnet, and Claude 3.5 Haiku \\ Anthropic",
         "description": "A refreshed, more powerful Claude 3.5 Sonnet, Claude 3.5 Haiku, and a new experimental AI capability: computer use.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -13473,14 +13473,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.uipath.com/automation/agentic-automation",
         "title": "What is Agentic Automation? | UiPath",
         "description": "Discover how agentic automation, powered by advanced AI like LLMs, GenAI, and LAMs, marks the next evolution in automation by enabling software agents to take autonomous action.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -15825,14 +15825,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://developers.openai.com/api/docs/assistants/migration",
         "title": "Assistants migration guide | OpenAI API",
         "description": "Migrate from the retired Assistants API to the Responses API, with side-by-side comparisons and updated patterns.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -17164,14 +17164,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://crewai.com/",
         "title": "CrewAI",
         "description": "The Leading Multi-Agent Platform",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -17705,14 +17705,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.langchain.com/",
         "title": "LangChain: the open agent platform to own your intelligence",
         "description": "LangChain enables every company to own their intelligence. Control, govern, and compound intelligence with an open agent engineering platform.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -19687,14 +19687,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://learn.microsoft.com/en-us/microsoft-copilot-studio/",
         "title": "Official Microsoft Copilot Studio documentation - Microsoft Copilot Studio | Microsoft Learn",
         "description": "Discover how to build AI-driven agents, workflows, and apps using Microsoft Copilot Studio with documentation, implementation guidance, online training, and other resources.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -22332,14 +22332,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://adoption.microsoft.com/en-us/build-agents/",
         "title": "Build agents with Microsoft Copilot &#8211; Microsoft Adoption",
         "description": "A curated collection of ready-to-deploy Microsoft Copilot agents designed to automate high-impact workflows, from daily planning to executive briefings.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -24285,14 +24285,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://docs.multion.ai/welcome",
         "title": "Welcome to MultiOn",
         "description": "Official documentation for MultiOn - the Motor Cortex layer for AI",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -25221,14 +25221,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://docs.lindy.ai/",
         "title": "What is Lindy? - Lindy Documentation",
-        "description": "Lindy is an AI employee that works in seconds, acts before you ask, and does the work of a hire — with a personal executive assistant for everyone on your team.",
-        "checked_at": "2026-10-13"
+        "description": "Learn what Lindy does, how to work with it, and where to find the guides you need.",
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -26693,14 +26693,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://github.com/smythos/sre",
         "title": "GitHub - SmythOS/sre: The SmythOS Runtime Environment (SRE) is an open-source, cloud-native runtime for agentic AI. Secure, modular, and production-ready, it lets developers build, run, and manage intelligent agents across local, cloud, and edge environments. · GitHub",
         "description": "The SmythOS Runtime Environment (SRE) is an open-source, cloud-native runtime for agentic AI. Secure, modular, and production-ready, it lets developers build, run, and manage intelligent agents across local, cloud, and edge environments. - SmythOS/sre",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -28671,14 +28671,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.bardeen.ai/",
         "title": "Bardeen: Find and reach leads no one else can.",
         "description": "Source leads with our agentic web scraper, qualify them with AI and reach them with contact enrichment.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -30113,7 +30113,7 @@
         "final_url": "https://www.workday.com/en-us/products/skills-cloud.html",
         "title": "Not Found",
         "description": null,
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -30168,7 +30168,7 @@
         "final_url": "https://www.adept.ai/",
         "title": "Just a moment...",
         "description": null,
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -30217,14 +30217,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://replit.com/agent4",
         "title": "The Next Evolution in AI App Building Tools | Agent 4",
         "description": "Replit's fastest, most versatile Agent to date is here. Agent 4 is built around four pillars: Design Freely, Build Together, Ship Anything, and Move Faster.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -31762,14 +31762,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/overview",
         "title": "Agent Platform overview &nbsp;|&nbsp; Gemini Enterprise Agent Platform &nbsp;|&nbsp; Google Cloud Documentation",
         "description": "Learn about Agent Platform, a unified platform for building, deploying, governing, and optimizing enterprise-grade AI agents.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -32893,7 +32893,7 @@
         "final_url": "https://strandsagents.com/",
         "title": "Strands Agents | The open source toolkit for production AI agents",
         "description": "Strands is the open source toolkit for building production AI agents in Python and TypeScript: an agent harness and SDK, sandboxed shell, evals, and research labs.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -32937,14 +32937,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://github.com/openai/swarm",
         "title": "GitHub - openai/swarm: Educational framework exploring ergonomic, lightweight multi-agent orchestration. Managed by OpenAI Solution team. · GitHub",
         "description": "Educational framework exploring ergonomic, lightweight multi-agent orchestration. Managed by OpenAI Solution team. - openai/swarm",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -33478,14 +33478,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.ag2.ai/",
         "title": "AG2: Build Systems, Not Prompts | Open-Source Multi-Agent AI Framework",
         "description": "AG2 is the open-source Python framework for building, orchestrating, and scaling multi-agent AI systems. Production-ready agent orchestration from the creators of AutoGen.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -34018,14 +34018,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.browserbase.com/",
-        "title": "Browserbase | Browserbase",
+        "title": "Browserbase",
         "description": "Give your agents access to the whole web.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -34950,14 +34950,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.llamaindex.ai/",
         "title": "LlamaIndex | AI Agents for Document OCR + Workflows",
         "description": "LlamaParse is the world",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -36926,14 +36926,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://learn.microsoft.com/en-us/semantic-kernel/",
         "title": "Semantic Kernel documentation | Microsoft Learn",
         "description": "Semantic Kernel documentation.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -37465,14 +37465,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://pydantic.dev/docs/",
         "title": "Pydantic Docs - Validation, AI Agents, Logfire Observability",
         "description": "Documentation for the Pydantic stack. Validate data with Pydantic Validation, build production AI agents with Pydantic AI, and monitor LLM calls, agent behavior, and costs with Pydantic Logfire.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -38005,14 +38005,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.anthropic.com/news/3-5-models-and-computer-use",
         "title": "Introducing computer use, a new Claude 3.5 Sonnet, and Claude 3.5 Haiku \\ Anthropic",
         "description": "A refreshed, more powerful Claude 3.5 Sonnet, Claude 3.5 Haiku, and a new experimental AI capability: computer use.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -38938,14 +38938,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://developers.openai.com/api/docs/assistants/migration",
         "title": "Assistants migration guide | OpenAI API",
         "description": "Migrate from the retired Assistants API to the Responses API, with side-by-side comparisons and updated patterns.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -39478,14 +39478,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://cognition.com/",
         "title": "Cognition",
         "description": "Cognition operates Devin, the first autonomous software engineer. Devin plans, writes, tests, and ships production code inside your existing workflows.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -41021,14 +41021,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://aider.chat/",
         "title": "Aider - AI Pair Programming in Your Terminal",
         "description": null,
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -42565,14 +42565,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://cursor.com/",
         "title": "AI Coding Agent for Building Ambitious Software | Cursor",
         "description": "Built to make you extraordinarily productive, agents turn ideas into code. Accelerate development by handing off tasks to Cursor.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -44109,14 +44109,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://github.com/features/copilot",
         "title": "GitHub Copilot · Your AI coding agent · GitHub · GitHub",
         "description": "GitHub Copilot works every step of the way, from an open issue to reviewing and merging a pull request. Use it in your editor, the terminal, on your desktop, and on GitHub.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -45652,14 +45652,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://sourcegraph.com/docs/cody",
         "title": "Cody - Sourcegraph docs",
         "description": "Documentation for Sourcegraph, the code intelligence platform.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -47203,7 +47203,7 @@
         "final_url": "https://www.perplexity.ai/",
         "title": "Just a moment...",
         "description": null,
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -47250,14 +47250,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://you.com/",
         "title": "The Leading Web Search APIs for AI | You.com",
         "description": "Skip the groundwork with our AI-ready Web Search APIs, delivering advanced search capabilities to power your next product.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -48380,7 +48380,7 @@
         "final_url": "https://poe.com/login?redirect_url=%2F",
         "title": "Just a moment...",
         "description": null,
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -48427,14 +48427,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://huggingface.co/docs/smolagents/index",
         "title": "smolagents · Hugging Face",
         "description": "We’re on a journey to advance and democratize artificial intelligence through open source and open science.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -48967,14 +48967,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.langchain.com/langsmith/observability",
         "title": "LangSmith: Agent & LLM Observability Platform",
         "description": "Complete AI agent and LLM observability platform with tracing and real-time monitoring. Debug agents, find failures fast, and track costs and latency.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -49506,14 +49506,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://github.com/yoheinakajima/babyagi",
         "title": "GitHub - yoheinakajima/babyagi · GitHub",
         "description": "Contribute to yoheinakajima/babyagi development by creating an account on GitHub.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -50044,14 +50044,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://github.com/FoundationAgents/MetaGPT",
         "title": "GitHub - FoundationAgents/MetaGPT: 🌟 The Multi-Agent Framework: First AI Software Company, Towards Natural Language Programming · GitHub",
         "description": "🌟 The Multi-Agent Framework: First AI Software Company, Towards Natural Language Programming - FoundationAgents/MetaGPT",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -51600,14 +51600,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://github.com/Significant-Gravitas/AutoGPT",
         "title": "GitHub - Significant-Gravitas/AutoGPT: AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our mission is to provide the tools, so that you can focus on what matters. · GitHub",
         "description": "AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our mission is to provide the tools, so that you can focus on what matters. - Significant-Gravitas/AutoGPT",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -52139,14 +52139,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://godmode.space/",
         "title": "Godmode.space",
         "description": null,
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -52678,14 +52678,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://github.com/TransformerOptimus/SuperAGI",
         "title": "GitHub - TransformerOptimus/SuperAGI: <⚡️> SuperAGI - A dev-first open source autonomous AI agent framework. Enabling developers to build, manage & run useful autonomous agents quickly and reliably. · GitHub",
         "description": "<⚡️> SuperAGI - A dev-first open source autonomous AI agent framework. Enabling developers to build, manage & run useful autonomous agents quickly and reliably. - TransformerOptimus/SuperAGI",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -53216,14 +53216,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://agentgpt.reworkd.ai/",
         "title": "AgentGPT",
         "description": "Assemble, configure, and deploy autonomous AI Agents in your browser.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -54147,14 +54147,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://dust.tt/",
         "title": "Dust - Multiplayer AI for human-agent collaboration",
         "description": "Dust connects your company knowledge, tools, and teams so you can create, share, and run agents across real workflows. Use different models for different tasks, with people in control.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -55270,14 +55270,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.glean.com/",
         "title": "Glean – Enterprise AI that Works | Agents, Assistant & Search",
         "description": "Glean is the Enterprise AI platform connected to your enterprise's data. Find, create, and automate anything. Explore what Glean can do for you!",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -56393,14 +56393,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.notion.com/",
         "title": "The AI workspace that works for you. | Notion",
         "description": "Build Custom Agents, search across all your apps, and automate busywork. The AI workspace where teams get more done, faster.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -57516,14 +57516,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://coda.io/",
         "title": "Coda: Your all-in-one collaborative workspace.",
         "description": "Coda is an all-in-one platform that blends the flexibility of docs, structure of spreadsheets, power of applications, and intelligence of AI.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -58639,14 +58639,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.harvey.ai/",
         "title": "Harvey | AI software for legal and professional services",
         "description": "Legal AI tailored for leading law firms and corporate legal teams worldwide. Harvey streamlines contract analysis, due diligence, compliance, and litigation.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -60085,7 +60085,7 @@
         "final_url": "https://www.thomsonreuters.com/en/cocounsel",
         "title": "CoCounsel: The industry-leading AI for professionals | Thomson Reuters",
         "description": "Thomson Reuters CoCounsel is AI technology built by industry experts, backed by authoritative content and equipped with best-in-class security.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -60132,14 +60132,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.klarna.com/us/?grs=%2F&grr=empty",
         "title": "Klarna US - A secure, flexible way to manage your money",
         "description": "Manage everyday payments securely with Klarna - online, in store, or with the Klarna Card. Flexible and interest-free options in the United States.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -61799,14 +61799,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.intercom.com/",
         "title": "Intercom | A complete system for human and AI customer service",
         "description": "Intercom is the only helpdesk with a natively integrated AI Agent, Fin, meaning every customer conversation improves the next one, enabling perfect experiences that were never possible before.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -63473,7 +63473,7 @@
         "final_url": "https://www.salesloft.com/",
         "title": "The Leading Predictive Revenue System",
         "description": "Turn buyer signals into action with Salesloft's AI Predictive Revenue System. Learn how top revenue teams close deals faster and explore the platform.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -63520,14 +63520,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.gong.io/",
         "title": "Gong - Revenue AI OS",
         "description": "Gong Revenue AI OS helps your entire GTM organization win. Drive growth with multimodal revenue signal processing, specialized AI agents, and purpose-built applications.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -64271,14 +64271,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.tableau.com/",
         "title": "Business Intelligence and Analytics Software | Tableau",
         "description": "Tableau can help anyone see and understand their data. Connect to almost any database, drag and drop to create visualizations, and share with a click.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -64901,7 +64901,7 @@
         "final_url": "https://powerbi.microsoft.com/",
         "title": "Just a moment...",
         "description": null,
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -64948,14 +64948,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://cloud.google.com/looker",
         "title": "Looker: AI Business Intelligence & Embedded Analytics | Google Cloud",
         "description": "Looker is Google Cloud agentic business intelligence and embedded analytics platform. Unify metrics with a trusted semantic layer and Gemini agents.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -65571,14 +65571,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://amplitude.com/",
         "title": "Amplitude | A new era for product teams",
         "description": "From analytics to feedback to code, Amplitude brings AI into every step of building self-improving products. Start free with 2M events per month.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -66194,14 +66194,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://mixpanel.com/home/",
         "title": "Product Intelligence Platform for the AI Era | Mixpanel",
         "description": "Mixpanel is the product intelligence platform for the AI era, combining analytics, session replay, experiments, feature flags, and AI-powered insights.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -66817,14 +66817,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.twilio.com/en-us/segment",
         "title": "Twilio Segment Customer Data Platform | Twilio",
         "description": "Collect, unify, and enrich customer data across any app or device with the Twilio Segment CDP, now available on Twilio.com.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -67965,14 +67965,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.mparticle.com/",
         "title": "Performance Made Easy | mParticle Customer Data Platform",
         "description": "Smarter strategy. Faster workflows. Stronger outcomes. mParticle is the performance CDP that turns customer data into audiences, actions, and growth.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -69113,14 +69113,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://tealium.com/",
         "title": "Customer Data Platform | Trusted Data for AI - Tealium",
         "description": "Discover Tealium&#039;s cutting-edge products designed to revolutionize your data strategy. Explore our suite of tools for data integration, management, and analytics to optimize customer experiences and drive digital transformation. See how our solutions can elevate your business&#039;s data capabilities.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -70261,14 +70261,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.fullstory.com/",
         "title": "Fullstory | The Intelligent Digital Experience Company",
         "description": "Fullstory helps companies understand and improve how humans and AI agents interact with digital experiences. It automatically captures every user interaction, giving businesses and their AI agents the context they need to spot problems, anticipate customer and employee needs, and fix friction points before they compound.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -70884,14 +70884,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://contentsquare.com/",
         "title": "Contentsquare: AI-native experience optimization platform",
         "description": "Contentsquare gives brands the intelligence to understand every human and agent journey — and the speed to turn every signal into better experiences.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -71507,14 +71507,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://contentsquare.com/hotjar/?utm_campaign=exp__hj_hp_redirection",
         "title": "Official Hotjar Site – Sign up for free",
         "description": "Contentsquare, the global leader in digital experience analytics, has joined forces with Hotjar, the leading product experience insights platform in the midsize and SMB market.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -72131,14 +72131,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://quickbooks.intuit.com/",
         "title": "QuickBooks®: Official Site | Smart Tools. Better Business.",
         "description": "Organize & manage your business with the #1 rated solution. Fast & easy setup. Sign up for a free trial to join 7 million businesses already using QuickBooks.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -73098,14 +73098,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://ramp.com/",
         "title": "Spend Management, Corporate Cards & Accounts Payable Solutions | Ramp",
         "description": "Make expense management easy with Ramp's spend management platform. Combine global corporate cards, travel, expenses and accounts payable to automate finance operations and improve efficiency.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -74065,14 +74065,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.brex.com/",
         "title": "Brex: The Modern Finance Software Platform | Spend Smarter",
         "description": "Simplify expense management with Brex's finance platform. From company cards to banking, Brex helps you drive growth, automate processes, & earn more.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -75032,14 +75032,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.greenhouse.com/",
-        "title": "Greenhouse | Applicant tracking software & hiring platform",
-        "description": "Greenhouse is more than your typical ATS recruiting software, powered by built-in AI recruiting tools to streamline sourcing, hiring and talent management.",
-        "checked_at": "2026-10-13"
+        "title": "Greenhouse | Hiring system",
+        "description": "Greenhouse is more than a hiring platform or ATS. We’re a complete hiring ecosystem that brings employers and job seekers together in one place.",
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -75271,14 +75271,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.lever.co/",
         "title": "Lever | Modern Recruiting Software & ATS",
         "description": "Lever is modern recruiting software that combines ATS and CRM capabilities to help scaling teams nurture talent relationships and hire efficiently.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -75510,14 +75510,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.workday.com/",
         "title": "The Enterprise AI Platform for HR, Finance, and IT | Workday",
         "description": "Experience a new way to work with Sana and agentic AI from Workday.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -75749,14 +75749,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.bamboohr.com/",
         "title": "BambooHR: The Complete HR Software for People, Payroll &#x26; Benefits",
         "description": "BambooHR makes it easy to simplify HR, with award-winning solutions for everything from hire to retire. Learn more with a free demo today.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -75988,14 +75988,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.rippling.com/",
         "title": "Rippling: #1 Workforce Management System | HR, IT, Finance",
         "description": "Rippling eliminates the friction from running a business, combining HR, IT, and Finance apps on a unified data platform.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -76227,14 +76227,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.deel.com/",
         "title": "Deel | Global Payroll, Compliance, HR Solutions | HRIS",
         "description": "Hire, pay, and manage teams in 150+ countries with Deel. Run global payroll, ensure compliance, and streamline HR operations—all on one powerful platform.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -76466,14 +76466,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://remote.com/",
         "title": "EOR, Payroll & Compliance Platform - Worldwide | Remote",
         "description": "The intelligent infrastructure for global employment. EOR, global payroll, contractor management, and compliant payments — worldwide, on one system of record.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -76705,14 +76705,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://lattice.com/",
         "title": "Lattice | The HR platform that people love",
         "description": "Join 5,000+ forward-thinking teams using Lattice’s HR and AI tools to manage people and performance — all on one trusted platform.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -76944,14 +76944,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.15five.com/",
         "title": "Continuous Performance Management Software | 15Five",
         "description": "15Five is the performance management platform that creates effective managers, highly engaged employees, and top-performing organizations.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -77183,14 +77183,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.cultureamp.com/",
         "title": "The market-leading employee experience platform | Culture Amp",
         "description": "Empower your teams and fuel positive change with performance, development, and employee engagement tools – all-in-one intuitive employee experience platform.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -77418,14 +77418,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://dify.ai/",
         "title": "Dify - The Platform for Production-Ready Agentic Workflows",
         "description": "Dify is the platform for production-ready agentic workflows. Build agents, knowledge pipelines, models, and tools on one canvas, deployable on Cloud, in your VPC, or self-hosted.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -77960,7 +77960,7 @@
         "final_url": "https://www.make.com/en/ai-agents",
         "title": "Just a moment...",
         "description": null,
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -78003,14 +78003,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.activepieces.com/",
         "title": "Activepieces: unify your team's AI",
         "description": "Chat, agents, flows, tables, and 760+ apps in one workspace, so your whole team works with AI in the tools they already use. Open source at the core.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -79974,14 +79974,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.gumloop.com/",
         "title": "Gumloop: Build AI agents for work",
         "description": "Gumloop is the multiplayer AI agent builder. Let anyone at your company build agents with any AI model, any integration while IT controls access.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -81945,14 +81945,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.tines.com/",
         "title": "Tines | The secure environment for AI agents, apps and automation",
         "description": "Tines lets teams put AI to work across their most sensitive systems, data, and processes, with the security and governance to do it safely.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -83916,14 +83916,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://relevanceai.com/",
         "title": "Specialist AI Agents for Every Task | Relevance AI",
         "description": "Deliver maximum ROI through optimized specialist agents. Build agents for sales, customer success, marketing and HR, and run millions of daily tasks on one platform.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -85894,7 +85894,7 @@
         "final_url": "https://openai.com/index/introducing-agentkit/",
         "title": null,
         "description": null,
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -85940,7 +85940,7 @@
         "final_url": "https://openai.com/index/introducing-chatgpt-agent/",
         "title": null,
         "description": null,
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -86003,7 +86003,7 @@
         "final_url": "https://learn.chatgpt.com/docs",
         "title": "ChatGPT | ChatGPT Learn",
         "description": "Use ChatGPT for ambitious work and software development",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -86046,14 +86046,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://claude.com/product/claude-code",
         "title": "Claude Code by Anthropic | AI Coding Agent, Terminal, IDE",
         "description": "Anthropic's agentic coding tool for developers. Claude Code understands your codebase, edits files, runs commands, and helps you ship faster.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -87585,14 +87585,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://cloud.google.com/gemini-enterprise",
         "title": "Gemini for Business: The Universal Work Agent | Google Cloud",
         "description": "Gemini answers your questions, handles your knowledge work, creates images and media, and writes and runs code—all in a single agent and a single API.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -89144,7 +89144,7 @@
         "final_url": "https://adk.dev/",
         "title": "Agent Development Kit (ADK) - Agent Development Kit (ADK)",
         "description": "Build powerful multi-agent systems with Agent Development Kit (ADK)",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -89183,14 +89183,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://aws.amazon.com/bedrock/agentcore/",
         "title": "Amazon Bedrock AgentCore - AWS",
         "description": null,
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -89718,14 +89718,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://aws.amazon.com/q/business/",
         "title": "Enterprise Knowledge Assistant - Amazon Q Business - AWS",
         "description": "Amazon Q Business connects to your enterprise data to answer questions, generate summaries, and automate tasks.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -90837,14 +90837,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.automationanywhere.com/",
         "title": "The #1 Provider of Agentic Automation | Automation Anywhere",
         "description": "The industry&#039;s most advanced, most deployed agentic process automation system combines the power of AI, Automation, and RPA to deliver secure end-to-end enterprise agentic automation for mission-critical processes.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -93181,14 +93181,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.kore.ai/",
         "title": "Enterprise Agentic AI Platform | Kore.ai",
         "description": "Kore.ai, a leader in enterprise AI, helps businesses accelerate outcomes across customer service and employee productivity with agentic AI.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -95081,14 +95081,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://aisera.com/",
         "title": "Aisera : Agentic AI for the Enterprise",
         "description": "Aisera enables businesses to deliver transformative work experiences, boost employee productivity, and reduce operational costs with its award-winning AI agent platform.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -96977,14 +96977,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.moveworks.com/",
         "title": "Moveworks: The AI Assistant Platform That Gets Work Done",
         "description": "Moveworks is the AI Assistant platform for your entire workforce to find answers instantly and automate tasks end-to-end in seconds across every business app.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -97553,14 +97553,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://sierra.ai/",
         "title": "Better customer experiences | Sierra",
         "description": "Sierra helps businesses build better, more human customer experiences with AI.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -99216,14 +99216,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://decagon.ai/",
         "title": "Decagon | The AI concierge for every customer",
         "description": "Build, optimize, and scale AI agents that treat every customer like the only one.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -100879,14 +100879,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://docs.ada.cx/home",
         "title": "Welcome to Ada Docs | Ada",
         "description": null,
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -102542,14 +102542,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.zendesk.com/service/ai/ai-agents/",
         "title": "AI Agents for Customer Service | Zendesk",
         "description": "Deploy AI agents that resolve up to 80% of customer interactions. Automate service and improve every outcome—start your free trial.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -104205,14 +104205,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.hubspot.com/products/artificial-intelligence/ai-agents",
         "title": "Easily Build Custom AI Agents | Agent Builder",
         "description": "HubSpot",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -106033,14 +106033,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.11x.ai/",
-        "title": "11x – Digital workers, Human results",
-        "description": "For Sales, RevOps, and GTM Leaders. Transform your revenue team with digital AI workers that execute, learn, and optimize across all customer touchpoints.",
-        "checked_at": "2026-10-13"
+        "title": "11x – AI Agents for Outbound, Inbound & Expansion",
+        "description": "11x runs your pipeline with AI agents for outbound prospecting, inbound qualification, and customer expansion. Fully managed, CRM-native, live in days.",
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -106780,14 +106780,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.clay.com/",
         "title": "Clay | Build systems to grow revenue",
         "description": "Infrastructure to get any data, run agentic workflows, and launch GTM plays.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -108344,14 +108344,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://writer.com/",
         "title": "WRITER - The enterprise AI platform for agentic work",
         "description": "WRITER is the enterprise AI agent platform trusted by Fortune 500 companies, built to help teams execute and scale on-brand, compliant work.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -109896,14 +109896,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://manus.im/",
         "title": "Manus: Hands On AI",
         "description": "Manus is the action engine that goes beyond answers to execute tasks, automate workflows, and extend your human reach.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -111784,7 +111784,7 @@
         "final_url": "https://www.perplexity.ai/comet",
         "title": "Just a moment...",
         "description": null,
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -111840,14 +111840,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://github.com/features/copilot",
         "title": "GitHub Copilot · Your AI coding agent · GitHub · GitHub",
         "description": "GitHub Copilot works every step of the way, from an open issue to reviewing and merging a pull request. Use it in your editor, the terminal, on your desktop, and on GitHub.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -113379,14 +113379,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://cursor.com/",
         "title": "AI Coding Agent for Building Ambitious Software | Cursor",
         "description": "Built to make you extraordinarily productive, agents turn ideas into code. Accelerate development by handing off tasks to Cursor.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -114925,7 +114925,7 @@
         "final_url": "https://lovable.dev/",
         "title": "Just a moment...",
         "description": null,
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -114968,14 +114968,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://bolt.new/",
         "title": "Bolt AI builder: Websites, apps & prototypes",
         "description": "Build and scale high-performing websites & apps using your words. Join millions and start building today.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -116507,14 +116507,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.hebbia.com/",
         "title": "Hebbia | AI built for the rigor of finance",
         "description": "The leading AI platform for finance, used by the world's leading asset managers, investment banks, law firms and Fortune 500 companies.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -118247,14 +118247,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.abridge.com/",
         "title": "Generative AI for Clinical Conversations | Abridge",
         "description": "Discover how Abridge transforms documentation for clinical conversations powered by generative AI, enhancing healthcare understanding and improving patient care.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -119146,14 +119146,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://hippocraticai.com/",
         "title": "Hippocratic AI | Safest Generative AI Healthcare Agent",
         "description": "Hippocratic AI builds the safest generative AI healthcare agent for health systems, payors, and pharma. Over 180 million clinical interactions across 1,000+ use cases with 60+ partners worldwide. Increase your organization&#039;s reach and patient&#039;s accessibility today.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -121334,14 +121334,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://mastra.ai/",
         "title": "TypeScript AI Framework for Agents and Apps | Mastra",
         "description": "Ship AI agents that reason, remember, and act in TypeScript. Mastra provides memory, tools, MCP, and observability to go from prototype to production.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -121869,14 +121869,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://openai.github.io/openai-agents-python/",
         "title": "OpenAI Agents SDK",
         "description": null,
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -122404,14 +122404,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.ibm.com/products/watsonx-orchestrate",
         "title": "IBM watsonx Orchestrate",
         "description": "IBM watsonx Orchestrate brings AI agents together to automate work across apps and workflows, with centralized governance that scales across the enterprise.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -124375,14 +124375,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.pega.com/",
         "title": "The leading AI-powered platform for enterprise transformation | Pega",
         "description": "The world’s most influential organizations trust Pega to reimagine work - automating workflows, personalizing customer experiences, and modernizing legacy systems.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -126346,14 +126346,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.workato.com/",
         "title": "Govern & Scale Enterprise AI on the #1 iPaaS | Workato",
         "description": "Workato connects apps, data, workflows, and AI agents on one enterprise platform to securely orchestrate, automate, and govern work.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -128317,14 +128317,14 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "evidence": {
         "http_status": 200,
         "final_url": "https://beam.ai/",
         "title": "Leading Platform for Agentic Automation & AI Agents | Beam AI",
         "description": "Automate processes with AI Agents ✓Build & deploy agents in minutes ✓Seamlessly integrate into your workflows ➤ Start automating today",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "method": "Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.",
@@ -130288,7 +130288,7 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "categories": [
         "customer_service"
@@ -130298,7 +130298,7 @@
         "final_url": "https://www.gorgias.com/",
         "title": "The Conversational AI platform for Ecommerce | Gorgias",
         "description": "Drive more sales and automate support with AI Agent, Helpdesk integrated to your stack, Chat, FAQ and more. Trusted by top 17,000 brands and counting.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "activities": [
@@ -131951,7 +131951,7 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "categories": [
         "customer_service"
@@ -131961,7 +131961,7 @@
         "final_url": "https://www.cognigy.com/",
         "title": "Enterprise Customer Service AI & AI Agents | NiCE Cognigy",
         "description": "NiCE Cognigy powers enterprise customer service with generative and conversational AI agents across voice and chat. Get a demo or try it free today.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "activities": [
@@ -133614,7 +133614,7 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "categories": [
         "customer_service"
@@ -133624,7 +133624,7 @@
         "final_url": "https://www.freshworks.com/freshdesk/",
         "title": "AI-Powered Customer Service Software | Freshdesk | Freshworks",
         "description": "Boost agent productivity and deliver seamless customer experiences with Freshdesk, an AI-powered customer service solution with omnichannel ticketing and automated workflows.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "activities": [
@@ -135277,7 +135277,7 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "categories": [
         "software_engineering"
@@ -135287,7 +135287,7 @@
         "final_url": "https://aws.amazon.com/q/developer/",
         "title": "Coding Assistant - Amazon Q Developer - AWS",
         "description": "Accelerate software development with Amazon Q Developer — an AI coding assistant that writes, debugs, and refactors code natively in your IDE.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "activities": [
@@ -136816,7 +136816,7 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "categories": [
         "software_engineering"
@@ -136826,7 +136826,7 @@
         "final_url": "https://junie.jetbrains.com/",
         "title": "Junie",
         "description": "Junie by JetBrains. AI Coding Agent.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "activities": [
@@ -138355,7 +138355,7 @@
         "publication_date": null,
         "tier": 5
       },
-      "retrieved_at": "2026-10-13",
+      "retrieved_at": "2026-10-15",
       "confidence": "medium",
       "categories": [
         "software_engineering"
@@ -138365,7 +138365,7 @@
         "final_url": "https://jules.google/",
         "title": "Jules - An Autonomous Coding Agent",
         "description": "Jules is an Autonomous agent that gets out of your way. It lets you focus on the coding you want to do, meanwhile picking up all the other random tasks that you rather not do.",
-        "checked_at": "2026-10-13"
+        "checked_at": "2026-10-15"
       },
       "onet_mapping": {
         "activities": [

@@ -224,23 +224,23 @@ async function main() {
       const st = SKILL_STATS.get(s.name);
       const zIm = st.sdIm ? (s.importance - st.meanIm) / st.sdIm : 0, zLv = st.sdLv && s.level != null ? (s.level - st.meanLv) / st.sdLv : 0;
       const z = (zIm + zLv) / 2;
-      const why = [`importance ${s.importance} vs ${r2(st.meanIm)} avg across ${st.n} occupations`]; const sig = [{ type: 'distinctiveness', source: 'O*NET 31.0 skills (importance/level z-score vs all occupations)', value: r2(z) }];
+      const ratio = st.meanIm ? s.importance / st.meanIm : 1; const why = [ratio >= 1.5 ? `Far more central to this job than to most (importance ${r2(s.importance)} of 5 vs ${r2(st.meanIm)} average)` : ratio >= 1.15 ? `More important here than in most jobs (importance ${r2(s.importance)} of 5 vs ${r2(st.meanIm)} average)` : `Important in this job (importance ${r2(s.importance)} of 5)`]; const sig = [{ type: 'distinctiveness', source: 'O*NET 31.0 skills (importance/level z-score vs all occupations)', value: r2(z) }];
       let bonus = 0;
       const tf = tw ? transFut.get(s.name) / tw - s.importance : 0;
-      if (tw && tf > 0.1) { bonus += Math.min(0.5, tf); why.push(`more important (+${r2(tf)}) in growing transition targets`); sig.push({ type: 'growing_transitions', source: 'BLS Employment Projections + O*NET related occupations', value: r2(tf) }); }
+      if (tw && tf > 0.1) { bonus += Math.min(0.5, tf); why.push('even more important in the growing jobs people move into from here'); sig.push({ type: 'growing_transitions', source: 'BLS Employment Projections + O*NET related occupations', value: r2(tf) }); }
       const re = C.skillSignals[s.name];
       const techHits = re ? hotTech.filter((t) => re.test(t.category + ' ' + t.example)).slice(0, 3).map((t) => t.example) : [];
-      if (techHits.length) { bonus += 0.3; why.push(`hot/in-demand tech: ${techHits.join(', ')}`); sig.push({ type: 'hot_technology', source: 'O*NET 31.0 technology skills (Hot Technology / In Demand flags)', items: techHits }); }
+      if (techHits.length) { bonus += 0.3; why.push(`used with in-demand tools such as ${techHits.slice(0,3).join(', ')}`); sig.push({ type: 'hot_technology', source: 'O*NET 31.0 technology skills (Hot Technology / In Demand flags)', items: techHits }); }
       const emHits = re ? o.emerging_tasks.filter((t) => re.test(t.text)).slice(0, 2).map((t) => t.text) : [];
-      if (emHits.length) { bonus += 0.3; why.push('appears in O*NET emerging tasks'); sig.push({ type: 'emerging_task', source: 'O*NET 31.0 emerging tasks', items: emHits }); }
+      if (emHits.length) { bonus += 0.3; why.push('part of new tasks emerging in this job'); sig.push({ type: 'emerging_task', source: 'O*NET 31.0 emerging tasks', items: emHits }); }
       const rising = (C.skillToRising[s.name] || []).map((id) => RISING.get(id)).filter(Boolean);
-      if (rising.length) { bonus += 0.2; why.push(`rising: ${rising.map((r) => r.name).join('; ')}`); sig.push(...rising.map((r) => ({ type: 'rising_skill', source: r.source.name, url: r.source.url, record_id: r.id }))); }
-      return { skill: s.name, category: s.category, kind: 'skill', future_importance: r2(s.importance + Math.max(0, tf)), current_importance: s.importance, level: s.level ?? null, distinctiveness: r2(z), future_score: r2(z + bonus), why: why.join('; '), signal_sources: sig, generic: st.meanIm >= 3 };
+      if (rising.length) { bonus += 0.2; why.push(`linked to fast-rising skills like ${rising.slice(0,2).map((r) => r.name).join(' and ')}`); sig.push(...rising.map((r) => ({ type: 'rising_skill', source: r.source.name, url: r.source.url, record_id: r.id }))); }
+      return { skill: s.name, category: s.category, kind: 'skill', future_importance: r2(s.importance + Math.max(0, tf)), current_importance: s.importance, level: s.level ?? null, distinctiveness: r2(z), future_score: r2(z + bonus), why: why.join('; ') + '.', signal_sources: sig, generic: st.meanIm >= 3 };
     });
     let future = scored.filter((x) => x.current_importance >= 2.75 && x.distinctiveness > 0 && !(x.generic && x.distinctiveness < 1)).sort((a, b) => b.future_score - a.future_score);
     if (future.length < 5) future = future.concat(scored.filter((x) => !future.includes(x) && x.current_importance >= 2.5).sort((a, b) => b.future_score - a.future_score)).slice(0, 5);
     future = future.slice(0, 8).map(({ generic, ...x }) => x);
-    const core = scored.filter((x) => x.generic).sort((a, b) => b.current_importance - a.current_importance).slice(0, 6).map(({ generic, future_score, signal_sources, ...x }) => ({ ...x, why: `baseline skill: important in most occupations (avg importance ${r2(SKILL_STATS.get(x.skill).meanIm)})` }));
+    const core = scored.filter((x) => x.generic).sort((a, b) => b.current_importance - a.current_importance).slice(0, 6).map(({ generic, future_score, signal_sources, ...x }) => ({ ...x, why: `A baseline skill that matters in most jobs (average importance ${r2(SKILL_STATS.get(x.skill).meanIm)} of 5).` }));
     const dev = new Map();
     top.slice(0, 5).forEach((t) => t.skill_gaps.forEach((g) => { const d = dev.get(g.skill) || { skill: g.skill, kind: 'skill', weighted_gap: 0, for_transitions: [] }; d.weighted_gap += Math.max(t.score, 0.05) * g.gap * g.target_importance / 5; d.for_transitions.push(t.code); dev.set(g.skill, d); }));
     const techAcc = new Map();
