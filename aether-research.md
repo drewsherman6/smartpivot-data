@@ -44,3 +44,5 @@ Log a summary of the run in the commit message (sources whose version changed, c
 - Download failure (for example, BLS returns 403): BLS requires the contact User-Agent that is already set in refresh.js. Retry once, then run `npm run refresh -- --offline` from cache and note "stale <source>" in the commit.
 - Schema failure: do not push. Fix the cause in the script, or revert the files.
 - Never push secrets, `.cache/` or `node_modules/` (all are gitignored).
+
+- `trend_summary` in `risk_scoring_overlay.json` is shown to users verbatim: plain sentences with sources only, never file paths or internal notes.
