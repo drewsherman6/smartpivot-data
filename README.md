@@ -48,7 +48,13 @@ Base raw URL: `https://raw.githubusercontent.com/drewsherman6/smartpivot-data/ma
 - `exposure.robotics`: `anthropic_robot_exposure_index` (0–3), `onet_degree_of_automation` (1–5), `exposed_tasks[]` and `cited_systems[]`. Each cited system has its developer, maturity and evidence URL.
 - `agents`: `platforms[]` (top 12 verified: id, name, url, status, category, score, relevance, matched_tasks[]), `platform_count`, `category_scores`.
 - `exposure.robotics.total_tasks`, `rated_tasks`, `exposed_tasks_count`, `exposed_task_share`, `exposed_time_share`; `exposure.ai.task_share` {total_tasks, tasks_with_data, tasks_with_ai_usage, share, mean_penetration}.
-- `derived`: `transitions[]`, `future_skills[]`, `skills_to_develop[]` and `future_technologies[]`. See below.
+- `derived`: `transitions[]`, `future_skills[]`, `core_skills[]`, `skills_to_develop[]`, `skills_to_deepen[]` and `future_technologies[]`. See below.
+- `bls.oews.shared_soc` / `bls.projections.shared_soc`: present when several O*NET codes share one BLS SOC figure (see "BLS figures").
+- `bls.oews.top_coded`: present only when BLS top-coded a wage (`#` in the source); the affected fields are null.
+
+### BLS figures
+- **Exactly as published.** `bls.oews` wage fields are copied from the raw OEWS May 2025 national file. `*` (not available) becomes null. `#` (top-coded: "a wage equal to or greater than $115.00 per hour or $239,200 per year") becomes null with `top_coded: true`, `top_coded_fields[]` and `top_code_threshold` {annual, hourly, definition}; a published mean is kept. `npm test` re-reads `.cache/oews.zip` and fails if any stored wage differs from its source cell. The May 2025 file contains **no** `#` cells (BLS publishes exact values even for physicians), so no occupation is currently top-coded; the handling is there for future releases.
+- **Shared SOC.** BLS publishes one figure per 6-digit SOC; when several O*NET codes map to it (215 codes in 72 SOCs, e.g. 33-3051.00 Police and Sheriff's Patrol Officers and 33-3051.04 Customs and Border Protection Officers), `bls.oews.shared_soc` and `bls.projections.shared_soc` = {soc, title, codes[], occupations[{code,title}], label, note}. `label` is ready to show, e.g. "BLS reports this together with Police and Sheriff's Patrol Officers (SOC 33-3051)". Not set on group fallbacks (`inferred_from`), which already say they are group estimates.
 
 ### Derived fields (documented formulas; no new numbers are invented)
 - **composite AI exposure**: the mean of the occupation's percentile ranks on whichever of the three AI measures exist for it (Eloundou `dv_beta`, Felten AIOE, Anthropic observed exposure). `n_measures` says how many were used.
@@ -58,7 +64,7 @@ Base raw URL: `https://raw.githubusercontent.com/drewsherman6/smartpivot-data/ma
   - growth: BLS change % / 20, clamped to [-1, 1]
   - exposure_reduction: own composite minus target composite
   - wage: ln(target median wage / own median wage), clamped
-  - The top 8 are kept. Each one lists `skill_gaps`: target skills with importance ≥ 3 whose level is at least 0.25 above the current occupation's level.
+  - The top 8 are kept. Each one lists `skill_gaps` (top 5): target skills with importance ≥ 3 whose level is at least 0.25 above the current occupation's level. Skills the current occupation has but whose O*NET level is suppressed are skipped (gap unknown, not treated as level 0). Each gap has `already_strong: true` when the skill is in the occupation's future_skills/core_skills or has importance ≥ 3.5.
   - Together, transitions and skill gaps form the **skill → future-career graph**.
 - **future_skills** (up to 8, job-distinctive; skills only):
   - `distinctiveness` = the mean of the importance z-score and the level z-score for that skill, compared against all 910 occupations that rate it.
@@ -70,7 +76,8 @@ Base raw URL: `https://raw.githubusercontent.com/drewsherman6/smartpivot-data/ma
   - Eligible skills have importance ≥ 2.75 and distinctiveness > 0. Generic baseline skills (average importance across occupations ≥ 3) are excluded unless distinctiveness is ≥ 1. If fewer than 5 skills qualify, the list is filled with the best remaining skills of importance ≥ 2.5.
   - Each item keeps `skill`, `category`, `kind`, `future_importance` and `current_importance`, and adds `level`, `distinctiveness`, `future_score`, `why` and `signal_sources[]` ({type, source, url/items/value}).
 - **core_skills** (up to 6): the generic baseline skills (for example Critical Thinking, Active Listening, Speaking, Reading Comprehension), ranked by the occupation's importance. They are kept so they aren't lost; show them separately as "Core skills".
-- **skills_to_develop**: skill gaps summed over the top 5 transitions, weighted by score × gap × target importance / 5. Skills only, never abilities.
+- **skills_to_develop** (up to 8): skill gaps (all qualifying gaps, not just the displayed top 5) summed over the top 5 transitions, weighted by score × gap × target importance / 5. Skills only, never abilities. **Never** includes a skill that is in the same occupation's `future_skills` or `core_skills`, or that the occupation already rates at importance ≥ 3.5. A remaining skill is also dropped when its current importance already meets every target's importance and its largest level gap is < 0.5. `npm test` enforces no overlap.
+- **skills_to_deepen** (up to 8): skills the user already has strongly (`strength`: `future_skill`, `core_skill` or `high_importance`) where at least one top-5 target needs a level ≥ 0.5 higher. Each item: `skill`, `kind`, `strength`, `current_level`, `current_importance`, `weighted_gap`, `max_gap`, `targets[]` ({code, title, current_level, target_level, target_importance, gap}, only targets with gap ≥ 0.5, largest first). Strong skills with smaller gaps appear in neither list.
 - **future_technologies**: hot or in-demand technologies across the occupation and its top transitions.
 
 - **agent mapping**: for each occupation, the code matches each task (statement + O*NET Detailed Work Activity titles) against keyword patterns per platform category (`scripts/catalog.js` → `categoryPatterns`).

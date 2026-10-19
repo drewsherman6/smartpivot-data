@@ -2,6 +2,14 @@
 
 Machine-readable history: `data/history/changes.jsonl`. `scripts/update.js` appends entries here automatically.
 
+## 2026-10-18 - Skills to develop vs deepen, shared-SOC labels, BLS source check
+- `derived.skills_to_develop` no longer repeats skills from the same occupation's `future_skills`/`core_skills` or skills it already rates at importance ≥ 3.5 (before: 944 of 1,016 occupations had overlaps, 3,026 duplicate items; now 0, enforced by `npm test`). Skills where current importance already meets the target and the level gap is < 0.5 are dropped.
+- New `derived.skills_to_deepen`: strong existing skills that a top-5 target needs at a level ≥ 0.5 higher, with the target role(s) (968 occupations, 5,174 items). `skill_gaps[].already_strong` added.
+- Skill gaps no longer treat a suppressed O*NET level (163 skill ratings) as 0 (this produced e.g. "+4.25 Programming" for Software Developers).
+- `bls.oews.shared_soc` / `bls.projections.shared_soc` with a ready `label` for the 215 O*NET codes that share a BLS SOC with another code (72 SOCs).
+- OEWS top-code handling (`#` → null + `top_coded`, `top_code_threshold`); validate.js now checks every stored wage against the raw OEWS May 2025 file. No `#` cells in May 2025, so no wage changed; Cardiologists $496,010 confirmed as published.
+- occupation_shard schema 1.2.0 (additive).
+
 ## 2026-10-15 - Usable data for every occupation (inferred fallbacks)
 - `scripts/infer.js` + `scripts/refresh.js`: the 106 occupations O*NET hasn't rated now borrow skills/abilities/knowledge (and, for 93, tasks/technology/related) from the closest rated role, with provenance in `inferred_from` (methods: same_soc_siblings 24, same_broad_soc_group_most_similar 31, same_minor_soc_group_most_similar 16, military_civilian_equivalent 19, onet_related_top_ranked 9, onet_soc_2010_crosswalk 7). Derived fields and task shares are computed for them and marked inferred.
 - New source: O*NET-SOC 2010→2019 taxonomy crosswalk.

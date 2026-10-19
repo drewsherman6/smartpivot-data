@@ -67,6 +67,47 @@ try {
       if (src?.inferred_from) errors.push(`${o.code}: inferred from ${inf.code}, which is itself inferred`);
     } else if (o.derived.future_skills.some((x) => x.inferred)) errors.push(`${o.code}: future_skills marked inferred without occupation.inferred_from`);
   }
+  // skills_to_develop never repeats a skill the occupation already has strongly (future/core); deepen items need a real gap
+  for (const o of recs) {
+    const d = o.derived; const strong = new Set([...d.future_skills, ...d.core_skills].map((x) => x.skill));
+    const dup = d.skills_to_develop.filter((x) => strong.has(x.skill)).map((x) => x.skill);
+    if (dup.length) errors.push(`${o.code}: skills_to_develop repeats future/core skills: ${dup.join(', ')}`);
+    const devNames = new Set(d.skills_to_develop.map((x) => x.skill));
+    for (const x of d.skills_to_deepen || []) {
+      if (devNames.has(x.skill)) errors.push(`${o.code}: ${x.skill} in both skills_to_develop and skills_to_deepen`);
+      if (!x.targets.length || x.targets.some((t) => !(t.gap >= 0.5) || !codes.has(t.code))) errors.push(`${o.code}: skills_to_deepen ${x.skill} lacks a valid target gap`);
+    }
+    // shared SOC blocks must list this code and only codes that really share the SOC
+    for (const k of ['oews', 'projections']) {
+      const sh = o.bls[k]?.shared_soc; if (!sh) continue;
+      if (!sh.codes.includes(o.code) || sh.codes.length < 2 || sh.codes.some((c) => c.slice(0, 7) !== o.code.slice(0, 7) && !c.startsWith(sh.soc))) errors.push(`${o.code}: bad bls.${k}.shared_soc`);
+      if (o.bls[k].inferred_from) errors.push(`${o.code}: bls.${k} has both shared_soc and inferred_from`);
+    }
+    const w = o.bls.oews;
+    if (w?.top_coded && (!w.top_coded_fields?.length || w.top_coded_fields.some((f) => w[f] != null) || typeof w.top_code_threshold?.annual !== 'number')) errors.push(`${o.code}: inconsistent top_coded wage block`);
+  }
+  // BLS wages must be exactly what the raw OEWS file publishes: a number only when the source cell is a number,
+  // null when it is "*" (not available) or "#" (top-coded, then top_coded must be set). Needs .cache/oews.zip
+  // (written by scripts/refresh.js); skipped with a notice when the cache is absent.
+  const oewsZip = path.join(ROOT, '.cache', 'oews.zip');
+  if (fs.existsSync(oewsZip)) {
+    const AdmZip = require('adm-zip'); const XLSX = require('xlsx');
+    const ent = new AdmZip(oewsZip).getEntries().find((e) => /national_M\d{4}_dl\.xlsx$/.test(e.entryName));
+    const wb = XLSX.read(ent.getData()); const src = new Map(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: null }).map((r) => [r.OCC_CODE, r]));
+    const COLS = { median_annual: 'A_MEDIAN', mean_annual: 'A_MEAN', median_hourly: 'H_MEDIAN', annual_p10: 'A_PCT10', annual_p90: 'A_PCT90' };
+    let checked = 0;
+    for (const o of recs) {
+      const w = o.bls.oews; if (!w) continue;
+      const r = src.get(w.soc); if (!r) { errors.push(`${o.code}: bls.oews.soc ${w.soc} not in OEWS source`); continue; }
+      for (const [f, c] of Object.entries(COLS)) {
+        const raw = r[c]; const want = typeof raw === 'number' ? raw : null;
+        if (w[f] !== want) errors.push(`${o.code}: bls.oews.${f}=${w[f]} but OEWS source ${c} for ${w.soc} is ${JSON.stringify(raw)}`);
+        if (raw === '#' && !w.top_coded_fields?.includes(f)) errors.push(`${o.code}: OEWS ${c} is top-coded (#) but ${f} not marked top_coded`);
+      }
+      checked++;
+    }
+    console.log(`OEWS source check: ${checked} wage blocks checked against ${ent.entryName}`);
+  } else console.log('OEWS source check skipped: .cache/oews.zip not present (run scripts/refresh.js first)');
   for (const [k, list] of Object.entries(gaps)) errors.push(`${list.length} occupations missing ${k}: ${list.slice(0, 10).join(' ')}${list.length > 10 ? ' …' : ''}`);
 } catch (e) { errors.push('coverage check: ' + e.message); }
 // Legacy-specific invariants

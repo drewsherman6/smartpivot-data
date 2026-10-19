@@ -70,7 +70,7 @@ Key fields in each occupation record:
 | `knowledge[]`, `technology[]` (`hot`, `in_demand`), `tasks[]`, `emerging_tasks[]`, `related[]`, `job_zone` | O\*NET 31.0 |
 | `bls.oews` / `bls.projections` | See §4 |
 | `exposure.ai` / `exposure.robotics` | See §3.3 |
-| `derived.transitions[]`, `derived.future_skills[]`, `derived.skills_to_develop[]`, `derived.future_technologies[]` | See §3.2 |
+| `derived.transitions[]`, `derived.future_skills[]`, `derived.core_skills[]`, `derived.skills_to_develop[]`, `derived.skills_to_deepen[]`, `derived.future_technologies[]` | See §3.2 |
 
 **Fixes "Skills to Develop" showing Finger Dexterity / Depth Perception:** filter by `kind === "skill"`. `derived.skills_to_develop` already contains skills only.
 
@@ -92,6 +92,12 @@ These address three problems: the CSR Future Forecast showing ML skills, the thi
 ```json
 {"skill":"Programming","category":"transferable","kind":"skill","future_importance":4,"current_importance":4,"distinctiveness":2.264,"future_score":2.764,"why":"importance 4 vs 1.602 avg across 910 occupations; hot/in-demand tech: Apache Kafka, C, C#; rising: AI and big data; …","signal_sources":[{"type":"distinctiveness","source":"O*NET 31.0 skills (importance/level z-score vs all occupations)","value":2.264},{"type":"hot_technology","source":"O*NET 31.0 technology skills (Hot Technology / In Demand flags)","items":["Apache Kafka","C","C#"]},{"type":"rising_skill","source":"World Economic Forum - Future of Jobs Report 2025","url":"…","record_id":"wef-ai-bigdata"}]}
 ```
+- **Skills to Develop vs Skills to Deepen (no duplicates):** `skills_to_develop` never contains a skill that is also in the same occupation's `future_skills` or `core_skills` (or that it already rates at importance ≥ 3.5); `npm test` enforces this for all 1,016 occupations. Strong existing skills that a target role needs at a clearly higher level are in **`skills_to_deepen`** instead:
+```json
+"skills_to_deepen":[{"skill":"Repairing","kind":"skill","strength":"future_skill","current_level":2.75,"current_importance":2.88,"weighted_gap":0.391,"max_gap":1.13,
+  "targets":[{"code":"49-3031.00","title":"Bus and Truck Mechanics and Diesel Engine Specialists","current_level":2.75,"target_level":3.88,"target_importance":4,"gap":1.13}]}]
+```
+(53-3032.00 Truck Drivers.) Show it as e.g. "Deepen: Repairing (for Bus and Truck Mechanics…)". Don't merge it back into Skills to Develop. 22 occupations have an empty `skills_to_develop` (every gap is a skill they already have): hide that section. In `transitions[].skill_gaps[]`, `already_strong: true` marks the same kind of skill, so the pathway card can say "build on" instead of "learn".
 - The formulas are in `README.md` → "Derived fields".
 
 ### 3.3 Exposure
@@ -158,6 +164,8 @@ Every one of the 1,016 occupations now has non-empty `skills`, `derived.future_s
 - Label the evidence class in the UI: "Published national estimate (BLS OEWS, May 2025)" vs "Projection (BLS 2025–35)".
 - Coverage: a wage or projection for every civilian code. Some are SOC-group aggregates (`inferred_from` on the block; label them "group estimate"). The only gaps are documented in `bls.unavailable` (19 military codes; 5 hourly-only performer codes have `median_hourly` instead of an annual median). Don't substitute your own estimate. See §3.7.
 - `bls.oews.soc` may be a broad-group code when there is no detailed match. Show it.
+- **Shared SOC (`shared_soc`):** BLS publishes one wage/projection per 6-digit SOC. When several O*NET roles share it (215 codes in 72 SOCs), `bls.oews.shared_soc` / `bls.projections.shared_soc` = `{soc, title, codes[], occupations[], label, note}`. Show `label` next to the figure, e.g. on Customs and Border Protection Officers (33-3051.04): *"BLS reports this together with Police and Sheriff's Patrol Officers (SOC 33-3051)"*. Don't present the number as specific to that role, and don't compare two codes from the same `shared_soc` on pay/growth as if they differed (they are the same number).
+- **Top-coded wages (`top_coded`):** wages are stored exactly as in the OEWS source file (checked by `npm test`). If BLS top-codes a wage (`#`, ≥ $239,200/yr or ≥ $115/hr), that field is null, `top_coded: true`, `top_coded_fields` lists which, `top_code_threshold.annual` gives the threshold, and `bls.unavailable.median_annual` has the reason. Show "≥ $239,200" (from the threshold), never a number of your own. The May 2025 file has no top-coded cells, so this is currently unused. Physician wages such as Cardiologists $496,010 (mean $454,940) are the real published values; a median above the mean is normal for these left-skewed distributions.
 
 ---
 

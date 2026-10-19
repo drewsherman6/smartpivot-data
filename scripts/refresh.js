@@ -106,11 +106,23 @@ async function main() {
   const oewsZip = new AdmZip(path.join(CACHE, SRC.oews.file));
   const oewsEntry = oewsZip.getEntries().find((e) => /national_M\d{4}_dl\.xlsx$/.test(e.entryName));
   const oewsRows = XLSX.utils.sheet_to_json(XLSX.read(oewsEntry.getData()).Sheets[XLSX.read(oewsEntry.getData()).SheetNames[0]], { defval: null });
+  // BLS top-codes very high wages: the cell holds "#" instead of a number (Field Descriptions sheet:
+  // "# = indicates a wage equal to or greater than $X per hour or $Y per year"). Never turn "#" into a number.
+  const fdRows = (() => { const wb = XLSX.read(oewsEntry.getData()); const ws = wb.Sheets['Field Descriptions']; return ws ? XLSX.utils.sheet_to_json(ws, { header: 1 }) : []; })();
+  const tcLine = fdRows.map((r) => (r || []).join(' ')).find((t) => /^\s*#\s*=/.test(t)) || '';
+  const TOPCODE = { annual: num((tcLine.match(/\$([\d,]+)\s*per year/) || [])[1]), hourly: num((tcLine.match(/\$([\d.,]+)\s*per hour/) || [])[1]), definition: tcLine.trim() || null };
+  const WAGE_COLS = { median_annual: 'A_MEDIAN', mean_annual: 'A_MEAN', median_hourly: 'H_MEDIAN', annual_p10: 'A_PCT10', annual_p90: 'A_PCT90' };
+  const topCoded = []; // [{soc,title,fields}]
   const oews = new Map();
   for (const r of oewsRows) {
     if (r.O_GROUP === 'major') MAJOR[r.OCC_CODE.slice(0, 2)] = r.OCC_TITLE;
     if (!['detailed', 'broad', 'minor', 'major'].includes(r.O_GROUP)) continue;
-    oews.set(r.OCC_CODE, { soc: r.OCC_CODE, title: r.OCC_TITLE, group: r.O_GROUP, employment: num(r.TOT_EMP), median_annual: num(r.A_MEDIAN), mean_annual: num(r.A_MEAN), median_hourly: num(r.H_MEDIAN), annual_p10: num(r.A_PCT10), annual_p90: num(r.A_PCT90), hourly_only: r.HOURLY === 'TRUE' || r.HOURLY === true });
+    const rec = { soc: r.OCC_CODE, title: r.OCC_TITLE, group: r.O_GROUP, employment: num(r.TOT_EMP) };
+    const tc = [];
+    for (const [f, colName] of Object.entries(WAGE_COLS)) { const raw = r[colName]; if (typeof raw === 'string' && raw.trim() === '#') { rec[f] = null; tc.push(f); } else rec[f] = typeof raw === 'number' ? raw : num(raw); }
+    rec.hourly_only = r.HOURLY === 'TRUE' || r.HOURLY === true;
+    if (tc.length) { Object.assign(rec, { top_coded: true, top_coded_fields: tc, top_code_threshold: { annual: TOPCODE.annual, hourly: TOPCODE.hourly, definition: TOPCODE.definition } }); topCoded.push({ soc: r.OCC_CODE, title: r.OCC_TITLE, fields: tc }); }
+    oews.set(r.OCC_CODE, rec);
   }
   S.oews.version = (oewsEntry.entryName.match(/M(\d{4})/) || [])[1] ? 'May ' + oewsEntry.entryName.match(/M(\d{4})/)[1] : S.oews.version;
   const epRaw = sheet(SRC.ep.file, 'Table 1.2', { header: 1 });
@@ -215,7 +227,9 @@ async function main() {
       if (!o.bls.oews) why.oews = 'BLS OEWS does not cover military occupations (it surveys civilian employers only), so no wage is published.';
       if (!o.bls.projections) why.projections = 'BLS Employment Projections do not include the armed forces.';
     }
-    if (o.bls.oews && o.bls.oews.median_annual == null) why.median_annual = o.bls.oews.hourly_only && o.bls.oews.median_hourly != null
+    if (o.bls.oews && o.bls.oews.median_annual == null) why.median_annual = o.bls.oews.top_coded && o.bls.oews.top_coded_fields.includes('median_annual')
+      ? `BLS top-codes this wage: the median is published only as "$${(o.bls.oews.top_code_threshold.annual || 0).toLocaleString('en-US')} or more per year", so no exact median exists.${o.bls.oews.mean_annual != null ? ` The published mean is $${o.bls.oews.mean_annual.toLocaleString('en-US')}.` : ''}`
+      : o.bls.oews.hourly_only && o.bls.oews.median_hourly != null
       ? `BLS publishes only an hourly wage for this occupation (median $${o.bls.oews.median_hourly}/hour) because the work is typically not year-round and full-time; no annual figure exists.`
       : 'BLS OEWS did not publish a median annual wage for this occupation (estimate suppressed or not available).';
     if (!o.bls.oews && !why.oews) why.oews = 'Not covered by BLS OEWS at the detailed, broad, minor or major SOC level.';
@@ -225,6 +239,29 @@ async function main() {
     o.skills.sort((a, b) => b.importance - a.importance); o.knowledge.sort((a, b) => b.importance - a.importance); o.abilities.sort((a, b) => b.importance - a.importance);
     o.knowledge = o.knowledge.slice(0, 12); o.abilities = o.abilities.slice(0, 20);
     o.technology.sort((a, b) => (b.hot + b.in_demand) - (a.hot + a.in_demand)); o.technology_total = o.technology.length; o.technology = o.technology.slice(0, 20);
+  }
+
+  // BLS publishes one figure per 6-digit SOC; several O*NET-SOC codes can share it (e.g. 33-3051.00 and 33-3051.04).
+  // Mark those blocks with shared_soc so the frontend can say the number is not specific to this exact role.
+  const sharedCounts = { oews: 0, projections: 0 };
+  for (const [k, keyOf] of [['oews', (b) => b.soc], ['projections', (b) => b.matrix_code]]) {
+    const by = new Map();
+    for (const o of all) { const b = o.bls[k]; if (!b || b.inferred_from) continue; const key = keyOf(b); (by.get(key) || by.set(key, []).get(key)).push(o); }
+    for (const [soc, list] of by) {
+      if (list.length < 2) continue;
+      list.sort((a, b) => a.code.localeCompare(b.code));
+      // EP titles are sentence case ("Police and sheriff's patrol officers"); prefer the OEWS title for the same SOC
+      const socTitle = (k === 'projections' && list[0].bls.oews?.soc === soc ? list[0].bls.oews.title : null) || list[0].bls[k].title;
+      for (const o of list) {
+        const others = list.filter((x) => x !== o);
+        const norm = (t) => String(t).toLowerCase().replace(/[^a-z]/g, '');
+        const withWhom = norm(o.title) === norm(socTitle) ? others.map((x) => x.title).join(', ').replace(/, ([^,]*)$/, ' and $1') : socTitle;
+        o.bls[k] = { ...o.bls[k], shared_soc: { soc, title: socTitle, codes: list.map((x) => x.code), occupations: list.map((x) => ({ code: x.code, title: x.title })),
+          label: `BLS reports this together with ${withWhom} (SOC ${soc})`,
+          note: `BLS ${k === 'oews' ? 'wage and employment figures' : 'projections'} exist only for SOC ${soc} (${socTitle}); the same figure is used for all ${list.length} O*NET roles in it and is not specific to this role.` } };
+        sharedCounts[k]++;
+      }
+    }
   }
 
   // inferred occupations: borrow the AI composite / robot exposure index from the sources when the occupation has none
@@ -254,8 +291,10 @@ async function main() {
       const comp = { relatedness: TIER_W[r.tier] ?? 0.4, growth: tg == null ? 0 : clamp(tg / 20), exposure_reduction: sc == null || tc == null ? 0 : clamp(sc - tc), wage: sw && tw ? clamp(Math.log(tw / sw)) : 0 };
       const score = 0.35 * comp.relatedness + 0.3 * comp.growth + 0.2 * comp.exposure_reduction + 0.15 * comp.wage;
       const tl = lv(t);
-      const gaps = [...tl.values()].map((s) => ({ skill: s.name, current_level: self.get(s.name)?.level ?? null, target_level: s.level, target_importance: s.importance, gap: r2((s.level || 0) - (self.get(s.name)?.level || 0)) })).filter((g) => g.gap >= 0.25 && g.target_importance >= 3).sort((a, b) => b.gap * b.target_importance - a.gap * a.target_importance).slice(0, 5);
-      return { code: t.code, title: t.title, relatedness_tier: r.tier, projected_change_percent: tg ?? null, median_annual_wage: tw ?? null, ai_exposure_composite: tc ?? null, robot_exposure_index: t.exposure.robotics.anthropic_robot_exposure_index, score: r2(score), components: Object.fromEntries(Object.entries(comp).map(([k, v]) => [k, r2(v)])), skill_gaps: gaps, growing_faster_than_average: tg != null && epTotal ? tg > epTotal.change_percent : null, ...(t.inferred_from ? { target_inferred_from: INF.ref(t) } : {}) };
+      // a skill the user has whose O*NET level is suppressed has an unknown gap: skip it rather than treat the level as 0
+      const allGaps = [...tl.values()].filter((s) => !(self.has(s.name) && self.get(s.name).level == null)).map((s) => ({ skill: s.name, current_level: self.get(s.name)?.level ?? null, current_importance: self.get(s.name)?.importance ?? null, target_level: s.level, target_importance: s.importance, gap: r2((s.level || 0) - (self.get(s.name)?.level || 0)) })).filter((g) => g.gap >= 0.25 && g.target_importance >= 3).sort((a, b) => b.gap * b.target_importance - a.gap * a.target_importance);
+      const gaps = allGaps.slice(0, 5);
+      return { code: t.code, title: t.title, relatedness_tier: r.tier, projected_change_percent: tg ?? null, median_annual_wage: tw ?? null, ai_exposure_composite: tc ?? null, robot_exposure_index: t.exposure.robotics.anthropic_robot_exposure_index, score: r2(score), components: Object.fromEntries(Object.entries(comp).map(([k, v]) => [k, r2(v)])), skill_gaps: gaps, growing_faster_than_average: tg != null && epTotal ? tg > epTotal.change_percent : null, ...(t.inferred_from ? { target_inferred_from: INF.ref(t) } : {}), _allGaps: allGaps };
     }).filter(Boolean).sort((a, b) => b.score - a.score);
     const top = cands.slice(0, 8);
     // future_skills: job-distinctive skills (z-score vs all occupations) + future signals; generic baseline -> core_skills
@@ -285,20 +324,39 @@ async function main() {
     if (future.length < 5) future = future.concat(scored.filter((x) => !future.includes(x) && x.current_importance >= 2.5).sort((a, b) => b.future_score - a.future_score)).slice(0, 5);
     future = future.slice(0, 8).map(({ generic, ...x }) => x);
     const core = scored.filter((x) => x.generic).sort((a, b) => b.current_importance - a.current_importance).slice(0, 6).map(({ generic, future_score, signal_sources, ...x }) => ({ ...x, why: `A baseline skill that matters in most jobs (average importance ${Math.round(SKILL_STATS.get(x.skill).meanIm * 10) / 10} of 5).` }));
+    // skills_to_develop = genuinely new skills for the top transitions. A skill the user already has strongly
+    // (in future_skills / core_skills, or importance >= STRONG_IM in this job) never appears there; if a target role
+    // still needs a clearly higher level (gap >= DEEPEN_GAP) it goes to skills_to_deepen with the target role(s).
+    // A skill whose current importance already meets the target and whose level gap is small is dropped.
+    const STRONG_IM = 3.5, DEEPEN_GAP = 0.5;
+    const inFuture = new Set(future.map((x) => x.skill)), inCore = new Set(core.map((x) => x.skill));
+    const strongWhy = (n) => (inFuture.has(n) ? 'future_skill' : inCore.has(n) ? 'core_skill' : (self.get(n)?.importance ?? 0) >= STRONG_IM ? 'high_importance' : null);
     const dev = new Map();
-    top.slice(0, 5).forEach((t) => t.skill_gaps.forEach((g) => { const d = dev.get(g.skill) || { skill: g.skill, kind: 'skill', weighted_gap: 0, for_transitions: [] }; d.weighted_gap += Math.max(t.score, 0.05) * g.gap * g.target_importance / 5; d.for_transitions.push(t.code); dev.set(g.skill, d); }));
+    top.slice(0, 5).forEach((t) => t._allGaps.forEach((g) => { const d = dev.get(g.skill) || { skill: g.skill, kind: 'skill', weighted_gap: 0, for_transitions: [], targets: [] }; d.weighted_gap += Math.max(t.score, 0.05) * g.gap * g.target_importance / 5; d.for_transitions.push(t.code); d.targets.push({ code: t.code, title: t.title, current_level: g.current_level, target_level: g.target_level, target_importance: g.target_importance, gap: g.gap }); dev.set(g.skill, d); }));
+    top.forEach((t) => t.skill_gaps.forEach((g) => { g.already_strong = !!strongWhy(g.skill); }));
+    const toDeepenAll = [], toDevelopAll = [];
+    for (const d of dev.values()) {
+      const maxGap = Math.max(...d.targets.map((x) => x.gap)); const cur = self.get(d.skill);
+      const sw = strongWhy(d.skill);
+      if (sw) { if (maxGap >= DEEPEN_GAP) toDeepenAll.push({ skill: d.skill, kind: 'skill', strength: sw, current_level: cur?.level ?? null, current_importance: cur?.importance ?? null, weighted_gap: d.weighted_gap, max_gap: r2(maxGap), targets: d.targets.filter((x) => x.gap >= DEEPEN_GAP).sort((a, b) => b.gap - a.gap) }); continue; }
+      const meets = cur && cur.importance >= Math.max(...d.targets.map((x) => x.target_importance)) && maxGap < DEEPEN_GAP;
+      if (!meets) toDevelopAll.push({ skill: d.skill, kind: 'skill', weighted_gap: d.weighted_gap, for_transitions: d.for_transitions });
+    }
     const techAcc = new Map();
     [o, ...top.slice(0, 5).map((t) => occ.get(t.code))].forEach((x) => x.technology.filter((t) => t.hot || t.in_demand).forEach((t) => techAcc.set(t.example, (techAcc.get(t.example) || 0) + 1)));
     const infSkills = isInf(o, 'skills'), infRel = isInf(o, 'related');
     const mark = (arr, on) => (on ? arr.map((x) => ({ ...x, inferred: true })) : arr);
-    const toDevelop = [...dev.values()].map((d) => ({ ...d, weighted_gap: r2(d.weighted_gap) })).sort((a, b) => b.weighted_gap - a.weighted_gap).slice(0, 8);
+    const toDevelop = toDevelopAll.map((d) => ({ ...d, weighted_gap: r2(d.weighted_gap) })).sort((a, b) => b.weighted_gap - a.weighted_gap).slice(0, 8);
+    const toDeepen = toDeepenAll.map((d) => ({ ...d, weighted_gap: r2(d.weighted_gap) })).sort((a, b) => b.weighted_gap - a.weighted_gap).slice(0, 8);
+    top.forEach((t) => delete t._allGaps);
     o.derived = {
       transitions: mark(top, infRel),
       future_skills: mark(future, infSkills),
       core_skills: mark(core, infSkills),
       skills_to_develop: mark(toDevelop, infSkills || infRel),
+      skills_to_deepen: mark(toDeepen, infSkills || infRel),
       future_technologies: [...techAcc.entries()].sort((a, b) => b[1] - a[1]).slice(0, 10).map(([name, n]) => ({ name, display_name: INF.friendlyTool(name), occurrences: n })),
-      ...(o.inferred_from ? { inferred_from: { ...INF.ref(o), fields: ['future_skills', 'core_skills', 'skills_to_develop', 'transitions'].filter((f) => (f === 'transitions' ? infRel : f === 'skills_to_develop' ? infSkills || infRel : infSkills)) } } : {}),
+      ...(o.inferred_from ? { inferred_from: { ...INF.ref(o), fields: ['future_skills', 'core_skills', 'skills_to_develop', 'skills_to_deepen', 'transitions'].filter((f) => (f === 'transitions' ? infRel : f === 'skills_to_develop' || f === 'skills_to_deepen' ? infSkills || infRel : infSkills)) } } : {}),
       method: 'See README "Derived fields". Inputs: O*NET related occupations, skills (importance/level, z-scored across occupations), technology hot/in-demand flags, emerging tasks, data/emerging_skills.json, BLS projections, OEWS wages, composite AI exposure.',
     };
   }
@@ -312,7 +370,7 @@ async function main() {
   for (const o of all) { const g = o.code.slice(0, 2); (groups.get(g) || groups.set(g, []).get(g)).push(o); }
   const index = [];
   for (const [g, list] of [...groups.entries()].sort()) {
-    writeIfChanged(`data/occupations/${g}.json`, { schema_version: '1.1.0', dataset: 'occupation_shard', major_group: { code: g + '-0000', title: MAJOR[g] || null }, ...meta, occupations: list });
+    writeIfChanged(`data/occupations/${g}.json`, { schema_version: '1.2.0', dataset: 'occupation_shard', major_group: { code: g + '-0000', title: MAJOR[g] || null }, ...meta, occupations: list });
     for (const o of list) index.push({ code: o.code, title: o.title, shard: `data/occupations/${g}.json`, job_zone: o.job_zone ?? null, employment: o.bls.oews?.employment ?? null, median_annual_wage: o.bls.oews?.median_annual ?? null, projected_change_percent: o.bls.projections?.change_percent ?? null, ai_exposure_composite: o.exposure.ai.composite?.value ?? null, robot_exposure_index: o.exposure.robotics.anthropic_robot_exposure_index, inferred_from: o.inferred_from ? INF.ref(o) : null, bls_basis: { oews: o.bls.oews ? o.bls.oews.inferred_from?.method || 'detailed' : null, projections: o.bls.projections ? o.bls.projections.inferred_from?.method || 'detailed' : null } });
   }
   writeIfChanged('data/occupations/index.json', { schema_version: '1.1.0', dataset: 'occupations_index', ...meta, count: index.length, occupations: index });
@@ -356,6 +414,8 @@ async function main() {
 
   writeIfChanged('data/agents_by_occupation.json', agentIndex);
   console.log('inferred descriptors by method:', JSON.stringify(inferCounts));
+  console.log(`OEWS top-code threshold: ${JSON.stringify(TOPCODE)}; top-coded SOC rows in source: ${topCoded.length}${topCoded.length ? ' ' + topCoded.map((x) => x.soc + '[' + x.fields.join(',') + ']').join(' ') : ''}; occupations with top-coded median: ${all.filter((o) => o.bls.oews?.top_coded_fields?.includes('median_annual')).map((o) => o.code).join(' ') || 'none'}`);
+  console.log(`shared SOC: oews ${sharedCounts.oews} codes, projections ${sharedCounts.projections} codes`);
   console.log(`occupations: ${all.length}, shards: ${groups.size}, robot platforms: ${plat.length}, BLS-OEWS matched: ${all.filter((o) => o.bls.oews).length}, EP matched: ${all.filter((o) => o.bls.projections).length}`);
   console.log(written.length ? 'changed:\n  ' + written.join('\n  ') : 'no data changes');
   fs.writeFileSync(path.join(CACHE, 'last-refresh.json'), JSON.stringify({ date: TODAY, changed: written }, null, 1));
