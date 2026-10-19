@@ -2,6 +2,13 @@
 
 Machine-readable history: `data/history/changes.jsonl`. `scripts/update.js` appends entries here automatically.
 
+## 2026-10-19 - Weekly refresh
+- Bulk sources unchanged (O*NET 31.0, OEWS May 2025, BLS projections 2025-35, Eloundou, AIOE, Anthropic EI incl. robot exposure); no occupation, exposure, robotics or wage data changed.
+- agent_platforms: 129 (+Cohere North); fixed URLs for 9 bot-blocked/404 entries and evidence tokens for 3 renamed products; 126 verified, 3 unreachable (Adept, ChatGPT agent, Perplexity Comet), 0 needs_review. 828 occupations' agent lists updated accordingly.
+- robotics_manufacturers: 56 (+ROBROS, +Leju Robotics); Omron and Ocado URLs fixed.
+- headline_stats: +7 (IFR World Robotics 2026, NBER w35859, IMF), see entry below.
+- verify-platforms.js: skips writing when only check dates change, never un-deprecates an entry, and treats "One moment, please" pages as bot interstitials.
+
 ## 2026-10-18 - Skills to develop vs deepen, shared-SOC labels, BLS source check
 - `derived.skills_to_develop` no longer repeats skills from the same occupation's `future_skills`/`core_skills` or skills it already rates at importance ≥ 3.5 (before: 944 of 1,016 occupations had overlaps, 3,026 duplicate items; now 0, enforced by `npm test`). Skills where current importance already meets the target and the level gap is < 0.5 are dropped.
 - New `derived.skills_to_deepen`: strong existing skills that a top-5 target needs at a level ≥ 0.5 higher, with the target role(s) (968 occupations, 5,174 items). `skill_gaps[].already_strong` added.
@@ -55,3 +62,13 @@ BLS Employment Projections 2025-35 release supersedes 2024-34 total
 - Items gain `level`, `distinctiveness`, `future_score`, `why` and `signal_sources[]`. The existing fields are unchanged.
 - New `derived.core_skills` holds the generic baseline skills (Critical Thinking, Active Listening, etc.).
 - Mappings are in `scripts/catalog.js` (`skillSignals`, `skillToRising`).
+
+## 2026-10-19 - headline_stats
+Weekly research 2026-10-19: IFR World Robotics 2026 (published 2026-09-24) supersedes WR 2025 figures; new NBER and IMF research.
+- headline_stats: add `ifr-wr26-installations`
+- headline_stats: add `ifr-wr26-operational-stock`
+- headline_stats: add `ifr-wr26-forecast-2026`
+- headline_stats: add `ifr-wr26-us-installations`
+- headline_stats: add `nber-w35859-ai-dissertations`
+- headline_stats: add `imf-wp-2026-ai-exposed-demand`
+- headline_stats: add `imf-2026-jobs-exposed`

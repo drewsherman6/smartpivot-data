@@ -1,2 +1,9 @@
 {"date":"2026-10-13","dataset":"*","op":"seed","note":"Initial sourced research pass; restored 74 platforms from commit d4344e7 as restored_unverified"}
 {"date":"2026-10-13","dataset":"headline_stats","note":"BLS Employment Projections 2025-35 release supersedes 2024-34 total","op":"add","id":"bls-2535-total-growth"}
+{"date":"2026-10-19","dataset":"headline_stats","note":"Weekly research 2026-10-19: IFR World Robotics 2026 (published 2026-09-24) supersedes WR 2025 figures; new NBER and IMF research.","op":"add","id":"ifr-wr26-installations"}
+{"date":"2026-10-19","dataset":"headline_stats","note":"Weekly research 2026-10-19: IFR World Robotics 2026 (published 2026-09-24) supersedes WR 2025 figures; new NBER and IMF research.","op":"add","id":"ifr-wr26-operational-stock"}
+{"date":"2026-10-19","dataset":"headline_stats","note":"Weekly research 2026-10-19: IFR World Robotics 2026 (published 2026-09-24) supersedes WR 2025 figures; new NBER and IMF research.","op":"add","id":"ifr-wr26-forecast-2026"}
+{"date":"2026-10-19","dataset":"headline_stats","note":"Weekly research 2026-10-19: IFR World Robotics 2026 (published 2026-09-24) supersedes WR 2025 figures; new NBER and IMF research.","op":"add","id":"ifr-wr26-us-installations"}
+{"date":"2026-10-19","dataset":"headline_stats","note":"Weekly research 2026-10-19: IFR World Robotics 2026 (published 2026-09-24) supersedes WR 2025 figures; new NBER and IMF research.","op":"add","id":"nber-w35859-ai-dissertations"}
+{"date":"2026-10-19","dataset":"headline_stats","note":"Weekly research 2026-10-19: IFR World Robotics 2026 (published 2026-09-24) supersedes WR 2025 figures; new NBER and IMF research.","op":"add","id":"imf-wp-2026-ai-exposed-demand"}
+{"date":"2026-10-19","dataset":"headline_stats","note":"Weekly research 2026-10-19: IFR World Robotics 2026 (published 2026-09-24) supersedes WR 2025 figures; new NBER and IMF research.","op":"add","id":"imf-2026-jobs-exposed"}

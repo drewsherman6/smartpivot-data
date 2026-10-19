@@ -31,9 +31,19 @@ async function probe(url) {
 function evidenceMatches(name, ev) {
   if (!ev.http_status || ev.http_status >= 400) return false;
   const text = `${ev.title || ''} ${ev.description || ''} ${ev.final_url || ''}`.toLowerCase();
-  if (!text.trim() || /redirecting|just a moment|access denied|attention required/.test(text)) return false;
+  if (!text.trim() || /redirecting|just a moment|one moment, please|access denied|attention required/.test(text)) return false;
+  if (C.evidenceTokens && C.evidenceTokens[name]) return text.includes(C.evidenceTokens[name]);
   const token = name.toLowerCase().replace(/[^a-z0-9 .]/g, ' ').split(/\s+/).find((w) => w.length > 2 && !['the', 'and', 'ai', 'agents', 'agent'].includes(w)) || '';
   return text.includes(token.replace(/\.(ai|tt|com|io)$/, ''));
+}
+// Dates move only when data moves: compare without volatile fields and skip the write if nothing else changed.
+const VOLATILE = ['generated', 'retrieved_at', 'checked_at', 'updated'];
+const stripVolatile = (o) => JSON.stringify(o, (k, v) => (VOLATILE.includes(k) ? undefined : v));
+function writeIfChanged(rel, obj, before, schemaRel) {
+  if (stripVolatile(obj) === before) return false;
+  obj.updated = TODAY;
+  writeJsonValidated(rel, obj, schemaRel);
+  return true;
 }
 async function pool(items, n, fn) { const out = []; let i = 0; await Promise.all(Array.from({ length: n }, async () => { while (i < items.length) { const k = i++; out[k] = await fn(items[k]); } })); return out; }
 
@@ -55,6 +65,7 @@ async function run() {
   const src = (name, ev, url) => ({ name: `${name} official website (fetched)`, url: ev.final_url || url, publication_date: null, tier: 5 });
   // ---- agents ----
   const ap = readJson('data/agent_platforms.json');
+  const apBefore = stripVolatile(ap);
   for (const [name, url, cat] of C.agentPlatforms) if (!ap.platforms.find((p) => p.name === name)) ap.platforms.push({ id: slug(name), name, url, category: cat, skills: [], facts: [], status: 'restored_unverified', source: { name: 'scripts/catalog.js (pending verification)', url, publication_date: null, tier: 0 }, retrieved_at: TODAY, confidence: 'low' });
   const evs = await pool(ap.platforms, 8, (p) => probe(p.url));
   ap.platforms.forEach((p, i) => {
@@ -64,17 +75,18 @@ async function run() {
     p.category = p.categories[0];
     p.evidence = ev;
     const ok = evidenceMatches(p.name, ev);
-    if (ok) {
+    if (p.status === 'deprecated') { /* deprecated entries keep their status; evidence is still recorded */ }
+    else if (ok) {
       if (p.status !== 'verified') { p.status = 'verified'; p.confidence = 'medium'; p.source = src(p.name, ev, p.url); }
       p.retrieved_at = TODAY;
     } else if (!p.facts.length) { p.status = ev.http_status && ev.http_status < 400 ? 'needs_review' : 'unreachable'; p.confidence = 'low'; }
     p.onet_mapping = { ...(p.onet_mapping || {}), activities: map([...new Set(p.categories.flatMap((c) => C.agentCategories[c]))]).activities };
     delete p.onet_mapping.top_occupations;
   });
-  ap.updated = TODAY;
-  writeJsonValidated('data/agent_platforms.json', ap, 'schemas/agent_platforms.schema.json');
+  writeIfChanged('data/agent_platforms.json', ap, apBefore, 'schemas/agent_platforms.schema.json');
   // ---- robot makers ----
   const rm = readJson('data/robotics_manufacturers.json');
+  const rmBefore = stripVolatile(rm);
   let plats = []; try { plats = readJson('data/robotics/platforms.json').platforms; } catch {}
   for (const [name, url, seg] of C.robotMakers) {
     let m = rm.manufacturers.find((x) => x.name === name || x.id === slug(name) || slug(x.name).startsWith(slug(name).split('-')[0]) && x.url && new URL(x.url).hostname === new URL(url).hostname);
@@ -90,8 +102,7 @@ async function run() {
     const hits = plats.filter((p) => p.developer.toLowerCase().includes(key));
     m.robot_exposure_citations = hits.length ? { developers: hits.map((h) => h.developer), cited_task_count: hits.reduce((s, h) => s + h.cited_task_count, 0), occupations: [...new Set(hits.flatMap((h) => h.occupations))].sort(), source: 'data/robotics/platforms.json (Anthropic robot exposure task citations)' } : null;
   });
-  rm.updated = TODAY;
-  writeJsonValidated('data/robotics_manufacturers.json', rm, 'schemas/robotics_manufacturers.schema.json');
+  writeIfChanged('data/robotics_manufacturers.json', rm, rmBefore, 'schemas/robotics_manufacturers.schema.json');
   const cnt = (a, f) => a.filter(f).length;
   console.log(`agents: ${ap.platforms.length} (verified ${cnt(ap.platforms, (p) => p.status === 'verified')}, unreachable ${cnt(ap.platforms, (p) => p.status === 'unreachable')}, unverified ${cnt(ap.platforms, (p) => p.status === 'restored_unverified')}); robot makers: ${rm.manufacturers.length} (homepage ok ${cnt(rm.manufacturers, (m) => m.evidence.http_status && m.evidence.http_status < 400)})`);
 }

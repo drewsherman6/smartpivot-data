@@ -59,8 +59,10 @@ exports.categoryOverrides = {
   'Replit Agent': ['software_engineering'], 'Bolt.new': ['software_engineering'], 'Lovable': ['software_engineering'], 'Aider': ['software_engineering'], 'Sourcegraph Cody': ['software_engineering'],
   'MetaGPT': ['software_engineering', 'agent_framework'], 'AutoGen / AG2': ['agent_framework'], 'Power BI Copilot': ['data_analytics'],
   'Gorgias': ['customer_service'], 'NiCE Cognigy': ['customer_service'], 'Freshdesk Freddy AI': ['customer_service'], 'Amazon Q Developer': ['software_engineering'],
-  'JetBrains Junie': ['software_engineering'], 'Google Jules': ['software_engineering'],
+  'JetBrains Junie': ['software_engineering'], 'Google Jules': ['software_engineering'], 'Cohere North': ['research_knowledge', 'workflow_automation'],
 };
+// Evidence token per platform when the first word of its name isn't on its official page (e.g. a renamed or acquired product).
+exports.evidenceTokens = { 'AWS Strands Agents': 'strands', 'Casetext CoCounsel': 'cocounsel', 'Drift / Salesloft AI Agents': 'salesloft' };
 // keyword rules to categorize restored entries (first match wins)
 exports.categoryRules = [
   [/legal|cocounsel|harvey/i, 'legal'], [/recruit|talent|\bhr\b|people|employ|payroll|performance|engagement|onboarding|culture|lattice|15five|bamboo|rippling|deel|remote\.com|greenhouse|lever|workday/i, 'hr_people'],
@@ -72,12 +74,12 @@ exports.categoryRules = [
   [/framework|langchain|langgraph|crewai|autogen|kernel|pydantic|swarm|llamaindex|babyagi|autogpt|superagi|agentgpt|godmode|smythos|strands|hugging/i, 'agent_framework'],
 ];
 exports.agentPlatforms = [
-  ['Dify', 'https://dify.ai/', 'agent_framework'], ['Make (AI Agents)', 'https://www.make.com/en/ai-agents', 'workflow_automation'],
+  ['Dify', 'https://dify.ai/', 'agent_framework'], ['Make (AI Agents)', 'https://help.make.com/', 'workflow_automation'],
   ['Activepieces', 'https://www.activepieces.com/', 'workflow_automation'], ['Gumloop', 'https://www.gumloop.com/', 'workflow_automation'],
   ['Tines', 'https://www.tines.com/', 'workflow_automation'], ['Relevance AI', 'https://relevanceai.com/', 'workflow_automation'],
-  ['OpenAI AgentKit', 'https://openai.com/index/introducing-agentkit/', 'agent_framework'], ['ChatGPT agent', 'https://openai.com/index/introducing-chatgpt-agent/', 'computer_use'],
-  ['OpenAI Codex', 'https://developers.openai.com/codex', 'software_engineering'], ['Claude Code', 'https://www.anthropic.com/claude-code', 'software_engineering'],
-  ['Google Gemini Enterprise', 'https://cloud.google.com/gemini-enterprise', 'research_knowledge'], ['Google Agent Development Kit', 'https://google.github.io/adk-docs/', 'agent_framework'],
+  ['OpenAI AgentKit', 'https://developers.openai.com/api/docs/guides/agent-builder', 'agent_framework'], ['ChatGPT agent', 'https://openai.com/index/introducing-chatgpt-agent/', 'computer_use'],
+  ['OpenAI Codex', 'https://github.com/openai/codex', 'software_engineering'], ['Claude Code', 'https://www.anthropic.com/claude-code', 'software_engineering'],
+  ['Google Gemini Enterprise', 'https://cloud.google.com/gemini-enterprise', 'research_knowledge'], ['Google Agent Development Kit', 'https://github.com/google/adk-python', 'agent_framework'],
   ['Amazon Bedrock AgentCore', 'https://aws.amazon.com/bedrock/agentcore/', 'agent_framework'], ['Amazon Q Business', 'https://aws.amazon.com/q/business/', 'research_knowledge'],
   ['Automation Anywhere', 'https://www.automationanywhere.com/', 'workflow_automation'], ['Kore.ai', 'https://www.kore.ai/', 'customer_service'],
   ['Aisera', 'https://aisera.com/', 'it_service'], ['Moveworks', 'https://www.moveworks.com/', 'it_service'],
@@ -87,7 +89,7 @@ exports.agentPlatforms = [
   ['Clay', 'https://www.clay.com/', 'sales_marketing'], ['Writer', 'https://writer.com/', 'general_assistant'],
   ['Manus', 'https://manus.im/', 'general_assistant'], ['Perplexity Comet', 'https://www.perplexity.ai/comet', 'computer_use'],
   ['GitHub Copilot coding agent', 'https://github.com/features/copilot', 'software_engineering'], ['Cursor', 'https://cursor.com/', 'software_engineering'],
-  ['Lovable', 'https://lovable.dev/', 'software_engineering'], ['Bolt.new', 'https://bolt.new/', 'software_engineering'],
+  ['Lovable', 'https://docs.lovable.dev/', 'software_engineering'], ['Bolt.new', 'https://bolt.new/', 'software_engineering'],
   ['Hebbia', 'https://www.hebbia.com/', 'research_knowledge'], ['Abridge', 'https://www.abridge.com/', 'general_assistant'],
   ['Hippocratic AI', 'https://www.hippocraticai.com/', 'customer_service'], ['Mastra', 'https://mastra.ai/', 'agent_framework'],
   ['OpenAI Agents SDK', 'https://openai.github.io/openai-agents-python/', 'agent_framework'], ['Microsoft Copilot Studio', 'https://www.microsoft.com/en-us/microsoft-copilot/microsoft-copilot-studio', 'workflow_automation'],
@@ -96,6 +98,7 @@ exports.agentPlatforms = [
   ['Freshdesk Freddy AI', 'https://www.freshworks.com/freshdesk/', 'customer_service'], ['Amazon Q Developer', 'https://aws.amazon.com/q/developer/', 'software_engineering'],
   ['JetBrains Junie', 'https://www.jetbrains.com/junie/', 'software_engineering'], ['Google Jules', 'https://jules.google/', 'software_engineering'],
   ['Workato', 'https://www.workato.com/', 'workflow_automation'], ['Beam AI', 'https://beam.ai/', 'workflow_automation'],
+  ['Cohere North', 'https://cohere.com/north', 'research_knowledge'],
 ];
 exports.robotMakers = [
   ['ABB Robotics', 'https://www.abb.com/global/en/areas/robotics', 'industrial'], ['FANUC', 'https://www.fanuc.co.jp/eindex.html', 'industrial'],
@@ -103,7 +106,7 @@ exports.robotMakers = [
   ['Kawasaki Robotics', 'https://kawasakirobotics.com/', 'industrial'], ['Nachi', 'https://www.nachirobotics.com/', 'industrial'],
   ['Stäubli Robotics', 'https://www.staubli.com/global/en/robotics.html', 'industrial'], ['Comau', 'https://www.comau.com/', 'industrial'],
   ['Epson Robots', 'https://epson.com/robots', 'industrial'], ['Denso Robotics', 'https://www.densorobotics.com/', 'industrial'],
-  ['Mitsubishi Electric Robots', 'https://www.mitsubishielectric.com/fa/products/rbt/robot/', 'industrial'], ['Omron Robotics', 'https://automation.omron.com/en/us/products/family/robots', 'industrial'],
+  ['Mitsubishi Electric Robots', 'https://www.mitsubishielectric.com/fa/products/rbt/robot/', 'industrial'], ['Omron Robotics', 'https://robotics.omron.com/', 'industrial'],
   ['Rockwell Automation', 'https://www.rockwellautomation.com/', 'industrial'], ['Estun', 'https://www.estun.com/', 'industrial'],
   ['Universal Robots', 'https://www.universal-robots.com/', 'cobot'], ['Doosan Robotics', 'https://www.doosanrobotics.com/', 'cobot'],
   ['Techman Robot', 'https://www.tm-robot.com/', 'cobot'], ['AUBO Robotics', 'https://www.aubo-cobot.com/', 'cobot'],
@@ -112,12 +115,12 @@ exports.robotMakers = [
   ['Agility Robotics', 'https://www.agilityrobotics.com/', 'humanoid_mobile'], ['Apptronik', 'https://apptronik.com/', 'humanoid_mobile'],
   ['1X Technologies', 'https://www.1x.tech/', 'humanoid_mobile'], ['Unitree Robotics', 'https://www.unitree.com/', 'humanoid_mobile'],
   ['UBTECH', 'https://www.ubtrobot.com/', 'humanoid_mobile'], ['Sanctuary AI', 'https://www.sanctuary.ai/', 'humanoid_mobile'],
-  ['ANYbotics', 'https://www.anybotics.com/', 'humanoid_mobile'], ['Intuitive Surgical', 'https://www.intuitive.com/', 'surgical_medical'],
+  ['ANYbotics', 'https://www.anybotics.com/', 'humanoid_mobile'], ['ROBROS', 'https://www.robros.co.kr/en', 'humanoid_mobile'], ['Leju Robotics', 'https://www.lejurobot.com/en', 'humanoid_mobile'], ['Intuitive Surgical', 'https://www.intuitive.com/', 'surgical_medical'],
   ['Medtronic (Hugo RAS)', 'https://www.medtronic.com/', 'surgical_medical'], ['Stryker (Mako)', 'https://www.stryker.com/', 'surgical_medical'],
   ['CMR Surgical', 'https://cmrsurgical.com/', 'surgical_medical'], ['Diligent Robotics', 'https://www.diligentrobots.com/', 'surgical_medical'],
   ['Amazon Robotics', 'https://www.aboutamazon.com/news/operations/amazon-robotics-robots-fulfillment-center', 'logistics'], ['Symbotic', 'https://www.symbotic.com/', 'logistics'],
   ['Locus Robotics', 'https://locusrobotics.com/', 'logistics'], ['Geek+', 'https://www.geekplus.com/', 'logistics'],
-  ['AutoStore', 'https://www.autostoresystem.com/', 'logistics'], ['Ocado Technology', 'https://www.ocadogroup.com/technology', 'logistics'],
+  ['AutoStore', 'https://www.autostoresystem.com/', 'logistics'], ['Ocado Technology', 'https://www.ocadogroup.com/', 'logistics'],
   ['Dematic', 'https://www.dematic.com/', 'logistics'], ['Zebra Technologies (Fetch)', 'https://www.zebra.com/', 'logistics'],
   ['Simbe Robotics', 'https://www.simbe.ai/', 'service'], ['Avidbots', 'https://avidbots.com/', 'service'],
   ['Brain Corp', 'https://braincorp.com/', 'service'], ['Knightscope', 'https://www.knightscope.com/', 'service'],

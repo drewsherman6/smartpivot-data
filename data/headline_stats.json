@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "dataset": "headline_stats",
-  "updated": "2026-10-13",
+  "updated": "2026-10-19",
   "records": [
     {
       "id": "wef-foj25-jobs-created",
@@ -452,6 +452,120 @@
       },
       "retrieved_at": "2026-10-13",
       "confidence": "high"
+    },
+    {
+      "id": "ifr-wr26-installations",
+      "statement": "603,307 industrial robots installed globally in 2025 (+11%), a new record above the 552,946 of 2022.",
+      "value": 603307,
+      "unit": "units",
+      "geography": "Global",
+      "period": "2025",
+      "source": {
+        "name": "IFR World Robotics 2026 - Industrial Robots, Executive Summary",
+        "url": "https://ifr.org/img/worldrobotics/Executive_Summary_WR_2026_-_Industrial_Robots.pdf",
+        "publication_date": "2026-09-24",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-19",
+      "confidence": "high"
+    },
+    {
+      "id": "ifr-wr26-operational-stock",
+      "statement": "Operational stock of industrial robots grew 9% to 5,079,078 units in 2025.",
+      "value": 5079078,
+      "unit": "units",
+      "geography": "Global",
+      "period": "2025",
+      "source": {
+        "name": "IFR World Robotics 2026 - Industrial Robots, Executive Summary",
+        "url": "https://ifr.org/img/worldrobotics/Executive_Summary_WR_2026_-_Industrial_Robots.pdf",
+        "publication_date": "2026-09-24",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-19",
+      "confidence": "high"
+    },
+    {
+      "id": "ifr-wr26-forecast-2026",
+      "statement": "IFR forecasts 655,000 industrial robot installations in 2026 (+9%) and 806,000 in 2029.",
+      "value": 655000,
+      "unit": "units",
+      "geography": "Global",
+      "period": "2026 (forecast)",
+      "source": {
+        "name": "IFR World Robotics 2026 - Industrial Robots, Executive Summary",
+        "url": "https://ifr.org/img/worldrobotics/Executive_Summary_WR_2026_-_Industrial_Robots.pdf",
+        "publication_date": "2026-09-24",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-19",
+      "confidence": "medium"
+    },
+    {
+      "id": "ifr-wr26-us-installations",
+      "statement": "The United States installed 38,428 industrial robots in 2025 (+12%), overtaking Japan as the second-largest market after China (354,226).",
+      "value": 38428,
+      "unit": "units",
+      "geography": "US",
+      "period": "2025",
+      "source": {
+        "name": "IFR World Robotics 2026 - Industrial Robots, Executive Summary",
+        "url": "https://ifr.org/img/worldrobotics/Executive_Summary_WR_2026_-_Industrial_Robots.pdf",
+        "publication_date": "2026-09-24",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-19",
+      "confidence": "high"
+    },
+    {
+      "id": "nber-w35859-ai-dissertations",
+      "statement": "AI-generated writing appears in 29% of US STEM PhD dissertations filed in 2026 (absent before 2023); graduates who used it were less likely to enter academic research careers.",
+      "value": 29,
+      "unit": "percent",
+      "geography": "US",
+      "period": "2026",
+      "source": {
+        "name": "NBER Working Paper 35859 (Gross, Shvadron & Zhang), How Heavily Are PhD Students Offloading Their Scientific Writing to AI?",
+        "url": "https://www.nber.org/papers/w35859",
+        "publication_date": "2026-10",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-19",
+      "confidence": "high"
+    },
+    {
+      "id": "imf-wp-2026-ai-exposed-demand",
+      "statement": "Across 700 million online job postings in 110 economies, labour demand has fallen by nearly 10% in more AI-exposed occupations, while firms demanding AI skills grow postings faster.",
+      "value": 10,
+      "unit": "percent",
+      "geography": "Global (110 economies)",
+      "period": "2026",
+      "source": {
+        "name": "IMF Working Paper, How is Labor Demand Changing as AI Improves? New Global Evidence",
+        "url": "https://doi.org/10.5089/9798229061551.001",
+        "publication_date": "2026-10-01",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-19",
+      "confidence": "medium",
+      "notes": "Figure from the published abstract (retrieved via search index); the IMF site blocked direct fetch."
+    },
+    {
+      "id": "imf-2026-jobs-exposed",
+      "statement": "About 40% of jobs globally are exposed to AI, rising to about 60% in advanced economies; the IMF says there is no apparent impact on the job market yet but the nature of work is changing.",
+      "value": 40,
+      "unit": "percent",
+      "geography": "Global",
+      "period": "2026",
+      "source": {
+        "name": "IMF Blog, The World Can't Afford to Get AI Wrong",
+        "url": "https://www.imf.org/en/blogs/articles/2026/10/15/the-world-cant-afford-to-get-ai-wrong",
+        "publication_date": "2026-10-15",
+        "tier": 1
+      },
+      "retrieved_at": "2026-10-19",
+      "confidence": "medium",
+      "notes": "Text retrieved via search index excerpt of the IMF page; the IMF site blocked direct fetch."
     }
   ]
 }
