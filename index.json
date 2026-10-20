@@ -1,6 +1,6 @@
 {
   "manifest_version": "1.0.0",
-  "generated": "2026-10-19",
+  "generated": "2026-10-20",
   "base_raw_url": "https://raw.githubusercontent.com/drewsherman6/smartpivot-data/main/",
   "datasets": [
     {
@@ -58,7 +58,7 @@
       "path": "data/occupations/index.json",
       "schema": "schemas/occupations_index.schema.json",
       "schema_version": "1.1.0",
-      "last_updated": "2026-10-15",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 1016,
       "description": "Every O*NET-SOC occupation with shard path + headline wage/growth/exposure"
@@ -68,7 +68,7 @@
       "path": "data/occupations/11.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 59,
       "description": "Full occupation records for SOC major group 11-0000"
@@ -78,7 +78,7 @@
       "path": "data/occupations/13.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 50,
       "description": "Full occupation records for SOC major group 13-0000"
@@ -88,7 +88,7 @@
       "path": "data/occupations/15.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 38,
       "description": "Full occupation records for SOC major group 15-0000"
@@ -98,7 +98,7 @@
       "path": "data/occupations/17.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 59,
       "description": "Full occupation records for SOC major group 17-0000"
@@ -108,7 +108,7 @@
       "path": "data/occupations/19.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 66,
       "description": "Full occupation records for SOC major group 19-0000"
@@ -118,7 +118,7 @@
       "path": "data/occupations/21.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 18,
       "description": "Full occupation records for SOC major group 21-0000"
@@ -128,7 +128,7 @@
       "path": "data/occupations/23.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 8,
       "description": "Full occupation records for SOC major group 23-0000"
@@ -138,7 +138,7 @@
       "path": "data/occupations/25.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 68,
       "description": "Full occupation records for SOC major group 25-0000"
@@ -148,7 +148,7 @@
       "path": "data/occupations/27.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 45,
       "description": "Full occupation records for SOC major group 27-0000"
@@ -158,7 +158,7 @@
       "path": "data/occupations/29.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 96,
       "description": "Full occupation records for SOC major group 29-0000"
@@ -168,7 +168,7 @@
       "path": "data/occupations/31.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 20,
       "description": "Full occupation records for SOC major group 31-0000"
@@ -178,7 +178,7 @@
       "path": "data/occupations/33.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 28,
       "description": "Full occupation records for SOC major group 33-0000"
@@ -188,7 +188,7 @@
       "path": "data/occupations/35.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 18,
       "description": "Full occupation records for SOC major group 35-0000"
@@ -198,7 +198,7 @@
       "path": "data/occupations/37.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 10,
       "description": "Full occupation records for SOC major group 37-0000"
@@ -208,7 +208,7 @@
       "path": "data/occupations/39.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 34,
       "description": "Full occupation records for SOC major group 39-0000"
@@ -218,7 +218,7 @@
       "path": "data/occupations/41.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 23,
       "description": "Full occupation records for SOC major group 41-0000"
@@ -228,7 +228,7 @@
       "path": "data/occupations/43.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 55,
       "description": "Full occupation records for SOC major group 43-0000"
@@ -238,7 +238,7 @@
       "path": "data/occupations/45.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 14,
       "description": "Full occupation records for SOC major group 45-0000"
@@ -248,7 +248,7 @@
       "path": "data/occupations/47.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 65,
       "description": "Full occupation records for SOC major group 47-0000"
@@ -258,7 +258,7 @@
       "path": "data/occupations/49.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 52,
       "description": "Full occupation records for SOC major group 49-0000"
@@ -268,7 +268,7 @@
       "path": "data/occupations/51.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 114,
       "description": "Full occupation records for SOC major group 51-0000"
@@ -278,7 +278,7 @@
       "path": "data/occupations/53.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 57,
       "description": "Full occupation records for SOC major group 53-0000"
@@ -288,7 +288,7 @@
       "path": "data/occupations/55.json",
       "schema": "schemas/occupation_shard.schema.json",
       "schema_version": "1.2.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 19,
       "description": "Full occupation records for SOC major group 55-0000"
@@ -334,11 +334,21 @@
       "description": "Robot developers/systems cited as task evidence, mapped to occupations"
     },
     {
+      "name": "skill_risk",
+      "path": "data/skills/skill_risk.json",
+      "schema": "schemas/skill_risk.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-20",
+      "legacy": false,
+      "record_count": 35,
+      "description": "Global per-skill AI/robotics risk (task-based, all occupations) + method and thresholds for derived.skill_risk / future_proof_pathways"
+    },
+    {
       "name": "family_signals",
       "path": "data/signals/families.json",
       "schema": "schemas/family_signals.schema.json",
       "schema_version": "1.0.0",
-      "last_updated": "2026-10-15",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 23,
       "description": "Per SOC major group (occupation family) weekly signals"

@@ -2,6 +2,15 @@
 
 Machine-readable history: `data/history/changes.jsonl`. `scripts/update.js` appends entries here automatically.
 
+## 2026-10-20 - Per-skill AI/robotics risk and future-proof pathways (Drew's method)
+- New `scripts/skill-risk.js` (also run by `refresh.js`): task-level AI risk (Anthropic task penetration + Eloundou GPT-4 task labels, with AIOE/composite fallbacks) and robotics risk (Anthropic robot tiers, cited systems per task_id, O*NET degree of automation). Tasks are linked to skills through O*NET DWAs, GWAs and the skills-to-work-activities linkage, then aggregated per skill per occupation.
+- New per-occupation fields (additive): `derived.skill_risk`, `safe_skills`, `at_risk_skills`, `skill_risk_summary`, `future_proof_pathways`, `future_proof_note`, `skill_risk_method`. `derived.transitions` is unchanged.
+- New dataset `data/skills/skill_risk.json` (global per-skill risk, method, parameters, coverage) + `schemas/skill_risk.schema.json`.
+- New source: Eloundou et al. task-level labels (`full_labelset.tsv`).
+- Coverage: 35,560 skill scores in 1,016 occupations (13,213 high / 9,223 medium / 13,124 low confidence); 852 occupations have pathways (164 have a note explaining why not).
+- `npm test` now checks that every skill is scored, that safe/at-risk lists are disjoint, skills only and match their thresholds, and that every pathway has exposure ≥ 0.10 below the source, non-negative growth, safe_overlap ≥ 0.30 and a score equal to its breakdown. It also checks that safe_overlap drives the ranking (Spearman with score 0.87 vs 0.40 for exposure).
+- Spot check of 11 occupations: `docs/SKILL_RISK_SPOTCHECK.md`.
+
 ## 2026-10-19 - Weekly refresh
 - Bulk sources unchanged (O*NET 31.0, OEWS May 2025, BLS projections 2025-35, Eloundou, AIOE, Anthropic EI incl. robot exposure); no occupation, exposure, robotics or wage data changed.
 - agent_platforms: 129 (+Cohere North); fixed URLs for 9 bot-blocked/404 entries and evidence tokens for 3 renamed products; 126 verified, 3 unreachable (Adept, ChatGPT agent, Perplexity Comet), 0 needs_review. 828 occupations' agent lists updated accordingly.

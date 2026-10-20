@@ -361,6 +361,9 @@ async function main() {
     };
   }
 
+  // ---------- Per-skill AI/robotics risk + future-proof pathways (scripts/skill-risk.js) ----------
+  const skillRiskDoc = require('./skill-risk').apply(all);
+
   // ---------- Agent platform mapping ----------
   const agentIndex = require('./agent-mapping').mapAgents(all, O.get, S);
 
@@ -413,6 +416,7 @@ async function main() {
   writeIfChanged('data/exposure/robot_exposure.json', { schema_version: '1.0.0', dataset: 'robot_exposure', generated: TODAY, sources: { robot_occ: S.robot_occ, onet: S.onet }, occupations: all.map((o) => ({ code: o.code, title: o.title, anthropic_robot_exposure_index: o.exposure.robotics.anthropic_robot_exposure_index, onet_degree_of_automation: o.exposure.robotics.onet_degree_of_automation, top_developers: [...new Set(o.exposure.robotics.cited_systems.map((s) => s.developer))].slice(0, 5) })) });
 
   writeIfChanged('data/agents_by_occupation.json', agentIndex);
+  writeIfChanged('data/skills/skill_risk.json', skillRiskDoc);
   console.log('inferred descriptors by method:', JSON.stringify(inferCounts));
   console.log(`OEWS top-code threshold: ${JSON.stringify(TOPCODE)}; top-coded SOC rows in source: ${topCoded.length}${topCoded.length ? ' ' + topCoded.map((x) => x.soc + '[' + x.fields.join(',') + ']').join(' ') : ''}; occupations with top-coded median: ${all.filter((o) => o.bls.oews?.top_coded_fields?.includes('median_annual')).map((o) => o.code).join(' ') || 'none'}`);
   console.log(`shared SOC: oews ${sharedCounts.oews} codes, projections ${sharedCounts.projections} codes`);

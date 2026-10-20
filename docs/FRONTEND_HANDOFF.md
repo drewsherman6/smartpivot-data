@@ -215,3 +215,15 @@ Every one of the 1,016 occupations now has non-empty `skills`, `derived.future_s
 - Prefer `main` (`master` mirrors it), with your 1-hour cache and the bundled fallback.
 - Hide `deprecated` items. Show provenance.
 - Request new fields or report data issues through a GitHub issue in `drewsherman6/smartpivot-data` labelled **`frontend-request`**.
+
+## 8. Skill risk and future-proof pathways (new, 2026-10-20)
+This replaces the site's own skill-risk logic: the fixed 28-skill list, the "safe unless listed" rule, and ranking pathways only from O*NET related jobs. Everything below is in the job file. Do not compute risk in the frontend.
+
+- `derived.skill_risk[]`: every skill of the occupation: `{skill, id, kind:"skill", importance, level, ai_risk, robotics_risk, combined, band: safe|moderate|at_risk, confidence: high|medium|low, basis, linked_tasks, top_tasks[{id,text,weight,ai,robotics,combined}]}`. Show `combined` as the skill's risk and `top_tasks` as "why".
+- `derived.safe_skills[]` / `derived.at_risk_skills[]`: the two lists to display (importance ≥ 2.5, disjoint, skills only). Show moderate skills from `skill_risk` with `band === "moderate"` if needed.
+- `derived.skill_risk_summary`: `occupation_ai`, `occupation_robotics`, `occupation_combined` (the task-based exposure used for pathways), coverage, and `inferred_from` (show "Based on closest related role: …" when present).
+- `derived.future_proof_pathways[]` (≤10, ranked): `{rank, code, title, score, breakdown{safe_overlap, target_combined_exposure, source_combined_exposure, exposure_drop, growth_percent, growth_factor, gap_factor, job_zone_factor, profile_similarity, similarity_factor, onet_related_bonus}, covered_safe_skills[], skill_gaps[], median_annual_wage, growth_basis, target_inferred_from?, reason}`. Show `reason` as is; it's built from the numbers on the same card. Show the pay figure too: pay is not part of the score.
+- `derived.future_proof_note`: show it when `future_proof_pathways` is empty (for example Customer Service Representatives: most skills at risk).
+- Global per-skill table: `data/skills/skill_risk.json` (`skills[]`, `method`, `parameters`, `coverage`).
+- Thresholds: safe < 0.30, at_risk ≥ 0.50. Pathway: exposure ≤ source − 0.10 and ≤ 0.85 x source, growth ≥ 0, safe_overlap ≥ 0.30.
+- The older figures (`exposure.ai.composite`, `task_share`, legacy `risk_scoring_overlay.json`) are still there and unchanged. On the skill-risk and pathway views, use `skill_risk_summary.occupation_combined` so there's one exposure number.

@@ -90,6 +90,24 @@ Base raw URL: `https://raw.githubusercontent.com/drewsherman6/smartpivot-data/ma
   - `exposed_time_share` = the sum of Anthropic `time_share` over E1–E3 tasks.
 - **AI task share**: `share` = tasks with Anthropic task penetration > 0 ÷ tasks matched to the Anthropic task-penetration file (exact text match).
 
+### Skill risk and future-proof pathways (`scripts/skill-risk.js`)
+Drew's method, computed for all 1,016 occupations. It runs inside `npm run refresh` and on its own with `node scripts/skill-risk.js`. The full method text and every parameter are in `data/skills/skill_risk.json` (`method`, `parameters`). Spot check: `docs/SKILL_RISK_SPOTCHECK.md`.
+
+1. **Task risk.** AI = 0.75 x Anthropic Economic Index task penetration + 0.25 x the Eloundou et al. GPT-4 task label (beta: E1=1, E2=0.5, E0=0). Missing pieces fall back to the Eloundou occupation dv_beta, then the Felten AIOE percentile, then the AI composite. Robotics = Anthropic robot tier / 3 (E0=0 … E3=1; non-physical = 0), raised to the tier of any `cited_systems` entry for that task_id. Tasks not in the robot file use 0.5 x (O*NET degree of automation − 1) / 4. Combined = 1 − (1 − AI)(1 − robotics).
+2. **Task to skill.** O*NET has no task-skill table, so each task goes through DWA, then GWA (`tasks_to_dwas`, `gwas_to_iwas_to_dwas`), then skill, using O*NET 31's official `essential_skills_to_work_activities` and `transferable_skills_to_work_activities`. relevance = share of the task's DWAs whose GWA links to the skill.
+3. **Skill risk** = (time_share x relevance)-weighted mean of linked task risks within the occupation. Skills with no linked task get the occupation's task average (`basis: occupation_average`, `confidence: low`). Confidence is high when there are at least 3 linked tasks and at least 70% Anthropic coverage, and medium otherwise.
+4. **Bands (fixed):** combined < 0.30 is `safe`, ≥ 0.50 is `at_risk`, and anything between is `moderate`. `derived.safe_skills` and `derived.at_risk_skills` list only skills with importance ≥ 2.5. They are disjoint and contain skills only.
+5. **Pathways** (`derived.future_proof_pathways`, top 10) search every occupation. `safe_overlap` = the share of the target's required skills (importance ≥ 2.5, at least the top 6) that the user's not-at-risk skills cover. Each target skill is weighted by importance x distinctiveness. Credit is 1 for safe, 0.5 for moderate and 0 for at_risk, and drops linearly once the user's level is more than 0.5 below the target's. score = safe_overlap x (1 − target exposure) x (1 + min(growth,20)/40) x gap_factor x job_zone_factor x similarity_factor x (1.1 if O*NET related). A target is eligible only if all of these hold:
+   - its exposure is ≤ source − 0.10 and ≤ 0.85 x source
+   - BLS 2025-35 growth is ≥ 0 (missing growth means not eligible)
+   - safe_overlap is ≥ 0.30
+   - its job zone is within +2/−1 of the source
+   - skill-profile similarity is ≥ 0.3
+   - it isn't an ", All Other" code
+
+   Every pathway carries a `breakdown`, the covered skills, the gaps and a plain-language `reason`. If an occupation gets no pathways, `derived.future_proof_note` says why. `derived.transitions` is unchanged.
+6. **Inferred occupations** compute from their borrowed tasks; `derived.skill_risk_summary.inferred_from` names the source.
+
 ### Inferred data (occupations O*NET hasn't rated) — `inferred_from`
 106 of the 1,016 O*NET-SOC codes have no O*NET skill/ability ratings (and 93 of them no task statements either): new detailed occupations O*NET hasn't surveyed yet (e.g. 13-2051.00 Financial and Investment Analysts, 29-1212.00 Cardiologists, 29-2042.00 EMTs, 11-1031.00 Legislators), "All Other" catch-alls, and military codes (55-xxxx). So that every occupation a user can pick has usable data, `scripts/infer.js` borrows the **empty** blocks (never overwrites real O*NET data) from the best rated source, in this order:
 
@@ -124,7 +142,8 @@ O*NET 31.0 (Aug 2026, CC BY 4.0) · BLS OEWS May 2025 · BLS Employment Projecti
 ```
 npm install
 npm run refresh        # download all bulk sources, rebuild, verify platforms, rebuild manifest (only changed files are rewritten)
+npm run skill-risk     # recompute per-skill risk + future-proof pathways from the committed shards (needs .cache from a refresh)
 npm test               # validation: strict JSON + schemas + coverage + sourcing; must pass before any push
 node scripts/update.js patch.json   # merge curated records (headline_stats etc.)
 ```
-Layout: `scripts/` (refresh, verify-platforms, update, validate, build-manifest, sources, catalog), `schemas/`, `data/`, `data/history/changes.jsonl`, `CHANGELOG.md`.
+Layout: `scripts/` (refresh, skill-risk, verify-platforms, update, validate, build-manifest, sources, catalog), `schemas/`, `data/`, `data/history/changes.jsonl`, `CHANGELOG.md`.

@@ -23,6 +23,10 @@ module.exports = {
     name: 'Eloundou, Manning, Mishkin & Rock (2023/2024) "GPTs are GPTs", occupation-level exposure', version: 'github main',
     url: 'https://raw.githubusercontent.com/openai/GPTs-are-GPTs/main/data/occ_level.csv', page: 'https://arxiv.org/abs/2303.10130', file: 'eloundou.csv',
   },
+  eloundou_tasks: {
+    name: 'Eloundou, Manning, Mishkin & Rock (2023/2024) "GPTs are GPTs", task-level labels (full_labelset)', version: 'github main',
+    url: 'https://raw.githubusercontent.com/openai/GPTs-are-GPTs/main/data/full_labelset.tsv', page: 'https://arxiv.org/abs/2303.10130', file: 'eloundou_tasks.tsv',
+  },
   aioe: {
     name: 'Felten, Raj & Seamans (2021) AI Occupational Exposure (AIOE), Data Appendix A', version: 'github main',
     url: 'https://raw.githubusercontent.com/AIOE-Data/AIOE/main/AIOE_DataAppendix.xlsx', page: 'https://github.com/AIOE-Data/AIOE', file: 'aioe.xlsx',
