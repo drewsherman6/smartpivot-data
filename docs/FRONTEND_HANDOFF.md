@@ -227,3 +227,25 @@ This replaces the site's own skill-risk logic: the fixed 28-skill list, the "saf
 - Global per-skill table: `data/skills/skill_risk.json` (`skills[]`, `method`, `parameters`, `coverage`).
 - Thresholds: safe < 0.30, at_risk ≥ 0.50. Pathway: exposure ≤ source − 0.10 and ≤ 0.85 x source, growth ≥ 0, safe_overlap ≥ 0.30.
 - The older figures (`exposure.ai.composite`, `task_share`, legacy `risk_scoring_overlay.json`) are still there and unchanged. On the skill-risk and pathway views, use `skill_risk_summary.occupation_combined` so there's one exposure number.
+
+### 8.1 Follow-up (2026-10-20, second pass): pay, hub damping, interest fit, reskilling
+- **New factors in `future_proof_pathways[].breakdown`. The score is still exactly the product of the factors.**
+  - **Pay:** `pay_factor = clamp(1 + 0.4 x ln(target median / current median), 0.5, 1.15)`. The breakdown also has `current_median_wage`, `target_median_wage` and `pay_ratio`. If either wage is missing, `pay_factor` is 1 and `pay_missing` is true. The `reason` always states the pay: "Pay cut of X%", "Pay rise of X%", "Similar pay" (within ±5%), or "Pay comparison unavailable".
+  - **Interest fit:** `interest_fit` (RIASEC) and `domain_fit` (O*NET specific interest areas) are cosines of the two jobs' profiles, centred per job. `fit_factor = 0.5 + 0.5 x max(0, mean)`. A target with a mean below 0.1 is dropped. This removes matches like Software Developers to Musicians.
+  - **Hub damping:** `hub_appearances` is the number of jobs that have this target in their top 30 before damping. `hub_factor = max(0.5, 1 / (1 + 0.4 x ln(1 + appearances / 20)))`. On top of that, there's a hard cap: no target is kept for more than 10% of jobs (101), with the highest-scoring matches filled first.
+  - Skill-profile similarity must now be at least 0.35 (it was 0.30).
+- **Skill gaps:** `skill_gaps[]` now use the user's own level. A suppressed O*NET level (null) is never treated as 0; importance is compared instead, and no level gap is reported. Each gap has `already_strong` (the user's importance ≥ 3.5), and the reason says "deepen" for those. This removes the fake "Programming (level 0 to 3.38)" gap.
+- **`growth_basis`** is always a plain label:
+  - "BLS projection for this occupation (…, 2025-35)"
+  - "Group estimate (BLS projections for …)"
+  - or the shared-SOC label
+- **Exposure vs the task-share cards:** the pathway exposure (`target_combined_exposure` = `skill_risk_summary.occupation_combined`) is a time-weighted average of each task's combined AI and robotics risk on a 0–1 scale. The AI and robotics cards count tasks instead:
+  - `exposure.ai.task_share.share`: the share of tasks with any Anthropic usage
+  - `exposure.robotics.exposed_task_share`: the share of tasks rated E1–E3
+
+  The two measure different things and won't match. Each pathway now has `task_shares.target` and `task_shares.current` with the card figures, so you can show both on the same basis. Label the pathway figure "task-weighted AI + robotics risk".
+- **New `derived.reskilling_pathways[]`** (up to 5), only for jobs with fewer than 3 future-proof pathways (28 jobs, including Customer Service Representatives):
+  - Each item has `needs_retraining: true`, `new_skills[]` (at most 4), and `breakdown.skill_fit` in place of `safe_overlap`.
+  - The `reason` always starts with "Needs retraining".
+  - Show these in a separate, clearly labelled "Reskilling routes" section. Never mix them into the future-proof list.
+- `families.json` and shard `major_group` for 55-0000 are now titled "Military Specific Occupations".

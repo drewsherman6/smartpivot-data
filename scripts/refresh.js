@@ -54,6 +54,7 @@ const sheet = (f, name, opts = {}) => { const wb = XLSX.readFile(path.join(CACHE
 const pct = (arr) => { const s = arr.filter((v) => v != null).sort((a, b) => a - b); return (v) => (v == null ? null : s.filter((x) => x <= v).length / s.length); };
 
 const MAJOR = {}; // filled from OEWS major rows
+const MAJOR_FALLBACK = { '55': 'Military Specific Occupations' }; // SOC major group not published in OEWS
 function stripVolatile(o) { return JSON.stringify(o, (k, v) => (['generated', 'retrieved_at', 'checked_at', 'updated'].includes(k) ? undefined : v)); }
 const written = [];
 function writeIfChanged(rel, obj) {
@@ -235,7 +236,7 @@ async function main() {
     if (!o.bls.oews && !why.oews) why.oews = 'Not covered by BLS OEWS at the detailed, broad, minor or major SOC level.';
     if (!o.bls.projections && !why.projections) why.projections = 'Not covered by BLS Employment Projections.';
     if (Object.keys(why).length) o.bls.unavailable = why;
-    o.major_group = { code: o.code.slice(0, 2) + '-0000', title: MAJOR[o.code.slice(0, 2)] || null };
+    o.major_group = { code: o.code.slice(0, 2) + '-0000', title: MAJOR[o.code.slice(0, 2)] || MAJOR_FALLBACK[o.code.slice(0, 2)] || null };
     o.skills.sort((a, b) => b.importance - a.importance); o.knowledge.sort((a, b) => b.importance - a.importance); o.abilities.sort((a, b) => b.importance - a.importance);
     o.knowledge = o.knowledge.slice(0, 12); o.abilities = o.abilities.slice(0, 20);
     o.technology.sort((a, b) => (b.hot + b.in_demand) - (a.hot + a.in_demand)); o.technology_total = o.technology.length; o.technology = o.technology.slice(0, 20);
@@ -373,7 +374,7 @@ async function main() {
   for (const o of all) { const g = o.code.slice(0, 2); (groups.get(g) || groups.set(g, []).get(g)).push(o); }
   const index = [];
   for (const [g, list] of [...groups.entries()].sort()) {
-    writeIfChanged(`data/occupations/${g}.json`, { schema_version: '1.2.0', dataset: 'occupation_shard', major_group: { code: g + '-0000', title: MAJOR[g] || null }, ...meta, occupations: list });
+    writeIfChanged(`data/occupations/${g}.json`, { schema_version: '1.2.0', dataset: 'occupation_shard', major_group: { code: g + '-0000', title: MAJOR[g] || MAJOR_FALLBACK[g] || null }, ...meta, occupations: list });
     for (const o of list) index.push({ code: o.code, title: o.title, shard: `data/occupations/${g}.json`, job_zone: o.job_zone ?? null, employment: o.bls.oews?.employment ?? null, median_annual_wage: o.bls.oews?.median_annual ?? null, projected_change_percent: o.bls.projections?.change_percent ?? null, ai_exposure_composite: o.exposure.ai.composite?.value ?? null, robot_exposure_index: o.exposure.robotics.anthropic_robot_exposure_index, inferred_from: o.inferred_from ? INF.ref(o) : null, bls_basis: { oews: o.bls.oews ? o.bls.oews.inferred_from?.method || 'detailed' : null, projections: o.bls.projections ? o.bls.projections.inferred_from?.method || 'detailed' : null } });
   }
   writeIfChanged('data/occupations/index.json', { schema_version: '1.1.0', dataset: 'occupations_index', ...meta, count: index.length, occupations: index });
@@ -396,7 +397,7 @@ async function main() {
     const growth = list.filter((o) => o.bls.projections?.change_percent != null && !o.bls.projections.inferred_from);
     const hot = new Map(); list.filter((o) => !o.inferred_from?.fields.includes('technology')).forEach((o) => o.technology.filter((t) => t.hot).forEach((t) => hot.set(t.example, (hot.get(t.example) || 0) + 1)));
     const signal = {
-      code: g + '-0000', title: MAJOR[g] || null, occupations: list.length, oews_employment: emp,
+      code: g + '-0000', title: MAJOR[g] || MAJOR_FALLBACK[g] || null, occupations: list.length, oews_employment: emp,
       employment_weighted: { projected_change_percent: wavg((o) => direct(o, o.bls.projections?.change_percent, o.bls.projections)), ai_exposure_composite: wavg((o) => direct(o, o.exposure.ai.composite?.value, o.exposure.ai.composite)), robot_exposure_index: wavg((o) => (o.exposure.robotics.robot_exposure_index_inferred ? null : o.exposure.robotics.anthropic_robot_exposure_index)), median_annual_wage: wavg((o) => o.bls.oews?.median_annual) },
       fastest_growing: growth.sort((a, b) => b.bls.projections.change_percent - a.bls.projections.change_percent).slice(0, 5).map((o) => ({ code: o.code, title: o.title, change_percent: o.bls.projections.change_percent })),
       fastest_declining: growth.slice().sort((a, b) => a.bls.projections.change_percent - b.bls.projections.change_percent).slice(0, 5).map((o) => ({ code: o.code, title: o.title, change_percent: o.bls.projections.change_percent })),

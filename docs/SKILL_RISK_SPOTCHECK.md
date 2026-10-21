@@ -93,3 +93,21 @@ Ten O*NET-rated occupations plus one inferred one (EMTs, tasks borrowed from Par
 2. Low-exposure personal-care roles (Barbers, Massage Therapists, Hearing Aid Specialists, Optometrists) recur across many sources because their exposure is very low and they rely on generic people skills.
 3. Anthropic task penetration measures observed Claude usage, not automation. Penetration near 1 makes a task count as almost fully exposed (blended 0.75 with Eloundou labels), which is why customer-service skills come out as at risk.
 4. 37% of skill scores (13,124) use the occupation average (no task of that occupation links to the skill via DWA, GWA and skill). These are mostly low-importance skills; they are marked `confidence: low` and `basis: occupation_average`.
+
+## Second pass (pay factor, hub damping, interest fit, reskilling), 2026-10-20
+
+| Job | Top 5 before | Top 5 after |
+|---|---|---|
+| Software Developers | Digital Forensics Analysts, Musicians and Singers, Information Security Engineers, Architectural and Civil Drafters, Orthotists and Prosthetists | Computer Hardware Engineers, Computer Network Architects, Blockchain Engineers, Information Security Engineers, RFID Device Specialists |
+| Bookkeeping Clerks | Tax Preparers, Architectural and Civil Drafters, Appraisers, Veterinary Assistants, Cartographers | Tax Preparers, Appraisers, Budget Analysts, Loan Officers, Civil Engineering Technologists |
+| Truck Drivers | Bus and Truck Mechanics, Barbers, Wind Turbine Technicians, Medical Equipment Preparers, Aircraft Service Attendants | Crane and Tower Operators, Tank Car/Truck/Ship Loaders, Rail Yard Engineers, Welders, Continuous Mining Machine Operators |
+| Accountants and Auditors | Architectural and Civil Drafters, Budget Analysts, Makeup Artists, Logistics Analysts, Fire Inspectors | Budget Analysts, Logistics Analysts, Purchasing Agents, Project Management Specialists, Fundraising Managers |
+| Cashiers | Massage Therapists, Fast Food and Counter Workers, Manicurists, Skincare Specialists, Locker Room Attendants | Fast Food and Counter Workers, Locker Room Attendants, Waiters and Waitresses, Ushers, Amusement and Recreation Attendants |
+| Customer Service Reps | none | still no future-proof pathways; reskilling_pathways: OT Assistants, Flight Attendants, Counter and Rental Clerks, Eligibility Interviewers, Reservation and Ticket Agents |
+
+What improved and what didn't:
+- **Better:** Software Developers and Accountants now get same-domain targets. The cross-domain hubs (Barbers, Massage Therapists) are gone from these lists.
+- **Still weak:**
+  - Truck Drivers lost Bus and Truck Mechanics from the top 5. The fit and hub factors favour other operator roles.
+  - Cashier targets are low-paid and only moderately less exposed.
+  - High-paid, low-exposure medical roles (Oral and Maxillofacial Surgeons 97, Prosthodontists 91, Optometrists 91) are now the biggest hubs. Most of their sources are engineering and science jobs (17-, 19-), helped by the pay boost.

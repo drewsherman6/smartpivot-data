@@ -67,7 +67,7 @@ try {
       if (src?.inferred_from) errors.push(`${o.code}: inferred from ${inf.code}, which is itself inferred`);
     } else if (o.derived.future_skills.some((x) => x.inferred)) errors.push(`${o.code}: future_skills marked inferred without occupation.inferred_from`);
   }
-  const byCode = new Map(recs.map((o) => [o.code, o])); const pathPairs = [];
+  const byCode = new Map(recs.map((o) => [o.code, o])); const pathPairs = []; const targetUse = new Map();
   let SR = null; try { SR = readJson('data/skills/skill_risk.json'); } catch (e) { errors.push(e.message); }
   const PW = SR?.parameters?.pathways || {};
   // skills_to_develop never repeats a skill the occupation already has strongly (future/core); deepen items need a real gap
@@ -101,12 +101,29 @@ try {
       if (Math.abs(b.target_combined_exposure - t.derived.skill_risk_summary.occupation_combined) > 1e-6) errors.push(`${o.code}: pathway ${p.code} exposure does not match target record`);
       const g = t.bls.projections?.change_percent; if (!(g >= 0) || g !== b.growth_percent) errors.push(`${o.code}: pathway ${p.code} growth ${g} negative/missing or mismatched`);
       if (!(b.safe_overlap >= PW.min_safe_overlap)) errors.push(`${o.code}: pathway ${p.code} safe_overlap ${b.safe_overlap} below ${PW.min_safe_overlap}`);
-      const re = b.safe_overlap * b.exposure_factor * b.growth_factor * b.gap_factor * b.job_zone_factor * b.similarity_factor * b.onet_related_bonus;
+      if (typeof b.pay_factor !== 'number' || typeof b.pay_missing !== 'boolean' || (b.pay_missing ? b.pay_factor !== 1 : !(b.current_median_wage > 0 && b.target_median_wage > 0))) errors.push(`${o.code}: pathway ${p.code} pay factor missing/inconsistent`);
+      if (!b.pay_missing && !/Pay (cut|rise)|Similar pay/.test(p.reason)) errors.push(`${o.code}: pathway ${p.code} reason lacks pay wording`);
+      if (!b.pay_missing) { const pct = (b.target_median_wage / b.current_median_wage - 1) * 100; if ((pct < -5.5 && !/Pay cut/.test(p.reason)) || (pct > 5.5 && !/Pay rise/.test(p.reason))) errors.push(`${o.code}: pathway ${p.code} pay wording contradicts ${pct.toFixed(1)}%`); }
+      for (const gp of p.skill_gaps) { const m = o.skills.find((s) => s.name === gp.skill); if (m && (m.level == null || gp.your_level !== Math.round(m.level * 1000) / 1000)) errors.push(`${o.code}: pathway ${p.code} gap ${gp.skill} ignores the user's own level`); }
+      if (!p.growth_basis || p.growth_basis === 'detailed' || !p.task_shares?.target) errors.push(`${o.code}: pathway ${p.code} lacks growth_basis label or task_shares`);
+      targetUse.set(p.code, (targetUse.get(p.code) || 0) + 1);
+      const re = b.safe_overlap * b.exposure_factor * b.growth_factor * b.gap_factor * b.job_zone_factor * b.similarity_factor * b.onet_related_bonus * b.pay_factor * b.fit_factor * b.hub_factor;
       if (Math.abs(re - p.score) > 0.01) errors.push(`${o.code}: pathway ${p.code} score ${p.score} != product of breakdown ${re.toFixed(3)}`);
       if (p.score > prevScore + 1e-9) errors.push(`${o.code}: pathways not sorted by score`); prevScore = p.score;
       if (p.covered_safe_skills.some((c) => !band.has(c.skill) || band.get(c.skill).band === 'at_risk')) errors.push(`${o.code}: pathway ${p.code} credits an at-risk or unknown skill`);
       if (/rewarding|tailwind|shortlist/i.test(p.reason) || (g === 0 && /growth/.test(p.reason) && !/flat/.test(p.reason))) errors.push(`${o.code}: pathway ${p.code} reason wording`);
-      pathPairs.push([p.score, b.safe_overlap, b.exposure_factor]);
+      pathPairs.push(b);
+    }
+    const fpCodes = new Set((d.future_proof_pathways || []).map((p) => p.code));
+    if ((d.reskilling_pathways || []).length && (d.future_proof_pathways || []).length >= (PW.reskill?.when_fewer_than ?? 3)) errors.push(`${o.code}: reskilling_pathways present although future_proof list is full`);
+    for (const p of d.reskilling_pathways || []) {
+      const b = p.breakdown; const t = byCode.get(p.code);
+      if (p.needs_retraining !== true || p.future_proof || fpCodes.has(p.code)) errors.push(`${o.code}: reskilling ${p.code} not labelled/kept separate`);
+      if (!t || !(b.target_combined_exposure <= E - PW.min_exposure_drop + 1e-9) || !(t.bls.projections?.change_percent >= 0)) errors.push(`${o.code}: reskilling ${p.code} not less exposed / negative growth`);
+      if (!(p.new_skills.length <= PW.reskill.max_new_skills) || !/^Needs retraining/.test(p.reason)) errors.push(`${o.code}: reskilling ${p.code} new skills unbounded or unlabelled`);
+      const re = b.skill_fit * b.exposure_factor * b.growth_factor * b.gap_factor * b.job_zone_factor * b.similarity_factor * b.onet_related_bonus * b.pay_factor * b.fit_factor * b.hub_factor;
+      if (Math.abs(re - p.score) > 0.01) errors.push(`${o.code}: reskilling ${p.code} score != product of breakdown`);
+      if (typeof b.pay_factor !== 'number') errors.push(`${o.code}: reskilling ${p.code} lacks pay_factor`);
     }
     // skill_risk_summary.occupation_combined of every target in the top list must be below the source; no pathways and no note = unexplained
     if (!(d.future_proof_pathways || []).length && !d.future_proof_note) errors.push(`${o.code}: no future_proof_pathways and no future_proof_note`);
@@ -119,12 +136,18 @@ try {
     const w = o.bls.oews;
     if (w?.top_coded && (!w.top_coded_fields?.length || w.top_coded_fields.some((f) => w[f] != null) || typeof w.top_code_threshold?.annual !== 'number')) errors.push(`${o.code}: inconsistent top_coded wage block`);
   }
-  // Safe overlap drives the ranking: across all stored pathways it must correlate with score more than the exposure factor does
-  { const rank = (xs) => { const s = xs.map((v, i) => [v, i]).sort((a, b) => a[0] - b[0]); const r = new Array(xs.length); s.forEach(([, i], k) => { r[i] = k; }); return r; };
-    const sp = (a, b) => { const ra = rank(a), rb = rank(b); const n = a.length; const m = (n - 1) / 2; let num = 0, da = 0, db = 0; for (let i = 0; i < n; i++) { num += (ra[i] - m) * (rb[i] - m); da += (ra[i] - m) ** 2; db += (rb[i] - m) ** 2; } return num / Math.sqrt(da * db); };
-    if (pathPairs.length > 100) { const sc = pathPairs.map((x) => x[0]); const rOv = sp(sc, pathPairs.map((x) => x[1])), rEx = sp(sc, pathPairs.map((x) => x[2]));
-      console.log(`Pathway ranking: Spearman(score, safe_overlap)=${rOv.toFixed(3)}, Spearman(score, 1-exposure)=${rEx.toFixed(3)} over ${pathPairs.length} pathways`);
-      if (!(rOv > 0.3) || !(rOv > rEx)) errors.push(`safe_overlap does not drive pathway ranking (rho ${rOv.toFixed(3)} vs exposure ${rEx.toFixed(3)})`); } else errors.push('too few future_proof_pathways overall'); }
+  // No hub target: a job may be a future-proof pathway for at most ~10% of all occupations
+  { const cap = Math.floor(recs.length * (PW.hub?.max_share ?? 0.1)) + 1; for (const [c, n] of targetUse) if (n > cap) errors.push(`${c} is a pathway for ${n} occupations (> ${cap}, ~10%)`); }
+  try { const fam = readJson('data/signals/families.json'); fam.families.filter((f) => !f.title).forEach((f) => errors.push(`families.json: ${f.code} has no title`)); } catch (e) { errors.push(e.message); }
+  if (!(PW.pay && PW.hub)) errors.push('skill_risk.json parameters lack pay/hub settings');
+  // Safe overlap drives the ranking: of all multiplicative score factors it must have the largest spread (sd of ln factor)
+  if (pathPairs.length > 100) {
+    const F = ['safe_overlap', 'exposure_factor', 'growth_factor', 'gap_factor', 'job_zone_factor', 'similarity_factor', 'fit_factor', 'pay_factor', 'hub_factor', 'onet_related_bonus'];
+    const sd = Object.fromEntries(F.map((k) => { const x = pathPairs.map((b) => Math.log(b[k])); const m = x.reduce((s, v) => s + v, 0) / x.length; return [k, Math.sqrt(x.reduce((s, v) => s + (v - m) ** 2, 0) / x.length)]; }));
+    const top = F.slice().sort((a, b) => sd[b] - sd[a]);
+    console.log(`Pathway score spread (sd ln factor): ${top.slice(0, 4).map((k) => `${k}=${sd[k].toFixed(3)}`).join(', ')} over ${pathPairs.length} pathways`);
+    if (top[0] !== 'safe_overlap') errors.push(`safe_overlap does not drive pathway ranking (largest spread is ${top[0]})`);
+  } else errors.push('too few future_proof_pathways overall');
   // BLS wages must be exactly what the raw OEWS file publishes: a number only when the source cell is a number,
   // null when it is "*" (not available) or "#" (top-coded, then top_coded must be set). Needs .cache/oews.zip
   // (written by scripts/refresh.js); skipped with a notice when the cache is absent.

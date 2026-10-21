@@ -31,7 +31,11 @@ const P = {
     partial_span: 1.5, // coverage falls linearly to 0 over the next 1.5 level points
     min_safe_overlap: 0.3,
     moderate_credit: 0.5, // a 'moderate' skill (not safe, not at risk) counts half; at_risk skills count 0
-    similarity_floor: 0.5, min_similarity: 0.3, // similarity_factor = 0.5 + 0.5 x max(0, cosine of centred skill-importance profiles)
+    similarity_floor: 0.5, min_similarity: 0.35, // similarity_factor = 0.5 + 0.5 x max(0, cosine of distinctive skill-importance profiles)
+    min_interest_fit: 0.1, fit_floor: 0.5, // fit = mean cosine of centred RIASEC interests and specific interest areas (O*NET 31 OI scale); < 0.1 dropped; fit_factor = 0.5 + 0.5 x max(0, fit); neutral 1 if either job lacks interest data
+    pay: { log_scale: 0.4, min: 0.5, max: 1.15 }, // pay_factor = clamp(1 + 0.4 x ln(target median / current median), 0.5, 1.15); 1 and pay_missing:true if either wage missing
+    hub: { top_k: 30, df0: 20, alpha: 0.4, min: 0.5, max_share: 0.1 }, // hub_factor = max(0.5, 1 / (1 + 0.4 x ln(1 + appearances / 20))); appearances = sources with the target in their pre-damping top 30; hard cap: a target is kept for at most 10% of occupations (highest scores first)
+    reskill: { when_fewer_than: 3, min_skill_fit: 0.4, max_new_skills: 4, new_skill_gap: 1.0, top_n: 5 }, // reskilling_pathways only for jobs with < 3 future_proof pathways
     min_exposure_drop: 0.1, // target combined exposure must be <= source - 0.10 (absolute)
     max_exposure_ratio: 0.85, // ... and <= 85% of the source's
     min_growth: 0, // BLS 2025-35 change percent must be >= 0 (missing growth = not eligible)
@@ -161,6 +165,7 @@ function compute(all) {
     x.atRisk = rel.filter((s) => s.band === 'at_risk').sort((a, b) => b.combined - a.combined).map(pick);
   }
 
+  const x0 = {};
   // ---- pathway search over all occupations
   const PP = P.pathways;
   const meanImp = new Map(); { const acc = new Map(); for (const o of all) for (const s of o.skills) { const a = acc.get(s.id) || acc.set(s.id, [0, 0]).get(s.id); a[0] += s.importance; a[1]++; } for (const [k, [t, n]] of acc) meanImp.set(k, t / n); }
@@ -171,62 +176,122 @@ function compute(all) {
   const cos = (a, b) => { const x = prof.get(a), y = prof.get(b); let s = 0; for (let i = 0; i < x.length; i++) s += x[i] * y[i]; return s; };
   const dw = (s) => s.importance * (0.5 + Math.min(2, Math.max(0, s.importance - (meanImp.get(s.id) || 0))) / 2);
   const fmtPct = (v) => `${Math.round(v * 100)}%`;
+  const fmtUsd = (v) => `$${Math.round(v / 1000)}K`;
+  // ---- interest (RIASEC) and domain (specific interest area) profiles, O*NET 31 "OI" scale, centred per occupation
+  const interestVec = (file) => { const m = new Map(); for (const r of onetTable(file)) { if (r['Scale ID'] !== 'OI') continue; const v = m.get(r['O*NET-SOC Code']) || m.set(r['O*NET-SOC Code'], new Map()).get(r['O*NET-SOC Code']); v.set(r['Element ID'], Number(r['Data Value'])); } const keys = [...new Set([...m.values()].flatMap((v) => [...v.keys()]))].sort(); const out = new Map(); for (const [c, v] of m) { const xs = keys.map((k) => v.get(k) ?? 0); const mu = xs.reduce((a2, b2) => a2 + b2, 0) / xs.length; const cx = xs.map((q) => q - mu); const n = Math.hypot(...cx); if (n > 0) out.set(c, cx.map((q) => q / n)); } return out; };
+  const RIASEC = interestVec('career_interest_types.csv'), DOMAIN = interestVec('specific_interest_areas.csv');
+  const vecFor = (M, o) => M.get(o.code) || (o.inferred_from ? M.get(o.inferred_from.code) : null) || null;
+  const dot = (x, y) => { let q = 0; for (let i = 0; i < x.length; i++) q += x[i] * y[i]; return q; };
+  const wageOf = (o) => o.bls.oews?.median_annual ?? null;
+
+  // Evaluate one source -> target candidate. mode 'future_proof': overlap counts only not-at-risk skills;
+  // mode 'reskilling': overlap counts every skill the user has at level, and the new skills needed must be bounded.
+  function evalCand(o, x, t, mode) {
+    const E_S = x.summary.occupation_combined;
+    if (t.code === o.code || PP.exclude_target_title.test(t.title)) return null;
+    const E_T = occOut.get(t.code).summary.occupation_combined; const g = t.bls.projections?.change_percent;
+    if (g == null || g < PP.min_growth) return null;
+    if (!(E_T <= E_S - PP.min_exposure_drop && E_T <= E_S * PP.max_exposure_ratio)) return null;
+    if (o.job_zone != null && t.job_zone != null && (t.job_zone > o.job_zone + PP.max_job_zone_jump || t.job_zone < o.job_zone - PP.max_job_zone_drop)) return null;
+    const sim = cos(o.code, t.code); if (sim < PP.min_similarity) return null;
+    const ri = vecFor(RIASEC, o) && vecFor(RIASEC, t) ? dot(vecFor(RIASEC, o), vecFor(RIASEC, t)) : null;
+    const di = vecFor(DOMAIN, o) && vecFor(DOMAIN, t) ? dot(vecFor(DOMAIN, o), vecFor(DOMAIN, t)) : null;
+    const fits = [ri, di].filter((v) => v != null); const fit = fits.length ? fits.reduce((a2, b2) => a2 + b2, 0) / fits.length : null;
+    if (fit != null && fit < PP.min_interest_fit) return null;
+    const fitF = fit == null ? 1 : PP.fit_floor + (1 - PP.fit_floor) * Math.max(0, fit);
+    const ts = t.skills.filter((q) => q.kind === 'skill').sort((a2, b2) => b2.importance - a2.importance);
+    let req = ts.filter((q) => q.importance >= PP.required_importance); if (req.length < PP.min_required_skills) req = ts.slice(0, PP.min_required_skills);
+    if (!req.length) return null;
+    const risk = x.riskById; const mine = x.mineById;
+    let tot = 0, cov = 0, short = 0; const covered = [], gaps = [], newSkills = [];
+    for (const q of req) {
+      const wt = x.dw(q); tot += wt; const u = risk.get(q.id); const m = mine.get(q.id);
+      // Suppressed O*NET levels (null) are unknown, not 0: compare importance instead and never report a level gap
+      const known = m && m.level != null && q.level != null; const tl = q.level ?? null; const ul = m ? m.level ?? null : 0;
+      const lvl = !m ? 0 : known ? (ul >= tl - PP.level_tolerance ? 1 : clamp(1 - (tl - PP.level_tolerance - ul) / PP.partial_span)) : clamp(1 - Math.max(0, q.importance - PP.level_tolerance - m.importance) / PP.partial_span);
+      const strong = !!m && m.importance >= 3.5;
+      const credit = !u ? 0 : mode === 'reskilling' ? 1 : u.band === 'safe' ? 1 : u.band === 'moderate' ? PP.moderate_credit : 0;
+      const cc = lvl * credit; cov += wt * cc; if (cc > 0) covered.push({ skill: q.name, band: u.band, your_level: ul == null ? null : r3(ul), target_level: tl, coverage: r3(cc) });
+      const sf = m && !known ? 0 : Math.max(0, (tl ?? 0) - (ul ?? 0)); short += sf;
+      if (sf >= PP.level_tolerance) gaps.push({ skill: q.name, your_level: r3(ul), target_level: tl, gap: r3(sf), already_strong: strong, you_have_it_safely: !!u && u.band !== 'at_risk' });
+      if (sf >= PP.reskill.new_skill_gap && !strong) newSkills.push({ skill: q.name, your_level: r3(ul), target_level: tl, gap: r3(sf) });
+    }
+    const overlap = cov / tot;
+    if (mode === 'future_proof' && overlap < PP.min_safe_overlap) return null;
+    if (mode === 'reskilling' && (overlap < PP.reskill.min_skill_fit || newSkills.length > PP.reskill.max_new_skills)) return null;
+    const meanShort = short / req.length; const gapF = 1 - PP.gap_max_penalty * Math.min(1, meanShort / PP.gap_scale);
+    const gF = PP.growth_factor(g); const rel = x.related.has(t.code) ? PP.related_bonus : 1;
+    const zF = o.job_zone != null && t.job_zone != null ? Math.max(PP.job_zone_factor_min, 1 - PP.job_zone_drop_penalty * Math.max(0, o.job_zone - t.job_zone - PP.job_zone_drop_free)) : 1;
+    const sF = PP.similarity_floor + (1 - PP.similarity_floor) * Math.max(0, sim);
+    const wS = wageOf(o), wT = wageOf(t); const payMissing = !(wS > 0 && wT > 0); const ratio = payMissing ? null : wT / wS;
+    const payF = payMissing ? 1 : clamp(1 + PP.pay.log_scale * Math.log(ratio), PP.pay.min, PP.pay.max);
+    const base = overlap * (1 - E_T) * gF * gapF * zF * sF * rel * payF * fitF;
+    return { t, E_T, E_S, g, overlap, gapF, gF, zF, sim, sF, rel, payF, payMissing, ratio, wS, wT, ri, di, fit, fitF, base, covered, gaps, newSkills, meanShort, mode };
+  }
+  for (const o of all) {
+    const x = occOut.get(o.code);
+    x.riskById = new Map(x.skillRisk.map((q) => [q.id, q])); x.mineById = new Map(o.skills.map((q) => [q.id, q]));
+    x.related = new Set((o.related || []).map((r) => r.code)); x.dw = dw;
+    x.hasSafe = x.skillRisk.some((q) => q.band !== 'at_risk');
+  }
+  // Pass 1: candidates + pre-damping score; hub appearances = how many sources have the target in their top-K
+  const hubCount = (mode, pick) => { const df = new Map(); for (const o of all) { const cs = pick(o); for (const c of cs.slice(0, PP.hub.top_k)) df.set(c.t.code, (df.get(c.t.code) || 0) + 1); } return df; };
+  const assign = (mode, candsBy, df, nOut) => {
+    const hubF = (code) => Math.max(PP.hub.min, 1 / (1 + PP.hub.alpha * Math.log(1 + (df.get(code) || 0) / PP.hub.df0)));
+    const pairs = []; for (const [code, cs] of candsBy) for (const c of cs) { c.hubN = df.get(c.t.code) || 0; c.hubF = hubF(c.t.code); c.score = c.base * c.hubF; pairs.push([code, c]); }
+    pairs.sort((p1, p2) => p2[1].score - p1[1].score);
+    const cap = Math.floor(all.length * PP.hub.max_share); const used = new Map(); const out = new Map([...candsBy.keys()].map((k) => [k, []]));
+    for (const [code, c] of pairs) { const l = out.get(code); if (l.length >= nOut) continue; if ((used.get(c.t.code) || 0) >= cap) continue; l.push(c); used.set(c.t.code, (used.get(c.t.code) || 0) + 1); }
+    return out;
+  };
+  const fpCands = new Map(all.map((o) => { const x = occOut.get(o.code); const cs = x.hasSafe ? all.map((t) => evalCand(o, x, t, 'future_proof')).filter(Boolean).sort((a2, b2) => b2.base - a2.base) : []; return [o.code, cs]; }));
+  const fpDf = hubCount('future_proof', (o) => fpCands.get(o.code));
+  const fpOut = assign('future_proof', fpCands, fpDf, PP.top_n);
+  const needReskill = all.filter((o) => fpOut.get(o.code).length < PP.reskill.when_fewer_than);
+  const rsCands = new Map(needReskill.map((o) => { const x = occOut.get(o.code); const have = new Set(fpOut.get(o.code).map((c) => c.t.code)); return [o.code, all.map((t) => (have.has(t.code) ? null : evalCand(o, x, t, 'reskilling'))).filter(Boolean).sort((a2, b2) => b2.base - a2.base)]; }));
+  const rsDf = hubCount('reskilling', (o) => rsCands.get(o.code) || []);
+  const rsOut = assign('reskilling', rsCands, rsDf, PP.reskill.top_n);
+
+  const fmt = (o) => (c, i) => {
+    const topCov = c.covered.sort((a2, b2) => b2.coverage - a2.coverage).slice(0, 4).map((q) => q.skill);
+    const mainGaps = c.gaps.sort((a2, b2) => b2.gap - a2.gap).slice(0, 3);
+    const gtxt = c.g > 0 ? `BLS projects ${c.g.toFixed(1)}% job growth for 2025-35` : 'BLS projects flat employment for 2025-35 (0.0%)';
+    const pct = c.ratio == null ? null : Math.round((c.ratio - 1) * 100);
+    const ptxt = c.payMissing ? 'Pay comparison unavailable (BLS median wage missing for one of the two jobs).'
+      : Math.abs(pct) <= 5 ? `Similar pay (median ${fmtUsd(c.wT)} vs ${fmtUsd(c.wS)}).`
+      : pct < 0 ? `Pay cut of ${-pct}% (median ${fmtUsd(c.wT)} vs ${fmtUsd(c.wS)}).` : `Pay rise of ${pct}% (median ${fmtUsd(c.wT)} vs ${fmtUsd(c.wS)}).`;
+    const reusedAtRisk = c.covered.filter((q) => q.band === 'at_risk').slice(0, 3).map((q) => q.skill);
+    const lead = c.mode === 'reskilling'
+      ? (c.newSkills.length ? `Needs retraining: ${c.newSkills.length} new skill${c.newSkills.length === 1 ? '' : 's'} to learn (${c.newSkills.map((q) => q.skill).join(', ')}). ` : `Needs retraining: no large skill gaps, but expect role-specific training or certification. `)
+        + `Your current skills cover ${fmtPct(c.overlap)} of what this role needs${reusedAtRisk.length ? `, including ${reusedAtRisk.join(', ')}, which are at risk in your current job but used in a less exposed way here` : ''}. `
+      : `Your skills that are not at risk cover ${fmtPct(c.overlap)} of what this role needs (${topCov.join(', ')}). `;
+    const reason = lead + `Its tasks are about ${fmtPct(c.E_T)} exposed to AI and robots, versus ${fmtPct(c.E_S)} in your current job. ${gtxt}. ${ptxt}`
+      + (c.mode === 'future_proof' ? (mainGaps.length ? ` To close: ${mainGaps.map((gp) => `${gp.skill} (${gp.already_strong ? 'deepen, ' : ''}level ${gp.your_level} to ${gp.target_level})`).join(', ')}.` : ' No significant skill gaps.') : '');
+    return {
+      rank: i + 1, code: c.t.code, title: c.t.title, score: r3(c.score),
+      breakdown: { [c.mode === 'reskilling' ? 'skill_fit' : 'safe_overlap']: r3(c.overlap), target_combined_exposure: r3(c.E_T), source_combined_exposure: r3(c.E_S), exposure_drop: r3(c.E_S - c.E_T), exposure_factor: r3(1 - c.E_T), growth_percent: c.g, growth_factor: r3(c.gF), mean_level_shortfall: r3(c.meanShort), gap_factor: r3(c.gapF), job_zone_factor: r3(c.zF), profile_similarity: r3(c.sim), similarity_factor: r3(c.sF), interest_fit: r3(c.ri), domain_fit: r3(c.di), fit_factor: r3(c.fitF), current_median_wage: c.wS ?? null, target_median_wage: c.wT ?? null, pay_ratio: r3(c.ratio), pay_factor: r3(c.payF), pay_missing: c.payMissing, hub_appearances: c.hubN, hub_factor: r3(c.hubF), onet_related_bonus: r3(c.rel) },
+      ...(c.mode === 'reskilling' ? { needs_retraining: true, new_skills: c.newSkills } : { future_proof: true }), onet_related: c.rel > 1,
+      covered_safe_skills: c.covered.slice(0, 8), skill_gaps: mainGaps,
+      median_annual_wage: c.wT ?? null, job_zone: c.t.job_zone ?? null,
+      growth_basis: c.t.bls.projections?.inferred_from ? `Group estimate (BLS projections for ${c.t.bls.projections.inferred_from.title || c.t.bls.projections.inferred_from.code}, 2025-35)` : c.t.bls.projections?.shared_soc ? c.t.bls.projections.shared_soc.label : `BLS projection for this occupation (${c.t.bls.projections.title || c.t.title}, ${c.t.bls.projections.period || '2025-35'})`,
+      task_shares: { note: 'Same basis as the AI and robotics task-share cards (share of tasks), for comparison; the pathway exposure above is the time-weighted combined task risk.', target: { ai_task_share: c.t.exposure.ai.task_share?.share ?? null, robotics_exposed_task_share: c.t.exposure.robotics.exposed_task_share ?? null }, current: { ai_task_share: o.exposure.ai.task_share?.share ?? null, robotics_exposed_task_share: o.exposure.robotics.exposed_task_share ?? null } },
+      ...(c.t.inferred_from ? { target_inferred_from: { code: c.t.inferred_from.code, title: c.t.inferred_from.title, method: c.t.inferred_from.method, label: c.t.inferred_from.label } } : {}),
+      reason,
+    };
+  };
   for (const o of all) {
     const x = occOut.get(o.code); const E_S = x.summary.occupation_combined;
-    const safe = new Map(x.skillRisk.filter((s) => s.band !== 'at_risk').map((s) => [s.id, s]));
-    const credit = (s) => (s.band === 'safe' ? 1 : PP.moderate_credit); const mine = new Map(o.skills.map((s) => [s.id, s]));
-    const relatedSet = new Set((o.related || []).map((r) => r.code));
-    const cands = [];
-    if (safe.size) for (const t of all) {
-      if (t.code === o.code || PP.exclude_target_title.test(t.title)) continue;
-      const tx = occOut.get(t.code); const E_T = tx.summary.occupation_combined;
-      const g = t.bls.projections?.change_percent;
-      if (g == null || g < PP.min_growth) continue;
-      if (!(E_T <= E_S - PP.min_exposure_drop && E_T <= E_S * PP.max_exposure_ratio)) continue;
-      if (o.job_zone != null && t.job_zone != null && (t.job_zone > o.job_zone + PP.max_job_zone_jump || t.job_zone < o.job_zone - PP.max_job_zone_drop)) continue;
-      const ts = t.skills.filter((s) => s.kind === 'skill').sort((a, b) => b.importance - a.importance);
-      let req = ts.filter((s) => s.importance >= PP.required_importance);
-      if (req.length < PP.min_required_skills) req = ts.slice(0, PP.min_required_skills);
-      if (!req.length) continue;
-      let tot = 0, cov = 0, short = 0; const covered = [], gaps = [];
-      for (const s of req) {
-        const wt = dw(s); tot += wt; const tl = s.level ?? 0; const u = safe.get(s.id);
-        if (u) { const ul = u.level ?? 0; const c = ul >= tl - PP.level_tolerance ? 1 : clamp(1 - (tl - PP.level_tolerance - ul) / PP.partial_span); const cc = c * credit(u); cov += wt * cc; if (cc > 0) covered.push({ skill: s.name, band: u.band, your_level: ul, target_level: tl, coverage: r3(cc) }); }
-        const ml = mine.get(s.id)?.level ?? 0; const sf = Math.max(0, tl - ml); short += sf;
-        if (sf >= PP.level_tolerance) gaps.push({ skill: s.name, your_level: r3(ml), target_level: tl, gap: r3(sf), you_have_it_safely: !!u });
-      }
-      const overlap = cov / tot; if (overlap < PP.min_safe_overlap) continue;
-      const meanShort = short / req.length; const gapF = 1 - PP.gap_max_penalty * Math.min(1, meanShort / PP.gap_scale);
-      const gF = PP.growth_factor(g); const rel = relatedSet.has(t.code) ? PP.related_bonus : 1;
-      const zF = o.job_zone != null && t.job_zone != null ? Math.max(PP.job_zone_factor_min, 1 - PP.job_zone_drop_penalty * Math.max(0, o.job_zone - t.job_zone - PP.job_zone_drop_free)) : 1;
-      const sim = cos(o.code, t.code); if (sim < PP.min_similarity) continue; const sF = PP.similarity_floor + (1 - PP.similarity_floor) * Math.max(0, sim);
-      const score = overlap * (1 - E_T) * gF * gapF * zF * sF * rel;
-      cands.push({ t, tx, E_T, g, overlap, gapF, gF, zF, sim, sF, rel, score, covered, gaps, meanShort });
-    }
-    cands.sort((a, b) => b.score - a.score);
-    x.pathways = cands.slice(0, PP.top_n).map((c, i) => {
-      const topCov = c.covered.sort((a, b) => b.coverage - a.coverage).slice(0, 4).map((s) => s.skill);
-      const mainGaps = c.gaps.sort((a, b) => b.gap - a.gap).slice(0, 3);
-      const gtxt = c.g > 0 ? `BLS projects ${c.g.toFixed(1)}% job growth for 2025-35` : 'BLS projects flat employment for 2025-35 (0.0%)';
-      const reason = `Your skills that are not at risk cover ${fmtPct(c.overlap)} of what this role needs (${topCov.join(', ')}). `
-        + `Its tasks are about ${fmtPct(c.E_T)} exposed to AI and robots, versus ${fmtPct(E_S)} in your current job. ${gtxt}.`
-        + (mainGaps.length ? ` To close: ${mainGaps.map((gp) => `${gp.skill} (level ${gp.your_level} to ${gp.target_level})`).join(', ')}.` : ' No significant skill gaps.');
-      return {
-        rank: i + 1, code: c.t.code, title: c.t.title, score: r3(c.score),
-        breakdown: { safe_overlap: r3(c.overlap), target_combined_exposure: r3(c.E_T), source_combined_exposure: r3(E_S), exposure_drop: r3(E_S - c.E_T), exposure_factor: r3(1 - c.E_T), growth_percent: c.g, growth_factor: r3(c.gF), mean_level_shortfall: r3(c.meanShort), gap_factor: r3(c.gapF), job_zone_factor: r3(c.zF), profile_similarity: r3(c.sim), similarity_factor: r3(c.sF), onet_related_bonus: r3(c.rel) },
-        future_proof: true, onet_related: c.rel > 1,
-        covered_safe_skills: c.covered.slice(0, 8), skill_gaps: mainGaps,
-        median_annual_wage: c.t.bls.oews?.median_annual ?? null, job_zone: c.t.job_zone ?? null,
-        growth_basis: c.t.bls.projections?.inferred_from ? `group estimate (BLS: ${c.t.bls.projections.inferred_from.title || c.t.bls.projections.inferred_from.code})` : c.t.bls.projections?.shared_soc ? c.t.bls.projections.shared_soc.label : 'detailed',
-        ...(c.t.inferred_from ? { target_inferred_from: { code: c.t.inferred_from.code, title: c.t.inferred_from.title, method: c.t.inferred_from.method, label: c.t.inferred_from.label } } : {}),
-        reason,
-      };
-    });
-    const nonRisk = x.skillRisk.filter((s) => s.importance >= P.min_importance_for_lists && s.band !== 'at_risk').length, relN = x.skillRisk.filter((s) => s.importance >= P.min_importance_for_lists).length;
-    x.pathwayNote = !x.pathways.length && relN && nonRisk / relN < 0.35 ? `Most of this job's skills are at risk (${relN - nonRisk} of ${relN} relevant skills), so no lower-exposure job is mostly covered by the skills that are not. A move will need retraining; see at_risk_skills and transitions.`
-      : !safe.size ? 'No skills in this job fall in the safe band, so no pathway can be built from safe skills; see moderate skills in skill_risk.'
-      : !x.pathways.length ? (E_S < P.bands.safe_below + PP.min_exposure_drop ? 'This job is already among the least exposed: no other job with non-negative growth is meaningfully less exposed.' : 'No occupation met all the thresholds (safe-skill overlap, lower exposure, non-negative growth, job-zone jump).') : null;
+    x.pathways = fpOut.get(o.code).map(fmt(o));
+    x.reskilling = (rsOut.get(o.code) || []).map(fmt(o));
+    const nonRisk = x.skillRisk.filter((q) => q.importance >= P.min_importance_for_lists && q.band !== 'at_risk').length, relN = x.skillRisk.filter((q) => q.importance >= P.min_importance_for_lists).length;
+    const rsTxt = x.reskilling.length ? ` See reskilling_pathways (${x.reskilling.length}) for less exposed jobs that need a bounded amount of retraining.` : '';
+    x.pathwayNote = x.pathways.length ? null
+      : relN && nonRisk / relN < 0.35 ? `Most of this job's skills are at risk (${relN - nonRisk} of ${relN} relevant skills), so no lower-exposure job is mostly covered by the skills that are not.${rsTxt || ' A move will need retraining; see at_risk_skills and transitions.'}`
+      : !x.hasSafe ? `No skills in this job fall below the at-risk band, so no pathway can be built from them.${rsTxt}`
+      : E_S < P.bands.safe_below + PP.min_exposure_drop ? 'This job is already among the least exposed: no other job with non-negative growth is meaningfully less exposed.'
+      : `No occupation met all the thresholds (skill overlap, lower exposure, non-negative growth, job zone, skill and interest fit).${rsTxt}`;
   }
+  x0.hubStats = { future_proof: [...fpOut.values()].flat().reduce((m, c) => m.set(c.t.title, (m.get(c.t.title) || 0) + 1), new Map()), reskilling: [...rsOut.values()].flat().reduce((m, c) => m.set(c.t.title, (m.get(c.t.title) || 0) + 1), new Map()) };
 
   // ---- global per-skill table
   const g = new Map();
@@ -236,7 +301,7 @@ function compute(all) {
     if (s.band === 'safe') e.safe++; if (s.band === 'at_risk') e.at++;
   }
   const globalSkills = [...g.values()].map((e) => { const v = e.vals.sort((a, b) => a - b); const c = r3(e.c / e.w); return { id: e.id, skill: e.skill, kind: 'skill', ai_risk: r3(e.a / e.w), robotics_risk: r3(e.r / e.w), combined: r3(c), band: c < P.bands.safe_below ? 'safe' : c >= P.bands.at_risk_from ? 'at_risk' : 'moderate', occupations: e.n, occupations_safe: e.safe, occupations_at_risk: e.at, p10: r3(v[Math.floor(v.length * 0.1)]), median: r3(v[Math.floor(v.length / 2)]), p90: r3(v[Math.floor(v.length * 0.9)]) }; }).sort((a, b) => a.combined - b.combined);
-  return { occOut, globalSkills };
+  return { occOut, globalSkills, hubStats: x0.hubStats };
 }
 
 const METHOD = {
@@ -248,8 +313,10 @@ const METHOD = {
   skill_risk: 'weighted mean of linked task ai / robotics risk; combined = 1 - (1 - ai)(1 - robotics). If no task of the occupation links to the skill, the occupation\'s time-weighted task average is used (basis "occupation_average", confidence low).',
   confidence: 'high: >= 3 linked tasks and >= 70% of tasks with Anthropic task penetration; medium: >= 1 linked task; low: occupation average.',
   bands: `safe: combined < ${P.bands.safe_below}; at_risk: combined >= ${P.bands.at_risk_from}; moderate otherwise. safe_skills / at_risk_skills list only skills with importance >= ${P.min_importance_for_lists}; the two lists are disjoint and contain skills only (never abilities or knowledge).`,
+  exposure_vs_task_share_cards: 'The pathway exposure (skill_risk_summary.occupation_combined, breakdown.target_combined_exposure) is the time-weighted average combined task risk: each task scores 0..1 for AI and robotics and is weighted by its time share. The task-share cards count tasks instead: exposure.ai.task_share.share = share of tasks with any Anthropic usage; exposure.robotics.exposed_task_share = share of tasks rated E1-E3. A job can have a high AI task share (many tasks touched) but lower combined risk (low penetration or little time on them), and vice versa. Each pathway carries task_shares.target / task_shares.current so both measures can be shown side by side.',
   occupation_combined: 'time-weighted mean of task combined risk (derived.skill_risk_summary.occupation_combined). This is the exposure figure used by the pathway search.',
-  pathways: `Every occupation is a candidate (O*NET related gets a x${P.pathways.related_bonus} bonus only). safe_overlap = sum over target skills with importance >= ${P.pathways.required_importance} of importance x coverage / total importance, where coverage = credit x level match, credit = 1 for a skill in the user's safe band, 0.5 for moderate, 0 for at_risk; level match = 1 at level >= target level - ${P.pathways.level_tolerance}, falling linearly to 0 over the next ${P.pathways.partial_span} level points. target skills are weighted by importance x distinctiveness (generic skills every job rates highly count half; skills the target rates far above the all-occupation average count up to 1.5x); targets with fewer than 6 skills at importance >= 2.5 use their top 6. score = safe_overlap x (1 - target combined exposure) x growth_factor x gap_factor x job_zone_factor x similarity_factor x related_bonus; similarity_factor = 0.5 + 0.5 x max(0, cosine similarity of the two occupations' skill-importance profiles z-scored per skill across occupations and keeping only above-average skills, so it compares what is distinctive about each job's skill make-up; candidates below 0.3 are dropped) so the overall skill make-up counts too (safe_overlap still has the larger range: 0.3-1 vs 0.5-1); job_zone_factor = max(0.5, 1 - 0.25 x max(0, source zone - target zone - 1)) to avoid steep downshifts; growth_factor = 1 + min(growth%, 20) / 40; gap_factor = 1 - 0.5 x min(1, mean level shortfall over required target skills / 2). Eligible (future_proof) only if: target exposure <= source - ${P.pathways.min_exposure_drop} AND <= ${P.pathways.max_exposure_ratio} x source; BLS 2025-35 growth >= 0 (missing growth = not eligible); safe_overlap >= ${P.pathways.min_safe_overlap}; target job zone within source +${P.pathways.max_job_zone_jump} / -${P.pathways.max_job_zone_drop}; profile similarity >= ${P.pathways.min_similarity}. Catch-all ", All Other" codes are not used as targets. Top ${P.pathways.top_n} kept.`,
+  pathways: `Every occupation is a candidate (O*NET related gets a x${P.pathways.related_bonus} bonus only). safe_overlap = importance x distinctiveness weighted share of the target's required skills (importance >= ${P.pathways.required_importance}, at least the top ${P.pathways.min_required_skills}) covered by the user's skills: credit 1 for safe, ${P.pathways.moderate_credit} for moderate, 0 for at_risk, times level match (1 at level >= target - ${P.pathways.level_tolerance}, falling to 0 over ${P.pathways.partial_span} more points). score = safe_overlap x exposure_factor (1 - target combined exposure) x growth_factor (1 + min(growth%, 20)/40) x gap_factor (1 - 0.5 x min(1, mean level shortfall / 2)) x job_zone_factor x similarity_factor (0.5 + 0.5 x skill-profile cosine) x fit_factor (0.5 + 0.5 x mean of RIASEC-interest and specific-interest-area cosines) x pay_factor (clamp(1 + ${P.pathways.pay.log_scale} x ln(target/current BLS median wage), ${P.pathways.pay.min}, ${P.pathways.pay.max}); 1 with pay_missing when a wage is missing) x hub_factor (max(${P.pathways.hub.min}, 1 / (1 + ${P.pathways.hub.alpha} x ln(1 + appearances / ${P.pathways.hub.df0}))), appearances = sources with the target in their pre-damping top ${P.pathways.hub.top_k}) x related_bonus. Eligible only if: target exposure <= source - ${P.pathways.min_exposure_drop} and <= ${P.pathways.max_exposure_ratio} x source; BLS 2025-35 growth >= 0; safe_overlap >= ${P.pathways.min_safe_overlap}; job zone within +${P.pathways.max_job_zone_jump}/-${P.pathways.max_job_zone_drop}; skill-profile similarity >= ${P.pathways.min_similarity}; interest fit >= ${P.pathways.min_interest_fit} (when both jobs have interest data); not an ", All Other" code. Slots are filled highest score first across all occupations and no target is kept for more than ${P.pathways.hub.max_share * 100}% of occupations. Top ${P.pathways.top_n} kept.`,
+  reskilling_pathways: `Only for occupations with fewer than ${P.pathways.reskill.when_fewer_than} future_proof_pathways. Same eligibility, factors, hub damping and cap, but skill_fit credits every skill the user has at level (any risk band), needs skill_fit >= ${P.pathways.reskill.min_skill_fit}, and allows at most ${P.pathways.reskill.max_new_skills} new skills (target skills with a level gap >= ${P.pathways.reskill.new_skill_gap}). Each item has needs_retraining: true and new_skills[]; never mixed into future_proof_pathways. Top ${P.pathways.reskill.top_n}.`,
 };
 
 function sourcesMeta() {
@@ -259,7 +326,7 @@ function sourcesMeta() {
 
 // Adds the derived.* skill-risk fields to every occupation object in place; returns the skill_risk.json document.
 function apply(all) {
-  const { occOut, globalSkills } = compute(all);
+  const { occOut, globalSkills, hubStats } = compute(all);
   for (const o of all) {
     const x = occOut.get(o.code);
     o.derived.skill_risk = x.skillRisk;
@@ -267,6 +334,7 @@ function apply(all) {
     o.derived.at_risk_skills = x.atRisk;
     o.derived.skill_risk_summary = x.summary;
     o.derived.future_proof_pathways = x.pathways;
+    o.derived.reskilling_pathways = x.reskilling;
     if (x.pathwayNote) o.derived.future_proof_note = x.pathwayNote; else delete o.derived.future_proof_note;
     o.derived.skill_risk_method = 'See data/skills/skill_risk.json "method" and README "Skill risk and future-proof pathways".';
   }
@@ -277,9 +345,10 @@ function apply(all) {
     skill_scores_by_band: ['safe', 'moderate', 'at_risk'].reduce((m, c) => ({ ...m, [c]: all.reduce((s, o) => s + o.derived.skill_risk.filter((x) => x.band === c).length, 0) }), {}),
     tasks: all.reduce((s, o) => s + o.tasks.length, 0), tasks_linked_to_skills: all.reduce((s, o) => s + o.derived.skill_risk_summary.tasks_linked_to_skills, 0),
     occupations_with_safe_skills: cnt((o) => o.derived.safe_skills.length), occupations_with_at_risk_skills: cnt((o) => o.derived.at_risk_skills.length),
-    occupations_with_pathways: cnt((o) => o.derived.future_proof_pathways.length), occupations_inferred_tasks: cnt((o) => o.derived.skill_risk_summary.inferred_from),
+    occupations_with_pathways: cnt((o) => o.derived.future_proof_pathways.length), occupations_with_3plus_pathways: cnt((o) => o.derived.future_proof_pathways.length >= 3), occupations_with_reskilling_pathways: cnt((o) => o.derived.reskilling_pathways.length), occupations_with_neither: cnt((o) => !o.derived.future_proof_pathways.length && !o.derived.reskilling_pathways.length),
+    top_hub_targets: [...hubStats.future_proof.entries()].sort((a, b) => b[1] - a[1]).slice(0, 10).map(([title, n]) => ({ title, appearances: n })), occupations_inferred_tasks: cnt((o) => o.derived.skill_risk_summary.inferred_from),
   };
-  return { schema_version: '1.0.0', dataset: 'skill_risk', generated: today(), sources: sourcesMeta(), method: METHOD, parameters: { ...P, pathways: { ...P.pathways, growth_factor: '1 + min(growth_percent, 20) / 40', exclude_target_title: String(P.pathways.exclude_target_title) } }, coverage, count: globalSkills.length, skills: globalSkills };
+  return { schema_version: '1.0.0', dataset: 'skill_risk', generated: today(), sources: sourcesMeta(), method: METHOD, parameters: { ...P, pathways: { ...P.pathways, growth_factor: '1 + min(growth_percent, 20) / 40',  exclude_target_title: String(P.pathways.exclude_target_title) } }, coverage, count: globalSkills.length, skills: globalSkills };
 }
 
 function writeSkillRisk(out) {

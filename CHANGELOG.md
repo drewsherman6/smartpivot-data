@@ -2,6 +2,14 @@
 
 Machine-readable history: `data/history/changes.jsonl`. `scripts/update.js` appends entries here automatically.
 
+## 2026-10-20 (later) - Pathways: pay factor, hub damping, interest fit, reskilling routes
+- `future_proof_pathways` score adds `pay_factor` (log BLS median wage ratio, clamped 0.5-1.15; neutral + `pay_missing` when a wage is missing), `fit_factor` (O*NET RIASEC + specific interest areas; fit < 0.1 dropped) and `hub_factor` (IDF-style damping), plus a hard cap of 10% of occupations per target. Skill-profile similarity minimum raised from 0.30 to 0.35. Reasons now state pay. Top hubs before → after: Hearing Aid Specialists 220 → 57, Optometrists 185 → 91, Barbers 136 → <60 (not in top 10); the highest is now 97 (Oral and Maxillofacial Surgeons).
+- `skill_gaps` in pathways use the user's own level; suppressed levels are no longer treated as 0 (fixes "Programming level 0 to 3.38"); `already_strong` added.
+- `growth_basis` is always a full label; new `task_shares` (target/current AI task share and robotics exposed task share) per pathway; method text explains how combined exposure differs from the task-share cards.
+- New `derived.reskilling_pathways` (needs_retraining, ≤4 new skills) for the 28 occupations with < 3 future-proof pathways, e.g. Customer Service Representatives.
+- 55-0000 family title set to "Military Specific Occupations" (refresh fallback added).
+- Tests: score = product of breakdown (incl. pay/fit/hub), pay factor present and pay wording follows its sign, no target for > ~10% of occupations, reskilling labelled/separate/bounded, gaps use the user's level, growth_basis labelled, every family titled; safe_overlap must have the largest spread of all score factors.
+
 ## 2026-10-20 - Per-skill AI/robotics risk and future-proof pathways (Drew's method)
 - New `scripts/skill-risk.js` (also run by `refresh.js`): task-level AI risk (Anthropic task penetration + Eloundou GPT-4 task labels, with AIOE/composite fallbacks) and robotics risk (Anthropic robot tiers, cited systems per task_id, O*NET degree of automation). Tasks are linked to skills through O*NET DWAs, GWAs and the skills-to-work-activities linkage, then aggregated per skill per occupation.
 - New per-occupation fields (additive): `derived.skill_risk`, `safe_skills`, `at_risk_skills`, `skill_risk_summary`, `future_proof_pathways`, `future_proof_note`, `skill_risk_method`. `derived.transitions` is unchanged.
