@@ -147,3 +147,6 @@ npm test               # validation: strict JSON + schemas + coverage + sourcing
 node scripts/update.js patch.json   # merge curated records (headline_stats etc.)
 ```
 Layout: `scripts/` (refresh, skill-risk, verify-platforms, update, validate, build-manifest, sources, catalog), `schemas/`, `data/`, `data/history/changes.jsonl`, `CHANGELOG.md`.
+
+## App update after a refresh
+After pushing a weekly refresh to `main`, run `npm run notify-app`. It waits until raw.githubusercontent.com serves the new data, then calls `https://launchpad.smartpivot.xyz/api/revalidate` so every results page and PDF uses it immediately (secret from `$SMARTPIVOT_REVALIDATE_SECRET` or `/workspace/.smartpivot-secrets/revalidate`). Without it, the app still updates within an hour (ISR) and a daily Vercel cron re-checks the data repo's `main` SHA. The app uses: occupation shards, `agent_platforms.json` (verification status + facts), `headline_stats.json`, `emerging_skills.json`, `signals/families.json` and `history/changes.jsonl` (the "data as of" date). Keep appending a dated line to `changes.jsonl` on every refresh. `risk_scoring_overlay.json` is not used by the app (uncited legacy multipliers).

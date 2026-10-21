@@ -10,7 +10,8 @@
     "manifest": "node scripts/build-manifest.js",
     "refresh": "node scripts/refresh.js",
     "verify-platforms": "node scripts/verify-platforms.js",
-    "skill-risk": "node scripts/skill-risk.js"
+    "skill-risk": "node scripts/skill-risk.js",
+    "notify-app": "node scripts/notify-app.js"
   },
   "devDependencies": {
     "ajv": "^8.17.1",
