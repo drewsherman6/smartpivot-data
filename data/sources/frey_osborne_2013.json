@@ -1,0 +1,4226 @@
+{
+"dataset": "frey_osborne_2013",
+"source": {
+"name": "Frey, C.B. & Osborne, M.A. (2013) The Future of Employment: How Susceptible Are Jobs to Computerisation? Appendix table",
+"url": "https://www.oxfordmartin.ox.ac.uk/downloads/academic/The_Future_of_Employment.pdf",
+"page": "https://ora.ox.ac.uk/objects/uuid:4ed9f1bd-27e9-4e30-997e-5fc8405b0491/",
+"soc_version": "SOC 2010",
+"retrieved_at": "2026-10-21",
+"extraction": "pdftotext -layout of the appendix; rank, probability, SOC code, title (hand label column dropped); 702 rows, ranks 1..702 all present"
+},
+"count": 702,
+"occupations": [
+{
+"soc2010": "11-1011",
+"probability": 0.015,
+"rank": 70,
+"title": "Chief Executives"
+},
+{
+"soc2010": "11-1021",
+"probability": 0.16,
+"rank": 195,
+"title": "General and Operations Managers"
+},
+{
+"soc2010": "11-2011",
+"probability": 0.039,
+"rank": 124,
+"title": "Advertising and Promotions Managers"
+},
+{
+"soc2010": "11-2021",
+"probability": 0.014,
+"rank": 61,
+"title": "Marketing Managers"
+},
+{
+"soc2010": "11-2022",
+"probability": 0.013,
+"rank": 59,
+"title": "Sales Managers"
+},
+{
+"soc2010": "11-2031",
+"probability": 0.015,
+"rank": 67,
+"title": "Public Relations and Fundraising Managers"
+},
+{
+"soc2010": "11-3011",
+"probability": 0.73,
+"rank": 401,
+"title": "Administrative Services Managers"
+},
+{
+"soc2010": "11-3021",
+"probability": 0.035,
+"rank": 118,
+"title": "Computer and Information Systems Managers"
+},
+{
+"soc2010": "11-3031",
+"probability": 0.069,
+"rank": 152,
+"title": "Financial Managers"
+},
+{
+"soc2010": "11-3051",
+"probability": 0.03,
+"rank": 107,
+"title": "Industrial Production Managers"
+},
+{
+"soc2010": "11-3061",
+"probability": 0.03,
+"rank": 111,
+"title": "Purchasing Managers"
+},
+{
+"soc2010": "11-3071",
+"probability": 0.59,
+"rank": 328,
+"title": "Transportation, Storage, and Distribution Managers"
+},
+{
+"soc2010": "11-3111",
+"probability": 0.96,
+"rank": 630,
+"title": "Compensation and Benefits Managers"
+},
+{
+"soc2010": "11-3121",
+"probability": 0.0055,
+"rank": 28,
+"title": "Human Resources Managers"
+},
+{
+"soc2010": "11-3131",
+"probability": 0.0063,
+"rank": 30,
+"title": "Training and Development Managers"
+},
+{
+"soc2010": "11-9013",
+"probability": 0.047,
+"rank": 137,
+"title": "Farmers, Ranchers, and Other Agricultural Managers"
+},
+{
+"soc2010": "11-9021",
+"probability": 0.071,
+"rank": 154,
+"title": "Construction Managers"
+},
+{
+"soc2010": "11-9031",
+"probability": 0.015,
+"rank": 71,
+"title": "Education Administrators, Preschool and Childcare Center/Program"
+},
+{
+"soc2010": "11-9032",
+"probability": 0.0046,
+"rank": 22,
+"title": "Education Administrators, Elementary and Secondary School"
+},
+{
+"soc2010": "11-9033",
+"probability": 0.01,
+"rank": 52,
+"title": "Education Administrators, Postsecondary"
+},
+{
+"soc2010": "11-9041",
+"probability": 0.017,
+"rank": 78,
+"title": "Architectural and Engineering Managers"
+},
+{
+"soc2010": "11-9051",
+"probability": 0.083,
+"rank": 162,
+"title": "Food Service Managers"
+},
+{
+"soc2010": "11-9071",
+"probability": 0.091,
+"rank": 165,
+"title": "Gaming Managers"
+},
+{
+"soc2010": "11-9081",
+"probability": 0.0039,
+"rank": 12,
+"title": "Lodging Managers"
+},
+{
+"soc2010": "11-9111",
+"probability": 0.0073,
+"rank": 36,
+"title": "Medical and Health Services Managers"
+},
+{
+"soc2010": "11-9121",
+"probability": 0.018,
+"rank": 80,
+"title": "Natural Sciences Managers"
+},
+{
+"soc2010": "11-9131",
+"probability": 0.75,
+"rank": 409,
+"title": "Postmasters and Mail Superintendents"
+},
+{
+"soc2010": "11-9141",
+"probability": 0.81,
+"rank": 446,
+"title": "Property, Real Estate, and Community Association Managers"
+},
+{
+"soc2010": "11-9151",
+"probability": 0.0067,
+"rank": 33,
+"title": "Social and Community Service Managers"
+},
+{
+"soc2010": "11-9161",
+"probability": 0.003,
+"rank": 3,
+"title": "Emergency Management Directors"
+},
+{
+"soc2010": "11-9199",
+"probability": 0.25,
+"rank": 226,
+"title": "Managers, All Other"
+},
+{
+"soc2010": "13-1011",
+"probability": 0.24,
+"rank": 220,
+"title": "Agents and Business Managers of Artists, Performers, and Athletes"
+},
+{
+"soc2010": "13-1021",
+"probability": 0.87,
+"rank": 506,
+"title": "Buyers and Purchasing Agents, Farm Products"
+},
+{
+"soc2010": "13-1022",
+"probability": 0.29,
+"rank": 237,
+"title": "Wholesale and Retail Buyers, Except Farm Products"
+},
+{
+"soc2010": "13-1023",
+"probability": 0.77,
+"rank": 423,
+"title": "Purchasing Agents, Except Wholesale, Retail, and Farm Products"
+},
+{
+"soc2010": "13-1031",
+"probability": 0.98,
+"rank": 675,
+"title": "Claims Adjusters, Examiners, and Investigators"
+},
+{
+"soc2010": "13-1032",
+"probability": 0.98,
+"rank": 685,
+"title": "Insurance Appraisers, Auto Damage"
+},
+{
+"soc2010": "13-1041",
+"probability": 0.08,
+"rank": 159,
+"title": "Compliance Officers"
+},
+{
+"soc2010": "13-1051",
+"probability": 0.57,
+"rank": 321,
+"title": "Cost Estimators"
+},
+{
+"soc2010": "13-1074",
+"probability": 0.97,
+"rank": 649,
+"title": "Farm Labor Contractors"
+},
+{
+"soc2010": "13-1078",
+"probability": 0.31,
+"rank": 242,
+"title": "Human Resources, Training, and Labor Relations Specialists, All Other"
+},
+{
+"soc2010": "13-1081",
+"probability": 0.012,
+"rank": 55,
+"title": "Logisticians"
+},
+{
+"soc2010": "13-1111",
+"probability": 0.13,
+"rank": 182,
+"title": "Management Analysts"
+},
+{
+"soc2010": "13-1121",
+"probability": 0.037,
+"rank": 121,
+"title": "Meeting, Convention, and Event Planners"
+},
+{
+"soc2010": "13-1141",
+"probability": 0.47,
+"rank": 286,
+"title": "Compensation, Benefits, and Job Analysis Specialists"
+},
+{
+"soc2010": "13-1151",
+"probability": 0.014,
+"rank": 64,
+"title": "Training and Development Specialists"
+},
+{
+"soc2010": "13-1161",
+"probability": 0.61,
+"rank": 337,
+"title": "Market Research Analysts and Marketing Specialists"
+},
+{
+"soc2010": "13-1199",
+"probability": 0.23,
+"rank": 216,
+"title": "Business Operations Specialists, All Other"
+},
+{
+"soc2010": "13-2011",
+"probability": 0.94,
+"rank": 589,
+"title": "Accountants and Auditors"
+},
+{
+"soc2010": "13-2021",
+"probability": 0.9,
+"rank": 541,
+"title": "Appraisers and Assessors of Real Estate"
+},
+{
+"soc2010": "13-2031",
+"probability": 0.94,
+"rank": 594,
+"title": "Budget Analysts"
+},
+{
+"soc2010": "13-2041",
+"probability": 0.98,
+"rank": 677,
+"title": "Credit Analysts"
+},
+{
+"soc2010": "13-2051",
+"probability": 0.23,
+"rank": 217,
+"title": "Financial Analysts"
+},
+{
+"soc2010": "13-2052",
+"probability": 0.58,
+"rank": 324,
+"title": "Personal Financial Advisors"
+},
+{
+"soc2010": "13-2053",
+"probability": 0.99,
+"rank": 698,
+"title": "Insurance Underwriters"
+},
+{
+"soc2010": "13-2061",
+"probability": 0.17,
+"rank": 198,
+"title": "Financial Examiners"
+},
+{
+"soc2010": "13-2071",
+"probability": 0.04,
+"rank": 126,
+"title": "Credit Counselors"
+},
+{
+"soc2010": "13-2072",
+"probability": 0.98,
+"rank": 686,
+"title": "Loan Officers"
+},
+{
+"soc2010": "13-2081",
+"probability": 0.93,
+"rank": 586,
+"title": "Tax Examiners and Collectors, and Revenue Agents"
+},
+{
+"soc2010": "13-2082",
+"probability": 0.99,
+"rank": 695,
+"title": "Tax Preparers"
+},
+{
+"soc2010": "13-2099",
+"probability": 0.33,
+"rank": 245,
+"title": "Financial Specialists, All Other"
+},
+{
+"soc2010": "15-1111",
+"probability": 0.015,
+"rank": 69,
+"title": "Computer and Information Research Scientists"
+},
+{
+"soc2010": "15-1121",
+"probability": 0.0065,
+"rank": 32,
+"title": "Computer Systems Analysts"
+},
+{
+"soc2010": "15-1131",
+"probability": 0.48,
+"rank": 293,
+"title": "Computer Programmers"
+},
+{
+"soc2010": "15-1132",
+"probability": 0.042,
+"rank": 130,
+"title": "Software Developers, Applications"
+},
+{
+"soc2010": "15-1133",
+"probability": 0.13,
+"rank": 181,
+"title": "Software Developers, Systems Software"
+},
+{
+"soc2010": "15-1141",
+"probability": 0.03,
+"rank": 110,
+"title": "Database Administrators"
+},
+{
+"soc2010": "15-1142",
+"probability": 0.03,
+"rank": 109,
+"title": "Network and Computer Systems Administrators"
+},
+{
+"soc2010": "15-1150",
+"probability": 0.65,
+"rank": 359,
+"title": "Computer Support Specialists"
+},
+{
+"soc2010": "15-1179",
+"probability": 0.21,
+"rank": 208,
+"title": "Information Security Analysts, Web Developers, and Computer Net-"
+},
+{
+"soc2010": "15-1799",
+"probability": 0.22,
+"rank": 212,
+"title": "Computer Occupations, All Other"
+},
+{
+"soc2010": "15-2011",
+"probability": 0.21,
+"rank": 209,
+"title": "Actuaries"
+},
+{
+"soc2010": "15-2021",
+"probability": 0.047,
+"rank": 135,
+"title": "Mathematicians"
+},
+{
+"soc2010": "15-2031",
+"probability": 0.035,
+"rank": 117,
+"title": "Operations Research Analysts"
+},
+{
+"soc2010": "15-2041",
+"probability": 0.22,
+"rank": 213,
+"title": "Statisticians"
+},
+{
+"soc2010": "15-2091",
+"probability": 0.99,
+"rank": 699,
+"title": "Mathematical Technicians"
+},
+{
+"soc2010": "17-1011",
+"probability": 0.018,
+"rank": 82,
+"title": "Architects, Except Landscape and Naval"
+},
+{
+"soc2010": "17-1012",
+"probability": 0.045,
+"rank": 133,
+"title": "Landscape Architects"
+},
+{
+"soc2010": "17-1021",
+"probability": 0.88,
+"rank": 515,
+"title": "Cartographers and Photogrammetrists"
+},
+{
+"soc2010": "17-1022",
+"probability": 0.38,
+"rank": 262,
+"title": "Surveyors"
+},
+{
+"soc2010": "17-2011",
+"probability": 0.017,
+"rank": 79,
+"title": "Aerospace Engineers"
+},
+{
+"soc2010": "17-2021",
+"probability": 0.49,
+"rank": 295,
+"title": "Agricultural Engineers"
+},
+{
+"soc2010": "17-2031",
+"probability": 0.037,
+"rank": 120,
+"title": "Biomedical Engineers"
+},
+{
+"soc2010": "17-2041",
+"probability": 0.017,
+"rank": 77,
+"title": "Chemical Engineers"
+},
+{
+"soc2010": "17-2051",
+"probability": 0.019,
+"rank": 84,
+"title": "Civil Engineers"
+},
+{
+"soc2010": "17-2061",
+"probability": 0.22,
+"rank": 214,
+"title": "Computer Hardware Engineers"
+},
+{
+"soc2010": "17-2071",
+"probability": 0.1,
+"rank": 172,
+"title": "Electrical Engineers"
+},
+{
+"soc2010": "17-2072",
+"probability": 0.025,
+"rank": 98,
+"title": "Electronics Engineers, Except Computer"
+},
+{
+"soc2010": "17-2081",
+"probability": 0.018,
+"rank": 81,
+"title": "Environmental Engineers"
+},
+{
+"soc2010": "17-2111",
+"probability": 0.028,
+"rank": 103,
+"title": "Health and Safety Engineers, Except Mining Safety Engineers and In-"
+},
+{
+"soc2010": "17-2112",
+"probability": 0.029,
+"rank": 104,
+"title": "Industrial Engineers"
+},
+{
+"soc2010": "17-2121",
+"probability": 0.01,
+"rank": 51,
+"title": "Marine Engineers and Naval Architects"
+},
+{
+"soc2010": "17-2131",
+"probability": 0.021,
+"rank": 88,
+"title": "Materials Engineers"
+},
+{
+"soc2010": "17-2141",
+"probability": 0.011,
+"rank": 53,
+"title": "Mechanical Engineers"
+},
+{
+"soc2010": "17-2151",
+"probability": 0.14,
+"rank": 189,
+"title": "Mining and Geological Engineers, Including Mining Safety Engineers"
+},
+{
+"soc2010": "17-2161",
+"probability": 0.07,
+"rank": 153,
+"title": "Nuclear Engineers"
+},
+{
+"soc2010": "17-2171",
+"probability": 0.16,
+"rank": 193,
+"title": "Petroleum Engineers"
+},
+{
+"soc2010": "17-2199",
+"probability": 0.014,
+"rank": 63,
+"title": "Engineers, All Other"
+},
+{
+"soc2010": "17-3011",
+"probability": 0.52,
+"rank": 305,
+"title": "Architectural and Civil Drafters"
+},
+{
+"soc2010": "17-3012",
+"probability": 0.81,
+"rank": 443,
+"title": "Electrical and Electronics Drafters"
+},
+{
+"soc2010": "17-3013",
+"probability": 0.68,
+"rank": 378,
+"title": "Mechanical Drafters"
+},
+{
+"soc2010": "17-3021",
+"probability": 0.48,
+"rank": 290,
+"title": "Aerospace Engineering and Operations Technicians"
+},
+{
+"soc2010": "17-3022",
+"probability": 0.75,
+"rank": 413,
+"title": "Civil Engineering Technicians"
+},
+{
+"soc2010": "17-3023",
+"probability": 0.84,
+"rank": 474,
+"title": "Electrical and Electronics Engineering Technicians"
+},
+{
+"soc2010": "17-3024",
+"probability": 0.81,
+"rank": 444,
+"title": "Electro-Mechanical Technicians"
+},
+{
+"soc2010": "17-3025",
+"probability": 0.25,
+"rank": 225,
+"title": "Environmental Engineering Technicians"
+},
+{
+"soc2010": "17-3026",
+"probability": 0.03,
+"rank": 108,
+"title": "Industrial Engineering Technicians"
+},
+{
+"soc2010": "17-3027",
+"probability": 0.38,
+"rank": 263,
+"title": "Mechanical Engineering Technicians"
+},
+{
+"soc2010": "17-3029",
+"probability": 0.24,
+"rank": 221,
+"title": "Engineering Technicians, Except Drafters, All Other"
+},
+{
+"soc2010": "17-3031",
+"probability": 0.96,
+"rank": 635,
+"title": "Surveying and Mapping Technicians"
+},
+{
+"soc2010": "19-1011",
+"probability": 0.061,
+"rank": 147,
+"title": "Animal Scientists"
+},
+{
+"soc2010": "19-1012",
+"probability": 0.077,
+"rank": 158,
+"title": "Food Scientists and Technologists"
+},
+{
+"soc2010": "19-1013",
+"probability": 0.021,
+"rank": 86,
+"title": "Soil and Plant Scientists"
+},
+{
+"soc2010": "19-1021",
+"probability": 0.027,
+"rank": 99,
+"title": "Biochemists and Biophysicists"
+},
+{
+"soc2010": "19-1022",
+"probability": 0.012,
+"rank": 56,
+"title": "Microbiologists"
+},
+{
+"soc2010": "19-1023",
+"probability": 0.3,
+"rank": 240,
+"title": "Zoologists and Wildlife Biologists"
+},
+{
+"soc2010": "19-1029",
+"probability": 0.015,
+"rank": 66,
+"title": "Biological Scientists, All Other"
+},
+{
+"soc2010": "19-1031",
+"probability": 0.016,
+"rank": 75,
+"title": "Conservation Scientists"
+},
+{
+"soc2010": "19-1032",
+"probability": 0.0081,
+"rank": 43,
+"title": "Foresters"
+},
+{
+"soc2010": "19-1041",
+"probability": 0.2,
+"rank": 206,
+"title": "Epidemiologists"
+},
+{
+"soc2010": "19-1042",
+"probability": 0.0045,
+"rank": 21,
+"title": "Medical Scientists, Except Epidemiologists"
+},
+{
+"soc2010": "19-2011",
+"probability": 0.041,
+"rank": 128,
+"title": "Astronomers"
+},
+{
+"soc2010": "19-2012",
+"probability": 0.1,
+"rank": 175,
+"title": "Physicists"
+},
+{
+"soc2010": "19-2021",
+"probability": 0.67,
+"rank": 371,
+"title": "Atmospheric and Space Scientists"
+},
+{
+"soc2010": "19-2031",
+"probability": 0.1,
+"rank": 173,
+"title": "Chemists"
+},
+{
+"soc2010": "19-2032",
+"probability": 0.021,
+"rank": 87,
+"title": "Materials Scientists"
+},
+{
+"soc2010": "19-2041",
+"probability": 0.033,
+"rank": 113,
+"title": "Environmental Scientists and Specialists, Including Health"
+},
+{
+"soc2010": "19-2042",
+"probability": 0.63,
+"rank": 346,
+"title": "Geoscientists, Except Hydrologists and Geographers"
+},
+{
+"soc2010": "19-2043",
+"probability": 0.014,
+"rank": 60,
+"title": "Hydrologists"
+},
+{
+"soc2010": "19-2099",
+"probability": 0.43,
+"rank": 281,
+"title": "Physical Scientists, All Other"
+},
+{
+"soc2010": "19-3011",
+"probability": 0.43,
+"rank": 282,
+"title": "Economists"
+},
+{
+"soc2010": "19-3022",
+"probability": 0.23,
+"rank": 215,
+"title": "Survey Researchers"
+},
+{
+"soc2010": "19-3031",
+"probability": 0.0047,
+"rank": 24,
+"title": "Clinical, Counseling, and School Psychologists"
+},
+{
+"soc2010": "19-3032",
+"probability": 0.012,
+"rank": 57,
+"title": "Industrial-Organizational Psychologists"
+},
+{
+"soc2010": "19-3039",
+"probability": 0.0043,
+"rank": 17,
+"title": "Psychologists, All Other"
+},
+{
+"soc2010": "19-3041",
+"probability": 0.059,
+"rank": 145,
+"title": "Sociologists"
+},
+{
+"soc2010": "19-3051",
+"probability": 0.13,
+"rank": 184,
+"title": "Urban and Regional Planners"
+},
+{
+"soc2010": "19-3091",
+"probability": 0.0077,
+"rank": 39,
+"title": "Anthropologists and Archeologists"
+},
+{
+"soc2010": "19-3092",
+"probability": 0.25,
+"rank": 222,
+"title": "Geographers"
+},
+{
+"soc2010": "19-3093",
+"probability": 0.44,
+"rank": 283,
+"title": "Historians"
+},
+{
+"soc2010": "19-3094",
+"probability": 0.039,
+"rank": 125,
+"title": "Political Scientists"
+},
+{
+"soc2010": "19-3099",
+"probability": 0.04,
+"rank": 127,
+"title": "Social Scientists and Related Workers, All Other"
+},
+{
+"soc2010": "19-4011",
+"probability": 0.97,
+"rank": 665,
+"title": "Agricultural and Food Science Technicians"
+},
+{
+"soc2010": "19-4021",
+"probability": 0.3,
+"rank": 238,
+"title": "Biological Technicians"
+},
+{
+"soc2010": "19-4031",
+"probability": 0.57,
+"rank": 319,
+"title": "Chemical Technicians"
+},
+{
+"soc2010": "19-4041",
+"probability": 0.91,
+"rank": 557,
+"title": "Geological and Petroleum Technicians"
+},
+{
+"soc2010": "19-4051",
+"probability": 0.85,
+"rank": 489,
+"title": "Nuclear Technicians"
+},
+{
+"soc2010": "19-4061",
+"probability": 0.65,
+"rank": 357,
+"title": "Social Science Research Assistants"
+},
+{
+"soc2010": "19-4091",
+"probability": 0.77,
+"rank": 419,
+"title": "Environmental Science and Protection Technicians, Including Health"
+},
+{
+"soc2010": "19-4092",
+"probability": 0.0095,
+"rank": 49,
+"title": "Forensic Science Technicians"
+},
+{
+"soc2010": "19-4093",
+"probability": 0.42,
+"rank": 278,
+"title": "Forest and Conservation Technicians"
+},
+{
+"soc2010": "19-4099",
+"probability": 0.61,
+"rank": 340,
+"title": "Life, Physical, and Social Science Technicians, All Other"
+},
+{
+"soc2010": "21-1011",
+"probability": 0.033,
+"rank": 114,
+"title": "Substance Abuse and Behavioral Disorder Counselors"
+},
+{
+"soc2010": "21-1012",
+"probability": 0.0085,
+"rank": 44,
+"title": "Educational, Guidance, School, and Vocational Counselors"
+},
+{
+"soc2010": "21-1013",
+"probability": 0.014,
+"rank": 62,
+"title": "Marriage and Family Therapists"
+},
+{
+"soc2010": "21-1014",
+"probability": 0.0048,
+"rank": 25,
+"title": "Mental Health Counselors"
+},
+{
+"soc2010": "21-1015",
+"probability": 0.0094,
+"rank": 47,
+"title": "Rehabilitation Counselors"
+},
+{
+"soc2010": "21-1021",
+"probability": 0.028,
+"rank": 102,
+"title": "Child, Family, and School Social Workers"
+},
+{
+"soc2010": "21-1022",
+"probability": 0.0035,
+"rank": 8,
+"title": "Healthcare Social Workers"
+},
+{
+"soc2010": "21-1023",
+"probability": 0.0031,
+"rank": 4,
+"title": "Mental Health and Substance Abuse Social Workers"
+},
+{
+"soc2010": "21-1091",
+"probability": 0.045,
+"rank": 134,
+"title": "Health Educators"
+},
+{
+"soc2010": "21-1092",
+"probability": 0.25,
+"rank": 224,
+"title": "Probation Officers and Correctional Treatment Specialists"
+},
+{
+"soc2010": "21-1093",
+"probability": 0.13,
+"rank": 185,
+"title": "Social and Human Service Assistants"
+},
+{
+"soc2010": "21-2011",
+"probability": 0.0081,
+"rank": 42,
+"title": "Clergy"
+},
+{
+"soc2010": "21-2021",
+"probability": 0.025,
+"rank": 97,
+"title": "Directors, Religious Activities and Education"
+},
+{
+"soc2010": "23-1011",
+"probability": 0.035,
+"rank": 115,
+"title": "Lawyers"
+},
+{
+"soc2010": "23-1012",
+"probability": 0.41,
+"rank": 276,
+"title": "Judicial Law Clerks"
+},
+{
+"soc2010": "23-1021",
+"probability": 0.64,
+"rank": 353,
+"title": "Administrative Law Judges, Adjudicators, and Hearing Officers"
+},
+{
+"soc2010": "23-1022",
+"probability": 0.06,
+"rank": 146,
+"title": "Arbitrators, Mediators, and Conciliators"
+},
+{
+"soc2010": "23-1023",
+"probability": 0.4,
+"rank": 271,
+"title": "Judges, Magistrate Judges, and Magistrates"
+},
+{
+"soc2010": "23-2011",
+"probability": 0.94,
+"rank": 609,
+"title": "Paralegals and Legal Assistants"
+},
+{
+"soc2010": "23-2091",
+"probability": 0.5,
+"rank": 301,
+"title": "Court Reporters"
+},
+{
+"soc2010": "23-2093",
+"probability": 0.99,
+"rank": 701,
+"title": "Title Examiners, Abstractors, and Searchers"
+},
+{
+"soc2010": "25-1000",
+"probability": 0.032,
+"rank": 112,
+"title": "Postsecondary Teachers"
+},
+{
+"soc2010": "25-2011",
+"probability": 0.0074,
+"rank": 37,
+"title": "Preschool Teachers, Except Special Education"
+},
+{
+"soc2010": "25-2012",
+"probability": 0.15,
+"rank": 191,
+"title": "Kindergarten Teachers, Except Special Education"
+},
+{
+"soc2010": "25-2021",
+"probability": 0.0044,
+"rank": 20,
+"title": "Elementary School Teachers, Except Special Education"
+},
+{
+"soc2010": "25-2022",
+"probability": 0.17,
+"rank": 200,
+"title": "Middle School Teachers, Except Special and Career/Technical Educa-"
+},
+{
+"soc2010": "25-2023",
+"probability": 0.26,
+"rank": 229,
+"title": "Career/Technical Education Teachers, Middle School"
+},
+{
+"soc2010": "25-2031",
+"probability": 0.0078,
+"rank": 41,
+"title": "Secondary School Teachers, Except Special and Career/Technical Edu-"
+},
+{
+"soc2010": "25-2032",
+"probability": 0.0088,
+"rank": 45,
+"title": "Career/Technical Education Teachers, Secondary School"
+},
+{
+"soc2010": "25-2053",
+"probability": 0.016,
+"rank": 76,
+"title": "Special Education Teachers, Middle School"
+},
+{
+"soc2010": "25-2054",
+"probability": 0.0077,
+"rank": 40,
+"title": "Special Education Teachers, Secondary School"
+},
+{
+"soc2010": "25-3011",
+"probability": 0.19,
+"rank": 205,
+"title": "Adult Basic and Secondary Education and Literacy Teachers and In-"
+},
+{
+"soc2010": "25-3021",
+"probability": 0.13,
+"rank": 186,
+"title": "Self-Enrichment Education Teachers"
+},
+{
+"soc2010": "25-3999",
+"probability": 0.0095,
+"rank": 48,
+"title": "Teachers and Instructors, All Other"
+},
+{
+"soc2010": "25-4011",
+"probability": 0.76,
+"rank": 415,
+"title": "Archivists"
+},
+{
+"soc2010": "25-4012",
+"probability": 0.0068,
+"rank": 34,
+"title": "Curators"
+},
+{
+"soc2010": "25-4013",
+"probability": 0.59,
+"rank": 326,
+"title": "Museum Technicians and Conservators"
+},
+{
+"soc2010": "25-4021",
+"probability": 0.65,
+"rank": 360,
+"title": "Librarians"
+},
+{
+"soc2010": "25-4031",
+"probability": 0.99,
+"rank": 692,
+"title": "Library Technicians"
+},
+{
+"soc2010": "25-9011",
+"probability": 0.39,
+"rank": 270,
+"title": "Audio-Visual and Multimedia Collections Specialists"
+},
+{
+"soc2010": "25-9021",
+"probability": 0.0075,
+"rank": 38,
+"title": "Farm and Home Management Advisors"
+},
+{
+"soc2010": "25-9031",
+"probability": 0.0042,
+"rank": 16,
+"title": "Instructional Coordinators"
+},
+{
+"soc2010": "25-9041",
+"probability": 0.56,
+"rank": 317,
+"title": "Teacher Assistants"
+},
+{
+"soc2010": "27-1011",
+"probability": 0.023,
+"rank": 95,
+"title": "Art Directors"
+},
+{
+"soc2010": "27-1012",
+"probability": 0.035,
+"rank": 116,
+"title": "Craft Artists"
+},
+{
+"soc2010": "27-1013",
+"probability": 0.042,
+"rank": 131,
+"title": "Fine Artists, Including Painters, Sculptors, and Illustrators"
+},
+{
+"soc2010": "27-1014",
+"probability": 0.015,
+"rank": 68,
+"title": "Multimedia Artists and Animators"
+},
+{
+"soc2010": "27-1021",
+"probability": 0.037,
+"rank": 119,
+"title": "Commercial and Industrial Designers"
+},
+{
+"soc2010": "27-1022",
+"probability": 0.021,
+"rank": 89,
+"title": "Fashion Designers"
+},
+{
+"soc2010": "27-1023",
+"probability": 0.047,
+"rank": 136,
+"title": "Floral Designers"
+},
+{
+"soc2010": "27-1024",
+"probability": 0.082,
+"rank": 161,
+"title": "Graphic Designers"
+},
+{
+"soc2010": "27-1025",
+"probability": 0.022,
+"rank": 93,
+"title": "Interior Designers"
+},
+{
+"soc2010": "27-1026",
+"probability": 0.48,
+"rank": 291,
+"title": "Merchandise Displayers and Window Trimmers"
+},
+{
+"soc2010": "27-1027",
+"probability": 0.0055,
+"rank": 27,
+"title": "Set and Exhibit Designers"
+},
+{
+"soc2010": "27-2011",
+"probability": 0.37,
+"rank": 259,
+"title": "Actors"
+},
+{
+"soc2010": "27-2012",
+"probability": 0.022,
+"rank": 92,
+"title": "Producers and Directors"
+},
+{
+"soc2010": "27-2021",
+"probability": 0.28,
+"rank": 234,
+"title": "Athletes and Sports Competitors"
+},
+{
+"soc2010": "27-2022",
+"probability": 0.013,
+"rank": 58,
+"title": "Coaches and Scouts"
+},
+{
+"soc2010": "27-2023",
+"probability": 0.98,
+"rank": 684,
+"title": "Umpires, Referees, and Other Sports Officials"
+},
+{
+"soc2010": "27-2031",
+"probability": 0.13,
+"rank": 179,
+"title": "Dancers"
+},
+{
+"soc2010": "27-2032",
+"probability": 0.004,
+"rank": 13,
+"title": "Choreographers"
+},
+{
+"soc2010": "27-2041",
+"probability": 0.015,
+"rank": 72,
+"title": "Music Directors and Composers"
+},
+{
+"soc2010": "27-2042",
+"probability": 0.074,
+"rank": 155,
+"title": "Musicians and Singers"
+},
+{
+"soc2010": "27-3011",
+"probability": 0.1,
+"rank": 171,
+"title": "Radio and Television Announcers"
+},
+{
+"soc2010": "27-3012",
+"probability": 0.72,
+"rank": 399,
+"title": "Public Address System and Other Announcers"
+},
+{
+"soc2010": "27-3021",
+"probability": 0.067,
+"rank": 151,
+"title": "Broadcast News Analysts"
+},
+{
+"soc2010": "27-3022",
+"probability": 0.11,
+"rank": 177,
+"title": "Reporters and Correspondents"
+},
+{
+"soc2010": "27-3031",
+"probability": 0.18,
+"rank": 201,
+"title": "Public Relations Specialists"
+},
+{
+"soc2010": "27-3041",
+"probability": 0.055,
+"rank": 140,
+"title": "Editors"
+},
+{
+"soc2010": "27-3042",
+"probability": 0.89,
+"rank": 526,
+"title": "Technical Writers"
+},
+{
+"soc2010": "27-3043",
+"probability": 0.038,
+"rank": 123,
+"title": "Writers and Authors"
+},
+{
+"soc2010": "27-3091",
+"probability": 0.38,
+"rank": 265,
+"title": "Interpreters and Translators"
+},
+{
+"soc2010": "27-4011",
+"probability": 0.55,
+"rank": 316,
+"title": "Audio and Video Equipment Technicians"
+},
+{
+"soc2010": "27-4012",
+"probability": 0.74,
+"rank": 407,
+"title": "Broadcast Technicians"
+},
+{
+"soc2010": "27-4013",
+"probability": 0.98,
+"rank": 673,
+"title": "Radio Operators"
+},
+{
+"soc2010": "27-4014",
+"probability": 0.13,
+"rank": 187,
+"title": "Sound Engineering Technicians"
+},
+{
+"soc2010": "27-4021",
+"probability": 0.021,
+"rank": 91,
+"title": "Photographers"
+},
+{
+"soc2010": "27-4031",
+"probability": 0.6,
+"rank": 332,
+"title": "Camera Operators, Television, Video, and Motion Picture"
+},
+{
+"soc2010": "27-4032",
+"probability": 0.31,
+"rank": 244,
+"title": "Film and Video Editors"
+},
+{
+"soc2010": "29-1011",
+"probability": 0.027,
+"rank": 100,
+"title": "Chiropractors"
+},
+{
+"soc2010": "29-1021",
+"probability": 0.0044,
+"rank": 19,
+"title": "Dentists, General"
+},
+{
+"soc2010": "29-1022",
+"probability": 0.0036,
+"rank": 9,
+"title": "Oral and Maxillofacial Surgeons"
+},
+{
+"soc2010": "29-1023",
+"probability": 0.023,
+"rank": 94,
+"title": "Orthodontists"
+},
+{
+"soc2010": "29-1024",
+"probability": 0.055,
+"rank": 141,
+"title": "Prosthodontists"
+},
+{
+"soc2010": "29-1031",
+"probability": 0.0039,
+"rank": 11,
+"title": "Dietitians and Nutritionists"
+},
+{
+"soc2010": "29-1041",
+"probability": 0.14,
+"rank": 188,
+"title": "Optometrists"
+},
+{
+"soc2010": "29-1051",
+"probability": 0.012,
+"rank": 54,
+"title": "Pharmacists"
+},
+{
+"soc2010": "29-1060",
+"probability": 0.0042,
+"rank": 15,
+"title": "Physicians and Surgeons"
+},
+{
+"soc2010": "29-1071",
+"probability": 0.14,
+"rank": 190,
+"title": "Physician Assistants"
+},
+{
+"soc2010": "29-1081",
+"probability": 0.0046,
+"rank": 23,
+"title": "Podiatrists"
+},
+{
+"soc2010": "29-1111",
+"probability": 0.009,
+"rank": 46,
+"title": "Registered Nurses"
+},
+{
+"soc2010": "29-1122",
+"probability": 0.0035,
+"rank": 6,
+"title": "Occupational Therapists"
+},
+{
+"soc2010": "29-1123",
+"probability": 0.021,
+"rank": 90,
+"title": "Physical Therapists"
+},
+{
+"soc2010": "29-1124",
+"probability": 0.34,
+"rank": 248,
+"title": "Radiation Therapists"
+},
+{
+"soc2010": "29-1125",
+"probability": 0.0028,
+"rank": 1,
+"title": "Recreational Therapists"
+},
+{
+"soc2010": "29-1126",
+"probability": 0.066,
+"rank": 150,
+"title": "Respiratory Therapists"
+},
+{
+"soc2010": "29-1127",
+"probability": 0.0064,
+"rank": 31,
+"title": "Speech-Language Pathologists"
+},
+{
+"soc2010": "29-1131",
+"probability": 0.038,
+"rank": 122,
+"title": "Veterinarians"
+},
+{
+"soc2010": "29-1181",
+"probability": 0.0033,
+"rank": 5,
+"title": "Audiologists"
+},
+{
+"soc2010": "29-1199",
+"probability": 0.02,
+"rank": 85,
+"title": "Health Diagnosing and Treating Practitioners, All Other"
+},
+{
+"soc2010": "29-2011",
+"probability": 0.9,
+"rank": 533,
+"title": "Medical and Clinical Laboratory Technologists"
+},
+{
+"soc2010": "29-2012",
+"probability": 0.47,
+"rank": 288,
+"title": "Medical and Clinical Laboratory Technicians"
+},
+{
+"soc2010": "29-2021",
+"probability": 0.68,
+"rank": 379,
+"title": "Dental Hygienists"
+},
+{
+"soc2010": "29-2031",
+"probability": 0.23,
+"rank": 219,
+"title": "Cardiovascular Technologists and Technicians"
+},
+{
+"soc2010": "29-2032",
+"probability": 0.35,
+"rank": 251,
+"title": "Diagnostic Medical Sonographers"
+},
+{
+"soc2010": "29-2033",
+"probability": 0.13,
+"rank": 180,
+"title": "Nuclear Medicine Technologists"
+},
+{
+"soc2010": "29-2037",
+"probability": 0.23,
+"rank": 218,
+"title": "Radiologic Technologists and Technicians"
+},
+{
+"soc2010": "29-2041",
+"probability": 0.049,
+"rank": 139,
+"title": "Emergency Medical Technicians and Paramedics"
+},
+{
+"soc2010": "29-2051",
+"probability": 0.13,
+"rank": 183,
+"title": "Dietetic Technicians"
+},
+{
+"soc2010": "29-2052",
+"probability": 0.92,
+"rank": 562,
+"title": "Pharmacy Technicians"
+},
+{
+"soc2010": "29-2053",
+"probability": 0.043,
+"rank": 132,
+"title": "Psychiatric Technicians"
+},
+{
+"soc2010": "29-2054",
+"probability": 0.1,
+"rank": 174,
+"title": "Respiratory Therapy Technicians"
+},
+{
+"soc2010": "29-2055",
+"probability": 0.34,
+"rank": 247,
+"title": "Surgical Technologists"
+},
+{
+"soc2010": "29-2056",
+"probability": 0.029,
+"rank": 106,
+"title": "Veterinary Technologists and Technicians"
+},
+{
+"soc2010": "29-2061",
+"probability": 0.058,
+"rank": 144,
+"title": "Licensed Practical and Licensed Vocational Nurses"
+},
+{
+"soc2010": "29-2071",
+"probability": 0.91,
+"rank": 550,
+"title": "Medical Records and Health Information Technicians"
+},
+{
+"soc2010": "29-2081",
+"probability": 0.71,
+"rank": 391,
+"title": "Opticians, Dispensing"
+},
+{
+"soc2010": "29-2091",
+"probability": 0.0035,
+"rank": 7,
+"title": "Orthotists and Prosthetists"
+},
+{
+"soc2010": "29-2799",
+"probability": 0.4,
+"rank": 273,
+"title": "Health Technologists and Technicians, All Other"
+},
+{
+"soc2010": "29-9011",
+"probability": 0.17,
+"rank": 196,
+"title": "Occupational Health and Safety Specialists"
+},
+{
+"soc2010": "29-9012",
+"probability": 0.25,
+"rank": 223,
+"title": "Occupational Health and Safety Technicians"
+},
+{
+"soc2010": "29-9091",
+"probability": 0.0071,
+"rank": 35,
+"title": "Athletic Trainers"
+},
+{
+"soc2010": "29-9799",
+"probability": 0.055,
+"rank": 142,
+"title": "Healthcare Practitioners and Technical Workers, All Other"
+},
+{
+"soc2010": "31-1011",
+"probability": 0.39,
+"rank": 266,
+"title": "Home Health Aides"
+},
+{
+"soc2010": "31-1013",
+"probability": 0.47,
+"rank": 287,
+"title": "Psychiatric Aides"
+},
+{
+"soc2010": "31-2011",
+"probability": 0.028,
+"rank": 101,
+"title": "Occupational Therapy Assistants"
+},
+{
+"soc2010": "31-2012",
+"probability": 0.27,
+"rank": 231,
+"title": "Occupational Therapy Aides"
+},
+{
+"soc2010": "31-2021",
+"probability": 0.018,
+"rank": 83,
+"title": "Physical Therapist Assistants"
+},
+{
+"soc2010": "31-2022",
+"probability": 0.61,
+"rank": 335,
+"title": "Physical Therapist Aides"
+},
+{
+"soc2010": "31-9011",
+"probability": 0.54,
+"rank": 311,
+"title": "Massage Therapists"
+},
+{
+"soc2010": "31-9091",
+"probability": 0.51,
+"rank": 303,
+"title": "Dental Assistants"
+},
+{
+"soc2010": "31-9092",
+"probability": 0.3,
+"rank": 239,
+"title": "Medical Assistants"
+},
+{
+"soc2010": "31-9093",
+"probability": 0.78,
+"rank": 426,
+"title": "Medical Equipment Preparers"
+},
+{
+"soc2010": "31-9094",
+"probability": 0.89,
+"rank": 523,
+"title": "Medical Transcriptionists"
+},
+{
+"soc2010": "31-9095",
+"probability": 0.72,
+"rank": 394,
+"title": "Pharmacy Aides"
+},
+{
+"soc2010": "31-9096",
+"probability": 0.86,
+"rank": 495,
+"title": "Veterinary Assistants and Laboratory Animal Caretakers"
+},
+{
+"soc2010": "31-9799",
+"probability": 0.63,
+"rank": 348,
+"title": "Healthcare Support Workers, All Other"
+},
+{
+"soc2010": "33-1011",
+"probability": 0.025,
+"rank": 96,
+"title": "First-Line Supervisors of Correctional Officers"
+},
+{
+"soc2010": "33-1012",
+"probability": 0.0044,
+"rank": 18,
+"title": "First-Line Supervisors of Police and Detectives"
+},
+{
+"soc2010": "33-1021",
+"probability": 0.0036,
+"rank": 10,
+"title": "First-Line Supervisors of Fire Fighting and Prevention Workers"
+},
+{
+"soc2010": "33-2011",
+"probability": 0.17,
+"rank": 197,
+"title": "Firefighters"
+},
+{
+"soc2010": "33-2021",
+"probability": 0.48,
+"rank": 289,
+"title": "Fire Inspectors and Investigators"
+},
+{
+"soc2010": "33-2022",
+"probability": 0.048,
+"rank": 138,
+"title": "Forest Fire Inspectors and Prevention Specialists"
+},
+{
+"soc2010": "33-3011",
+"probability": 0.36,
+"rank": 252,
+"title": "Bailiffs"
+},
+{
+"soc2010": "33-3012",
+"probability": 0.6,
+"rank": 331,
+"title": "Correctional Officers and Jailers"
+},
+{
+"soc2010": "33-3021",
+"probability": 0.34,
+"rank": 246,
+"title": "Detectives and Criminal Investigators"
+},
+{
+"soc2010": "33-3031",
+"probability": 0.08,
+"rank": 160,
+"title": "Fish and Game Wardens"
+},
+{
+"soc2010": "33-3041",
+"probability": 0.84,
+"rank": 482,
+"title": "Parking Enforcement Workers"
+},
+{
+"soc2010": "33-3051",
+"probability": 0.098,
+"rank": 167,
+"title": "Police and Sheriff\u2019s Patrol Officers"
+},
+{
+"soc2010": "33-3052",
+"probability": 0.57,
+"rank": 322,
+"title": "Transit and Railroad Police"
+},
+{
+"soc2010": "33-9011",
+"probability": 0.21,
+"rank": 210,
+"title": "Animal Control Workers"
+},
+{
+"soc2010": "33-9021",
+"probability": 0.31,
+"rank": 243,
+"title": "Private Detectives and Investigators"
+},
+{
+"soc2010": "33-9031",
+"probability": 0.95,
+"rank": 615,
+"title": "Gaming Surveillance Officers and Gaming Investigators"
+},
+{
+"soc2010": "33-9032",
+"probability": 0.84,
+"rank": 478,
+"title": "Security Guards"
+},
+{
+"soc2010": "33-9091",
+"probability": 0.49,
+"rank": 294,
+"title": "Crossing Guards"
+},
+{
+"soc2010": "33-9092",
+"probability": 0.67,
+"rank": 373,
+"title": "Lifeguards, Ski Patrol, and Other Recreational Protective Service Work-"
+},
+{
+"soc2010": "35-1011",
+"probability": 0.1,
+"rank": 169,
+"title": "Chefs and Head Cooks"
+},
+{
+"soc2010": "35-1012",
+"probability": 0.63,
+"rank": 349,
+"title": "First-Line Supervisors of Food Preparation and Serving Workers"
+},
+{
+"soc2010": "35-2011",
+"probability": 0.81,
+"rank": 441,
+"title": "Cooks, Fast Food"
+},
+{
+"soc2010": "35-2012",
+"probability": 0.83,
+"rank": 460,
+"title": "Cooks, Institution and Cafeteria"
+},
+{
+"soc2010": "35-2013",
+"probability": 0.3,
+"rank": 241,
+"title": "Cooks, Private Household"
+},
+{
+"soc2010": "35-2014",
+"probability": 0.96,
+"rank": 641,
+"title": "Cooks, Restaurant"
+},
+{
+"soc2010": "35-2015",
+"probability": 0.94,
+"rank": 601,
+"title": "Cooks, Short Order"
+},
+{
+"soc2010": "35-2021",
+"probability": 0.87,
+"rank": 508,
+"title": "Food Preparation Workers"
+},
+{
+"soc2010": "35-3011",
+"probability": 0.77,
+"rank": 422,
+"title": "Bartenders"
+},
+{
+"soc2010": "35-3021",
+"probability": 0.92,
+"rank": 571,
+"title": "Combined Food Preparation and Serving Workers, Including Fast Food"
+},
+{
+"soc2010": "35-3022",
+"probability": 0.96,
+"rank": 632,
+"title": "Counter Attendants, Cafeteria, Food Concession, and Coffee Shop"
+},
+{
+"soc2010": "35-3031",
+"probability": 0.94,
+"rank": 592,
+"title": "Waiters and Waitresses"
+},
+{
+"soc2010": "35-3041",
+"probability": 0.86,
+"rank": 492,
+"title": "Food Servers, Nonrestaurant"
+},
+{
+"soc2010": "35-9011",
+"probability": 0.91,
+"rank": 555,
+"title": "Dining Room and Cafeteria Attendants and Bartender Helpers"
+},
+{
+"soc2010": "35-9021",
+"probability": 0.77,
+"rank": 424,
+"title": "Dishwashers"
+},
+{
+"soc2010": "35-9031",
+"probability": 0.97,
+"rank": 668,
+"title": "Hosts and Hostesses, Restaurant, Lounge, and Coffee Shop"
+},
+{
+"soc2010": "37-1011",
+"probability": 0.94,
+"rank": 607,
+"title": "First-Line Supervisors of Housekeeping and Janitorial Workers"
+},
+{
+"soc2010": "37-1012",
+"probability": 0.57,
+"rank": 323,
+"title": "First-Line Supervisors of Landscaping, Lawn Service, and"
+},
+{
+"soc2010": "37-2011",
+"probability": 0.66,
+"rank": 367,
+"title": "Janitors and Cleaners, Except Maids and Housekeeping Cleaners"
+},
+{
+"soc2010": "37-2012",
+"probability": 0.69,
+"rank": 381,
+"title": "Maids and Housekeeping Cleaners"
+},
+{
+"soc2010": "37-2021",
+"probability": 0.66,
+"rank": 364,
+"title": "Pest Control Workers"
+},
+{
+"soc2010": "37-3011",
+"probability": 0.95,
+"rank": 623,
+"title": "Landscaping and Groundskeeping Workers"
+},
+{
+"soc2010": "37-3012",
+"probability": 0.97,
+"rank": 654,
+"title": "Pesticide Handlers, Sprayers, and Applicators, Vegetation"
+},
+{
+"soc2010": "37-3013",
+"probability": 0.77,
+"rank": 421,
+"title": "Tree Trimmers and Pruners"
+},
+{
+"soc2010": "39-1011",
+"probability": 0.28,
+"rank": 235,
+"title": "Gaming Supervisors"
+},
+{
+"soc2010": "39-1012",
+"probability": 0.54,
+"rank": 310,
+"title": "Slot Supervisors"
+},
+{
+"soc2010": "39-1021",
+"probability": 0.076,
+"rank": 157,
+"title": "First-Line Supervisors of Personal Service Workers"
+},
+{
+"soc2010": "39-2011",
+"probability": 0.1,
+"rank": 170,
+"title": "Animal Trainers"
+},
+{
+"soc2010": "39-2021",
+"probability": 0.82,
+"rank": 452,
+"title": "Nonfarm Animal Caretakers"
+},
+{
+"soc2010": "39-3011",
+"probability": 0.96,
+"rank": 639,
+"title": "Gaming Dealers"
+},
+{
+"soc2010": "39-3012",
+"probability": 0.91,
+"rank": 544,
+"title": "Gaming and Sports Book Writers and Runners"
+},
+{
+"soc2010": "39-3021",
+"probability": 0.97,
+"rank": 659,
+"title": "Motion Picture Projectionists"
+},
+{
+"soc2010": "39-3031",
+"probability": 0.96,
+"rank": 642,
+"title": "Ushers, Lobby Attendants, and Ticket Takers"
+},
+{
+"soc2010": "39-3091",
+"probability": 0.72,
+"rank": 393,
+"title": "Amusement and Recreation Attendants"
+},
+{
+"soc2010": "39-3092",
+"probability": 0.61,
+"rank": 336,
+"title": "Costume Attendants"
+},
+{
+"soc2010": "39-3093",
+"probability": 0.43,
+"rank": 280,
+"title": "Locker Room, Coatroom, and Dressing Room Attendants"
+},
+{
+"soc2010": "39-4011",
+"probability": 0.54,
+"rank": 308,
+"title": "Embalmers"
+},
+{
+"soc2010": "39-4021",
+"probability": 0.37,
+"rank": 257,
+"title": "Funeral Attendants"
+},
+{
+"soc2010": "39-4831",
+"probability": 0.2,
+"rank": 207,
+"title": "Funeral Service Managers, Directors, Morticians, and Undertakers"
+},
+{
+"soc2010": "39-5011",
+"probability": 0.8,
+"rank": 439,
+"title": "Barbers"
+},
+{
+"soc2010": "39-5012",
+"probability": 0.11,
+"rank": 176,
+"title": "Hairdressers, Hairstylists, and Cosmetologists"
+},
+{
+"soc2010": "39-5091",
+"probability": 0.01,
+"rank": 50,
+"title": "Makeup Artists, Theatrical and Performance"
+},
+{
+"soc2010": "39-5092",
+"probability": 0.95,
+"rank": 610,
+"title": "Manicurists and Pedicurists"
+},
+{
+"soc2010": "39-5093",
+"probability": 0.79,
+"rank": 432,
+"title": "Shampooers"
+},
+{
+"soc2010": "39-5094",
+"probability": 0.29,
+"rank": 236,
+"title": "Skincare Specialists"
+},
+{
+"soc2010": "39-6011",
+"probability": 0.83,
+"rank": 469,
+"title": "Baggage Porters and Bellhops"
+},
+{
+"soc2010": "39-6012",
+"probability": 0.21,
+"rank": 211,
+"title": "Concierges"
+},
+{
+"soc2010": "39-7011",
+"probability": 0.91,
+"rank": 546,
+"title": "Tour Guides and Escorts"
+},
+{
+"soc2010": "39-7012",
+"probability": 0.057,
+"rank": 143,
+"title": "Travel Guides"
+},
+{
+"soc2010": "39-9011",
+"probability": 0.084,
+"rank": 163,
+"title": "Childcare Workers"
+},
+{
+"soc2010": "39-9021",
+"probability": 0.74,
+"rank": 406,
+"title": "Personal Care Aides"
+},
+{
+"soc2010": "39-9031",
+"probability": 0.085,
+"rank": 164,
+"title": "Fitness Trainers and Aerobics Instructors"
+},
+{
+"soc2010": "39-9032",
+"probability": 0.0061,
+"rank": 29,
+"title": "Recreation Workers"
+},
+{
+"soc2010": "39-9041",
+"probability": 0.064,
+"rank": 148,
+"title": "Residential Advisors"
+},
+{
+"soc2010": "41-1011",
+"probability": 0.28,
+"rank": 233,
+"title": "First-Line Supervisors of Retail Sales Workers"
+},
+{
+"soc2010": "41-1012",
+"probability": 0.075,
+"rank": 156,
+"title": "First-Line Supervisors of Non-Retail Sales Workers"
+},
+{
+"soc2010": "41-2011",
+"probability": 0.97,
+"rank": 657,
+"title": "Cashiers"
+},
+{
+"soc2010": "41-2012",
+"probability": 0.83,
+"rank": 470,
+"title": "Gaming Change Persons and Booth Cashiers"
+},
+{
+"soc2010": "41-2021",
+"probability": 0.97,
+"rank": 661,
+"title": "Counter and Rental Clerks"
+},
+{
+"soc2010": "41-2022",
+"probability": 0.98,
+"rank": 676,
+"title": "Parts Salespersons"
+},
+{
+"soc2010": "41-2031",
+"probability": 0.92,
+"rank": 570,
+"title": "Retail Salespersons"
+},
+{
+"soc2010": "41-3011",
+"probability": 0.54,
+"rank": 312,
+"title": "Advertising Sales Agents"
+},
+{
+"soc2010": "41-3021",
+"probability": 0.92,
+"rank": 565,
+"title": "Insurance Sales Agents"
+},
+{
+"soc2010": "41-3031",
+"probability": 0.016,
+"rank": 74,
+"title": "Securities, Commodities, and Financial Services Sales Agents"
+},
+{
+"soc2010": "41-3041",
+"probability": 0.099,
+"rank": 168,
+"title": "Travel Agents"
+},
+{
+"soc2010": "41-4011",
+"probability": 0.25,
+"rank": 228,
+"title": "Sales Representatives, Wholesale and Manufacturing, Technical and"
+},
+{
+"soc2010": "41-4012",
+"probability": 0.85,
+"rank": 484,
+"title": "Sales Representatives, Wholesale and Manufacturing, Except Technical"
+},
+{
+"soc2010": "41-9011",
+"probability": 0.51,
+"rank": 302,
+"title": "Demonstrators and Product Promoters"
+},
+{
+"soc2010": "41-9012",
+"probability": 0.98,
+"rank": 669,
+"title": "Models"
+},
+{
+"soc2010": "41-9021",
+"probability": 0.97,
+"rank": 663,
+"title": "Real Estate Brokers"
+},
+{
+"soc2010": "41-9022",
+"probability": 0.86,
+"rank": 497,
+"title": "Real Estate Sales Agents"
+},
+{
+"soc2010": "41-9031",
+"probability": 0.0041,
+"rank": 14,
+"title": "Sales Engineers"
+},
+{
+"soc2010": "41-9041",
+"probability": 0.99,
+"rank": 702,
+"title": "Telemarketers"
+},
+{
+"soc2010": "41-9091",
+"probability": 0.94,
+"rank": 606,
+"title": "Door-to-Door Sales Workers, News and Street Vendors, and Related"
+},
+{
+"soc2010": "43-1011",
+"probability": 0.014,
+"rank": 65,
+"title": "First-Line Supervisors of Office and Administrative Support Workers"
+},
+{
+"soc2010": "43-2011",
+"probability": 0.96,
+"rank": 631,
+"title": "Switchboard Operators, Including Answering Service"
+},
+{
+"soc2010": "43-2021",
+"probability": 0.97,
+"rank": 664,
+"title": "Telephone Operators"
+},
+{
+"soc2010": "43-3011",
+"probability": 0.95,
+"rank": 613,
+"title": "Bill and Account Collectors"
+},
+{
+"soc2010": "43-3021",
+"probability": 0.96,
+"rank": 643,
+"title": "Billing and Posting Clerks"
+},
+{
+"soc2010": "43-3031",
+"probability": 0.98,
+"rank": 671,
+"title": "Bookkeeping, Accounting, and Auditing Clerks"
+},
+{
+"soc2010": "43-3041",
+"probability": 0.39,
+"rank": 269,
+"title": "Gaming Cage Workers"
+},
+{
+"soc2010": "43-3051",
+"probability": 0.97,
+"rank": 666,
+"title": "Payroll and Timekeeping Clerks"
+},
+{
+"soc2010": "43-3061",
+"probability": 0.98,
+"rank": 680,
+"title": "Procurement Clerks"
+},
+{
+"soc2010": "43-3071",
+"probability": 0.98,
+"rank": 683,
+"title": "Tellers"
+},
+{
+"soc2010": "43-4011",
+"probability": 0.98,
+"rank": 688,
+"title": "Brokerage Clerks"
+},
+{
+"soc2010": "43-4021",
+"probability": 0.86,
+"rank": 500,
+"title": "Correspondence Clerks"
+},
+{
+"soc2010": "43-4031",
+"probability": 0.46,
+"rank": 285,
+"title": "Court, Municipal, and License Clerks"
+},
+{
+"soc2010": "43-4041",
+"probability": 0.97,
+"rank": 667,
+"title": "Credit Authorizers, Checkers, and Clerks"
+},
+{
+"soc2010": "43-4051",
+"probability": 0.55,
+"rank": 315,
+"title": "Customer Service Representatives"
+},
+{
+"soc2010": "43-4061",
+"probability": 0.7,
+"rank": 383,
+"title": "Eligibility Interviewers, Government Programs"
+},
+{
+"soc2010": "43-4071",
+"probability": 0.97,
+"rank": 662,
+"title": "File Clerks"
+},
+{
+"soc2010": "43-4081",
+"probability": 0.94,
+"rank": 604,
+"title": "Hotel, Motel, and Resort Desk Clerks"
+},
+{
+"soc2010": "43-4111",
+"probability": 0.94,
+"rank": 600,
+"title": "Interviewers, Except Eligibility and Loan"
+},
+{
+"soc2010": "43-4121",
+"probability": 0.95,
+"rank": 616,
+"title": "Library Assistants, Clerical"
+},
+{
+"soc2010": "43-4131",
+"probability": 0.92,
+"rank": 563,
+"title": "Loan Interviewers and Clerks"
+},
+{
+"soc2010": "43-4141",
+"probability": 0.99,
+"rank": 693,
+"title": "New Accounts Clerks"
+},
+{
+"soc2010": "43-4151",
+"probability": 0.98,
+"rank": 687,
+"title": "Order Clerks"
+},
+{
+"soc2010": "43-4161",
+"probability": 0.9,
+"rank": 532,
+"title": "Human Resources Assistants, Except Payroll and Timekeeping"
+},
+{
+"soc2010": "43-4171",
+"probability": 0.96,
+"rank": 628,
+"title": "Receptionists and Information Clerks"
+},
+{
+"soc2010": "43-4181",
+"probability": 0.61,
+"rank": 338,
+"title": "Reservation and Transportation Ticket Agents and Travel Clerks"
+},
+{
+"soc2010": "43-5011",
+"probability": 0.99,
+"rank": 696,
+"title": "Cargo and Freight Agents"
+},
+{
+"soc2010": "43-5021",
+"probability": 0.94,
+"rank": 599,
+"title": "Couriers and Messengers"
+},
+{
+"soc2010": "43-5031",
+"probability": 0.49,
+"rank": 298,
+"title": "Police, Fire, and Ambulance Dispatchers"
+},
+{
+"soc2010": "43-5032",
+"probability": 0.96,
+"rank": 627,
+"title": "Dispatchers, Except Police, Fire, and Ambulance"
+},
+{
+"soc2010": "43-5041",
+"probability": 0.85,
+"rank": 485,
+"title": "Meter Readers, Utilities"
+},
+{
+"soc2010": "43-5051",
+"probability": 0.95,
+"rank": 625,
+"title": "Postal Service Clerks"
+},
+{
+"soc2010": "43-5052",
+"probability": 0.68,
+"rank": 375,
+"title": "Postal Service Mail Carriers"
+},
+{
+"soc2010": "43-5053",
+"probability": 0.79,
+"rank": 430,
+"title": "Postal Service Mail Sorters, Processors, and Processing Machine Oper-"
+},
+{
+"soc2010": "43-5061",
+"probability": 0.88,
+"rank": 513,
+"title": "Production, Planning, and Expediting Clerks"
+},
+{
+"soc2010": "43-5071",
+"probability": 0.98,
+"rank": 679,
+"title": "Shipping, Receiving, and Traffic Clerks"
+},
+{
+"soc2010": "43-5081",
+"probability": 0.64,
+"rank": 354,
+"title": "Stock Clerks and Order Fillers"
+},
+{
+"soc2010": "43-5111",
+"probability": 0.95,
+"rank": 611,
+"title": "Weighers, Measurers, Checkers, and Samplers, Recordkeeping"
+},
+{
+"soc2010": "43-6011",
+"probability": 0.86,
+"rank": 490,
+"title": "Executive Secretaries and Executive Administrative Assistants"
+},
+{
+"soc2010": "43-6012",
+"probability": 0.98,
+"rank": 672,
+"title": "Legal Secretaries"
+},
+{
+"soc2010": "43-6013",
+"probability": 0.81,
+"rank": 447,
+"title": "Medical Secretaries"
+},
+{
+"soc2010": "43-6014",
+"probability": 0.96,
+"rank": 634,
+"title": "Secretaries and Administrative Assistants, Except Legal, Medical, and"
+},
+{
+"soc2010": "43-9011",
+"probability": 0.78,
+"rank": 428,
+"title": "Computer Operators"
+},
+{
+"soc2010": "43-9021",
+"probability": 0.99,
+"rank": 691,
+"title": "Data Entry Keyers"
+},
+{
+"soc2010": "43-9022",
+"probability": 0.81,
+"rank": 442,
+"title": "Word Processors and Typists"
+},
+{
+"soc2010": "43-9031",
+"probability": 0.16,
+"rank": 194,
+"title": "Desktop Publishers"
+},
+{
+"soc2010": "43-9041",
+"probability": 0.98,
+"rank": 689,
+"title": "Insurance Claims and Policy Processing Clerks"
+},
+{
+"soc2010": "43-9051",
+"probability": 0.94,
+"rank": 591,
+"title": "Mail Clerks and Mail Machine Operators, Except Postal Service"
+},
+{
+"soc2010": "43-9061",
+"probability": 0.96,
+"rank": 629,
+"title": "Office Clerks, General"
+},
+{
+"soc2010": "43-9071",
+"probability": 0.92,
+"rank": 561,
+"title": "Office Machine Operators, Except Computer"
+},
+{
+"soc2010": "43-9081",
+"probability": 0.84,
+"rank": 481,
+"title": "Proofreaders and Copy Markers"
+},
+{
+"soc2010": "43-9111",
+"probability": 0.66,
+"rank": 366,
+"title": "Statistical Assistants"
+},
+{
+"soc2010": "45-1011",
+"probability": 0.57,
+"rank": 318,
+"title": "First-Line Supervisors of Farming, Fishing, and Forestry Workers"
+},
+{
+"soc2010": "45-2011",
+"probability": 0.94,
+"rank": 608,
+"title": "Agricultural Inspectors"
+},
+{
+"soc2010": "45-2021",
+"probability": 0.95,
+"rank": 619,
+"title": "Animal Breeders"
+},
+{
+"soc2010": "45-2041",
+"probability": 0.41,
+"rank": 274,
+"title": "Graders and Sorters, Agricultural Products"
+},
+{
+"soc2010": "45-2090",
+"probability": 0.87,
+"rank": 501,
+"title": "Miscellaneous Agricultural Workers"
+},
+{
+"soc2010": "45-3011",
+"probability": 0.83,
+"rank": 456,
+"title": "Fishers and Related Fishing Workers"
+},
+{
+"soc2010": "45-3021",
+"probability": 0.77,
+"rank": 425,
+"title": "Hunters and Trappers"
+},
+{
+"soc2010": "45-4011",
+"probability": 0.87,
+"rank": 502,
+"title": "Forest and Conservation Workers"
+},
+{
+"soc2010": "45-4021",
+"probability": 0.76,
+"rank": 418,
+"title": "Fallers"
+},
+{
+"soc2010": "45-4022",
+"probability": 0.79,
+"rank": 437,
+"title": "Logging Equipment Operators"
+},
+{
+"soc2010": "45-4023",
+"probability": 0.97,
+"rank": 655,
+"title": "Log Graders and Scalers"
+},
+{
+"soc2010": "47-1011",
+"probability": 0.17,
+"rank": 199,
+"title": "First-Line Supervisors of Construction Trades and Extraction Workers"
+},
+{
+"soc2010": "47-2011",
+"probability": 0.68,
+"rank": 377,
+"title": "Boilermakers"
+},
+{
+"soc2010": "47-2021",
+"probability": 0.82,
+"rank": 455,
+"title": "Brickmasons and Blockmasons"
+},
+{
+"soc2010": "47-2022",
+"probability": 0.89,
+"rank": 524,
+"title": "Stonemasons"
+},
+{
+"soc2010": "47-2031",
+"probability": 0.72,
+"rank": 398,
+"title": "Carpenters"
+},
+{
+"soc2010": "47-2041",
+"probability": 0.87,
+"rank": 504,
+"title": "Carpet Installers"
+},
+{
+"soc2010": "47-2042",
+"probability": 0.79,
+"rank": 438,
+"title": "Floor Layers, Except Carpet, Wood, and Hard Tiles"
+},
+{
+"soc2010": "47-2043",
+"probability": 0.87,
+"rank": 509,
+"title": "Floor Sanders and Finishers"
+},
+{
+"soc2010": "47-2044",
+"probability": 0.75,
+"rank": 410,
+"title": "Tile and Marble Setters"
+},
+{
+"soc2010": "47-2051",
+"probability": 0.94,
+"rank": 595,
+"title": "Cement Masons and Concrete Finishers"
+},
+{
+"soc2010": "47-2053",
+"probability": 0.88,
+"rank": 519,
+"title": "Terrazzo Workers and Finishers"
+},
+{
+"soc2010": "47-2061",
+"probability": 0.88,
+"rank": 512,
+"title": "Construction Laborers"
+},
+{
+"soc2010": "47-2071",
+"probability": 0.83,
+"rank": 472,
+"title": "Paving, Surfacing, and Tamping Equipment Operators"
+},
+{
+"soc2010": "47-2072",
+"probability": 0.82,
+"rank": 454,
+"title": "Pile-Driver Operators"
+},
+{
+"soc2010": "47-2073",
+"probability": 0.95,
+"rank": 617,
+"title": "Operating Engineers and Other Construction Equipment Operators"
+},
+{
+"soc2010": "47-2081",
+"probability": 0.79,
+"rank": 433,
+"title": "Drywall and Ceiling Tile Installers"
+},
+{
+"soc2010": "47-2082",
+"probability": 0.62,
+"rank": 344,
+"title": "Tapers"
+},
+{
+"soc2010": "47-2111",
+"probability": 0.15,
+"rank": 192,
+"title": "Electricians"
+},
+{
+"soc2010": "47-2121",
+"probability": 0.73,
+"rank": 402,
+"title": "Glaziers"
+},
+{
+"soc2010": "47-2131",
+"probability": 0.83,
+"rank": 465,
+"title": "Insulation Workers, Floor, Ceiling, and Wall"
+},
+{
+"soc2010": "47-2132",
+"probability": 0.64,
+"rank": 356,
+"title": "Insulation Workers, Mechanical"
+},
+{
+"soc2010": "47-2141",
+"probability": 0.75,
+"rank": 411,
+"title": "Painters, Construction and Maintenance"
+},
+{
+"soc2010": "47-2142",
+"probability": 0.87,
+"rank": 505,
+"title": "Paperhangers"
+},
+{
+"soc2010": "47-2151",
+"probability": 0.62,
+"rank": 345,
+"title": "Pipelayers"
+},
+{
+"soc2010": "47-2152",
+"probability": 0.35,
+"rank": 249,
+"title": "Plumbers, Pipefitters, and Steamfitters"
+},
+{
+"soc2010": "47-2161",
+"probability": 0.84,
+"rank": 475,
+"title": "Plasterers and Stucco Masons"
+},
+{
+"soc2010": "47-2171",
+"probability": 0.9,
+"rank": 534,
+"title": "Reinforcing Iron and Rebar Workers"
+},
+{
+"soc2010": "47-2181",
+"probability": 0.9,
+"rank": 535,
+"title": "Roofers"
+},
+{
+"soc2010": "47-2211",
+"probability": 0.82,
+"rank": 453,
+"title": "Sheet Metal Workers"
+},
+{
+"soc2010": "47-2221",
+"probability": 0.83,
+"rank": 457,
+"title": "Structural Iron and Steel Workers"
+},
+{
+"soc2010": "47-3011",
+"probability": 0.83,
+"rank": 463,
+"title": "Helpers\u2013Brickmasons, Blockmasons, Stonemasons, and Tile and Mar-"
+},
+{
+"soc2010": "47-3012",
+"probability": 0.92,
+"rank": 573,
+"title": "Helpers\u2013Carpenters"
+},
+{
+"soc2010": "47-3013",
+"probability": 0.74,
+"rank": 408,
+"title": "Helpers\u2013Electricians"
+},
+{
+"soc2010": "47-3014",
+"probability": 0.94,
+"rank": 603,
+"title": "Helpers\u2013Painters, Paperhangers, Plasterers, and Stucco Masons"
+},
+{
+"soc2010": "47-3015",
+"probability": 0.57,
+"rank": 320,
+"title": "Helpers\u2013Pipelayers, Plumbers, Pipefitters, and Steamfitters"
+},
+{
+"soc2010": "47-3016",
+"probability": 0.72,
+"rank": 395,
+"title": "Helpers\u2013Roofers"
+},
+{
+"soc2010": "47-4011",
+"probability": 0.63,
+"rank": 350,
+"title": "Construction and Building Inspectors"
+},
+{
+"soc2010": "47-4021",
+"probability": 0.39,
+"rank": 268,
+"title": "Elevator Installers and Repairers"
+},
+{
+"soc2010": "47-4031",
+"probability": 0.92,
+"rank": 568,
+"title": "Fence Erectors"
+},
+{
+"soc2010": "47-4041",
+"probability": 0.53,
+"rank": 307,
+"title": "Hazardous Materials Removal Workers"
+},
+{
+"soc2010": "47-4051",
+"probability": 0.87,
+"rank": 511,
+"title": "Highway Maintenance Workers"
+},
+{
+"soc2010": "47-4061",
+"probability": 0.89,
+"rank": 528,
+"title": "Rail-Track Laying and Maintenance Equipment Operators"
+},
+{
+"soc2010": "47-4071",
+"probability": 0.83,
+"rank": 468,
+"title": "Septic Tank Servicers and Sewer Pipe Cleaners"
+},
+{
+"soc2010": "47-4091",
+"probability": 0.83,
+"rank": 464,
+"title": "Segmental Pavers"
+},
+{
+"soc2010": "47-4799",
+"probability": 0.71,
+"rank": 390,
+"title": "Construction and Related Workers, All Other"
+},
+{
+"soc2010": "47-5011",
+"probability": 0.8,
+"rank": 440,
+"title": "Derrick Operators, Oil and Gas"
+},
+{
+"soc2010": "47-5012",
+"probability": 0.53,
+"rank": 306,
+"title": "Rotary Drill Operators, Oil and Gas"
+},
+{
+"soc2010": "47-5013",
+"probability": 0.93,
+"rank": 576,
+"title": "Service Unit Operators, Oil, Gas, and Mining"
+},
+{
+"soc2010": "47-5021",
+"probability": 0.85,
+"rank": 488,
+"title": "Earth Drillers, Except Oil and Gas"
+},
+{
+"soc2010": "47-5031",
+"probability": 0.48,
+"rank": 292,
+"title": "Explosives Workers, Ordnance Handling Experts, and Blasters"
+},
+{
+"soc2010": "47-5041",
+"probability": 0.54,
+"rank": 309,
+"title": "Continuous Mining Machine Operators"
+},
+{
+"soc2010": "47-5042",
+"probability": 0.59,
+"rank": 327,
+"title": "Mine Cutting and Channeling Machine Operators"
+},
+{
+"soc2010": "47-5051",
+"probability": 0.96,
+"rank": 633,
+"title": "Rock Splitters, Quarry"
+},
+{
+"soc2010": "47-5061",
+"probability": 0.49,
+"rank": 296,
+"title": "Roof Bolters, Mining"
+},
+{
+"soc2010": "47-5071",
+"probability": 0.68,
+"rank": 376,
+"title": "Roustabouts, Oil and Gas"
+},
+{
+"soc2010": "47-5081",
+"probability": 0.37,
+"rank": 258,
+"title": "Helpers\u2013Extraction Workers"
+},
+{
+"soc2010": "49-1011",
+"probability": 0.003,
+"rank": 2,
+"title": "First-Line Supervisors of Mechanics, Installers, and Repairers"
+},
+{
+"soc2010": "49-2011",
+"probability": 0.74,
+"rank": 405,
+"title": "Computer, Automated Teller, and Office Machine Repairers"
+},
+{
+"soc2010": "49-2021",
+"probability": 0.93,
+"rank": 582,
+"title": "Radio, Cellular, and Tower Equipment Installers and Repairs"
+},
+{
+"soc2010": "49-2022",
+"probability": 0.36,
+"rank": 254,
+"title": "Telecommunications Equipment Installers and Repairers, Except Line"
+},
+{
+"soc2010": "49-2091",
+"probability": 0.7,
+"rank": 386,
+"title": "Avionics Technicians"
+},
+{
+"soc2010": "49-2092",
+"probability": 0.76,
+"rank": 417,
+"title": "Electric Motor, Power Tool, and Related Repairers"
+},
+{
+"soc2010": "49-2093",
+"probability": 0.91,
+"rank": 554,
+"title": "Electrical and Electronics Installers and Repairers, Transportation"
+},
+{
+"soc2010": "49-2094",
+"probability": 0.41,
+"rank": 277,
+"title": "Electrical and Electronics Repairers, Commercial and Industrial Equip-"
+},
+{
+"soc2010": "49-2095",
+"probability": 0.38,
+"rank": 261,
+"title": "Electrical and Electronics Repairers, Powerhouse, Substation, and Re-"
+},
+{
+"soc2010": "49-2096",
+"probability": 0.61,
+"rank": 334,
+"title": "Electronic Equipment Installers and Repairers, Motor Vehicles"
+},
+{
+"soc2010": "49-2097",
+"probability": 0.65,
+"rank": 361,
+"title": "Electronic Home Entertainment Equipment Installers and Repairers"
+},
+{
+"soc2010": "49-2098",
+"probability": 0.82,
+"rank": 450,
+"title": "Security and Fire Alarm Systems Installers"
+},
+{
+"soc2010": "49-3011",
+"probability": 0.71,
+"rank": 387,
+"title": "Aircraft Mechanics and Service Technicians"
+},
+{
+"soc2010": "49-3021",
+"probability": 0.91,
+"rank": 558,
+"title": "Automotive Body and Related Repairers"
+},
+{
+"soc2010": "49-3022",
+"probability": 0.55,
+"rank": 313,
+"title": "Automotive Glass Installers and Repairers"
+},
+{
+"soc2010": "49-3023",
+"probability": 0.59,
+"rank": 330,
+"title": "Automotive Service Technicians and Mechanics"
+},
+{
+"soc2010": "49-3031",
+"probability": 0.73,
+"rank": 404,
+"title": "Bus and Truck Mechanics and Diesel Engine Specialists"
+},
+{
+"soc2010": "49-3041",
+"probability": 0.75,
+"rank": 414,
+"title": "Farm Equipment Mechanics and Service Technicians"
+},
+{
+"soc2010": "49-3042",
+"probability": 0.4,
+"rank": 272,
+"title": "Mobile Heavy Equipment Mechanics, Except Engines"
+},
+{
+"soc2010": "49-3043",
+"probability": 0.88,
+"rank": 521,
+"title": "Rail Car Repairers"
+},
+{
+"soc2010": "49-3051",
+"probability": 0.66,
+"rank": 368,
+"title": "Motorboat Mechanics and Service Technicians"
+},
+{
+"soc2010": "49-3052",
+"probability": 0.79,
+"rank": 435,
+"title": "Motorcycle Mechanics"
+},
+{
+"soc2010": "49-3053",
+"probability": 0.93,
+"rank": 578,
+"title": "Outdoor Power Equipment and Other Small Engine Mechanics"
+},
+{
+"soc2010": "49-3091",
+"probability": 0.94,
+"rank": 596,
+"title": "Bicycle Repairers"
+},
+{
+"soc2010": "49-3092",
+"probability": 0.59,
+"rank": 329,
+"title": "Recreational Vehicle Service Technicians"
+},
+{
+"soc2010": "49-3093",
+"probability": 0.7,
+"rank": 384,
+"title": "Tire Repairers and Changers"
+},
+{
+"soc2010": "49-9011",
+"probability": 0.91,
+"rank": 547,
+"title": "Mechanical Door Repairers"
+},
+{
+"soc2010": "49-9012",
+"probability": 0.63,
+"rank": 347,
+"title": "Control and Valve Installers and Repairers, Except Mechanical Door"
+},
+{
+"soc2010": "49-9021",
+"probability": 0.65,
+"rank": 362,
+"title": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers"
+},
+{
+"soc2010": "49-9031",
+"probability": 0.72,
+"rank": 397,
+"title": "Home Appliance Repairers"
+},
+{
+"soc2010": "49-9041",
+"probability": 0.67,
+"rank": 374,
+"title": "Industrial Machinery Mechanics"
+},
+{
+"soc2010": "49-9043",
+"probability": 0.86,
+"rank": 499,
+"title": "Maintenance Workers, Machinery"
+},
+{
+"soc2010": "49-9044",
+"probability": 0.59,
+"rank": 325,
+"title": "Millwrights"
+},
+{
+"soc2010": "49-9045",
+"probability": 0.82,
+"rank": 451,
+"title": "Refractory Materials Repairers, Except Brickmasons"
+},
+{
+"soc2010": "49-9051",
+"probability": 0.097,
+"rank": 166,
+"title": "Electrical Power-Line Installers and Repairers"
+},
+{
+"soc2010": "49-9052",
+"probability": 0.49,
+"rank": 297,
+"title": "Telecommunications Line Installers and Repairers"
+},
+{
+"soc2010": "49-9061",
+"probability": 0.97,
+"rank": 658,
+"title": "Camera and Photographic Equipment Repairers"
+},
+{
+"soc2010": "49-9062",
+"probability": 0.27,
+"rank": 232,
+"title": "Medical Equipment Repairers"
+},
+{
+"soc2010": "49-9063",
+"probability": 0.91,
+"rank": 545,
+"title": "Musical Instrument Repairers and Tuners"
+},
+{
+"soc2010": "49-9064",
+"probability": 0.99,
+"rank": 697,
+"title": "Watch Repairers"
+},
+{
+"soc2010": "49-9071",
+"probability": 0.64,
+"rank": 352,
+"title": "Maintenance and Repair Workers, General"
+},
+{
+"soc2010": "49-9091",
+"probability": 0.94,
+"rank": 597,
+"title": "Coin, Vending, and Amusement Machine Servicers and Repairers"
+},
+{
+"soc2010": "49-9092",
+"probability": 0.18,
+"rank": 202,
+"title": "Commercial Divers"
+},
+{
+"soc2010": "49-9093",
+"probability": 0.96,
+"rank": 640,
+"title": "Fabric Menders, Except Garment"
+},
+{
+"soc2010": "49-9094",
+"probability": 0.77,
+"rank": 420,
+"title": "Locksmiths and Safe Repairers"
+},
+{
+"soc2010": "49-9095",
+"probability": 0.18,
+"rank": 203,
+"title": "Manufactured Building and Mobile Home Installers"
+},
+{
+"soc2010": "49-9096",
+"probability": 0.89,
+"rank": 527,
+"title": "Riggers"
+},
+{
+"soc2010": "49-9097",
+"probability": 0.9,
+"rank": 543,
+"title": "Signal and Track Switch Repairers"
+},
+{
+"soc2010": "49-9098",
+"probability": 0.79,
+"rank": 434,
+"title": "Helpers\u2013Installation, Maintenance, and Repair Workers"
+},
+{
+"soc2010": "49-9799",
+"probability": 0.5,
+"rank": 300,
+"title": "Installation, Maintenance, and Repair Workers, All Other"
+},
+{
+"soc2010": "51-1011",
+"probability": 0.016,
+"rank": 73,
+"title": "First-Line Supervisors of Production and Operating Workers"
+},
+{
+"soc2010": "51-2011",
+"probability": 0.79,
+"rank": 436,
+"title": "Aircraft Structure, Surfaces, Rigging, and Systems Assemblers"
+},
+{
+"soc2010": "51-2021",
+"probability": 0.73,
+"rank": 403,
+"title": "Coil Winders, Tapers, and Finishers"
+},
+{
+"soc2010": "51-2022",
+"probability": 0.95,
+"rank": 621,
+"title": "Electrical and Electronic Equipment Assemblers"
+},
+{
+"soc2010": "51-2023",
+"probability": 0.97,
+"rank": 648,
+"title": "Electromechanical Equipment Assemblers"
+},
+{
+"soc2010": "51-2031",
+"probability": 0.82,
+"rank": 449,
+"title": "Engine and Other Machine Assemblers"
+},
+{
+"soc2010": "51-2041",
+"probability": 0.41,
+"rank": 275,
+"title": "Structural Metal Fabricators and Fitters"
+},
+{
+"soc2010": "51-2091",
+"probability": 0.93,
+"rank": 575,
+"title": "Fiberglass Laminators and Fabricators"
+},
+{
+"soc2010": "51-2092",
+"probability": 0.97,
+"rank": 646,
+"title": "Team Assemblers"
+},
+{
+"soc2010": "51-2093",
+"probability": 0.98,
+"rank": 690,
+"title": "Timing Device Assemblers and Adjusters"
+},
+{
+"soc2010": "51-3011",
+"probability": 0.89,
+"rank": 522,
+"title": "Bakers"
+},
+{
+"soc2010": "51-3021",
+"probability": 0.93,
+"rank": 583,
+"title": "Butchers and Meat Cutters"
+},
+{
+"soc2010": "51-3022",
+"probability": 0.94,
+"rank": 593,
+"title": "Meat, Poultry, and Fish Cutters and Trimmers"
+},
+{
+"soc2010": "51-3023",
+"probability": 0.6,
+"rank": 333,
+"title": "Slaughterers and Meat Packers"
+},
+{
+"soc2010": "51-3091",
+"probability": 0.91,
+"rank": 548,
+"title": "Food and Tobacco Roasting, Baking, and Drying Machine Operators"
+},
+{
+"soc2010": "51-3092",
+"probability": 0.7,
+"rank": 385,
+"title": "Food Batchmakers"
+},
+{
+"soc2010": "51-3093",
+"probability": 0.61,
+"rank": 341,
+"title": "Food Cooking Machine Operators and Tenders"
+},
+{
+"soc2010": "51-4011",
+"probability": 0.86,
+"rank": 498,
+"title": "Computer-Controlled Machine Tool Operators, Metal and Plastic"
+},
+{
+"soc2010": "51-4012",
+"probability": 0.36,
+"rank": 253,
+"title": "Computer Numerically Controlled Machine Tool Programmers, Metal"
+},
+{
+"soc2010": "51-4021",
+"probability": 0.91,
+"rank": 560,
+"title": "Extruding and Drawing Machine Setters, Operators, and Tenders, Metal"
+},
+{
+"soc2010": "51-4022",
+"probability": 0.93,
+"rank": 587,
+"title": "Forging Machine Setters, Operators, and Tenders, Metal and Plastic"
+},
+{
+"soc2010": "51-4023",
+"probability": 0.83,
+"rank": 471,
+"title": "Rolling Machine Setters, Operators, and Tenders, Metal and Plastic"
+},
+{
+"soc2010": "51-4031",
+"probability": 0.78,
+"rank": 427,
+"title": "Cutting, Punching, and Press Machine Setters, Operators, and Tenders,"
+},
+{
+"soc2010": "51-4032",
+"probability": 0.94,
+"rank": 590,
+"title": "Drilling and Boring Machine Tool Setters, Operators, and Tenders,"
+},
+{
+"soc2010": "51-4033",
+"probability": 0.95,
+"rank": 624,
+"title": "Grinding, Lapping, Polishing, and Buffing Machine Tool Setters, Oper-"
+},
+{
+"soc2010": "51-4034",
+"probability": 0.84,
+"rank": 477,
+"title": "Lathe and Turning Machine Tool Setters, Operators, and Tenders, Metal"
+},
+{
+"soc2010": "51-4035",
+"probability": 0.98,
+"rank": 678,
+"title": "Milling and Planing Machine Setters, Operators, and Tenders, Metal"
+},
+{
+"soc2010": "51-4041",
+"probability": 0.65,
+"rank": 358,
+"title": "Machinists"
+},
+{
+"soc2010": "51-4051",
+"probability": 0.88,
+"rank": 516,
+"title": "Metal-Refining Furnace Operators and Tenders"
+},
+{
+"soc2010": "51-4052",
+"probability": 0.87,
+"rank": 503,
+"title": "Pourers and Casters, Metal"
+},
+{
+"soc2010": "51-4061",
+"probability": 0.93,
+"rank": 581,
+"title": "Model Makers, Metal and Plastic"
+},
+{
+"soc2010": "51-4062",
+"probability": 0.9,
+"rank": 539,
+"title": "Patternmakers, Metal and Plastic"
+},
+{
+"soc2010": "51-4071",
+"probability": 0.67,
+"rank": 370,
+"title": "Foundry Mold and Coremakers"
+},
+{
+"soc2010": "51-4072",
+"probability": 0.95,
+"rank": 620,
+"title": "Molding, Coremaking, and Casting Machine Setters, Operators, and"
+},
+{
+"soc2010": "51-4081",
+"probability": 0.91,
+"rank": 552,
+"title": "Multiple Machine Tool Setters, Operators, and Tenders, Metal and Plas-"
+},
+{
+"soc2010": "51-4111",
+"probability": 0.84,
+"rank": 473,
+"title": "Tool and Die Makers"
+},
+{
+"soc2010": "51-4121",
+"probability": 0.94,
+"rank": 598,
+"title": "Welders, Cutters, Solderers, and Brazers"
+},
+{
+"soc2010": "51-4122",
+"probability": 0.61,
+"rank": 342,
+"title": "Welding, Soldering, and Brazing Machine Setters, Operators, and Ten-"
+},
+{
+"soc2010": "51-4191",
+"probability": 0.91,
+"rank": 556,
+"title": "Heat Treating Equipment Setters, Operators, and Tenders, Metal and"
+},
+{
+"soc2010": "51-4192",
+"probability": 0.84,
+"rank": 476,
+"title": "Layout Workers, Metal and Plastic"
+},
+{
+"soc2010": "51-4193",
+"probability": 0.92,
+"rank": 569,
+"title": "Plating and Coating Machine Setters, Operators, and Tenders, Metal"
+},
+{
+"soc2010": "51-4194",
+"probability": 0.88,
+"rank": 520,
+"title": "Tool Grinders, Filers, and Sharpeners"
+},
+{
+"soc2010": "51-5111",
+"probability": 0.97,
+"rank": 660,
+"title": "Prepress Technicians and Workers"
+},
+{
+"soc2010": "51-5112",
+"probability": 0.83,
+"rank": 466,
+"title": "Printing Press Operators"
+},
+{
+"soc2010": "51-5113",
+"probability": 0.95,
+"rank": 618,
+"title": "Print Binding and Finishing Workers"
+},
+{
+"soc2010": "51-6011",
+"probability": 0.71,
+"rank": 392,
+"title": "Laundry and Dry-Cleaning Workers"
+},
+{
+"soc2010": "51-6021",
+"probability": 0.81,
+"rank": 448,
+"title": "Pressers, Textile, Garment, and Related Materials"
+},
+{
+"soc2010": "51-6031",
+"probability": 0.89,
+"rank": 530,
+"title": "Sewing Machine Operators"
+},
+{
+"soc2010": "51-6041",
+"probability": 0.52,
+"rank": 304,
+"title": "Shoe and Leather Workers and Repairers"
+},
+{
+"soc2010": "51-6042",
+"probability": 0.97,
+"rank": 647,
+"title": "Shoe Machine Operators and Tenders"
+},
+{
+"soc2010": "51-6051",
+"probability": 0.99,
+"rank": 700,
+"title": "Sewers, Hand"
+},
+{
+"soc2010": "51-6052",
+"probability": 0.84,
+"rank": 479,
+"title": "Tailors, Dressmakers, and Custom Sewers"
+},
+{
+"soc2010": "51-6061",
+"probability": 0.97,
+"rank": 650,
+"title": "Textile Bleaching and Dyeing Machine Operators and Tenders"
+},
+{
+"soc2010": "51-6062",
+"probability": 0.95,
+"rank": 612,
+"title": "Textile Cutting Machine Setters, Operators, and Tenders"
+},
+{
+"soc2010": "51-6063",
+"probability": 0.73,
+"rank": 400,
+"title": "Textile Knitting and Weaving Machine Setters, Operators, and Tenders"
+},
+{
+"soc2010": "51-6064",
+"probability": 0.96,
+"rank": 637,
+"title": "Textile Winding, Twisting, and Drawing Out Machine Setters, Opera-"
+},
+{
+"soc2010": "51-6091",
+"probability": 0.88,
+"rank": 518,
+"title": "Extruding and Forming Machine Setters, Operators, and Tenders, Syn-"
+},
+{
+"soc2010": "51-6092",
+"probability": 0.0049,
+"rank": 26,
+"title": "Fabric and Apparel Patternmakers"
+},
+{
+"soc2010": "51-6093",
+"probability": 0.39,
+"rank": 267,
+"title": "Upholsterers"
+},
+{
+"soc2010": "51-7011",
+"probability": 0.92,
+"rank": 566,
+"title": "Cabinetmakers and Bench Carpenters"
+},
+{
+"soc2010": "51-7021",
+"probability": 0.87,
+"rank": 507,
+"title": "Furniture Finishers"
+},
+{
+"soc2010": "51-7031",
+"probability": 0.96,
+"rank": 636,
+"title": "Model Makers, Wood"
+},
+{
+"soc2010": "51-7032",
+"probability": 0.91,
+"rank": 559,
+"title": "Patternmakers, Wood"
+},
+{
+"soc2010": "51-7041",
+"probability": 0.86,
+"rank": 493,
+"title": "Sawing Machine Setters, Operators, and Tenders, Wood"
+},
+{
+"soc2010": "51-7042",
+"probability": 0.97,
+"rank": 645,
+"title": "Woodworking Machine Setters, Operators, and Tenders, Except Sawing"
+},
+{
+"soc2010": "51-8011",
+"probability": 0.95,
+"rank": 614,
+"title": "Nuclear Power Reactor Operators"
+},
+{
+"soc2010": "51-8012",
+"probability": 0.64,
+"rank": 355,
+"title": "Power Distributors and Dispatchers"
+},
+{
+"soc2010": "51-8013",
+"probability": 0.85,
+"rank": 486,
+"title": "Power Plant Operators"
+},
+{
+"soc2010": "51-8021",
+"probability": 0.89,
+"rank": 529,
+"title": "Stationary Engineers and Boiler Operators"
+},
+{
+"soc2010": "51-8031",
+"probability": 0.61,
+"rank": 339,
+"title": "Water and Wastewater Treatment Plant and System Operators"
+},
+{
+"soc2010": "51-8091",
+"probability": 0.85,
+"rank": 487,
+"title": "Chemical Plant and System Operators"
+},
+{
+"soc2010": "51-8092",
+"probability": 0.78,
+"rank": 429,
+"title": "Gas Plant Operators"
+},
+{
+"soc2010": "51-8093",
+"probability": 0.71,
+"rank": 389,
+"title": "Petroleum Pump System Operators, Refinery Operators, and Gaugers"
+},
+{
+"soc2010": "51-8099",
+"probability": 0.86,
+"rank": 491,
+"title": "Plant and System Operators, All Other"
+},
+{
+"soc2010": "51-9011",
+"probability": 0.76,
+"rank": 416,
+"title": "Chemical Equipment Operators and Tenders"
+},
+{
+"soc2010": "51-9012",
+"probability": 0.88,
+"rank": 517,
+"title": "Separating, Filtering, Clarifying, Precipitating, and Still Machine Set-"
+},
+{
+"soc2010": "51-9021",
+"probability": 0.97,
+"rank": 652,
+"title": "Crushing, Grinding, and Polishing Machine Setters, Operators, and"
+},
+{
+"soc2010": "51-9022",
+"probability": 0.97,
+"rank": 653,
+"title": "Grinding and Polishing Workers, Hand"
+},
+{
+"soc2010": "51-9023",
+"probability": 0.83,
+"rank": 462,
+"title": "Mixing and Blending Machine Setters, Operators, and Tenders"
+},
+{
+"soc2010": "51-9031",
+"probability": 0.64,
+"rank": 351,
+"title": "Cutters and Trimmers, Hand"
+},
+{
+"soc2010": "51-9032",
+"probability": 0.86,
+"rank": 496,
+"title": "Cutting and Slicing Machine Setters, Operators, and Tenders"
+},
+{
+"soc2010": "51-9041",
+"probability": 0.93,
+"rank": 584,
+"title": "Extruding, Forming, Pressing, and Compacting Machine Setters, Oper-"
+},
+{
+"soc2010": "51-9051",
+"probability": 0.37,
+"rank": 255,
+"title": "Furnace, Kiln, Oven, Drier, and Kettle Operators and Tenders"
+},
+{
+"soc2010": "51-9061",
+"probability": 0.98,
+"rank": 670,
+"title": "Inspectors, Testers, Sorters, Samplers, and Weighers"
+},
+{
+"soc2010": "51-9071",
+"probability": 0.95,
+"rank": 626,
+"title": "Jewelers and Precious Stone and Metal Workers"
+},
+{
+"soc2010": "51-9081",
+"probability": 0.97,
+"rank": 651,
+"title": "Dental Laboratory Technicians"
+},
+{
+"soc2010": "51-9082",
+"probability": 0.45,
+"rank": 284,
+"title": "Medical Appliance Technicians"
+},
+{
+"soc2010": "51-9083",
+"probability": 0.97,
+"rank": 656,
+"title": "Ophthalmic Laboratory Technicians"
+},
+{
+"soc2010": "51-9111",
+"probability": 0.98,
+"rank": 681,
+"title": "Packaging and Filling Machine Operators and Tenders"
+},
+{
+"soc2010": "51-9121",
+"probability": 0.91,
+"rank": 551,
+"title": "Coating, Painting, and Spraying Machine Setters, Operators, and Ten-"
+},
+{
+"soc2010": "51-9122",
+"probability": 0.69,
+"rank": 382,
+"title": "Painters, Transportation Equipment"
+},
+{
+"soc2010": "51-9123",
+"probability": 0.92,
+"rank": 567,
+"title": "Painting, Coating, and Decorating Workers"
+},
+{
+"soc2010": "51-9141",
+"probability": 0.88,
+"rank": 514,
+"title": "Semiconductor Processors"
+},
+{
+"soc2010": "51-9151",
+"probability": 0.99,
+"rank": 694,
+"title": "Photographic Process Workers and Processing Machine Operators"
+},
+{
+"soc2010": "51-9191",
+"probability": 0.95,
+"rank": 622,
+"title": "Adhesive Bonding Machine Operators and Tenders"
+},
+{
+"soc2010": "51-9192",
+"probability": 0.81,
+"rank": 445,
+"title": "Cleaning, Washing, and Metal Pickling Equipment Operators and Ten-"
+},
+{
+"soc2010": "51-9193",
+"probability": 0.93,
+"rank": 574,
+"title": "Cooling and Freezing Equipment Operators and Tenders"
+},
+{
+"soc2010": "51-9194",
+"probability": 0.98,
+"rank": 682,
+"title": "Etchers and Engravers"
+},
+{
+"soc2010": "51-9195",
+"probability": 0.9,
+"rank": 540,
+"title": "Molders, Shapers, and Casters, Except Metal and Plastic"
+},
+{
+"soc2010": "51-9196",
+"probability": 0.67,
+"rank": 369,
+"title": "Paper Goods Machine Setters, Operators, and Tenders"
+},
+{
+"soc2010": "51-9197",
+"probability": 0.94,
+"rank": 605,
+"title": "Tire Builders"
+},
+{
+"soc2010": "51-9198",
+"probability": 0.66,
+"rank": 365,
+"title": "Helpers\u2013Production Workers"
+},
+{
+"soc2010": "51-9399",
+"probability": 0.92,
+"rank": 572,
+"title": "Production Workers, All Other"
+},
+{
+"soc2010": "53-1011",
+"probability": 0.066,
+"rank": 149,
+"title": "Aircraft Cargo Handling Supervisors"
+},
+{
+"soc2010": "53-1021",
+"probability": 0.42,
+"rank": 279,
+"title": "First-Line Supervisors of Helpers, Laborers, and Material Movers,"
+},
+{
+"soc2010": "53-1031",
+"probability": 0.029,
+"rank": 105,
+"title": "First-Line Supervisors of Transportation and Material-Moving Machine"
+},
+{
+"soc2010": "53-2011",
+"probability": 0.18,
+"rank": 204,
+"title": "Airline Pilots, Copilots, and Flight Engineers"
+},
+{
+"soc2010": "53-2012",
+"probability": 0.55,
+"rank": 314,
+"title": "Commercial Pilots"
+},
+{
+"soc2010": "53-2021",
+"probability": 0.11,
+"rank": 178,
+"title": "Air Traffic Controllers"
+},
+{
+"soc2010": "53-2022",
+"probability": 0.71,
+"rank": 388,
+"title": "Airfield Operations Specialists"
+},
+{
+"soc2010": "53-2031",
+"probability": 0.35,
+"rank": 250,
+"title": "Flight Attendants"
+},
+{
+"soc2010": "53-3011",
+"probability": 0.25,
+"rank": 227,
+"title": "Ambulance Drivers and Attendants, Except Emergency Medical Tech-"
+},
+{
+"soc2010": "53-3021",
+"probability": 0.67,
+"rank": 372,
+"title": "Bus Drivers, Transit and Intercity"
+},
+{
+"soc2010": "53-3022",
+"probability": 0.89,
+"rank": 525,
+"title": "Bus Drivers, School or Special Client"
+},
+{
+"soc2010": "53-3031",
+"probability": 0.98,
+"rank": 674,
+"title": "Driver/Sales Workers"
+},
+{
+"soc2010": "53-3032",
+"probability": 0.79,
+"rank": 431,
+"title": "Heavy and Tractor-Trailer Truck Drivers"
+},
+{
+"soc2010": "53-3033",
+"probability": 0.69,
+"rank": 380,
+"title": "Light Truck or Delivery Services Drivers"
+},
+{
+"soc2010": "53-3041",
+"probability": 0.89,
+"rank": 531,
+"title": "Taxi Drivers and Chauffeurs"
+},
+{
+"soc2010": "53-4011",
+"probability": 0.96,
+"rank": 638,
+"title": "Locomotive Engineers"
+},
+{
+"soc2010": "53-4012",
+"probability": 0.93,
+"rank": 579,
+"title": "Locomotive Firers"
+},
+{
+"soc2010": "53-4013",
+"probability": 0.91,
+"rank": 553,
+"title": "Rail Yard Engineers, Dinkey Operators, and Hostlers"
+},
+{
+"soc2010": "53-4021",
+"probability": 0.83,
+"rank": 458,
+"title": "Railroad Brake, Signal, and Switch Operators"
+},
+{
+"soc2010": "53-4031",
+"probability": 0.83,
+"rank": 459,
+"title": "Railroad Conductors and Yardmasters"
+},
+{
+"soc2010": "53-4041",
+"probability": 0.86,
+"rank": 494,
+"title": "Subway and Streetcar Operators"
+},
+{
+"soc2010": "53-5011",
+"probability": 0.83,
+"rank": 461,
+"title": "Sailors and Marine Oilers"
+},
+{
+"soc2010": "53-5021",
+"probability": 0.27,
+"rank": 230,
+"title": "Captains, Mates, and Pilots of Water Vessels"
+},
+{
+"soc2010": "53-5022",
+"probability": 0.62,
+"rank": 343,
+"title": "Motorboat Operators"
+},
+{
+"soc2010": "53-5031",
+"probability": 0.041,
+"rank": 129,
+"title": "Ship Engineers"
+},
+{
+"soc2010": "53-6011",
+"probability": 0.97,
+"rank": 644,
+"title": "Bridge and Lock Tenders"
+},
+{
+"soc2010": "53-6021",
+"probability": 0.87,
+"rank": 510,
+"title": "Parking Lot Attendants"
+},
+{
+"soc2010": "53-6031",
+"probability": 0.83,
+"rank": 467,
+"title": "Automotive and Watercraft Service Attendants"
+},
+{
+"soc2010": "53-6041",
+"probability": 0.9,
+"rank": 537,
+"title": "Traffic Technicians"
+},
+{
+"soc2010": "53-6051",
+"probability": 0.9,
+"rank": 538,
+"title": "Transportation Inspectors"
+},
+{
+"soc2010": "53-6061",
+"probability": 0.75,
+"rank": 412,
+"title": "Transportation Attendants, Except Flight Attendants"
+},
+{
+"soc2010": "53-7011",
+"probability": 0.93,
+"rank": 577,
+"title": "Conveyor Operators and Tenders"
+},
+{
+"soc2010": "53-7021",
+"probability": 0.9,
+"rank": 536,
+"title": "Crane and Tower Operators"
+},
+{
+"soc2010": "53-7031",
+"probability": 0.92,
+"rank": 564,
+"title": "Dredge Operators"
+},
+{
+"soc2010": "53-7032",
+"probability": 0.94,
+"rank": 602,
+"title": "Excavating and Loading Machine and Dragline Operators"
+},
+{
+"soc2010": "53-7033",
+"probability": 0.5,
+"rank": 299,
+"title": "Loading Machine Operators, Underground Mining"
+},
+{
+"soc2010": "53-7041",
+"probability": 0.65,
+"rank": 363,
+"title": "Hoist and Winch Operators"
+},
+{
+"soc2010": "53-7051",
+"probability": 0.93,
+"rank": 588,
+"title": "Industrial Truck and Tractor Operators"
+},
+{
+"soc2010": "53-7061",
+"probability": 0.37,
+"rank": 256,
+"title": "Cleaners of Vehicles and Equipment"
+},
+{
+"soc2010": "53-7062",
+"probability": 0.85,
+"rank": 483,
+"title": "Laborers and Freight, Stock, and Material Movers, Hand"
+},
+{
+"soc2010": "53-7063",
+"probability": 0.93,
+"rank": 580,
+"title": "Machine Feeders and Offbearers"
+},
+{
+"soc2010": "53-7064",
+"probability": 0.38,
+"rank": 264,
+"title": "Packers and Packagers, Hand"
+},
+{
+"soc2010": "53-7071",
+"probability": 0.91,
+"rank": 549,
+"title": "Gas Compressor and Gas Pumping Station Operators"
+},
+{
+"soc2010": "53-7072",
+"probability": 0.9,
+"rank": 542,
+"title": "Pump Operators, Except Wellhead Pumpers"
+},
+{
+"soc2010": "53-7073",
+"probability": 0.84,
+"rank": 480,
+"title": "Wellhead Pumpers"
+},
+{
+"soc2010": "53-7081",
+"probability": 0.93,
+"rank": 585,
+"title": "Refuse and Recyclable Material Collectors"
+},
+{
+"soc2010": "53-7111",
+"probability": 0.37,
+"rank": 260,
+"title": "Mine Shuttle Car Operators"
+},
+{
+"soc2010": "53-7121",
+"probability": 0.72,
+"rank": 396,
+"title": "Tank Car, Truck, and Ship Loaders"
+}
+]
+}

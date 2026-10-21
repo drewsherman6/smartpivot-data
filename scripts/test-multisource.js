@@ -5,7 +5,7 @@ const idx = readJson('data/multisource/index.json'); const occ = readJson('data/
 assert.strictEqual(idx.count, occ.count, 'every O*NET occupation has a multisource record');
 let n = 0;
 for (const e of idx.occupations) { const o = readJson(e.file); assert(v(o), e.file + ' schema: ' + JSON.stringify(v.errors));
-  assert.strictEqual(o.blend.primary, 'current', 'blend must not be primary without sign-off');
+  assert.strictEqual(o.blend.primary, 'multi_source', 'multi-source is primary (approved)');
   assert(o.statements.some((s) => s.sources.some((z) => z.source === 'onet')), o.code + ' keeps O*NET tasks');
   const ids = new Set();
   for (const s of o.statements) { n++; assert(!ids.has(s.id)); ids.add(s.id);

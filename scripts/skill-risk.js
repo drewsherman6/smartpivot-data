@@ -84,6 +84,7 @@ function loadAll() {
   return { docs, all: docs.flatMap((x) => x.d.occupations) };
 }
 
+let MULTI = null;
 function compute(all) {
   // ---- task -> GWA links (O*NET tasks_to_dwas + gwas_to_iwas_to_dwas)
   const dwaGwa = new Map(onetTable('gwas_to_iwas_to_dwas.csv').map((r) => [r['DWA Element ID'], r['GWA Element ID']]));
@@ -106,7 +107,7 @@ function compute(all) {
   const occOut = new Map();
   for (const o of all) {
     const occBeta = o.exposure.ai.eloundou_2023?.dv_beta ?? null;
-    const prior = occBeta ?? aioePct(o.exposure.ai.felten_aioe) ?? o.exposure.ai.composite?.value ?? null;
+    const prior = occBeta ?? aioePct(o.exposure.ai.felten_aioe) ?? (o.exposure.ai.composite?.previous_method?.value ?? o.exposure.ai.composite?.value) ?? null;
     const priorSrc = occBeta != null ? 'eloundou_occupation_beta' : o.exposure.ai.felten_aioe != null ? 'felten_aioe_percentile' : 'ai_composite';
     const doa = o.exposure.robotics.onet_degree_of_automation;
     const cites = new Map(); for (const c of o.exposure.robotics.cited_systems || []) { const s = P.robot_tier_score[c.tier]; if (s != null) cites.set(c.task_id, Math.max(cites.get(c.task_id) || 0, s)); }
@@ -162,6 +163,40 @@ function compute(all) {
         ...(inf ? { inferred_from: { code: o.inferred_from.code, title: o.inferred_from.title, method: o.inferred_from.method, label: o.inferred_from.label, note: 'Tasks (and so task risks) are borrowed from the source occupation(s); skill risk is computed from those tasks.' } } : {}),
       },
     });
+  }
+
+  // ---- PRIMARY = multi-source score (scripts/blend.js; approved Oct 21, 2026). Equipercentile linking: each job's
+  // multi-source AI (robotics) rank is mapped onto the distribution of the task-based occupation AI (robotics) risk, so the
+  // absolute 0..1 scale, the band thresholds (0.30 / 0.50) and their meaning are kept while the ORDER of jobs follows every
+  // measure. combined = 1 - (1 - ai)(1 - robotics). Skill risks are rescaled by the job's new/old ratio (within-job order kept).
+  // The previous task-only values stay in summary.previous_method.
+  {
+    const msDir = path.join(ROOT, 'data/multisource/occ'); const msBy = new Map();
+    if (fs.existsSync(msDir)) for (const o of all) { const f = path.join(msDir, o.code + '.json'); if (fs.existsSync(f)) msBy.set(o.code, JSON.parse(fs.readFileSync(f, 'utf8'))); }
+    const B = require('./blend').compute(byCode, msBy); MULTI = B;
+    const link = (key, dim) => {
+      const dist = all.map((o) => occOut.get(o.code).summary[key]).filter((v) => v != null).sort((a, b) => a - b);
+      const sc = all.map((o) => ({ c: o.code, v: B.byCode.get(o.code)?.[dim]?.score })).filter((x) => x.v != null).sort((a, b) => a.v - b.v);
+      const out = new Map(); sc.forEach((x, i) => { const q = sc.length > 1 ? i / (sc.length - 1) : 0.5; const pos = q * (dist.length - 1); const lo = Math.floor(pos); out.set(x.c, dist[lo] + (dist[Math.min(lo + 1, dist.length - 1)] - dist[lo]) * (pos - lo)); });
+      return out;
+    };
+    const lAi = link('occupation_ai', 'ai'), lRob = link('occupation_robotics', 'robotics');
+    for (const o of all) {
+      const x = occOut.get(o.code); const S = x.summary; const b = B.byCode.get(o.code);
+      const prev = { occupation_ai: S.occupation_ai, occupation_robotics: S.occupation_robotics, occupation_combined: S.occupation_combined, band: S.occupation_combined < P.bands.safe_below ? 'safe' : S.occupation_combined >= P.bands.at_risk_from ? 'at_risk' : 'moderate' };
+      const ai = lAi.get(o.code) ?? S.occupation_ai, rob = lRob.get(o.code) ?? S.occupation_robotics;
+      const fA = S.occupation_ai > 0 ? ai / S.occupation_ai : null, fR = S.occupation_robotics > 0 ? rob / S.occupation_robotics : null;
+      for (const k of x.skillRisk) {
+        k.ai_risk = r3(clamp(fA != null ? k.ai_risk * fA : ai)); k.robotics_risk = r3(clamp(fR != null ? k.robotics_risk * fR : rob));
+        k.combined = r3(1 - (1 - k.ai_risk) * (1 - k.robotics_risk)); k.band = k.combined < P.bands.safe_below ? 'safe' : k.combined >= P.bands.at_risk_from ? 'at_risk' : 'moderate';
+      }
+      S.occupation_ai = r3(ai); S.occupation_robotics = r3(rob); S.occupation_combined = r3(1 - (1 - ai) * (1 - rob));
+      S.basis = 'multi_source'; S.multi_source = { ai_score: b?.ai.score ?? null, robotics_score: b?.robotics.score ?? null, ai_agreement: b?.ai.agreement.label ?? null, robotics_agreement: b?.robotics.agreement.label ?? null };
+      S.previous_method = prev;
+      // headline exposure fields used across the site
+      const comp = o.exposure.ai.composite; if (comp) { const pv = comp.previous_method ?? { value: comp.value, n_measures: comp.n_measures, method: comp.method }; o.exposure.ai.composite = { ...comp, value: b?.ai.score ?? comp.value, n_measures: b?.ai.agreement.families ?? comp.n_measures, method: 'multi-source score: weighted mean of available measure-family percentiles (scripts/blend.js, docs/BLEND_COMPARISON.md)', agreement: b?.ai.agreement ?? null, previous_method: pv }; }
+      o.exposure.robotics.multi_source = { value: b?.robotics.score ?? null, agreement: b?.robotics.agreement ?? null, method: 'multi-source score (scripts/blend.js)', previous_method: { anthropic_robot_exposure_index: o.exposure.robotics.anthropic_robot_exposure_index } };
+    }
   }
 
   // ---- safe / at-risk lists
@@ -423,6 +458,14 @@ function run() {
     if (fs.readFileSync(abs, 'utf8') !== txt) { fs.writeFileSync(abs + '.tmp', txt); fs.renameSync(abs + '.tmp', abs); changed++; }
   }
   writeSkillRisk(out);
+  // standalone: keep the headline tables in step with the primary (multi-source) score; refresh.js rebuilds them itself
+  const by = new Map(all.map((o) => [o.code, o]));
+  const ip = path.join(ROOT, 'data/occupations/index.json'); const idx = JSON.parse(fs.readFileSync(ip, 'utf8'));
+  for (const e of idx.occupations) { const o = by.get(e.code); if (!o) continue; e.ai_exposure_composite = o.exposure.ai.composite?.value ?? e.ai_exposure_composite; e.robot_multi_source = o.exposure.robotics.multi_source?.value ?? null; e.combined_risk = o.derived.skill_risk_summary.occupation_combined; }
+  fs.writeFileSync(ip, JSON.stringify(idx) + '\n');
+  const ap = path.join(ROOT, 'data/exposure/ai_exposure.json'); const ae = JSON.parse(fs.readFileSync(ap, 'utf8'));
+  for (const e of ae.occupations) { const o = by.get(e.code); if (o) e.composite = o.exposure.ai.composite; }
+  fs.writeFileSync(ap, JSON.stringify(ae) + '\n');
   console.log(`skill-risk: ${changed} shard(s) updated; coverage ${JSON.stringify(out.coverage)}`);
   return out;
 }

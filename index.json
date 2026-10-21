@@ -338,7 +338,7 @@
       "path": "data/skills/skill_risk.json",
       "schema": "schemas/skill_risk.schema.json",
       "schema_version": "1.0.0",
-      "last_updated": "2026-10-20",
+      "last_updated": "2026-10-21",
       "legacy": false,
       "record_count": 35,
       "description": "Global per-skill AI/robotics risk (task-based, all occupations) + method and thresholds for derived.skill_risk / future_proof_pathways"

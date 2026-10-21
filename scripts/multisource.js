@@ -215,20 +215,20 @@ async function run(opts = {}) {
     const blendRob = robParts.length ? r3(robParts.reduce((a, b) => a + b, 0) / robParts.length) : null;
     out.push({ code: o.code, title: o.title, crosswalk: { esco: escoOccs.map((m) => ({ uri: m.uri, title: m.title, match: m.match, weight: m.w })), soc2010: soc10, isco08: isco, isco_basis: iscoBasis, noc2021: noc21, nice_work_roles: NICE_MAP[o.code] || [] },
       summary: { statements: stmts.length, by_source: bySrc, multi_source_statements: stmts.filter((x) => x.n_sources > 1).length, ai_scored: stmts.filter((x) => x.ai).length, robotics_scored: stmts.filter((x) => x.robotics).length },
-      blend: { ai_pct: blendAi, ai_sources: blendParts.length, robotics: blendRob, robotics_sources: robParts.length, current_ai_composite: o.exposure.ai.composite?.value ?? null, current_robot_index: o.exposure.robotics.anthropic_robot_exposure_index ?? null, primary: 'current' },
+      blend: { ai_pct: blendAi, ai_sources: blendParts.length, robotics: blendRob, robotics_sources: robParts.length, current_ai_composite: o.exposure.ai.composite?.value ?? null, current_robot_index: o.exposure.robotics.anthropic_robot_exposure_index ?? null, primary: 'multi_source' },
       statements: stmts });
   }
   // ---------- full multi-measure blend (scripts/blend.js) ----------
   const BL = require('./blend'); const blendRes = BL.compute(shards, new Map(out.map((x) => [x.code, x])));
   for (const x of out) { const b = blendRes.byCode.get(x.code);
-    x.blend = { ai_pct: b.ai.score, ai_sources: b.ai.agreement.families, robotics: b.robotics.score, robotics_sources: b.robotics.agreement.families, current_ai_composite: b.current_ai_composite, current_robot_index: b.current_robot_index, primary: 'current', inferred_from: b.inferred, ai: b.ai, robotics_detail: b.robotics }; }
+    x.blend = { ai_pct: b.ai.score, ai_sources: b.ai.agreement.families, robotics: b.robotics.score, robotics_sources: b.robotics.agreement.families, current_ai_composite: b.current_ai_composite, current_robot_index: b.current_robot_index, primary: 'multi_source', inferred_from: b.inferred, ai: b.ai, robotics_detail: b.robotics }; }
   // ---------- write ----------
   const meta = { dataset: 'multisource_statements', schema_version: '1.0.0', generated: today(), sources: SRC, esco_concepts_not_in_current_release: MISSING.length,
     method: { dedupe: `ESCO skill URI identity; then identical normalized text (lowercase, punctuation/stopwords removed, light suffix stemming, sorted token set); then token-set Jaccard >= ${DEDUPE_J} within the occupation (knowledge items only merge by URI/text). Deterministic and offline; no embeddings.`,
       crosswalk_weights: 'ESCO match type: exact 1.0, close 0.8, narrow 0.6, broad 0.5 (relatedMatch excluded: not validated by US DOL); ESCO optional skills x0.5. ILO/OaSIS: 1/n of mapped ISCO groups / NOC units. ISCO groups = BLS SOC2010->ISCO-08 list, intersected with the ISCO groups of the ESCO occupations mapped to this O*NET code when that intersection is non-empty. NICE: 0.5, curated title mapping (no official SOC crosswalk). O*NET tasks: Anthropic time share / the occupation max (equal weights when missing).',
       exposure: `Only published scores. AI direct: Anthropic Economic Index task penetration (O*NET tasks) and ILO WP140 2025 task score (ISCO tasks). Robotics direct: Anthropic robot exposure tier E0-E3 on O*NET tasks (score = tier/3). Others inherit from the most lexically similar directly-scored statement in the same occupation when Jaccard >= ${TRANSFER_J} (basis "transferred", donor and similarity recorded); otherwise null. Calibration: each AI source -> its own percentile (share of that source's statements scoring strictly lower, so a zero score stays 0; statements with both: mean).`,
       blend_full: 'See scripts/blend.js and docs/BLEND_COMPARISON.md: every available measure as a percentile across occupations, grouped into independent families (AI: observed use, rated LLM exposure, ability-based, ILO tasks, market targeting; robotics: Anthropic robot, O*NET degree of automation, deployed robots); family = mean of available members; blend = mean of available families (missing re-weighted, never zero).',
-      blend_v1_superseded: 'AI: unweighted mean of two independent task-level sources, each weight-averaged over its directly-scored statements: O*NET tasks (Anthropic penetration percentile, time-share weights) and ISCO-08 tasks (ILO 2025 percentile, 1/n ISCO weights). ESCO/OaSIS/NICE statements carry transferred scores for display but do not vote (no published task score of their own). Robotics: only O*NET tasks carry a published robot tier, so the robotics blend equals the O*NET task mean. EXPERIMENTAL: the current O*NET composite stays primary until sign-off.' } };
+      blend_v1_superseded: 'AI: unweighted mean of two independent task-level sources, each weight-averaged over its directly-scored statements: O*NET tasks (Anthropic penetration percentile, time-share weights) and ISCO-08 tasks (ILO 2025 percentile, 1/n ISCO weights). ESCO/OaSIS/NICE statements carry transferred scores for display but do not vote (no published task score of their own). Robotics: only O*NET tasks carry a published robot tier, so the robotics blend equals the O*NET task mean. Primary since Oct 21, 2026 (Drew approved).' } };
   const outDir = path.join(ROOT, 'data/multisource'); fs.mkdirSync(outDir, { recursive: true });
   // one small file per occupation (the app fetches only the job it shows); sources/method live in index.json
   const occDir = path.join(outDir, 'occ'); fs.rmSync(occDir, { recursive: true, force: true }); fs.mkdirSync(occDir, { recursive: true });
@@ -237,12 +237,39 @@ async function run(opts = {}) {
   const counts = out.map((x) => x.summary.statements).sort((a, b) => a - b);
   fs.writeFileSync(path.join(outDir, 'index.json'), JSON.stringify({ ...meta, count: out.length, coverage_by_source: cov, statements_per_occupation: { min: counts[0], median: counts[counts.length >> 1], max: counts[counts.length - 1], mean: r3(counts.reduce((a, b) => a + b, 0) / counts.length) },
     occupations: out.map((x) => ({ code: x.code, title: x.title, file: `data/multisource/occ/${x.code}.json`, statements: x.summary.statements, sources: Object.entries(x.summary.by_source).filter(([, v]) => v.statements).map(([k]) => k), blend: x.blend })) }, null, 0));
-  writeComparison(out, cov, counts, blendRes, BL);
+  writeComparison(out, cov, counts, blendRes, BL, shards);
   console.log(`multisource: ${out.length} occupations; statements min ${counts[0]} median ${counts[counts.length >> 1]} max ${counts[counts.length - 1]}; coverage ${JSON.stringify(cov)}`);
   return out;
 }
 
-function writeComparison(out, cov, counts, B, BL) {
+function writeComparison(out, cov, counts, B, BL, shards) {
+  const bandOf = (x) => (x < 0.3 ? 'Low' : x >= 0.5 ? 'High' : 'Moderate');
+  const lv = [...shards.values()].filter((o) => o.derived?.skill_risk_summary?.previous_method).map((o) => { const S = o.derived.skill_risk_summary; return { c: o.code, t: o.title, a: bandOf(S.previous_method.occupation_combined), b: bandOf(S.occupation_combined), pa: S.previous_method.occupation_combined, pb: S.occupation_combined, ai0: S.previous_method.occupation_ai, ai1: S.occupation_ai, r0: S.previous_method.occupation_robotics, r1: S.occupation_robotics }; });
+  const trans = {}; for (const x of lv) trans[`${x.a} → ${x.b}`] = (trans[`${x.a} → ${x.b}`] || 0) + 1;
+  const dist = (k) => ['Low', 'Moderate', 'High'].map((b) => `${b} ${lv.filter((x) => x[k] === b).length}`).join(', ');
+  const aiLv = lv.filter((x) => bandOf(x.ai0) !== bandOf(x.ai1)).length, rLv = lv.filter((x) => bandOf(x.r0) !== bandOf(x.r1)).length;
+  const foN = B.coverage.frey_osborne_ai;
+  const levelSection = lv.length ? `## Primary switch (approved by Drew, Oct 21, 2026)
+The multi-source score is now the **primary** score. It drives the headline AI and robotics figures, the risk-level bands, skill risks, pathways, reskilling routes, the employer brief, the PDF and CSV, and Supabase. The previous task-only method is kept as \`previous_method\` in each record and is shown on /method.
+
+**From score to risk level.** The bands are defined on a 0–1 "share of work exposed" scale: Low below 0.30, High at 0.50 and above. To keep that scale and its meaning, the multi-source AI and robotics scores are **equipercentile-linked** onto it. A job at the 80th percentile of the multi-source AI score gets the 80th-percentile value of task-based AI risk across all jobs, and the same is done for robotics. Combined risk = 1 − (1 − AI)(1 − robotics). Each skill's risk is scaled by its job's new/old ratio, so the order of skills within a job is unchanged. Pathways and reskilling were recomputed on the new combined risk. Every invariant still holds: at least 3 pathways per job, targets with lower risk, the doctor-type block, and the tiers.
+
+| | Low | Moderate | High |
+|---|---|---|---|
+| Previous method | ${lv.filter((x) => x.a === 'Low').length} | ${lv.filter((x) => x.a === 'Moderate').length} | ${lv.filter((x) => x.a === 'High').length} |
+| Multi-source (primary) | ${lv.filter((x) => x.b === 'Low').length} | ${lv.filter((x) => x.b === 'Moderate').length} | ${lv.filter((x) => x.b === 'High').length} |
+
+- **Combined risk level** changed for **${lv.filter((x) => x.a !== x.b).length}** of ${lv.length} jobs: ${Object.entries(trans).filter(([k]) => k.split(' → ')[0] !== k.split(' → ')[1]).map(([k, v]) => `${k} ${v}`).join(', ')}.
+- **AI component band** changed for ${aiLv} jobs, and the **robotics component band** for ${rLv}.
+- The site can still raise a level when products already on the market cover more of the work. That rule is unchanged.
+
+Largest combined-risk changes:
+
+| Code | Title | Previous | Multi-source | Level |
+|---|---|---|---|---|
+${lv.slice().sort((a, b) => Math.abs(b.pb - b.pa) - Math.abs(a.pb - a.pa)).slice(0, 20).map((x) => `| ${x.c} | ${x.t} | ${x.pa} | ${x.pb} | ${x.a}${x.a !== x.b ? ' → ' + x.b : ''} |`).join('\n')}
+
+` : '';
   const rankOf = (vals) => { const v = vals.filter((x) => x != null).sort((a, b) => a - b); return (x) => (x == null ? null : (v.filter((q) => q < x).length + (v.filter((q) => q === x).length) / 2) / v.length); };
   const ids = out.map((x) => x.code); const get = (c) => B.byCode.get(c);
   const band = (p) => (p >= 2 / 3 ? 'High' : p >= 1 / 3 ? 'Moderate' : 'Low');
@@ -267,7 +294,9 @@ function writeComparison(out, cov, counts, B, BL) {
   const calR = Object.entries(B.calibration).filter(([k]) => /^(robot|onet_degree)[^~]*~(robot|onet_degree)/.test(k)).map(([k, v]) => `| ${k.replace('~', ' vs ')} | ${v.n} | ${v.rho.toFixed(2)} |`).join('\n');
   const md = `# Multi-source exposure score vs current score (all ${out.length} occupations)
 
-Generated ${today()} by \`scripts/multisource.js\` and \`scripts/blend.js\`. **This is a secondary "multi-source score". The current O*NET composite stays primary and drives the risk level until Drew signs off.**
+Generated ${today()} by \`scripts/multisource.js\` and \`scripts/blend.js\`. **The multi-source score is the PRIMARY score; Drew approved it on Oct 21, 2026.** "Current" in the tables below means the previous method (the O*NET composite and the Anthropic robot index), which is kept for comparison.
+
+${levelSection}
 
 ## Method
 1. **Every available measure is used.** Each is converted to a mid-rank percentile across the ${out.length} occupations, so measures on different scales become comparable. That puts a β share, a 0–1 ILO score, an AIOE z-score, a 1–5 automation rating and a time share all on the same 0–1 scale.
@@ -276,15 +305,17 @@ Generated ${today()} by \`scripts/multisource.js\` and \`scripts/blend.js\`. **T
 4. **Jobs O*NET does not rate directly** take job-level measures from the related role the current composite already uses (\`inferred_from\`). Their task-level measures use the job's own task list.
 5. **Agreement** is the standard deviation of the family scores: below 0.15 "sources agree", 0.15–0.25 "partly agree", 0.25 and above "disagree". Counts: ${agreeCounts}.
 6. **Weighting rationale:** each independent family gets equal weight (scheme A). That follows the standard practice of averaging standardized indicators when no family is known to be more valid; see OECD/JRC, *Handbook on Constructing Composite Indicators* (2008). Schemes B and C below show how sensitive the result is to that choice.
-7. **Not included:** Frey & Osborne (2013) automation probabilities. SmartPivot does not use them today, and they are coded to SOC 2010 with only 702 occupations. They can be added as another family if wanted.
+7. **Final weights:** every family counts 1.0, except two at 0.5.
+   - **O*NET Degree of Automation** (robotics) counts 0.5. Its correlation with the other robot measures is only about 0.10, because it rates how machine-paced the work is, not whether robots can do it.
+   - **Frey & Osborne (2013)** counts 0.5 in both AI and robotics. Their probability of computerisation covers machine learning and mobile robotics together, so it cannot be assigned to just one. It is also a pre-LLM estimate built from nine O*NET variables. It is coded to SOC 2010 and was linked to 2018 SOC with the BLS 2010→2018 crosswalk, averaging when several 2010 codes map to one 2018 code. It covers ${foN} of ${out.length} jobs, and missing values are treated as missing. It is left out of the agreement statistic because it is a 2013 baseline. Source: https://www.oxfordmartin.ox.ac.uk/downloads/academic/The_Future_of_Employment.pdf (appendix table; ranks 1–702 extracted, see \`data/sources/frey_osborne_2013.json\`).
 
-| AI family | Measures (coverage = number of occupations) |
+| AI family (weight) | Measures (coverage = number of occupations) |
 |---|---|
-${Object.entries(BL.AI_FAMILIES).map(([k, f]) => `| ${f.label} | ${f.measures.map((m) => `${BL.MEASURE_LABEL[m]} (${B.coverage[m]})`).join('; ')} |`).join('\n')}
+${Object.entries(BL.AI_FAMILIES).map(([k, f]) => `| ${f.label} (${f.weight ?? 1}) | ${f.measures.map((m) => `${BL.MEASURE_LABEL[m]} (${B.coverage[m]})`).join('; ')} |`).join('\n')}
 
-| Robotics family | Measures (coverage) |
+| Robotics family (weight) | Measures (coverage) |
 |---|---|
-${Object.entries(BL.ROB_FAMILIES).map(([k, f]) => `| ${f.label} | ${f.measures.map((m) => `${BL.MEASURE_LABEL[m]} (${B.coverage[m]})`).join('; ')} |`).join('\n')}
+${Object.entries(BL.ROB_FAMILIES).map(([k, f]) => `| ${f.label} (${f.weight ?? 1}) | ${f.measures.map((m) => `${BL.MEASURE_LABEL[m]} (${B.coverage[m]})`).join('; ')} |`).join('\n')}
 
 ## Headline (scheme A vs current)
 - **AI:** rank correlation with the current composite **${A.rho.toFixed(3)}** (Spearman). Mean absolute rank change ${pct(A.mad)} points; ${A.big} jobs move 20 or more points. The Low/Moderate/High tercile changes for **${A.moved}** of ${A.n} jobs (${A.up} up, ${A.down} down).
