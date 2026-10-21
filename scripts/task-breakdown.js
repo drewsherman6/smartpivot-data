@@ -19,6 +19,7 @@ const TW = require('./time-weighted');
 const CACHE = path.join(ROOT, '.cache');
 const ROBOT_EXPOSED = new Set(['E1', 'E2', 'E3']);
 const r3 = (x) => (x == null ? null : Math.round(x * 1000) / 1000);
+const r5 = (x) => (x == null ? null : Math.round(x * 1e5) / 1e5);
 function onet(name) {
   const e = new AdmZip(path.join(CACHE, SRC.onet.file)).getEntries().find((x) => x.entryName.endsWith('/' + name));
   if (!e) throw new Error(`task-breakdown: O*NET ${name} missing; run scripts/refresh.js`);
@@ -84,7 +85,7 @@ function build() {
       for (const t of tasks) t.time_share_normalized = r3(weight(t) / W);
       // graded exposure strength per task (0..1) and the job's time-weighted exposure (scripts/time-weighted.js)
       const tr = new Map(TW.taskRows(o).map((r) => [r.id, r])); const twe = TW.twe(o);
-      for (const t of tasks) { const r = tr.get(t.id); t.ai_strength = r3(r?.ai ?? null); t.robotics_strength = r3(r?.robotics ?? null); t.ai_weighted = t.ai_strength == null ? null : r3(t.time_share_normalized * t.ai_strength); t.robotics_weighted = t.robotics_strength == null ? null : r3(t.time_share_normalized * t.robotics_strength); t.strength_evidence = r ? r.evidence : null; }
+      for (const t of tasks) { const r = tr.get(t.id); t.ai_strength = r3(r?.ai ?? null); t.robotics_strength = r3(r?.robotics ?? null); t.ai_weighted = r?.ai == null ? null : r5(r.share * r.ai); t.robotics_weighted = r?.robotics == null ? null : r5(r.share * r.robotics); /* 5 decimals so the per-task contributions add up to the job total */ t.strength_evidence = r ? r.evidence : null; }
       const sumW = (pred) => r3(tasks.filter(pred).reduce((s, t) => s + weight(t), 0) / W);
       return { code: o.code, title: o.title, time_basis: tasks.every((t) => t.time_share != null) ? 'anthropic_time_share' : 'equal_weight_fallback',
         summary: { tasks: tasks.length, ai_tasks: tasks.filter((t) => t.ai_exposed).length, robotics_tasks: tasks.filter((t) => t.robotics_exposed).length, safe_tasks: tasks.filter((t) => t.group === 'safe').length, no_data_tasks: tasks.filter((t) => t.group === 'no_data').length,
