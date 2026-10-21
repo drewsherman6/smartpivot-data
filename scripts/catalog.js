@@ -150,3 +150,59 @@ exports.skillSignals = {
   'Equipment Maintenance': /maintenance|diagnostic/i, Repairing: /repair|diagnostic/i, Installation: /install/i,
   'Management of Financial Resources': /accounting|financial|budget/i, 'Management of Personnel Resources': /human resources|scheduling|workforce/i,
 };
+
+// Evidence-based capability rules (replace categoryPatterns for task linkage, 2026-10-21; categoryPatterns is kept only for
+// the technology-category bonus and is deprecated for task links). A task links to a product category only when the task
+// STATEMENT itself (not DWA titles or technology lists) names an action the category's documented capability performs:
+// `include` must match and no `exclude` may match. `capability` paraphrases what the verified products in that category
+// document on their official pages (scripts/verify-platforms.js records each page title/description weekly).
+// Audit, sample and precision: docs/AI_LINK_AUDIT.md; tests: scripts/test-ai-links.js.
+const V = (verbs, objs, gap = 60) => new RegExp(`\\b(${verbs})\\w*\\b[^.;]{0,${gap}}\\b(${objs})`);
+exports.capabilityRules = {
+  customer_service: { capability: 'Answers and resolves customer/caller questions, requests and complaints; informs or notifies customers; books appointments (e.g. Intercom Fin, Zendesk, Sierra, Decagon).',
+    include: [V('answer|respond|reply|resolv|handl|greet|inform|notif|contact|assist|explain|schedul', 'customers?|clients?|callers?|calls|telephones?|inquir\\w*|questions|complaints?|requests?|public|patrons?|guests?|appointments')],
+    exclude: [/\bproposals?\b/, /\bexplain general\b/, /\bcalendars\b/, /\brecord information about\b/, /\b(analy[sz]|monitor|study|interpret|investigate|manage)\w*\b[^.;]{0,40}\b(trends|portfolios?|policies|plans|complaints)/, /\bmarket trends\b/, /\bmaintain customer records\b/] },
+  sales_marketing: { capability: 'Prospecting, lead generation, outreach, sales quotes/contracts/orders, marketing copy, campaign and market analysis (e.g. HubSpot Breeze, 11x, Clay, Gong).',
+    include: [/\b(prospective (customers|clients)|generate (leads|lists)|leads\b|sales (contracts|letters|trends|quotas?)|order forms|enter orders|customer accounts|campaigns?|price quotations?|quotes?\b)/, V('prepare|write|plan|develop|create', 'advertising|promotional|marketing|sales'), V('conduct|analy[sz]|measure|forecast|track|investigate|identify', 'market\\w*|sales|advertising')],
+    exclude: [/\beconomic phenomena\b/, /\b(stocks|bonds|securities|commodit)/, /\bcorporate image\b/, /\bpublic relations strateg/] },
+  data_analytics: { capability: 'Analyzes, models, forecasts and reports on data, statistics, trends and metrics (e.g. Power BI Copilot, Hex, Julius).',
+    include: [V('analy[sz]|interpret|compil|process|identify|report|forecast|model|calculat|track|apply mathematical|apply statistical|develop', 'data|statistic\\w*|trends|metrics|forecasts?|models?|results|figures|calculations|cost estimates|scenarios')],
+    exclude: [/\b(patients?|diagnos\w*|examination results|medical)\b/, /\bdata models and databases\b/, /\bdesign forms\b/, /\bgather data from (sources such as )?(surface|stations|satellites)/, /\bread current literature\b/, /\brelationships of quantities\b/] },
+  finance_ops: { capability: 'Processes and reconciles invoices, bills, budgets, ledgers and transactions; prepares financial reports and models (e.g. Ramp, Brex, Hebbia).',
+    include: [V('prepar|process|record|reconcil|document|examin|review|audit|analy[sz]|compil|verif|post|calculat|administer|employ|produce|interpret', 'invoices?|bills?|budgets?|accounts? (payable|receivable)|ledgers?|transactions|financial (statements|records|data|information|reports?|models?|research)|financial models|expenses?|payroll|tax returns|records|purchasing systems|cost analysis|data on price')],
+    exclude: [/\b(explain|recommend|advise|interview|notify|locate|provide information)\w*\b/, /\bmilestones\b/, /\b(patients?|diagnos\w*|medical)\b/] },
+  general_assistant: { capability: 'Writes, drafts, edits, proofreads, rewrites, summarizes and translates text (e.g. Writer, Microsoft 365 Copilot, Claude).',
+    include: [/\b(write|rewrite|draft|edit|revise|proofread|translate|summari[sz]e|compose|organize material|invent names|adapt text|plan project arrangements or outlines)\b/, /\bprepare (reports?|correspondence|documents?|memos|letters|presentations|newsletters|press releases)\b/],
+    exclude: [/\b(edit|organize)\w*\b[^.;]{0,30}\b(films?|videotapes?|video|footage|sound)/, /\bcompose and frame\b/, /\bprograms\b/, /\blectures?\b/, /\binterpretive reports\b/] },
+  healthcare_documentation: { capability: 'Ambient clinical documentation: drafts notes, records patient histories, codes and abstracts charts (e.g. Abridge).',
+    include: [V('document|record|chart|write|compil|maintain|prepar|code|abstract|keep', 'medical (records?|histor\\w*)|histor(y|ies)|records|charts?|notes|narrative summaries|patient data|information|reports'), /\bobtain\w*[^.;]{0,40}histor(y|ies)\b/],
+    exclude: [/\b(explain|advise|instruct|discuss|interpret|schedul|assist patients|diagnos)\w*\b/], require: /\b(patients?|medical|clinical|health|treatment|examination|diagnos\w*)\b/ },
+  hr_people: { capability: 'Recruiting, applicant screening and communication, HR documentation and employee policy questions (e.g. Moveworks HR, Workday agents).',
+    include: [/\b(recruit\w*|hire|hiring|interview (job )?(applicants|candidates)|job (applicants|candidates|vacancies)|applicants|personnel (records|policies|actions|related)|employee (records|benefits|relations|relocation|orientation)|payroll|benefits administration|onboard\w*|performance (appraisals?|reviews?)|employment(-related)? (applications|data))\b/],
+    exclude: [/\banswer applicants' questions about benefits\b/] },
+  it_service: { capability: 'IT service desk: resolves user tickets, troubleshoots user problems, resets accounts and access, answers user IT questions (e.g. ServiceNow AI Agents, Moveworks, Aisera).',
+    include: [/\b(troubleshoot\w*|technical support|user support|help desk|confer with users|reset\w*|user accounts|tickets?|service requests|provide (technical )?(support|assistance) to users)\b/],
+    exclude: [/\b(design|configure|develop|implement|architect)\w*\b[^.;]{0,30}\b(networks?|servers?|systems?|architectures?)\b/, /\bvoice services and equipment\b/] },
+  legal: { capability: 'Legal research and drafting: reads, reviews and summarizes pleadings, contracts, laws and regulations; drafts briefs and opinions (e.g. Harvey, CoCounsel).',
+    include: [V('prepar|draft|review|research|interpret|read|advis|determin|analy[sz]|writ', 'legal|briefs?|opinions?|decisions|pleadings|motions|petitions|laws?|regulations?|regulatory|statutes?|precedent|contracts?|case law|liability')],
+    exclude: [/\brewrite material into\b/, /\b(comply with|enforce|maintain knowledge|contract specifications|transcribe)\b/, /\bregulatory (agencies|affairs documents)\b/, /\bsubmissions to\b/] },
+  personal_assistant: { capability: 'Email, calendar and scheduling, correspondence, messages and travel booking (e.g. Lindy, Microsoft 365 Copilot).',
+    include: [/\b(schedule|scheduling|confirm appointments|calendars?|appointments?|correspondence|e-?mails?|travel (arrangements|reservations)|reservations|meeting notes|take messages|answer telephones|form letters|compose letters|routine inquiries)\b/],
+    exclude: [/\bdispatch\b/, /\bproject plans?\b/, /\btranslat/, /\bcounsel\w*\b/] },
+  research_knowledge: { capability: 'Searches and reads literature, databases and documents; keeps current; summarizes and reports research findings (e.g. Perplexity, Glean, Gemini Enterprise).',
+    include: [/\b(read|review)\w*[^.;]{0,40}\b(literature|journals|publications|documents)\b/, /\b(keep|stay)s? (abreast|informed|current)\b/, /\bsearch\w*[^.;]{0,40}\b(databases?|sources|literature|information|repositories)\b/, /\bconduct research\b/, /\bpublish findings\b/, /\b(summariz\w*|write about|present)\b[^.;]{0,30}\bresearch\b/, /\bresearch (and analyze|laws|regulations|policies)\b/, /\breports?\b[^.;]{0,30}\b(summarizing|based upon) research\b/],
+    exclude: [/\bgather data from (sources such as )?(surface|stations|satellites)/, /\busing observation\b/] },
+  software_engineering: { capability: 'Writes, modifies, tests and debugs code, programs, scripts, queries, databases and web applications (e.g. Cursor, Claude Code, GitHub Copilot, Devin).',
+    include: [V('writ|rewrit|modif|correct|debug|revis|test|recheck', 'programs?', 40), V('writ|develop|modif|debug|test|extend|perform|program|cod|build|maintain|design|correct', 'software|computer programs?|existing programs|code|coding|scripts?|algorithms?|databases?|web ?sites?|web applications?|queries|programming|machine learning', 50)],
+    exclude: [/\baccording to scripts\b/, /\b(strategies|e-commerce)\b/, /\bhardware or software maintenance\b/, /\b(education|training|community|social|academic|treatment|outreach|benefits?|assistance|wellness|exercise|recreation\w*|patient education) programs?\b/, /\b(style guidelines|feedback|analyze problems|technical literature|procedures for|operate computers|maintain understanding)\b/] },
+  workflow_automation: { capability: 'Back-office document and data workflows: records, compiles, files, enters and updates records, forms, invoices and reports (e.g. UiPath, Automation Anywhere, Workato).',
+    include: [V('record|compil|file|filing|enter|updat|process|prepar|maintain|transcrib|code|abstract|check completed work|research, compile', 'records?|files?|forms|data|documents|invoices|bills|statements|reports|charts|minutes|applications|correspondence|memos|letters|spelling', 50)],
+    exclude: [/\b(legal briefs|research findings|incidents|project-related)\b/, /\bmonitoring or diagnostic\b/, /\bmedical histor/, /\bpatients' histories\b/] },
+  agent_framework: { capability: 'Frameworks for building AI agents and automated workflows (e.g. OpenAI Agents SDK, Google ADK, AutoGen).',
+    include: [V('develop|design|build|implement|apply', 'machine learning|artificial intelligence|ai (agents|models|systems)|automated (systems|processes|workflows)|data mining', 50)],
+    exclude: [] },
+  computer_use: { capability: 'Operates a browser or desktop: looks up, enters, uploads and retrieves information on websites, online stores, databases and spreadsheets (e.g. ChatGPT agent, Perplexity Comet, UiPath).',
+    include: [V('enter|upload|download|search|look up|retriev|updat|input|store, retrieve', 'online|internet|web ?sites?|databases?|computers?|spreadsheets?|data|information|records|storefront', 50), /\bprepare or organize online\b/, /\binvestigate\b[^.;]{0,120}\b(internet|online)\b/],
+    exclude: [/\b(security|breach|network)\w*\b/] },
+};
+exports.capabilityMatch = (cat, text) => { const r = exports.capabilityRules[cat]; if (!r) return false; const s = String(text || '').toLowerCase(); return r.include.some((re) => re.test(s)) && !r.exclude.some((re) => re.test(s)) && (!r.require || r.require.test(s)); };

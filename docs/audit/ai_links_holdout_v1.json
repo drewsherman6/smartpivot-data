@@ -1,0 +1,1261 @@
+{
+ "note": "Holdout sample (seed 11, up to 15 per category, excluding the before sample) of links produced by capability rules v1 (first pass). Same rubric.",
+ "items": [
+  {
+   "cat": "computer_use",
+   "code": "51-5111.00",
+   "title": "Prepress Technicians and Workers",
+   "task_id": "10403",
+   "text": "Enter, position, and alter text size, using computers, to make up and arrange pages so that printed materials can be produced.",
+   "label": 1
+  },
+  {
+   "cat": "customer_service",
+   "code": "43-4171.00",
+   "title": "Receptionists and Information Clerks",
+   "task_id": "748",
+   "text": "Hear and resolve complaints from customers or the public.",
+   "label": 1
+  },
+  {
+   "cat": "customer_service",
+   "code": "43-9061.00",
+   "title": "Office Clerks, General",
+   "task_id": "837",
+   "text": "Complete work schedules, manage calendars, and arrange appointments.",
+   "label": 0
+  },
+  {
+   "cat": "customer_service",
+   "code": "43-3011.00",
+   "title": "Bill and Account Collectors",
+   "task_id": "2474",
+   "text": "Record information about financial status of customers and status of collection efforts.",
+   "label": 0
+  },
+  {
+   "cat": "customer_service",
+   "code": "43-2099.00",
+   "title": "Communications Equipment Operators, All Other",
+   "task_id": "20429",
+   "text": "Perform administrative tasks, such as accepting orders, scheduling appointments or meeting rooms, or sending and receiving faxes.",
+   "label": 1
+  },
+  {
+   "cat": "customer_service",
+   "code": "43-4081.00",
+   "title": "Hotel, Motel, and Resort Desk Clerks",
+   "task_id": "18567",
+   "text": "Answer inquiries pertaining to hotel services, guest registration, and travel directions, or make recommendations regarding shopping, dining, or entertainment.",
+   "label": 1
+  },
+  {
+   "cat": "customer_service",
+   "code": "43-4199.00",
+   "title": "Information and Record Clerks, All Other",
+   "task_id": "744",
+   "text": "Operate telephone switchboard to answer, screen, or forward calls, providing information, taking messages, or scheduling appointments.",
+   "label": 1
+  },
+  {
+   "cat": "customer_service",
+   "code": "41-2031.00",
+   "title": "Retail Salespersons",
+   "task_id": "702",
+   "text": "Describe merchandise and explain use, operation, and care of merchandise to customers.",
+   "label": 1
+  },
+  {
+   "cat": "customer_service",
+   "code": "41-2031.00",
+   "title": "Retail Salespersons",
+   "task_id": "701",
+   "text": "Answer questions regarding the store and its merchandise.",
+   "label": 1
+  },
+  {
+   "cat": "customer_service",
+   "code": "43-9199.00",
+   "title": "Office and Administrative Support Workers, All Other",
+   "task_id": "834",
+   "text": "Review files, records, and other documents to obtain information to respond to requests.",
+   "label": 1
+  },
+  {
+   "cat": "customer_service",
+   "code": "43-4041.00",
+   "title": "Credit Authorizers, Checkers, and Clerks",
+   "task_id": "23306",
+   "text": "Relay credit report information to subscribers by mail or by telephone.",
+   "label": 1
+  },
+  {
+   "cat": "customer_service",
+   "code": "43-4199.00",
+   "title": "Information and Record Clerks, All Other",
+   "task_id": "752",
+   "text": "Analyze data to determine answers to questions from customers or members of the public.",
+   "label": 1
+  },
+  {
+   "cat": "customer_service",
+   "code": "43-4199.00",
+   "title": "Information and Record Clerks, All Other",
+   "task_id": "748",
+   "text": "Hear and resolve complaints from customers or the public.",
+   "label": 1
+  },
+  {
+   "cat": "customer_service",
+   "code": "43-9061.00",
+   "title": "Office Clerks, General",
+   "task_id": "826",
+   "text": "Communicate with customers, employees, and other individuals to answer questions, disseminate or explain information, take orders, and address complaints.",
+   "label": 1
+  },
+  {
+   "cat": "customer_service",
+   "code": "15-1232.00",
+   "title": "Computer User Support Specialists",
+   "task_id": "1282",
+   "text": "Answer user inquiries regarding computer software or hardware operation to resolve problems.",
+   "label": 1
+  },
+  {
+   "cat": "customer_service",
+   "code": "43-9199.00",
+   "title": "Office and Administrative Support Workers, All Other",
+   "task_id": "826",
+   "text": "Communicate with customers, employees, and other individuals to answer questions, disseminate or explain information, take orders, and address complaints.",
+   "label": 1
+  },
+  {
+   "cat": "data_analytics",
+   "code": "15-2099.00",
+   "title": "Mathematical Science Occupations, All Other",
+   "task_id": "17721",
+   "text": "Conduct quality analyses of data inputs and resulting analyses or predictions.",
+   "label": 1
+  },
+  {
+   "cat": "data_analytics",
+   "code": "13-2099.01",
+   "title": "Financial Quantitative Analysts",
+   "task_id": "15997",
+   "text": "Apply mathematical or statistical techniques to address practical issues in finance, such as derivative valuation, securities trading, risk management, or financial market regulation.",
+   "label": 1
+  },
+  {
+   "cat": "data_analytics",
+   "code": "13-2054.00",
+   "title": "Financial Risk Specialists",
+   "task_id": "21623",
+   "text": "Inform financial decisions by analyzing financial information to forecast business, industry, or economic conditions.",
+   "label": 1
+  },
+  {
+   "cat": "data_analytics",
+   "code": "19-2099.01",
+   "title": "Remote Sensing Scientists and Technologists",
+   "task_id": "18265",
+   "text": "Compile and format image data to increase its usefulness.",
+   "label": 1
+  },
+  {
+   "cat": "data_analytics",
+   "code": "29-1221.00",
+   "title": "Pediatricians, General",
+   "task_id": "7822",
+   "text": "Collect, record, and maintain patient information, such as medical history, reports, or examination results.",
+   "label": 0
+  },
+  {
+   "cat": "data_analytics",
+   "code": "29-1071.00",
+   "title": "Physician Assistants",
+   "task_id": "4074",
+   "text": "Interpret diagnostic test results for deviations from normal.",
+   "label": 0
+  },
+  {
+   "cat": "data_analytics",
+   "code": "19-4031.00",
+   "title": "Chemical Technicians",
+   "task_id": "1542",
+   "text": "Write technical reports or prepare graphs or charts to document experimental results.",
+   "label": 1
+  },
+  {
+   "cat": "data_analytics",
+   "code": "13-2041.00",
+   "title": "Credit Analysts",
+   "task_id": "1250",
+   "text": "Analyze credit data and financial statements to determine the degree of risk involved in extending credit or lending money.",
+   "label": 1
+  },
+  {
+   "cat": "data_analytics",
+   "code": "19-3041.00",
+   "title": "Sociologists",
+   "task_id": "5465",
+   "text": "Analyze and interpret data to increase the understanding of human social behavior.",
+   "label": 1
+  },
+  {
+   "cat": "data_analytics",
+   "code": "17-2031.00",
+   "title": "Bioengineers and Biomedical Engineers",
+   "task_id": "21856",
+   "text": "Prepare technical reports, data summary documents, or research articles for scientific publication, regulatory submissions, or patent applications.",
+   "label": 1
+  },
+  {
+   "cat": "data_analytics",
+   "code": "19-1029.00",
+   "title": "Biological Scientists, All Other",
+   "task_id": "16787",
+   "text": "Develop data models and databases.",
+   "label": 0
+  },
+  {
+   "cat": "data_analytics",
+   "code": "19-4042.00",
+   "title": "Environmental Science and Protection Technicians, Including Health",
+   "task_id": "1549",
+   "text": "Record test data and prepare reports, summaries, or charts that interpret test results.",
+   "label": 1
+  },
+  {
+   "cat": "data_analytics",
+   "code": "19-4031.00",
+   "title": "Chemical Technicians",
+   "task_id": "1538",
+   "text": "Compile and interpret results of tests and analyses.",
+   "label": 1
+  },
+  {
+   "cat": "data_analytics",
+   "code": "29-1215.00",
+   "title": "Family Medicine Physicians",
+   "task_id": "7774",
+   "text": "Collect, record, and maintain patient information, such as medical history, reports, or examination results.",
+   "label": 0
+  },
+  {
+   "cat": "data_analytics",
+   "code": "13-2099.01",
+   "title": "Financial Quantitative Analysts",
+   "task_id": "15989",
+   "text": "Interpret results of financial analysis procedures.",
+   "label": 1
+  },
+  {
+   "cat": "finance_ops",
+   "code": "11-3031.01",
+   "title": "Treasurers and Controllers",
+   "task_id": "8856",
+   "text": "Prepare or direct preparation of financial statements, business activity reports, financial position forecasts, annual budgets, or reports required by regulatory agencies.",
+   "label": 1
+  },
+  {
+   "cat": "finance_ops",
+   "code": "43-3031.00",
+   "title": "Bookkeeping, Accounting, and Auditing Clerks",
+   "task_id": "2490",
+   "text": "Classify, record, and summarize numerical and financial data to compile and keep financial records, using journals and ledgers or computers.",
+   "label": 1
+  },
+  {
+   "cat": "finance_ops",
+   "code": "13-2071.00",
+   "title": "Credit Counselors",
+   "task_id": "18940",
+   "text": "Maintain or update records of client account activity, including financial transactions, counseling session notes, correspondence, document images, or client inquiries.",
+   "label": 1
+  },
+  {
+   "cat": "finance_ops",
+   "code": "11-9151.00",
+   "title": "Social and Community Service Managers",
+   "task_id": "1128",
+   "text": "Prepare and maintain records and reports, such as budgets, personnel records, or training manuals.",
+   "label": 1
+  },
+  {
+   "cat": "finance_ops",
+   "code": "43-3051.00",
+   "title": "Payroll and Timekeeping Clerks",
+   "task_id": "2523",
+   "text": "Provide information to employees and managers on payroll matters, tax issues, benefit plans, and collective agreement provisions.",
+   "label": 0
+  },
+  {
+   "cat": "finance_ops",
+   "code": "43-3021.00",
+   "title": "Billing and Posting Clerks",
+   "task_id": "23238",
+   "text": "Verify accuracy of billing data and revise any errors.",
+   "label": 1
+  },
+  {
+   "cat": "finance_ops",
+   "code": "13-2011.00",
+   "title": "Accountants and Auditors",
+   "task_id": "21514",
+   "text": "Prepare, examine, or analyze accounting records, financial statements, or other financial reports to assess accuracy, completeness, and conformance to reporting and procedural standards.",
+   "label": 1
+  },
+  {
+   "cat": "finance_ops",
+   "code": "29-1214.00",
+   "title": "Emergency Medicine Physicians",
+   "task_id": "22715",
+   "text": "Analyze records, examination information, or test results to diagnose medical conditions.",
+   "label": 0
+  },
+  {
+   "cat": "finance_ops",
+   "code": "43-3021.00",
+   "title": "Billing and Posting Clerks",
+   "task_id": "23240",
+   "text": "Prepare itemized statements, bills, or invoices and record amounts due for items purchased or services rendered.",
+   "label": 1
+  },
+  {
+   "cat": "finance_ops",
+   "code": "13-2051.00",
+   "title": "Financial and Investment Analysts",
+   "task_id": "21594",
+   "text": "Interpret data on price, yield, stability, future investment-risk trends, economic influences, and other factors affecting investment programs.",
+   "label": 1
+  },
+  {
+   "cat": "finance_ops",
+   "code": "43-3031.00",
+   "title": "Bookkeeping, Accounting, and Auditing Clerks",
+   "task_id": "2507",
+   "text": "Compile budget data and documents, based on estimated revenues and expenses and previous budgets.",
+   "label": 1
+  },
+  {
+   "cat": "finance_ops",
+   "code": "13-1031.00",
+   "title": "Claims Adjusters, Examiners, and Investigators",
+   "task_id": "21417",
+   "text": "Examine claims forms and other records to determine insurance coverage.",
+   "label": 1
+  },
+  {
+   "cat": "finance_ops",
+   "code": "13-2051.00",
+   "title": "Financial and Investment Analysts",
+   "task_id": "21593",
+   "text": "Inform investment decisions by analyzing financial information to forecast business, industry, or economic conditions.",
+   "label": 1
+  },
+  {
+   "cat": "finance_ops",
+   "code": "13-2041.00",
+   "title": "Credit Analysts",
+   "task_id": "1250",
+   "text": "Analyze credit data and financial statements to determine the degree of risk involved in extending credit or lending money.",
+   "label": 1
+  },
+  {
+   "cat": "finance_ops",
+   "code": "13-2051.00",
+   "title": "Financial and Investment Analysts",
+   "task_id": "21598",
+   "text": "Prepare all materials for transactions or execution of deals.",
+   "label": 1
+  },
+  {
+   "cat": "general_assistant",
+   "code": "27-4031.00",
+   "title": "Camera Operators, Television, Video, and Film",
+   "task_id": "4031",
+   "text": "Compose and frame each shot, applying the technical aspects of light, lenses, film, filters, and camera settings to achieve the effects sought by directors.",
+   "label": 0
+  },
+  {
+   "cat": "general_assistant",
+   "code": "23-1023.00",
+   "title": "Judges, Magistrate Judges, and Magistrates",
+   "task_id": "5651",
+   "text": "Research legal issues and write opinions on the issues.",
+   "label": 1
+  },
+  {
+   "cat": "general_assistant",
+   "code": "27-3031.00",
+   "title": "Public Relations Specialists",
+   "task_id": "20557",
+   "text": "Prepare or edit organizational publications, such as employee newsletters or stockholders' reports, for internal or external audiences.",
+   "label": 1
+  },
+  {
+   "cat": "general_assistant",
+   "code": "27-3099.00",
+   "title": "Media and Communication Workers, All Other",
+   "task_id": "9328",
+   "text": "Translate messages simultaneously or consecutively into specified languages, orally or by using hand signs, maintaining message content, context, and style as much as possible.",
+   "label": 1
+  },
+  {
+   "cat": "general_assistant",
+   "code": "11-2032.00",
+   "title": "Public Relations Managers",
+   "task_id": "21245",
+   "text": "Write interesting and effective press releases, prepare information for media kits, and develop and maintain company internet or intranet web pages.",
+   "label": 1
+  },
+  {
+   "cat": "general_assistant",
+   "code": "27-3043.00",
+   "title": "Writers and Authors",
+   "task_id": "22657",
+   "text": "Write articles, bulletins, sales letters, speeches, and other related informative, marketing and promotional material.",
+   "label": 1
+  },
+  {
+   "cat": "general_assistant",
+   "code": "11-2032.00",
+   "title": "Public Relations Managers",
+   "task_id": "21232",
+   "text": "Draft speeches for company executives and arrange interviews and other forms of contact for them.",
+   "label": 1
+  },
+  {
+   "cat": "general_assistant",
+   "code": "27-4031.00",
+   "title": "Camera Operators, Television, Video, and Film",
+   "task_id": "18663",
+   "text": "Edit video for broadcast productions, including non-linear editing.",
+   "label": 0
+  },
+  {
+   "cat": "general_assistant",
+   "code": "27-3043.05",
+   "title": "Poets, Lyricists and Creative Writers",
+   "task_id": "11060",
+   "text": "Write humorous material for publication, or for performances such as comedy routines, gags, and comedy shows.",
+   "label": 1
+  },
+  {
+   "cat": "general_assistant",
+   "code": "19-3091.00",
+   "title": "Anthropologists and Archeologists",
+   "task_id": "22234",
+   "text": "Write about and present research findings for a variety of specialized and general audiences.",
+   "label": 1
+  },
+  {
+   "cat": "general_assistant",
+   "code": "23-1023.00",
+   "title": "Judges, Magistrate Judges, and Magistrates",
+   "task_id": "5653",
+   "text": "Write decisions on cases.",
+   "label": 1
+  },
+  {
+   "cat": "general_assistant",
+   "code": "27-3043.05",
+   "title": "Poets, Lyricists and Creative Writers",
+   "task_id": "11055",
+   "text": "Write narrative, dramatic, lyric, or other types of poetry for publication.",
+   "label": 1
+  },
+  {
+   "cat": "general_assistant",
+   "code": "19-3092.00",
+   "title": "Geographers",
+   "task_id": "5504",
+   "text": "Write and present reports of research findings.",
+   "label": 1
+  },
+  {
+   "cat": "general_assistant",
+   "code": "17-3012.00",
+   "title": "Electrical and Electronics Drafters",
+   "task_id": "21969",
+   "text": "Write technical reports and draw charts that display statistics and data.",
+   "label": 1
+  },
+  {
+   "cat": "general_assistant",
+   "code": "27-3031.00",
+   "title": "Public Relations Specialists",
+   "task_id": "20554",
+   "text": "Write press releases or other media communications to promote clients.",
+   "label": 1
+  },
+  {
+   "cat": "healthcare_documentation",
+   "code": "55-3016.00",
+   "title": "Infantry",
+   "task_id": "23053",
+   "text": "Record facts to prepare reports that document incidents and activities.",
+   "label": 0
+  },
+  {
+   "cat": "healthcare_documentation",
+   "code": "19-4099.03",
+   "title": "Remote Sensing Technicians",
+   "task_id": "16983",
+   "text": "Document methods used and write technical reports containing information collected.",
+   "label": 0
+  },
+  {
+   "cat": "healthcare_documentation",
+   "code": "33-3021.00",
+   "title": "Detectives and Criminal Investigators",
+   "task_id": "23029",
+   "text": "Prepare reports that detail investigation findings.",
+   "label": 0
+  },
+  {
+   "cat": "healthcare_documentation",
+   "code": "29-1011.00",
+   "title": "Chiropractors",
+   "task_id": "6918",
+   "text": "Obtain and record patients' medical histories.",
+   "label": 1
+  },
+  {
+   "cat": "healthcare_documentation",
+   "code": "11-9121.00",
+   "title": "Natural Sciences Managers",
+   "task_id": "7208",
+   "text": "Review project activities and prepare and review research, testing, or operational reports.",
+   "label": 0
+  },
+  {
+   "cat": "healthcare_documentation",
+   "code": "13-1041.04",
+   "title": "Government Property Inspectors and Investigators",
+   "task_id": "12891",
+   "text": "Examine records, reports, or other documents to establish facts or detect discrepancies.",
+   "label": 0
+  },
+  {
+   "cat": "healthcare_documentation",
+   "code": "43-3031.00",
+   "title": "Bookkeeping, Accounting, and Auditing Clerks",
+   "task_id": "2487",
+   "text": "Operate computers programmed with accounting software to record, store, and analyze information.",
+   "label": 0
+  },
+  {
+   "cat": "healthcare_documentation",
+   "code": "13-2011.00",
+   "title": "Accountants and Auditors",
+   "task_id": "21505",
+   "text": "Prepare detailed reports on audit findings.",
+   "label": 0
+  },
+  {
+   "cat": "healthcare_documentation",
+   "code": "29-1218.00",
+   "title": "Obstetricians and Gynecologists",
+   "task_id": "7811",
+   "text": "Collect, record, and maintain patient information, such as medical histories, reports, or examination results.",
+   "label": 1
+  },
+  {
+   "cat": "healthcare_documentation",
+   "code": "43-9061.00",
+   "title": "Office Clerks, General",
+   "task_id": "834",
+   "text": "Review files, records, and other documents to obtain information to respond to requests.",
+   "label": 0
+  },
+  {
+   "cat": "healthcare_documentation",
+   "code": "43-9199.00",
+   "title": "Office and Administrative Support Workers, All Other",
+   "task_id": "838",
+   "text": "Process and prepare documents, such as business or government forms and expense reports.",
+   "label": 0
+  },
+  {
+   "cat": "healthcare_documentation",
+   "code": "29-1216.00",
+   "title": "General Internal Medicine Physicians",
+   "task_id": "7791",
+   "text": "Collect, record, and maintain patient information, such as medical history, reports, or examination results.",
+   "label": 1
+  },
+  {
+   "cat": "healthcare_documentation",
+   "code": "43-9199.00",
+   "title": "Office and Administrative Support Workers, All Other",
+   "task_id": "828",
+   "text": "Compile, copy, sort, and file records of office activities, business transactions, and other activities.",
+   "label": 0
+  },
+  {
+   "cat": "healthcare_documentation",
+   "code": "43-9199.00",
+   "title": "Office and Administrative Support Workers, All Other",
+   "task_id": "834",
+   "text": "Review files, records, and other documents to obtain information to respond to requests.",
+   "label": 0
+  },
+  {
+   "cat": "healthcare_documentation",
+   "code": "11-3031.01",
+   "title": "Treasurers and Controllers",
+   "task_id": "8856",
+   "text": "Prepare or direct preparation of financial statements, business activity reports, financial position forecasts, annual budgets, or reports required by regulatory agencies.",
+   "label": 0
+  },
+  {
+   "cat": "hr_people",
+   "code": "11-9151.00",
+   "title": "Social and Community Service Managers",
+   "task_id": "1128",
+   "text": "Prepare and maintain records and reports, such as budgets, personnel records, or training manuals.",
+   "label": 1
+  },
+  {
+   "cat": "hr_people",
+   "code": "43-4061.00",
+   "title": "Eligibility Interviewers, Government Programs",
+   "task_id": "9732",
+   "text": "Answer applicants' questions about benefits and claim procedures.",
+   "label": 0
+  },
+  {
+   "cat": "hr_people",
+   "code": "43-3051.00",
+   "title": "Payroll and Timekeeping Clerks",
+   "task_id": "2523",
+   "text": "Provide information to employees and managers on payroll matters, tax issues, benefit plans, and collective agreement provisions.",
+   "label": 1
+  },
+  {
+   "cat": "it_service",
+   "code": "15-1244.00",
+   "title": "Network and Computer Systems Administrators",
+   "task_id": "15205",
+   "text": "Diagnose, troubleshoot, and resolve hardware, software, or other network and system problems, and replace defective components when necessary.",
+   "label": 1
+  },
+  {
+   "cat": "it_service",
+   "code": "15-1244.00",
+   "title": "Network and Computer Systems Administrators",
+   "task_id": "15208",
+   "text": "Implement and provide technical support for voice services and equipment, such as private branch exchange, voice mail system, and telecom system.",
+   "label": 0
+  },
+  {
+   "cat": "it_service",
+   "code": "15-1231.00",
+   "title": "Computer Network Support Specialists",
+   "task_id": "19007",
+   "text": "Document help desk requests and resolutions.",
+   "label": 1
+  },
+  {
+   "cat": "legal",
+   "code": "27-3091.00",
+   "title": "Interpreters and Translators",
+   "task_id": "9331",
+   "text": "Read written materials, such as legal documents, scientific works, or news reports, and rewrite material into specified languages.",
+   "label": 0
+  },
+  {
+   "cat": "legal",
+   "code": "23-1011.00",
+   "title": "Lawyers",
+   "task_id": "3774",
+   "text": "Interpret laws, rulings and regulations for individuals and businesses.",
+   "label": 1
+  },
+  {
+   "cat": "legal",
+   "code": "23-1023.00",
+   "title": "Judges, Magistrate Judges, and Magistrates",
+   "task_id": "5651",
+   "text": "Research legal issues and write opinions on the issues.",
+   "label": 1
+  },
+  {
+   "cat": "legal",
+   "code": "23-1012.00",
+   "title": "Judicial Law Clerks",
+   "task_id": "19050",
+   "text": "Prepare briefs, legal memoranda, or statements of issues involved in cases, including appropriate suggestions or recommendations.",
+   "label": 1
+  },
+  {
+   "cat": "legal",
+   "code": "23-1021.00",
+   "title": "Administrative Law Judges, Adjudicators, and Hearing Officers",
+   "task_id": "7619",
+   "text": "Research and analyze laws, regulations, policies, and precedent decisions to prepare for hearings and to determine conclusions.",
+   "label": 1
+  },
+  {
+   "cat": "legal",
+   "code": "23-2011.00",
+   "title": "Paralegals and Legal Assistants",
+   "task_id": "1636",
+   "text": "Gather and analyze research data, such as statutes, decisions, and legal articles, codes, and documents.",
+   "label": 1
+  },
+  {
+   "cat": "legal",
+   "code": "27-3099.00",
+   "title": "Media and Communication Workers, All Other",
+   "task_id": "9331",
+   "text": "Read written materials, such as legal documents, scientific works, or news reports, and rewrite material into specified languages.",
+   "label": 0
+  },
+  {
+   "cat": "legal",
+   "code": "23-1023.00",
+   "title": "Judges, Magistrate Judges, and Magistrates",
+   "task_id": "5653",
+   "text": "Write decisions on cases.",
+   "label": 1
+  },
+  {
+   "cat": "personal_assistant",
+   "code": "39-6012.00",
+   "title": "Concierges",
+   "task_id": "4530",
+   "text": "Make travel arrangements for sightseeing or other tours.",
+   "label": 1
+  },
+  {
+   "cat": "personal_assistant",
+   "code": "21-1012.00",
+   "title": "Educational, Guidance, and Career Counselors and Advisors",
+   "task_id": "18627",
+   "text": "Counsel students regarding educational issues, such as course and program selection, class scheduling and registration, school adjustment, truancy, study habits, and career planning.",
+   "label": 0
+  },
+  {
+   "cat": "personal_assistant",
+   "code": "43-6013.00",
+   "title": "Medical Secretaries and Administrative Assistants",
+   "task_id": "777",
+   "text": "Answer telephones and direct calls to appropriate staff.",
+   "label": 1
+  },
+  {
+   "cat": "personal_assistant",
+   "code": "43-6013.00",
+   "title": "Medical Secretaries and Administrative Assistants",
+   "task_id": "776",
+   "text": "Compile and record medical charts, reports, or correspondence, using typewriter or personal computer.",
+   "label": 1
+  },
+  {
+   "cat": "personal_assistant",
+   "code": "43-6013.00",
+   "title": "Medical Secretaries and Administrative Assistants",
+   "task_id": "775",
+   "text": "Schedule and confirm patient diagnostic appointments, surgeries, or medical consultations.",
+   "label": 1
+  },
+  {
+   "cat": "personal_assistant",
+   "code": "43-6013.00",
+   "title": "Medical Secretaries and Administrative Assistants",
+   "task_id": "789",
+   "text": "Prepare correspondence or assist physicians or medical scientists with preparation of reports, speeches, articles, or conference proceedings.",
+   "label": 1
+  },
+  {
+   "cat": "personal_assistant",
+   "code": "21-1019.00",
+   "title": "Counselors, All Other",
+   "task_id": "18627",
+   "text": "Counsel students regarding educational issues, such as course and program selection, class scheduling and registration, school adjustment, truancy, study habits, and career planning.",
+   "label": 0
+  },
+  {
+   "cat": "research_knowledge",
+   "code": "19-3041.00",
+   "title": "Sociologists",
+   "task_id": "5467",
+   "text": "Collect data about the attitudes, values, and behaviors of people in groups, using observation, interviews, and review of documents.",
+   "label": 0
+  },
+  {
+   "cat": "research_knowledge",
+   "code": "25-1011.00",
+   "title": "Business Teachers, Postsecondary",
+   "task_id": "5670",
+   "text": "Keep abreast of developments in the field by reading current literature, talking with colleagues, and participating in professional organizations and conferences.",
+   "label": 1
+  },
+  {
+   "cat": "research_knowledge",
+   "code": "25-1065.00",
+   "title": "Political Science Teachers, Postsecondary",
+   "task_id": "6036",
+   "text": "Keep abreast of developments in the field by reading current literature, talking with colleagues, and participating in professional conferences.",
+   "label": 1
+  },
+  {
+   "cat": "research_knowledge",
+   "code": "25-1066.00",
+   "title": "Psychology Teachers, Postsecondary",
+   "task_id": "6057",
+   "text": "Keep abreast of developments in the field by reading current literature, talking with colleagues, and participating in professional conferences.",
+   "label": 1
+  },
+  {
+   "cat": "research_knowledge",
+   "code": "25-1042.00",
+   "title": "Biological Science Teachers, Postsecondary",
+   "task_id": "5804",
+   "text": "Keep abreast of developments in the field by reading current literature, talking with colleagues, and participating in professional conferences.",
+   "label": 1
+  },
+  {
+   "cat": "research_knowledge",
+   "code": "25-1069.00",
+   "title": "Social Sciences Teachers, Postsecondary, All Other",
+   "task_id": "6036",
+   "text": "Keep abreast of developments in the field by reading current literature, talking with colleagues, and participating in professional conferences.",
+   "label": 1
+  },
+  {
+   "cat": "research_knowledge",
+   "code": "25-1042.00",
+   "title": "Biological Science Teachers, Postsecondary",
+   "task_id": "20064",
+   "text": "Review papers for publication in journals.",
+   "label": 1
+  },
+  {
+   "cat": "research_knowledge",
+   "code": "25-1065.00",
+   "title": "Political Science Teachers, Postsecondary",
+   "task_id": "6042",
+   "text": "Conduct research in a particular field of knowledge and publish findings in professional journals, books, or electronic media.",
+   "label": 1
+  },
+  {
+   "cat": "research_knowledge",
+   "code": "25-1067.00",
+   "title": "Sociology Teachers, Postsecondary",
+   "task_id": "6087",
+   "text": "Conduct research in a particular field of knowledge and publish findings in professional journals, books, or electronic media.",
+   "label": 1
+  },
+  {
+   "cat": "research_knowledge",
+   "code": "25-1112.00",
+   "title": "Law Teachers, Postsecondary",
+   "task_id": "6223",
+   "text": "Conduct research in a particular field of knowledge and publish findings in professional journals, books, or electronic media.",
+   "label": 1
+  },
+  {
+   "cat": "research_knowledge",
+   "code": "25-1041.00",
+   "title": "Agricultural Sciences Teachers, Postsecondary",
+   "task_id": "5781",
+   "text": "Conduct research in a particular field of knowledge and publish findings in professional journals, books, or electronic media.",
+   "label": 1
+  },
+  {
+   "cat": "research_knowledge",
+   "code": "25-1064.00",
+   "title": "Geography Teachers, Postsecondary",
+   "task_id": "6017",
+   "text": "Conduct research in a particular field of knowledge and publish findings in professional journals, books, or electronic media.",
+   "label": 1
+  },
+  {
+   "cat": "research_knowledge",
+   "code": "25-1063.00",
+   "title": "Economics Teachers, Postsecondary",
+   "task_id": "5994",
+   "text": "Conduct research in a particular field of knowledge and publish findings in professional journals, books, or electronic media.",
+   "label": 1
+  },
+  {
+   "cat": "research_knowledge",
+   "code": "25-1032.00",
+   "title": "Engineering Teachers, Postsecondary",
+   "task_id": "5754",
+   "text": "Keep abreast of developments in the field by reading current literature, talking with colleagues, and participating in professional conferences.",
+   "label": 1
+  },
+  {
+   "cat": "research_knowledge",
+   "code": "25-1063.00",
+   "title": "Economics Teachers, Postsecondary",
+   "task_id": "5988",
+   "text": "Keep abreast of developments in the field by reading current literature, talking with colleagues, and participating in professional conferences.",
+   "label": 1
+  },
+  {
+   "cat": "sales_marketing",
+   "code": "27-3043.00",
+   "title": "Writers and Authors",
+   "task_id": "22656",
+   "text": "Develop advertising campaigns for a wide range of clients, working with an advertising agency's creative director and art director to determine the best way to present advertising information.",
+   "label": 1
+  },
+  {
+   "cat": "sales_marketing",
+   "code": "13-1161.00",
+   "title": "Market Research Analysts and Marketing Specialists",
+   "task_id": "5439",
+   "text": "Conduct research on consumer opinions and marketing strategies, collaborating with marketing professionals, statisticians, pollsters, and other professionals.",
+   "label": 1
+  },
+  {
+   "cat": "sales_marketing",
+   "code": "11-2011.00",
+   "title": "Advertising and Promotions Managers",
+   "task_id": "3238",
+   "text": "Plan and execute advertising policies and strategies for organizations.",
+   "label": 1
+  },
+  {
+   "cat": "sales_marketing",
+   "code": "13-1161.01",
+   "title": "Search Marketing Strategists",
+   "task_id": "20326",
+   "text": "Identify appropriate Key Performance Indicators (KPIs) and report key metrics from digital campaigns.",
+   "label": 1
+  },
+  {
+   "cat": "sales_marketing",
+   "code": "41-3091.00",
+   "title": "Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",
+   "task_id": "23228",
+   "text": "Develop sales presentations or proposals to explain service specifications.",
+   "label": 1
+  },
+  {
+   "cat": "sales_marketing",
+   "code": "13-1161.01",
+   "title": "Search Marketing Strategists",
+   "task_id": "16191",
+   "text": "Conduct online marketing initiatives, such as paid ad placement, affiliate programs, sponsorship programs, email promotions, or viral marketing campaigns on social media Web sites.",
+   "label": 1
+  },
+  {
+   "cat": "sales_marketing",
+   "code": "41-4012.00",
+   "title": "Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products",
+   "task_id": "8115",
+   "text": "Contact regular and prospective customers to demonstrate products, explain product features, and solicit orders.",
+   "label": 1
+  },
+  {
+   "cat": "sales_marketing",
+   "code": "41-4012.00",
+   "title": "Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products",
+   "task_id": "8116",
+   "text": "Estimate or quote prices, credit or contract terms, warranties, and delivery dates.",
+   "label": 1
+  },
+  {
+   "cat": "sales_marketing",
+   "code": "13-1161.00",
+   "title": "Market Research Analysts and Marketing Specialists",
+   "task_id": "5433",
+   "text": "Collect and analyze data on customer demographics, preferences, needs, and buying habits to identify potential markets and factors affecting product demand.",
+   "label": 1
+  },
+  {
+   "cat": "sales_marketing",
+   "code": "19-3011.00",
+   "title": "Economists",
+   "task_id": "7538",
+   "text": "Compile, analyze, and report data to explain economic phenomena and forecast market trends, applying mathematical models and statistical techniques.",
+   "label": 0
+  },
+  {
+   "cat": "sales_marketing",
+   "code": "43-4051.00",
+   "title": "Customer Service Representatives",
+   "task_id": "18565",
+   "text": "Confer with customers by telephone or in person to provide information about products or services, take or enter orders, cancel accounts, or obtain details of complaints.",
+   "label": 1
+  },
+  {
+   "cat": "sales_marketing",
+   "code": "41-3091.00",
+   "title": "Sales Representatives of Services, Except Advertising, Insurance, Financial Services, and Travel",
+   "task_id": "23231",
+   "text": "Identify prospective customers using business directories, leads from clients, or information from conferences or trade shows.",
+   "label": 1
+  },
+  {
+   "cat": "sales_marketing",
+   "code": "13-1161.01",
+   "title": "Search Marketing Strategists",
+   "task_id": "16186",
+   "text": "Conduct market research analysis to identify search query trends, real-time search and news media activity, popular social media topics, electronic commerce trends, market opportunities, or competitor performance.",
+   "label": 1
+  },
+  {
+   "cat": "sales_marketing",
+   "code": "27-3043.00",
+   "title": "Writers and Authors",
+   "task_id": "22659",
+   "text": "Invent names for products and write the slogans that appear on packaging, brochures and other promotional material.",
+   "label": 1
+  },
+  {
+   "cat": "sales_marketing",
+   "code": "11-2011.00",
+   "title": "Advertising and Promotions Managers",
+   "task_id": "3233",
+   "text": "Monitor and analyze sales promotion results to determine cost effectiveness of promotion campaigns.",
+   "label": 1
+  },
+  {
+   "cat": "software_engineering",
+   "code": "15-1242.00",
+   "title": "Database Administrators",
+   "task_id": "1300",
+   "text": "Test programs or databases, correct errors, and make necessary modifications.",
+   "label": 1
+  },
+  {
+   "cat": "software_engineering",
+   "code": "15-1251.00",
+   "title": "Computer Programmers",
+   "task_id": "1272",
+   "text": "Perform or direct revision, repair, or expansion of existing programs to increase operating efficiency or adapt to new requirements.",
+   "label": 1
+  },
+  {
+   "cat": "software_engineering",
+   "code": "15-1253.00",
+   "title": "Software Quality Assurance Analysts and Testers",
+   "task_id": "14653",
+   "text": "Provide feedback and recommendations to developers on software usability and functionality.",
+   "label": 0
+  },
+  {
+   "cat": "software_engineering",
+   "code": "15-1299.01",
+   "title": "Web Administrators",
+   "task_id": "14759",
+   "text": "Develop or document style guidelines for Web site content.",
+   "label": 0
+  },
+  {
+   "cat": "software_engineering",
+   "code": "15-1254.00",
+   "title": "Web Developers",
+   "task_id": "14707",
+   "text": "Write supporting code for Web applications or Web sites.",
+   "label": 1
+  },
+  {
+   "cat": "software_engineering",
+   "code": "15-1221.00",
+   "title": "Computer and Information Research Scientists",
+   "task_id": "14623",
+   "text": "Analyze problems to develop solutions involving computer hardware and software.",
+   "label": 0
+  },
+  {
+   "cat": "software_engineering",
+   "code": "15-2051.02",
+   "title": "Clinical Data Managers",
+   "task_id": "16266",
+   "text": "Read technical literature and participate in continuing education or professional associations to maintain awareness of current database technology and best practices.",
+   "label": 0
+  },
+  {
+   "cat": "software_engineering",
+   "code": "15-1255.00",
+   "title": "Web and Digital Interface Designers",
+   "task_id": "21692",
+   "text": "Design, build, or maintain Web sites, using authoring or scripting languages, content creation tools, management tools, and digital media.",
+   "label": 1
+  },
+  {
+   "cat": "software_engineering",
+   "code": "15-1254.00",
+   "title": "Web Developers",
+   "task_id": "14714",
+   "text": "Develop or implement procedures for ongoing Web site revision.",
+   "label": 0
+  },
+  {
+   "cat": "software_engineering",
+   "code": "15-1255.00",
+   "title": "Web and Digital Interface Designers",
+   "task_id": "21693",
+   "text": "Develop and document style guidelines for Web site content.",
+   "label": 0
+  },
+  {
+   "cat": "software_engineering",
+   "code": "15-1243.00",
+   "title": "Database Architects",
+   "task_id": "16110",
+   "text": "Design database applications, such as interfaces, data transfer mechanisms, global temporary tables, data partitions, and function-based indexes to enable efficient access of the generic database structure.",
+   "label": 1
+  },
+  {
+   "cat": "software_engineering",
+   "code": "15-2099.00",
+   "title": "Mathematical Science Occupations, All Other",
+   "task_id": "17715",
+   "text": "Extend existing software programs, web-based interactive tools, or database queries as sequence management and analysis needs evolve.",
+   "label": 1
+  },
+  {
+   "cat": "software_engineering",
+   "code": "15-1243.00",
+   "title": "Database Architects",
+   "task_id": "21657",
+   "text": "Test programs or databases, correct errors, and make necessary modifications.",
+   "label": 1
+  },
+  {
+   "cat": "software_engineering",
+   "code": "19-1029.01",
+   "title": "Bioinformatics Scientists",
+   "task_id": "16787",
+   "text": "Develop data models and databases.",
+   "label": 1
+  },
+  {
+   "cat": "software_engineering",
+   "code": "15-1254.00",
+   "title": "Web Developers",
+   "task_id": "14694",
+   "text": "Design, build, or maintain Web sites, using authoring or scripting languages, content creation tools, management tools, and digital media.",
+   "label": 1
+  },
+  {
+   "cat": "workflow_automation",
+   "code": "11-9121.01",
+   "title": "Clinical Research Coordinators",
+   "task_id": "15609",
+   "text": "Code, evaluate, or interpret collected study data.",
+   "label": 1
+  },
+  {
+   "cat": "workflow_automation",
+   "code": "29-9021.00",
+   "title": "Health Information Technologists and Medical Registrars",
+   "task_id": "22909",
+   "text": "Write or maintain archived procedures, procedural codes, or queries for applications.",
+   "label": 1
+  },
+  {
+   "cat": "workflow_automation",
+   "code": "19-4061.00",
+   "title": "Social Science Research Assistants",
+   "task_id": "12952",
+   "text": "Prepare, manipulate, and manage extensive databases.",
+   "label": 1
+  },
+  {
+   "cat": "workflow_automation",
+   "code": "43-9111.00",
+   "title": "Statistical Assistants",
+   "task_id": "9798",
+   "text": "Code data prior to computer entry, using lists of codes.",
+   "label": 1
+  },
+  {
+   "cat": "workflow_automation",
+   "code": "31-9094.00",
+   "title": "Medical Transcriptionists",
+   "task_id": "9413",
+   "text": "Transcribe dictation for a variety of medical reports, such as patient histories, physical examinations, emergency room visits, operations, chart reviews, consultation, or discharge summaries.",
+   "label": 1
+  },
+  {
+   "cat": "workflow_automation",
+   "code": "23-2099.00",
+   "title": "Legal Support Workers, All Other",
+   "task_id": "9244",
+   "text": "Prepare real estate closing statements, using knowledge and expertise in real estate procedures.",
+   "label": 1
+  },
+  {
+   "cat": "workflow_automation",
+   "code": "13-2011.00",
+   "title": "Accountants and Auditors",
+   "task_id": "21513",
+   "text": "Examine records and interview workers to ensure recording of transactions and compliance with laws and regulations.",
+   "label": 1
+  },
+  {
+   "cat": "workflow_automation",
+   "code": "29-9021.00",
+   "title": "Health Information Technologists and Medical Registrars",
+   "task_id": "22904",
+   "text": "Prepare statistical reports, narrative reports, or graphic presentations of information, such as tumor registry data for use by hospital staff, researchers, or other users.",
+   "label": 1
+  },
+  {
+   "cat": "workflow_automation",
+   "code": "25-4011.00",
+   "title": "Archivists",
+   "task_id": "7630",
+   "text": "Create and maintain accessible, retrievable computer archives and databases, incorporating current advances in electronic information storage technology.",
+   "label": 1
+  },
+  {
+   "cat": "workflow_automation",
+   "code": "29-9021.00",
+   "title": "Health Information Technologists and Medical Registrars",
+   "task_id": "22900",
+   "text": "Identify, compile, abstract, and code patient data, using standard classification systems.",
+   "label": 1
+  },
+  {
+   "cat": "workflow_automation",
+   "code": "43-9041.00",
+   "title": "Insurance Claims and Policy Processing Clerks",
+   "task_id": "23319",
+   "text": "Process and record new insurance policies and claims.",
+   "label": 1
+  },
+  {
+   "cat": "workflow_automation",
+   "code": "19-4061.00",
+   "title": "Social Science Research Assistants",
+   "task_id": "12957",
+   "text": "Prepare tables, graphs, fact sheets, and written reports summarizing research results.",
+   "label": 1
+  },
+  {
+   "cat": "workflow_automation",
+   "code": "13-2099.04",
+   "title": "Fraud Examiners, Investigators and Analysts",
+   "task_id": "16046",
+   "text": "Prepare written reports of investigation findings.",
+   "label": 1
+  },
+  {
+   "cat": "workflow_automation",
+   "code": "31-9094.00",
+   "title": "Medical Transcriptionists",
+   "task_id": "9414",
+   "text": "Review and edit transcribed reports or dictated material for spelling, grammar, clarity, consistency, and proper medical terminology.",
+   "label": 1
+  },
+  {
+   "cat": "workflow_automation",
+   "code": "13-2023.00",
+   "title": "Appraisers and Assessors of Real Estate",
+   "task_id": "21550",
+   "text": "Prepare written reports that estimate property values, outline methods by which the estimations were made, and meet appraisal standards.",
+   "label": 1
+  }
+ ]
+}

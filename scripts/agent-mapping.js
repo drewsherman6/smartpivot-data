@@ -16,7 +16,7 @@ const C = require('./catalog');
 const THRESHOLD = 0.05;
 const CONF = { high: 0, medium: 1, low: 2 };
 const r3 = (x) => Math.round(x * 1000) / 1000;
-const METHOD = 'Task-weighted keyword overlap between platform categories (scripts/catalog.js categoryPatterns) and O*NET task statements + Detailed Work Activities (+ technology categories), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.';
+const METHOD = 'Task-weighted capability match: a task links to a verified platform category only when the O*NET task statement names an action the category documents (scripts/catalog.js capabilityRules include/exclude; audited precision in docs/AI_LINK_AUDIT.md) (+ technology categories bonus via legacy categoryPatterns), times (0.5 + 0.5*AI exposure composite). Generic categories down-weighted (catalog.genericCategories). Listed when matched tasks (excluding the technology bonus) are >= 0.05 of task time; relevance high >= 0.30, medium >= 0.15, else low. Derived heuristic; see README.';
 
 exports.mapAgents = (occs, onetGet, sources) => {
   const dwa = new Map();
@@ -34,7 +34,9 @@ exports.mapAgents = (occs, onetGet, sources) => {
     const catScore = {}; const catTasks = {}; const catIds = {}; const taskOnly = {};
     for (const c of cats) {
       const re = C.categoryPatterns[c];
-      const hits = o.tasks.filter((t) => re.test((t.text + ' ' + (dwa.get((t.source_code || o.code) + '|' + t.id) || '')).toLowerCase()));
+      // Evidence-based rule (catalog.capabilityRules): the task statement itself must name an action the category's documented
+      // capability performs. DWA titles are no longer used for linkage (generic DWA wording caused most false positives; docs/AI_LINK_AUDIT.md).
+      const hits = o.tasks.filter((t) => C.capabilityMatch(c, t.text));
       taskOnly[c] = hits.reduce((s, t) => s + w(t), 0);
       catScore[c] = Math.min(1, taskOnly[c] + (re.test(techText) ? 0.05 : 0));
       const sorted = hits.sort((a, b) => w(b) - w(a)); catTasks[c] = sorted.slice(0, 3).map((t) => ({ id: t.id, text: t.text })); catIds[c] = sorted.map((t) => String(t.id));
@@ -52,8 +54,15 @@ exports.mapAgents = (occs, onetGet, sources) => {
     }
     list.sort((a, b) => b.score - a.score || CONF[a.confidence] - CONF[b.confidence] || a.name.localeCompare(b.name));
     list.forEach((x) => delete x.confidence);
-    o.agents = { platforms: list.slice(0, 12), platform_count: list.length, category_scores: Object.fromEntries(cats.map((c) => [c, r3(catScore[c])])), method: METHOD };
-    byOcc.push({ code: o.code, title: o.title, platforms: list.slice(0, 12).map(({ id, name, score, category, relevance }) => ({ id, name, score, category, relevance })) });
+    // Top 12, but first the best platform of every category that has matched tasks, so a job's matched work is not cut off by the
+    // cap when one category's products outrank another's (e.g. sales agents crowding out customer-service agents for 43-4051.00).
+    const top = []; const seenCat = new Set();
+    for (const x of list) if (x.relevance !== 'low' && !seenCat.has(x.category)) { seenCat.add(x.category); top.push(x); }
+    for (const x of list) { if (top.length >= 12) break; if (!top.includes(x)) top.push(x); }
+    const rank = new Map(list.map((x, i) => [x, i])); top.sort((a, b) => rank.get(a) - rank.get(b));
+    const shown = top.slice(0, Math.max(12, seenCat.size));
+    o.agents = { platforms: shown, platform_count: list.length, category_scores: Object.fromEntries(cats.map((c) => [c, r3(catScore[c])])), method: METHOD };
+    byOcc.push({ code: o.code, title: o.title, platforms: shown.map(({ id, name, score, category, relevance }) => ({ id, name, score, category, relevance })) });
   }
   for (const p of ap.platforms) {
     const occ = (forward.get(p.id) || []).sort((a, b) => b.score - a.score);
