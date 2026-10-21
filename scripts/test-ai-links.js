@@ -40,6 +40,9 @@ for (const f of fs.readdirSync(path.join(__dirname, '../data/occupations')).filt
       for (const id of p.matched_task_ids) assert.ok(C.capabilityMatch(p.category, T.get(id)), `${o.code} ${p.id} ${id}`);
     }
     const verifiedCats = new Set(ap.platforms.filter((p) => p.status === 'verified').flatMap((p) => p.categories || [p.category]));
+    const tb = o.agents?.targeted_by_category; assert.ok(tb, `${o.code} targeted_by_category`);
+    assert.deepStrictEqual(new Set(o.agents.targeted_task_ids), new Set(Object.values(tb).flat()), `${o.code} targeted union`);
+    for (const c of Object.keys(tb)) assert.ok(verifiedCats.has(c), `${o.code} ${c} has no verified platform`);
     for (const id of o.agents?.targeted_task_ids || []) assert.ok([...verifiedCats].some((c) => C.capabilityMatch(c, T.get(id))), `${o.code} targeted ${id} has no verified capability`);
   }
 assert.ok(n >= 1000);

@@ -2,6 +2,10 @@
 
 Machine-readable history: `data/history/changes.jsonl`. `scripts/update.js` appends entries here automatically.
 
+## 2026-10-21 - agents.targeted_by_category (re-gate on weekly verification)
+- Adds `agents.targeted_by_category` ({category: [task ids]}, categories with >=1 verified platform at build time); `targeted_task_ids` stays (legacy, = union). Consumers must count a category only while a product in it is currently verified in data/agent_platforms.json, so a product failing the weekly check stops counting immediately (app bug: targeted_task_ids ignored the weekly status).
+- Written by scripts/agent-mapping.js; current shards were back-filled with the identical computation (union verified equal to targeted_task_ids for all 1,016 jobs). Tests assert presence, union equality and verified categories.
+
 ## 2026-10-20 - AI-link recall audit and pinned-SHA notify
 - Recall on the final holdout went from 0.407 to 0.833, with task precision 0.900 and link precision 0.852 on an untouched sample. Details are in docs/AI_LINK_AUDIT.md.
 - New categories security_ops and design_creative, plus 9 platforms. Some rules were broadened and others tightened. Adds `agents.targeted_task_ids`.

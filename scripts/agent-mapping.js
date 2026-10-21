@@ -63,8 +63,11 @@ exports.mapAgents = (occs, onetGet, sources) => {
     const shown = top.slice(0, Math.max(12, seenCat.size));
     // Every task matched by any verified platform's capability rule (uncapped, any relevance): the AI side of "work already
     // targeted". Relevance ranks products for a job; it is not evidence about a single task (2026-10-21 recall audit).
-    const targeted = [...new Set(cats.filter((c) => plats.some((p) => (p.categories || [p.category]).includes(c))).flatMap((c) => catIds[c]))];
-    o.agents = { platforms: shown, platform_count: list.length, targeted_task_ids: targeted, category_scores: Object.fromEntries(cats.map((c) => [c, r3(catScore[c])])), method: METHOD };
+    // targeted_by_category keeps the category -> task mapping so consumers can re-gate on the weekly verification status
+    // (a category only counts while at least one of its products is currently verified in agent_platforms.json).
+    const byCat = Object.fromEntries(cats.filter((c) => catIds[c]?.length && plats.some((p) => (p.categories || [p.category]).includes(c))).map((c) => [c, [...catIds[c]]]));
+    const targeted = [...new Set(Object.values(byCat).flat())];
+    o.agents = { platforms: shown, platform_count: list.length, targeted_task_ids: targeted, targeted_by_category: byCat, category_scores: Object.fromEntries(cats.map((c) => [c, r3(catScore[c])])), method: METHOD };
     byOcc.push({ code: o.code, title: o.title, platforms: shown.map(({ id, name, score, category, relevance }) => ({ id, name, score, category, relevance })) });
   }
   for (const p of ap.platforms) {
