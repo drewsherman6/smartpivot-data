@@ -16,3 +16,22 @@
 | **Final holdout: final rule, untouched (`ai_links_holdout_final.json`)** | 63 | **0.825 (out-of-sample)** | n/a | n/a |
 
 The honest estimate of current precision is the final holdout: **about 82%**, up from 57%. The remaining errors are mostly generic document or report tasks matched to a specialised category, for example compliance reports linked to legal research tools.
+
+## Recall audit (2026-10-20)
+
+The strict rule (79bfbb0) dropped some jobs to 0%: Information Security Analysts, Desktop Publishers, Sales Engineers, and Registered Nurses (0.3%). Measured on stratified task holdouts (label 1 = a verified product documents a capability that performs the task):
+
+| Holdout | keyword (3d314f3) | strict (79bfbb0) | this change (`agents.targeted_task_ids`) |
+|---|---|---|---|
+| tuning, 125 tasks (`ai_recall_holdout.json`, seed 101) | R 0.607 / P 0.552 | R 0.328 / P 0.870 | R 0.967 / P 0.937 |
+| final, 89 tasks, not tuned on (`ai_recall_holdout_final.json`, seed 202) | R 0.648 / P 0.673 | R 0.407 / P 0.880 | R 0.833 / P 0.900 |
+
+Link-level precision of the links this change adds: 0.656 (seed 303) and then 0.794 (seed 404) out of sample, both measured before rules were tightened on them. The final untouched sample (`ai_links_holdout_final2.json`, seed 505, 54 links) scores **0.852**.
+
+Changes:
+- New categories **security_ops** (Microsoft Security Copilot, CrowdStrike Charlotte AI, Google Security Operations) and **design_creative** (Figma AI, Canva AI; Canva's homepage is currently unreachable, so it is not counted).
+- New platforms Responsive AI (RFP response), Microsoft Dragon Copilot (including the nurses page), and Suki.
+- Rules broadened only where vendor pages document the capability: proposals/RFPs, nursing symptom/vitals/progress documentation and dictation, reports/lesson plans/materials, clerical workflow, customer information, and data synthesis. More excludes were added, e.g. securities and price quotes, public records, and genomic regulation.
+- `agents.targeted_task_ids` is the uncapped union of tasks matched by any category that has a verified platform. The app uses it for "work already targeted" instead of only the top-12 high/medium platforms.
+
+Movers in "work already targeted": Desktop Publishers 0 → 0.553, Information Security Analysts 0 → 0.463, Online Merchants 0.042 → 0.306, Network/Systems Admins 0.022 → 0.277, Sales Engineers 0 → 0.152, Registered Nurses 0.003 → 0.112. The mean across 1,016 jobs went from 0.120 to 0.141. **No risk level changed.**

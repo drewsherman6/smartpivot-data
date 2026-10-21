@@ -61,7 +61,10 @@ exports.mapAgents = (occs, onetGet, sources) => {
     for (const x of list) { if (top.length >= 12) break; if (!top.includes(x)) top.push(x); }
     const rank = new Map(list.map((x, i) => [x, i])); top.sort((a, b) => rank.get(a) - rank.get(b));
     const shown = top.slice(0, Math.max(12, seenCat.size));
-    o.agents = { platforms: shown, platform_count: list.length, category_scores: Object.fromEntries(cats.map((c) => [c, r3(catScore[c])])), method: METHOD };
+    // Every task matched by any verified platform's capability rule (uncapped, any relevance): the AI side of "work already
+    // targeted". Relevance ranks products for a job; it is not evidence about a single task (2026-10-21 recall audit).
+    const targeted = [...new Set(cats.filter((c) => plats.some((p) => (p.categories || [p.category]).includes(c))).flatMap((c) => catIds[c]))];
+    o.agents = { platforms: shown, platform_count: list.length, targeted_task_ids: targeted, category_scores: Object.fromEntries(cats.map((c) => [c, r3(catScore[c])])), method: METHOD };
     byOcc.push({ code: o.code, title: o.title, platforms: shown.map(({ id, name, score, category, relevance }) => ({ id, name, score, category, relevance })) });
   }
   for (const p of ap.platforms) {

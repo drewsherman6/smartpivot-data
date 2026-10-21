@@ -440,8 +440,8 @@
       "evidence": {
         "http_status": 200,
         "final_url": "https://bostondynamics.com/",
-        "title": "The World’s Leading Robotics Company | Boston Dynamics",
-        "description": "A leading global robotics company, Boston Dynamics builds practical robotics to tackle your toughest automation challenges and change your idea of what robots can do.",
+        "title": "One moment, please...",
+        "description": null,
         "checked_at": "2026-10-20"
       },
       "robot_exposure_citations": {
@@ -1230,7 +1230,7 @@
       "evidence": {
         "http_status": 200,
         "final_url": "https://www.kuka.com/",
-        "title": "industrial intelligence 4.0_beyond automation | KUKA UK",
+        "title": "industrial intelligence 4.0_beyond automation | KUKA Global",
         "description": "KUKA is one of the world’s leading suppliers of intelligent robotics, plant and systems engineering and is driving digitization in industry.",
         "checked_at": "2026-10-20"
       },

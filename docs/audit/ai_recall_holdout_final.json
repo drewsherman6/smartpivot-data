@@ -1,0 +1,628 @@
+{
+ "note": "Fresh recall holdout (seed 202, up to 5 distinct AI-used tasks per SOC major group, excluding the first recall holdout); labelled before looking at rule output; not used for tuning. Same rubric as ai_recall_holdout.json.",
+ "items": [
+  {
+   "code": "11-9199.01",
+   "title": "Regulatory Affairs Managers",
+   "task_id": "18037",
+   "text": "Review all regulatory agency submission materials to ensure timeliness, accuracy, comprehensiveness, or compliance with regulatory standards.",
+   "label": 1
+  },
+  {
+   "code": "11-3061.00",
+   "title": "Purchasing Managers",
+   "task_id": "1021",
+   "text": "Locate vendors of materials, equipment or supplies, and interview them to determine product availability and terms of sales.",
+   "label": 0
+  },
+  {
+   "code": "11-9141.00",
+   "title": "Property, Real Estate, and Community Association Managers",
+   "task_id": "7224",
+   "text": "Manage and oversee operations, maintenance, administration, and improvement of commercial, industrial, or residential properties.",
+   "label": 0
+  },
+  {
+   "code": "11-9021.00",
+   "title": "Construction Managers",
+   "task_id": "3315",
+   "text": "Plan, organize, or direct activities concerned with the construction or maintenance of structures, facilities, or systems.",
+   "label": 0
+  },
+  {
+   "code": "11-3061.00",
+   "title": "Purchasing Managers",
+   "task_id": "1034",
+   "text": "Prepare reports regarding market conditions and merchandise costs.",
+   "label": 1
+  },
+  {
+   "code": "13-1141.00",
+   "title": "Compensation, Benefits, and Job Analysis Specialists",
+   "task_id": "3369",
+   "text": "Plan and develop curricula and materials for training programs and conduct training.",
+   "label": 0
+  },
+  {
+   "code": "13-2011.00",
+   "title": "Accountants and Auditors",
+   "task_id": "21517",
+   "text": "Establish tables of accounts and assign entries to proper accounts.",
+   "label": 1
+  },
+  {
+   "code": "13-1041.04",
+   "title": "Government Property Inspectors and Investigators",
+   "task_id": "12891",
+   "text": "Examine records, reports, or other documents to establish facts or detect discrepancies.",
+   "label": 1
+  },
+  {
+   "code": "13-2031.00",
+   "title": "Budget Analysts",
+   "task_id": "3398",
+   "text": "Provide advice and technical assistance with cost analysis, fiscal allocation, and budget preparation.",
+   "label": 0
+  },
+  {
+   "code": "13-2052.00",
+   "title": "Personal Financial Advisors",
+   "task_id": "20184",
+   "text": "Manage client portfolios, keeping client plans up-to-date.",
+   "label": 0
+  },
+  {
+   "code": "15-1254.00",
+   "title": "Web Developers",
+   "task_id": "14725",
+   "text": "Evaluate or recommend server hardware or software.",
+   "label": 0
+  },
+  {
+   "code": "15-1211.00",
+   "title": "Computer Systems Analysts",
+   "task_id": "3478",
+   "text": "Review and analyze computer printouts and performance indicators to locate code problems, and correct errors by correcting codes.",
+   "label": 1
+  },
+  {
+   "code": "15-1299.02",
+   "title": "Geographic Information Systems Technologists and Technicians",
+   "task_id": "21731",
+   "text": "Create, analyze, report, convert, or transfer data, using specialized applications program software.",
+   "label": 1
+  },
+  {
+   "code": "15-1251.00",
+   "title": "Computer Programmers",
+   "task_id": "1272",
+   "text": "Perform or direct revision, repair, or expansion of existing programs to increase operating efficiency or adapt to new requirements.",
+   "label": 1
+  },
+  {
+   "code": "15-1242.00",
+   "title": "Database Administrators",
+   "task_id": "1300",
+   "text": "Test programs or databases, correct errors, and make necessary modifications.",
+   "label": 1
+  },
+  {
+   "code": "17-2072.00",
+   "title": "Electronics Engineers, Except Computer",
+   "task_id": "20495",
+   "text": "Analyze electronics system requirements, capacity, cost, or customer needs to determine project feasibility.",
+   "label": 0
+  },
+  {
+   "code": "17-2199.03",
+   "title": "Energy Engineers, Except Wind and Solar",
+   "task_id": "18159",
+   "text": "Analyze, interpret, or create graphical representations of energy data, using engineering software.",
+   "label": 1
+  },
+  {
+   "code": "17-2199.08",
+   "title": "Robotics Engineers",
+   "task_id": "16514",
+   "text": "Document robotic application development, maintenance, or changes.",
+   "label": 1
+  },
+  {
+   "code": "17-2199.08",
+   "title": "Robotics Engineers",
+   "task_id": "16528",
+   "text": "Design software to control robotic systems for applications, such as military defense or manufacturing.",
+   "label": 1
+  },
+  {
+   "code": "17-3022.00",
+   "title": "Civil Engineering Technologists and Technicians",
+   "task_id": "1465",
+   "text": "Prepare reports and document project activities and data.",
+   "label": 1
+  },
+  {
+   "code": "19-4013.00",
+   "title": "Food Science Technicians",
+   "task_id": "7578",
+   "text": "Compute moisture or salt content, percentages of ingredients, formulas, or other product factors, using mathematical and chemical procedures.",
+   "label": 0
+  },
+  {
+   "code": "19-3051.00",
+   "title": "Urban and Regional Planners",
+   "task_id": "22229",
+   "text": "Research, compile, analyze and organize information from maps, reports, investigations, and books for use in reports and special projects.",
+   "label": 1
+  },
+  {
+   "code": "19-1029.04",
+   "title": "Biologists",
+   "task_id": "176",
+   "text": "Study aquatic plants and animals and environmental conditions affecting them, such as radioactivity or pollution.",
+   "label": 0
+  },
+  {
+   "code": "19-3022.00",
+   "title": "Survey Researchers",
+   "task_id": "7548",
+   "text": "Review, classify, and record survey data in preparation for computer analysis.",
+   "label": 1
+  },
+  {
+   "code": "19-2041.03",
+   "title": "Industrial Ecologists",
+   "task_id": "19971",
+   "text": "Examine societal issues and their relationship with both technical systems and the environment.",
+   "label": 0
+  },
+  {
+   "code": "21-1091.00",
+   "title": "Health Education Specialists",
+   "task_id": "20236",
+   "text": "Prepare and distribute health education materials, such as reports, bulletins, and visual aids, to address smoking, vaccines, and other public health concerns.",
+   "label": 1
+  },
+  {
+   "code": "21-1012.00",
+   "title": "Educational, Guidance, and Career Counselors and Advisors",
+   "task_id": "5619",
+   "text": "Teach classes and present self-help or information sessions on subjects related to education and career planning.",
+   "label": 0
+  },
+  {
+   "code": "21-1012.00",
+   "title": "Educational, Guidance, and Career Counselors and Advisors",
+   "task_id": "18634",
+   "text": "Plan, direct, and participate in recruitment and enrollment activities.",
+   "label": 0
+  },
+  {
+   "code": "21-1023.00",
+   "title": "Mental Health and Substance Abuse Social Workers",
+   "task_id": "276",
+   "text": "Monitor, evaluate, and record client progress with respect to treatment goals.",
+   "label": 1
+  },
+  {
+   "code": "21-1011.00",
+   "title": "Substance Abuse and Behavioral Disorder Counselors",
+   "task_id": "5589",
+   "text": "Provide clients or family members with information about addiction issues and about available services or programs, making appropriate referrals when necessary.",
+   "label": 0
+  },
+  {
+   "code": "23-1023.00",
+   "title": "Judges, Magistrate Judges, and Magistrates",
+   "task_id": "5651",
+   "text": "Research legal issues and write opinions on the issues.",
+   "label": 1
+  },
+  {
+   "code": "23-1022.00",
+   "title": "Arbitrators, Mediators, and Conciliators",
+   "task_id": "20238",
+   "text": "Apply relevant laws, regulations, policies, or precedents to reach conclusions.",
+   "label": 0
+  },
+  {
+   "code": "23-1022.00",
+   "title": "Arbitrators, Mediators, and Conciliators",
+   "task_id": "12994",
+   "text": "Use mediation techniques to facilitate communication between disputants, to further parties' understanding of different perspectives, and to guide parties toward mutual agreement.",
+   "label": 0
+  },
+  {
+   "code": "23-2011.00",
+   "title": "Paralegals and Legal Assistants",
+   "task_id": "1636",
+   "text": "Gather and analyze research data, such as statutes, decisions, and legal articles, codes, and documents.",
+   "label": 1
+  },
+  {
+   "code": "23-1023.00",
+   "title": "Judges, Magistrate Judges, and Magistrates",
+   "task_id": "5653",
+   "text": "Write decisions on cases.",
+   "label": 1
+  },
+  {
+   "code": "25-9044.00",
+   "title": "Teaching Assistants, Postsecondary",
+   "task_id": "10960",
+   "text": "Prepare or proctor examinations.",
+   "label": 1
+  },
+  {
+   "code": "25-2021.00",
+   "title": "Elementary School Teachers, Except Special Education",
+   "task_id": "6564",
+   "text": "Organize and label materials and display students' work.",
+   "label": 0
+  },
+  {
+   "code": "25-1082.00",
+   "title": "Library Science Teachers, Postsecondary",
+   "task_id": "20088",
+   "text": "Keep abreast of developments in the field by reading current literature, talking with colleagues, giving presentations at conferences, and serving on committees in professional associations.",
+   "label": 1
+  },
+  {
+   "code": "25-1011.00",
+   "title": "Business Teachers, Postsecondary",
+   "task_id": "5671",
+   "text": "Advise students on academic and vocational curricula and career issues.",
+   "label": 0
+  },
+  {
+   "code": "25-1052.00",
+   "title": "Chemistry Teachers, Postsecondary",
+   "task_id": "5868",
+   "text": "Prepare and deliver lectures to undergraduate or graduate students on topics such as organic chemistry, analytical chemistry, and chemical separation.",
+   "label": 0
+  },
+  {
+   "code": "27-1014.00",
+   "title": "Special Effects Artists and Animators",
+   "task_id": "6891",
+   "text": "Use models to simulate the behavior of animated objects in the finished sequence.",
+   "label": 0
+  },
+  {
+   "code": "27-1012.00",
+   "title": "Craft Artists",
+   "task_id": "9252",
+   "text": "Develop concepts or creative ideas for craft objects.",
+   "label": 0
+  },
+  {
+   "code": "27-3042.00",
+   "title": "Technical Writers",
+   "task_id": "3970",
+   "text": "Review published materials and recommend revisions or changes in scope, format, content, and methods of reproduction and binding.",
+   "label": 1
+  },
+  {
+   "code": "27-3023.00",
+   "title": "News Analysts, Reporters, and Journalists",
+   "task_id": "22642",
+   "text": "Check reference materials, such as books, news files, or public records, to obtain relevant facts.",
+   "label": 1
+  },
+  {
+   "code": "27-1011.00",
+   "title": "Art Directors",
+   "task_id": "294",
+   "text": "Create custom illustrations or other graphic elements.",
+   "label": 1
+  },
+  {
+   "code": "29-1161.00",
+   "title": "Nurse Midwives",
+   "task_id": "18459",
+   "text": "Read current literature, talk with colleagues, or participate in professional organizations or conferences to keep abreast of developments in midwifery.",
+   "label": 1
+  },
+  {
+   "code": "29-1215.00",
+   "title": "Family Medicine Physicians",
+   "task_id": "7774",
+   "text": "Collect, record, and maintain patient information, such as medical history, reports, or examination results.",
+   "label": 1
+  },
+  {
+   "code": "29-1213.00",
+   "title": "Dermatologists",
+   "task_id": "17078",
+   "text": "Record patients' health histories.",
+   "label": 1
+  },
+  {
+   "code": "29-1141.02",
+   "title": "Advanced Practice Psychiatric Nurses",
+   "task_id": "17327",
+   "text": "Educate patients and family members about mental health and medical conditions, preventive health measures, medications, or treatment plans.",
+   "label": 0
+  },
+  {
+   "code": "29-1291.00",
+   "title": "Acupuncturists",
+   "task_id": "17366",
+   "text": "Collect medical histories and general health and lifestyle information from patients.",
+   "label": 1
+  },
+  {
+   "code": "31-9092.00",
+   "title": "Medical Assistants",
+   "task_id": "2034",
+   "text": "Schedule appointments for patients.",
+   "label": 1
+  },
+  {
+   "code": "31-9099.02",
+   "title": "Endoscopy Technicians",
+   "task_id": "17529",
+   "text": "Read current literature, talk with colleagues, or participate in professional organizations or conferences to keep abreast of developments in endoscopy.",
+   "label": 1
+  },
+  {
+   "code": "31-9094.00",
+   "title": "Medical Transcriptionists",
+   "task_id": "9420",
+   "text": "Perform data entry and data retrieval services, providing data for inclusion in medical records and for transmission to physicians.",
+   "label": 1
+  },
+  {
+   "code": "31-9094.00",
+   "title": "Medical Transcriptionists",
+   "task_id": "9413",
+   "text": "Transcribe dictation for a variety of medical reports, such as patient histories, physical examinations, emergency room visits, operations, chart reviews, consultation, or discharge summaries.",
+   "label": 1
+  },
+  {
+   "code": "31-2022.00",
+   "title": "Physical Therapist Aides",
+   "task_id": "15251",
+   "text": "Schedule patient appointments with physical therapists and coordinate therapists' schedules.",
+   "label": 1
+  },
+  {
+   "code": "33-3051.04",
+   "title": "Customs and Border Protection Officers",
+   "task_id": "9450",
+   "text": "Examine immigration applications, visas, and passports and interview persons to determine eligibility for admission, residence, and travel in the U.S.",
+   "label": 0
+  },
+  {
+   "code": "33-9099.02",
+   "title": "Retail Loss Prevention Specialists",
+   "task_id": "17570",
+   "text": "Prepare written reports on investigations.",
+   "label": 1
+  },
+  {
+   "code": "33-3021.06",
+   "title": "Intelligence Analysts",
+   "task_id": "17544",
+   "text": "Design, use, or maintain databases and software applications, such as geographic information systems (GIS) mapping and artificial intelligence tools.",
+   "label": 1
+  },
+  {
+   "code": "33-3051.00",
+   "title": "Police and Sheriff's Patrol Officers",
+   "task_id": "23053",
+   "text": "Record facts to prepare reports that document incidents and activities.",
+   "label": 1
+  },
+  {
+   "code": "33-3052.00",
+   "title": "Transit and Railroad Police",
+   "task_id": "9478",
+   "text": "Prepare reports documenting investigation activities and results.",
+   "label": 1
+  },
+  {
+   "code": "39-6012.00",
+   "title": "Concierges",
+   "task_id": "20262",
+   "text": "Plan special events, parties, or meetings, which may include booking musicians or celebrities.",
+   "label": 0
+  },
+  {
+   "code": "39-9011.00",
+   "title": "Childcare Workers",
+   "task_id": "18759",
+   "text": "Create developmentally appropriate lesson plans.",
+   "label": 1
+  },
+  {
+   "code": "39-6011.00",
+   "title": "Baggage Porters and Bellhops",
+   "task_id": "2315",
+   "text": "Supply guests or travelers with directions, travel information, and other information, such as available services and points of interest.",
+   "label": 1
+  },
+  {
+   "code": "39-5012.00",
+   "title": "Hairdressers, Hairstylists, and Cosmetologists",
+   "task_id": "638",
+   "text": "Schedule client appointments.",
+   "label": 1
+  },
+  {
+   "code": "39-3091.00",
+   "title": "Amusement and Recreation Attendants",
+   "task_id": "5116",
+   "text": "Provide information about facilities, entertainment options, and rules and regulations.",
+   "label": 1
+  },
+  {
+   "code": "41-9022.00",
+   "title": "Real Estate Sales Agents",
+   "task_id": "2453",
+   "text": "Answer clients' questions regarding construction work, financing, maintenance, repairs, and appraisals.",
+   "label": 1
+  },
+  {
+   "code": "41-3031.00",
+   "title": "Securities, Commodities, and Financial Services Sales Agents",
+   "task_id": "23196",
+   "text": "Buy or sell stocks, bonds, commodity futures, foreign currencies, or other securities on behalf of investment dealers.",
+   "label": 0
+  },
+  {
+   "code": "41-4011.00",
+   "title": "Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products",
+   "task_id": "20609",
+   "text": "Contact new or existing customers to discuss how specific products or services can meet their needs.",
+   "label": 1
+  },
+  {
+   "code": "41-4011.00",
+   "title": "Sales Representatives, Wholesale and Manufacturing, Technical and Scientific Products",
+   "task_id": "20610",
+   "text": "Select or assist customers in selecting products based on customer needs, product specifications, and applicable regulations.",
+   "label": 0
+  },
+  {
+   "code": "41-4012.00",
+   "title": "Sales Representatives, Wholesale and Manufacturing, Except Technical and Scientific Products",
+   "task_id": "8120",
+   "text": "Identify prospective customers by using business directories, following leads from existing clients, participating in organizations and clubs, and attending trade shows and conferences.",
+   "label": 1
+  },
+  {
+   "code": "43-6011.00",
+   "title": "Executive Secretaries and Executive Administrative Assistants",
+   "task_id": "2787",
+   "text": "Review operating practices and procedures to determine whether improvements can be made in areas such as workflow, reporting procedures, or expenditures.",
+   "label": 0
+  },
+  {
+   "code": "43-6012.00",
+   "title": "Legal Secretaries and Administrative Assistants",
+   "task_id": "766",
+   "text": "Schedule and make appointments.",
+   "label": 1
+  },
+  {
+   "code": "43-6014.00",
+   "title": "Secretaries and Administrative Assistants, Except Legal, Medical, and Executive",
+   "task_id": "20288",
+   "text": "Develop or maintain internal or external company Web sites.",
+   "label": 1
+  },
+  {
+   "code": "43-4041.00",
+   "title": "Credit Authorizers, Checkers, and Clerks",
+   "task_id": "23311",
+   "text": "Prepare reports of findings and recommendations.",
+   "label": 1
+  },
+  {
+   "code": "43-4151.00",
+   "title": "Order Clerks",
+   "task_id": "2670",
+   "text": "Inform customers by mail or telephone of order information, such as unit prices, shipping dates, and any anticipated delays.",
+   "label": 1
+  },
+  {
+   "code": "47-4011.00",
+   "title": "Construction and Building Inspectors",
+   "task_id": "871",
+   "text": "Review and interpret plans, blueprints, site layouts, specifications, or construction methods to ensure compliance to legal requirements and safety regulations.",
+   "label": 0
+  },
+  {
+   "code": "47-2152.00",
+   "title": "Plumbers, Pipefitters, and Steamfitters",
+   "task_id": "23475",
+   "text": "Review blueprints, building codes, or specifications to determine work details or procedures.",
+   "label": 0
+  },
+  {
+   "code": "49-1011.00",
+   "title": "First-Line Supervisors of Mechanics, Installers, and Repairers",
+   "task_id": "2931",
+   "text": "Develop or implement electronic maintenance programs or computer information management systems.",
+   "label": 0
+  },
+  {
+   "code": "49-2011.00",
+   "title": "Computer, Automated Teller, and Office Machine Repairers",
+   "task_id": "11632",
+   "text": "Install and configure new equipment, including operating software or peripheral equipment.",
+   "label": 0
+  },
+  {
+   "code": "49-2098.00",
+   "title": "Security and Fire Alarm Systems Installers",
+   "task_id": "11772",
+   "text": "Prepare documents, such as invoices or warranties.",
+   "label": 1
+  },
+  {
+   "code": "49-2011.00",
+   "title": "Computer, Automated Teller, and Office Machine Repairers",
+   "task_id": "11644",
+   "text": "Analyze equipment performance records to assess equipment functioning.",
+   "label": 1
+  },
+  {
+   "code": "49-9061.00",
+   "title": "Camera and Photographic Equipment Repairers",
+   "task_id": "8447",
+   "text": "Record test data and document fabrication techniques on reports.",
+   "label": 0
+  },
+  {
+   "code": "51-2061.00",
+   "title": "Timing Device Assemblers and Adjusters",
+   "task_id": "15018",
+   "text": "Review blueprints, sketches, or work orders to gather information about tasks to be completed.",
+   "label": 0
+  },
+  {
+   "code": "51-9162.00",
+   "title": "Computer Numerically Controlled Tool Programmers",
+   "task_id": "11967",
+   "text": "Modify existing programs to enhance efficiency.",
+   "label": 0
+  },
+  {
+   "code": "51-9061.00",
+   "title": "Inspectors, Testers, Sorters, Samplers, and Weighers",
+   "task_id": "12481",
+   "text": "Analyze test data, making computations as necessary, to determine test results.",
+   "label": 1
+  },
+  {
+   "code": "51-9023.00",
+   "title": "Mixing and Blending Machine Setters, Operators, and Tenders",
+   "task_id": "12407",
+   "text": "Record operational or production data on specified forms.",
+   "label": 1
+  },
+  {
+   "code": "51-2022.00",
+   "title": "Electrical and Electronic Equipment Assemblers",
+   "task_id": "10022",
+   "text": "Read and interpret schematic drawings, diagrams, blueprints, specifications, work orders, or reports to determine materials requirements or assembly instructions.",
+   "label": 0
+  },
+  {
+   "code": "53-2031.00",
+   "title": "Flight Attendants",
+   "task_id": "9648",
+   "text": "Answer passengers' questions about flights, aircraft, weather, travel routes and services, arrival times, or schedules.",
+   "label": 1
+  },
+  {
+   "code": "53-1042.00",
+   "title": "First-Line Supervisors of Helpers, Laborers, and Material Movers, Hand",
+   "task_id": "8582",
+   "text": "Participate in the hiring process by reviewing credentials, conducting interviews, or making hiring decisions or recommendations.",
+   "label": 1
+  }
+ ]
+}

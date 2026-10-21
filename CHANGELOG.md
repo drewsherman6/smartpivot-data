@@ -2,6 +2,12 @@
 
 Machine-readable history: `data/history/changes.jsonl`. `scripts/update.js` appends entries here automatically.
 
+## 2026-10-20 - AI-link recall audit and pinned-SHA notify
+- Recall on the final holdout went from 0.407 to 0.833, with task precision 0.900 and link precision 0.852 on an untouched sample. Details are in docs/AI_LINK_AUDIT.md.
+- New categories security_ops and design_creative, plus 9 platforms. Some rules were broadened and others tightened. Adds `agents.targeted_task_ids`.
+- notify-app now checks that raw-by-SHA files match the local files, revalidates, then polls /api/data-version and the canary page until it sees the pushed SHA. It fails loudly otherwise.
+- Tests: recall/precision floors and the new holdouts in test-ai-links.js.
+
 ## 2026-10-21 - AI product -> task links: evidence-based capability rules (false-positive audit)
 - Audit (docs/AI_LINK_AUDIT.md, labelled samples in docs/audit/): precision of the links that count toward "work already targeted" was 0.57 on a stratified sample of 269 (0.56 weighted by category size). The cause was naive keyword matching (`categoryPatterns`) on the task statement plus generic O*NET DWA titles.
 - New `catalog.capabilityRules`: each product category has a documented capability, plus action+object include rules, exclude rules and, where needed, a domain require rule. These are matched on the task statement only; DWA titles are no longer used. Only verified platforms are mapped. Precision on an untouched final holdout (63 links) is 0.825.
