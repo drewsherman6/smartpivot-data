@@ -96,21 +96,48 @@ function dwaLinks() {
   for (const r of parse(fs.readFileSync(f, 'utf8'), { columns: true, relax_quotes: true, skip_empty_lines: true })) { const k = String(r['Task ID']); if (!m.has(k)) m.set(k, new Set()); m.get(k).add(r['DWA Element ID']); }
   return m;
 }
+// Work Context profiles (O*NET 31.0 work_context.csv, CX scale, ~57 elements: physical setting, hazards, equipment,
+// body positions, pace). Used to find jobs in *other* SOC minor groups that share the same setting/work context.
+let WC = null;
+function workContext() {
+  if (WC) return WC; const f = path.join(ROOT, '.cache/work_context_cx.json');
+  if (!fs.existsSync(f)) {
+    const z = path.join(ROOT, '.cache/onet.zip'); const out = {};
+    if (fs.existsSync(z)) { const AdmZip = require('adm-zip'); const e = new AdmZip(z).getEntries().find((x) => /work_context\.csv$/.test(x.entryName));
+      if (e) for (const r of parse(e.getData().toString('utf8'), { columns: true, relax_quotes: true, skip_empty_lines: true })) { if (r['Scale ID'] !== 'CX' || r['Recommend Suppress'] === 'Y') continue; const c = r['O*NET-SOC Code']; (out[c] = out[c] || {})[r['Element ID']] = +r['Data Value']; } }
+    fs.writeFileSync(f, JSON.stringify(out));
+  }
+  const raw = JSON.parse(fs.readFileSync(f, 'utf8')); const els = [...new Set(Object.values(raw).flatMap((v) => Object.keys(v)))].sort();
+  const mu = {}, sd = {}; for (const e of els) { const xs = Object.values(raw).map((v) => v[e]).filter((x) => x != null); mu[e] = mean(xs); sd[e] = Math.sqrt(mean(xs.map((x) => (x - mu[e]) ** 2))) || 1; }
+  const vec = new Map(); for (const [c, v] of Object.entries(raw)) { const z = els.map((e) => (v[e] == null ? 0 : (v[e] - mu[e]) / sd[e])); const n = Math.sqrt(z.reduce((s, x) => s + x * x, 0)) || 1; vec.set(c, z.map((x) => x / n)); }
+  WC = { vec }; return WC;
+}
+const wcSim = (a, b) => { const A = WC.vec.get(a), B = WC.vec.get(b); if (!A || !B) return null; let s = 0; for (let i = 0; i < A.length; i++) s += A[i] * B[i]; return s; };
 function pool() {
-  if (POOL) return POOL; const links = dwaLinks(); const seen = new Map(); const seenR = new Map(); const dir = path.join(ROOT, 'data/occupations');
+  if (POOL) return POOL; const links = dwaLinks(); const seen = new Map(); const rob = new Map(); const dir = path.join(ROOT, 'data/occupations'); workContext();
+  const homes = new Set(); const wcOf = new Map(); // job -> code whose Work Context profile it uses (own, else its source job, else none)
   for (const f of fs.readdirSync(dir).filter((x) => /^\d\d\.json$/.test(x))) for (const o of JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')).occupations) {
     const drive = new Set((o.tasks || []).filter((t) => t.robot_driving_rule).map((t) => String(t.id)));
     const home = new Map((o.tasks || []).map((t) => [String(t.id), t.source_code || o.code])); // a task copied from another job keeps that job's setting
     for (const r of ownTaskRows(o)) {
       const k = r.id; const prev = seen.get(k) || { ai: [], rob: [] }; if (r.ai != null) prev.ai.push(r.ai); if (r.robotics != null) prev.rob.push(r.robotics); seen.set(k, prev);
-      if (r.robotics != null && !drive.has(k)) { const g = minor(home.get(k) || o.code); const kk = g + '|' + k; const pr = seenR.get(kk) || { g, id: k, v: [] }; pr.v.push(r.robotics); seenR.set(kk, pr); }
+      if (r.robotics != null && !drive.has(k)) { const h = home.get(k) || o.code; homes.add(h); for (const d of links.get(k) || []) { if (!rob.has(d)) rob.set(d, []); rob.get(d).push({ h, id: k, v: r.robotics }); } }
     } }
+  for (const h of homes) wcOf.set(h, WC.vec.has(h) ? h : null);
+  // Same-setting threshold: the median Work Context similarity between two jobs in the same SOC minor group. A job in
+  // another group joins a job's robot pool only if it is at least as alike in setting as a typical same-group peer.
+  const hs = [...homes].filter((h) => wcOf.get(h)); const within = [];
+  for (let i = 0; i < hs.length; i++) for (let j = i + 1; j < hs.length; j++) if (minor(hs[i]) === minor(hs[j])) within.push(wcSim(hs[i], hs[j]));
+  within.sort((a, b) => a - b); const TAU = within.length ? within[Math.floor(within.length / 2)] : 1;
+  const nbr = new Map(); const peers = (src) => { if (nbr.has(src)) return nbr.get(src); const s = new Set(); for (const h of homes) { if (minor(h) === minor(src)) { s.add(h); continue; } const x = WC.vec.has(src) ? wcSim(src, h) : null; if (x != null && x >= TAU) s.add(h); } nbr.set(src, s); return s; };
   const acc = new Map(); // dwa -> {ai:[...], rob:[...]} one value per task id (mean over the jobs listing it)
   for (const [id, v] of seen) { const ds = links.get(id); if (!ds) continue; for (const d of ds) { const a = acc.get(d) || { ai: [], rob: [] }; if (v.ai.length) a.ai.push(mean(v.ai)); if (v.rob.length) a.rob.push(mean(v.rob)); acc.set(d, a); } }
   const dwa = new Map(); for (const [d, a] of acc) dwa.set(d, { ai: mean(a.ai), ai_n: a.ai.length, rob: mean(a.rob), rob_n: a.rob.length });
-  const accR = new Map(); for (const { g, id, v } of seenR.values()) for (const d of links.get(id) || []) { const kk = g + '|' + d; if (!accR.has(kk)) accR.set(kk, []); accR.get(kk).push(mean(v)); }
-  const dwaMinor = new Map(); for (const [kk, v] of accR) dwaMinor.set(kk, { rob: mean(v), rob_n: v.length });
-  POOL = { links, dwa, dwaMinor }; return POOL;
+  const cache = new Map();
+  const robFor = (src, d) => { const kk = src + '|' + d; if (cache.has(kk)) return cache.get(kk); const P = peers(src); const byTask = new Map(); let cross = false;
+    for (const e of rob.get(d) || []) if (P.has(e.h)) { if (minor(e.h) !== minor(src)) cross = true; if (!byTask.has(e.id)) byTask.set(e.id, []); byTask.get(e.id).push(e.v); }
+    const v = byTask.size ? { rob: mean([...byTask.values()].map(mean)), rob_n: byTask.size, cross } : null; cache.set(kk, v); return v; };
+  POOL = { links, dwa, robFor, TAU }; return POOL;
 }
 const minor = (code) => String(code).slice(0, 4); // SOC minor group (e.g. 51-4 metal and plastic workers): same kind of work setting
 function taskRows(o) {
@@ -121,12 +148,13 @@ function taskRows(o) {
     const out = { ...r, ai_own: r.ai, robotics_own: r.robotics, dwa_ids: [...(P.links.get(r.id) || [])], ai_dwa_tasks: ai.reduce((s, d) => s + d.ai_n, 0), robotics_dwa_tasks: rb.reduce((s, d) => s + d.rob_n, 0) };
     if (ai.length) { out.ai = mean(ai.map((d) => d.ai)); out.ai_basis = 'dwa_pooled'; out.ai_sources = [...new Set([...(r.ai_sources || []), 'onet_dwa_pool'])]; }
     // Robotics (Oct 21, 2026, pass 2): robot instance ratings are setting-specific, so they are pooled per DWA *within the
-    // job's SOC minor group* (same kind of workplace); driving-rule tasks keep their own rating (approved driving rule) and
+    // job's SOC minor group* (same kind of workplace), plus jobs in other groups whose O*NET Work Context profile is at least
+    // as similar as the median same-group pair (same setting, different SOC group); driving-rule tasks keep their own rating (approved driving rule) and
     // are not pooled. Unrated tasks are filled from the same pool, else from the all-jobs DWA pool.
     const drive = (o.tasks || []).find((t) => String(t.id) === r.id)?.robot_driving_rule;
     const src = (o.tasks || []).find((t) => String(t.id) === r.id)?.source_code || o.code; // same statement, same setting, same evidence (tasks an O*NET-unrated job takes from its source job)
-    const rm = drive ? [] : out.dwa_ids.map((d) => P.dwaMinor.get(minor(src) + '|' + d)).filter(Boolean);
-    if (rm.length) { out.robotics = mean(rm.map((d) => d.rob)); out.robotics_basis = 'dwa_pooled'; out.robotics_source = r.robotics_source ? r.robotics_source + '+onet_dwa_pool_minor_group' : 'onet_dwa_pool_minor_group'; out.robotics_dwa_tasks = rm.reduce((s2, d) => s2 + d.rob_n, 0); }
+    const rm = drive ? [] : out.dwa_ids.map((d) => P.robFor(src, d)).filter(Boolean);
+    if (rm.length) { out.robotics = mean(rm.map((d) => d.rob)); out.robotics_basis = 'dwa_pooled'; out.robotics_source = r.robotics_source ? r.robotics_source + '+onet_dwa_pool_minor_group' : 'onet_dwa_pool_minor_group'; if (rm.some((d) => d.cross)) out.robotics_source += '+same_work_context'; out.robotics_dwa_tasks = rm.reduce((s2, d) => s2 + d.rob_n, 0); }
     else if (rb.length && r.robotics == null) { out.robotics = mean(rb.map((d) => d.rob)); out.robotics_basis = 'dwa_pooled'; out.robotics_source = 'onet_dwa_pool'; }
     return out;
   });

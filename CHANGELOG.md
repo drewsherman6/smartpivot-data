@@ -2,6 +2,15 @@
 
 Machine-readable history: `data/history/changes.jsonl`. `scripts/update.js` appends entries here automatically.
 
+## 2026-10-21 - Quality pass: scale linking, same-setting robot pooling, crosswalk cache, resume tie-break
+- `scripts/blend.js`: other measures are equipercentile-linked onto the task-level score distribution before blending (rank from 1-(1-O_ai)(1-O_rob); AI:robot ratio kept; `other_measures_unlinked` kept). Max effect 0.012.
+- `scripts/time-weighted.js`: robot DWA pool = jobs in the same SOC minor group plus jobs in other groups whose O*NET 31.0 Work Context (CX) profile has cosine similarity >= the median same-group pair (0.536); tasks copied from a source job use the source job's setting (53-7199.00 now 0.373 vs 47-5022.00 0.372, was 0.468 vs 0.312). Source tag `+same_work_context`.
+- `scripts/refresh.js`: offline runs download any source whose cache is missing (fixes the missing O*NET 2010-2019 crosswalk); runs agentic-skills after task-breakdown. Full online refresh run end to end.
+- App resume mapping: ambiguous alternate-vs-official title ties go to the job with higher BLS employment (CSR resume -> 43-4051.00, was 43-4041.00).
+- Near-identical audit (`scripts/audit/near_identical.py`, `docs/audit/near_identical_pairs.json`): 21 pairs (DWA Jaccard >= 0.7, gap > 0.10); evidence term <= 0.03 in all, 16 explained by task time mix (O*NET/Anthropic time shares, e.g. nursing instructors' 15% clinical supervision), 5 by job-level other measures. Genuine, documented; no artifact found.
+- `docs/audit/crosswalk/dump_db.sh`: reproducible DB dump for audits p1-p5.
+- Bands Low/Moderate/High 307/376/333 -> 309/380/327; market-rule levels safe/moderate/at_risk 298/384/334.
+
 ## 2026-10-21 - Breakdown groups by main driver
 - `scripts/task-breakdown.js`: each task with points is listed once, under its main driver (AI or robots, whichever adds more of its points); `ai_exposed`/`robotics_exposed`/`group` follow it, `main_driver`, `any_ai`, `any_robotics` added; summary `ai_group_points` + `robotics_group_points` = `combined_time_weighted`. Truck drivers: AI group 13% of time / 7 pts, robots 83% / 64 pts (was 83% AI by the any-fraction rule).
 

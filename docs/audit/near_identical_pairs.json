@@ -1,0 +1,380 @@
+[
+ {
+  "imp_T_gap": 0.102,
+  "a": "25-2021.00",
+  "b": "25-2011.00",
+  "jaccard": 0.71,
+  "score_a": 0.432,
+  "score_b": 0.275,
+  "gap": 0.157,
+  "T_gap": 0.158,
+  "time_mix": 0.159,
+  "evidence": 0.001,
+  "other": -0.001,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "time-mix (robust to importance weights)"
+ },
+ {
+  "imp_T_gap": 0.053,
+  "a": "25-1126.00",
+  "b": "25-1072.00",
+  "jaccard": 0.72,
+  "score_a": 0.647,
+  "score_b": 0.493,
+  "gap": 0.154,
+  "T_gap": 0.102,
+  "time_mix": 0.087,
+  "evidence": 0.007,
+  "other": 0.052,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "time-mix (robust to importance weights)"
+ },
+ {
+  "imp_T_gap": 0.042,
+  "a": "25-1032.00",
+  "b": "25-1072.00",
+  "jaccard": 0.76,
+  "score_a": 0.644,
+  "score_b": 0.493,
+  "gap": 0.151,
+  "T_gap": 0.099,
+  "time_mix": 0.088,
+  "evidence": -0.0,
+  "other": 0.052,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "time-mix (time-data sensitive)"
+ },
+ {
+  "imp_T_gap": 0.042,
+  "a": "25-1022.00",
+  "b": "25-1072.00",
+  "jaccard": 0.76,
+  "score_a": 0.618,
+  "score_b": 0.493,
+  "gap": 0.125,
+  "T_gap": 0.086,
+  "time_mix": 0.081,
+  "evidence": 0.001,
+  "other": 0.039,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "time-mix (time-data sensitive)"
+ },
+ {
+  "imp_T_gap": 0.053,
+  "a": "25-2022.00",
+  "b": "25-2012.00",
+  "jaccard": 0.76,
+  "score_a": 0.505,
+  "score_b": 0.38,
+  "gap": 0.125,
+  "T_gap": 0.121,
+  "time_mix": 0.124,
+  "evidence": -0.006,
+  "other": 0.004,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "time-mix (robust to importance weights)"
+ },
+ {
+  "imp_T_gap": 0.039,
+  "a": "25-2031.00",
+  "b": "25-2012.00",
+  "jaccard": 0.73,
+  "score_a": 0.505,
+  "score_b": 0.38,
+  "gap": 0.125,
+  "T_gap": 0.121,
+  "time_mix": 0.123,
+  "evidence": -0.003,
+  "other": 0.004,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "time-mix (time-data sensitive)"
+ },
+ {
+  "imp_T_gap": 0.064,
+  "a": "25-1063.00",
+  "b": "25-1072.00",
+  "jaccard": 0.75,
+  "score_a": 0.615,
+  "score_b": 0.493,
+  "gap": 0.122,
+  "T_gap": 0.141,
+  "time_mix": 0.13,
+  "evidence": 0.001,
+  "other": -0.019,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "time-mix (robust to importance weights)"
+ },
+ {
+  "imp_T_gap": 0.028,
+  "a": "25-1193.00",
+  "b": "25-1072.00",
+  "jaccard": 0.78,
+  "score_a": 0.613,
+  "score_b": 0.493,
+  "gap": 0.12,
+  "T_gap": 0.069,
+  "time_mix": 0.062,
+  "evidence": 0.001,
+  "other": 0.051,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "time-mix (time-data sensitive)"
+ },
+ {
+  "imp_T_gap": 0.052,
+  "a": "25-1053.00",
+  "b": "25-1072.00",
+  "jaccard": 0.79,
+  "score_a": 0.607,
+  "score_b": 0.493,
+  "gap": 0.114,
+  "T_gap": 0.107,
+  "time_mix": 0.099,
+  "evidence": 0.001,
+  "other": 0.007,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "time-mix (robust to importance weights)"
+ },
+ {
+  "imp_T_gap": 0.048,
+  "a": "25-1126.00",
+  "b": "25-1054.00",
+  "jaccard": 0.79,
+  "score_a": 0.647,
+  "score_b": 0.534,
+  "gap": 0.113,
+  "T_gap": 0.045,
+  "time_mix": 0.035,
+  "evidence": 0.01,
+  "other": 0.068,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "other-measures"
+ },
+ {
+  "imp_T_gap": 0.042,
+  "a": "25-1125.00",
+  "b": "25-1054.00",
+  "jaccard": 0.75,
+  "score_a": 0.646,
+  "score_b": 0.534,
+  "gap": 0.112,
+  "T_gap": 0.047,
+  "time_mix": 0.044,
+  "evidence": -0.0,
+  "other": 0.065,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "other-measures"
+ },
+ {
+  "imp_T_gap": 0.037,
+  "a": "25-1032.00",
+  "b": "25-1054.00",
+  "jaccard": 0.84,
+  "score_a": 0.644,
+  "score_b": 0.534,
+  "gap": 0.11,
+  "T_gap": 0.042,
+  "time_mix": 0.039,
+  "evidence": -0.0,
+  "other": 0.068,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "other-measures"
+ },
+ {
+  "imp_T_gap": 0.008,
+  "a": "25-1021.00",
+  "b": "25-1072.00",
+  "jaccard": 0.74,
+  "score_a": 0.599,
+  "score_b": 0.493,
+  "gap": 0.106,
+  "T_gap": 0.086,
+  "time_mix": 0.077,
+  "evidence": -0.0,
+  "other": 0.02,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "time-mix (time-data sensitive)"
+ },
+ {
+  "imp_T_gap": 0.042,
+  "a": "25-1124.00",
+  "b": "25-1054.00",
+  "jaccard": 0.72,
+  "score_a": 0.64,
+  "score_b": 0.534,
+  "gap": 0.106,
+  "T_gap": 0.048,
+  "time_mix": 0.054,
+  "evidence": 0.001,
+  "other": 0.058,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "time-mix (time-data sensitive)"
+ },
+ {
+  "imp_T_gap": 0.042,
+  "a": "25-1112.00",
+  "b": "25-1072.00",
+  "jaccard": 0.73,
+  "score_a": 0.599,
+  "score_b": 0.493,
+  "gap": 0.106,
+  "T_gap": 0.102,
+  "time_mix": 0.087,
+  "evidence": 0.001,
+  "other": 0.004,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "time-mix (time-data sensitive)"
+ },
+ {
+  "imp_T_gap": 0.073,
+  "a": "25-2012.00",
+  "b": "25-2011.00",
+  "jaccard": 0.79,
+  "score_a": 0.38,
+  "score_b": 0.275,
+  "gap": 0.105,
+  "T_gap": 0.108,
+  "time_mix": 0.102,
+  "evidence": 0.005,
+  "other": -0.003,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "time-mix (robust to importance weights)"
+ },
+ {
+  "imp_T_gap": 0.023,
+  "a": "25-1081.00",
+  "b": "25-1072.00",
+  "jaccard": 0.74,
+  "score_a": 0.597,
+  "score_b": 0.493,
+  "gap": 0.104,
+  "T_gap": 0.083,
+  "time_mix": 0.097,
+  "evidence": -0.03,
+  "other": 0.021,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "time-mix (time-data sensitive)"
+ },
+ {
+  "imp_T_gap": 0.059,
+  "a": "25-1126.00",
+  "b": "25-1121.00",
+  "jaccard": 0.8,
+  "score_a": 0.647,
+  "score_b": 0.544,
+  "gap": 0.103,
+  "T_gap": 0.056,
+  "time_mix": 0.042,
+  "evidence": 0.007,
+  "other": 0.047,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "other-measures"
+ },
+ {
+  "imp_T_gap": 0.031,
+  "a": "25-1067.00",
+  "b": "25-1072.00",
+  "jaccard": 0.74,
+  "score_a": 0.595,
+  "score_b": 0.493,
+  "gap": 0.102,
+  "T_gap": 0.121,
+  "time_mix": 0.113,
+  "evidence": -0.004,
+  "other": -0.019,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "time-mix (time-data sensitive)"
+ },
+ {
+  "imp_T_gap": 0.053,
+  "a": "25-1125.00",
+  "b": "25-1121.00",
+  "jaccard": 0.76,
+  "score_a": 0.646,
+  "score_b": 0.544,
+  "gap": 0.102,
+  "T_gap": 0.058,
+  "time_mix": 0.049,
+  "evidence": -0.0,
+  "other": 0.044,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "other-measures"
+ },
+ {
+  "imp_T_gap": 0.103,
+  "a": "17-3029.00",
+  "b": "17-3029.08",
+  "jaccard": 0.74,
+  "score_a": 0.356,
+  "score_b": 0.255,
+  "gap": 0.101,
+  "T_gap": 0.123,
+  "time_mix": 0.119,
+  "evidence": 0.002,
+  "other": -0.022,
+  "time_basis": [
+   "anthropic_time_share",
+   "anthropic_time_share"
+  ],
+  "cause": "time-mix (robust to importance weights)"
+ }
+]
