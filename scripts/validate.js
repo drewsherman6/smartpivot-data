@@ -99,10 +99,13 @@ try {
       const b = p.breakdown; const t = byCode.get(p.code); const tier = p.tier ?? 1;
       if (![1, 2, 3].includes(tier) || !p.tier_label) errors.push(`${o.code}: pathway ${p.code} lacks tier / tier_label`);
       if (tier < prevTier) errors.push(`${o.code}: pathway tiers out of order`); if (tier !== prevTier) prevScore = Infinity; prevTier = tier;
+      { const LD = new RegExp(PW.licensed_doctor.soc_pattern), LDe = new RegExp(PW.licensed_doctor.education, 'i'); const ld = (x) => LD.test(x.code) && LDe.test(x.bls.projections?.typical_education || '');
+        if (t && ld(t) && !ld(o)) errors.push(`${o.code}: licensed-doctor target ${p.code} from outside the group`); }
+      if (tier === 3 && !(b.profile_similarity >= Math.min(FB.tier3.min_similarity, 0.1) - 1e-9 || b.profile_similarity != null)) errors.push(`${o.code}: tier 3 ${p.code} lacks similarity`);
       if (tier > 1) {
         const R = FB['tier' + tier]; const ov = tier === 2 ? b.safe_overlap : b.skill_fit;
         if (!t || !(t.bls.projections?.change_percent >= 0) || !(b.target_median_wage > 0)) errors.push(`${o.code}: fallback ${p.code} lacks growth/pay data`);
-        const lower = tier === 2 ? b.target_combined_exposure <= E - R.min_exposure_drop + 1e-9 && b.target_combined_exposure <= E * R.max_exposure_ratio + 1e-9 : b.target_combined_exposure < E - 1e-9 || (E <= R.near_floor_band && b.target_combined_exposure <= R.near_floor_band);
+        const lower = tier === 2 ? b.target_combined_exposure <= E - R.min_exposure_drop + 1e-9 && b.target_combined_exposure <= E * R.max_exposure_ratio + 1e-9 : b.target_combined_exposure < E - 1e-9 || (E <= R.near_floor_band && b.target_combined_exposure <= R.near_floor_target_max);
         if (!lower) errors.push(`${o.code}: fallback ${p.code} exposure ${b.target_combined_exposure} not below source ${E}`);
         if (tier === 2 && !(ov >= R.min_safe_overlap)) errors.push(`${o.code}: tier 2 ${p.code} overlap below ${R.min_safe_overlap}`);
         if (!p.reason.startsWith(`Tier ${tier} (`)) errors.push(`${o.code}: fallback ${p.code} reason not labelled with its tier`);
