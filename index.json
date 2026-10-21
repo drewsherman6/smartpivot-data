@@ -584,6 +584,16 @@
       "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 55"
     },
     {
+      "name": "multisource_index",
+      "path": "data/multisource/index.json",
+      "schema": "schemas/multisource_index.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 1016,
+      "description": "Multi-source work statements (O*NET, ESCO, ILO/ISCO, OaSIS/NOC, NICE): index of data/multisource/occ/<code>.json files (validated by scripts/test-multisource.js); per-occupation counts, coverage and experimental blended exposure"
+    },
+    {
       "name": "family_signals",
       "path": "data/signals/families.json",
       "schema": "schemas/family_signals.schema.json",

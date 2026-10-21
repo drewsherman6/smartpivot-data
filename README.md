@@ -30,6 +30,7 @@ Base raw URL: `https://raw.githubusercontent.com/drewsherman6/smartpivot-data/ma
 | `data/robotics_manufacturers.json` | Major robot makers (industrial, cobot, humanoid, surgical, logistics, service, AV, ag, construction) |
 | `data/agent_platforms.json` | AI agent platforms; `onet_mapping.occupations[]` = every occupation the platform maps to (uncapped) |
 | `data/agents_by_occupation.json` | Reverse index: top 12 verified platforms per occupation |
+| `data/multisource/index.json`, `data/multisource/occ/<code>.json` | Multi-source work statements per occupation: O*NET tasks + ESCO skills (official ESCO-O*NET crosswalk) + ILO 2025 ISCO-08 tasks + Canada OaSIS/NOC 2021 duties + NIST NICE (curated), with source lists, crosswalk weights, dedupe and published AI/robot scores. Experimental blend (not primary). See docs/TAXONOMY_RESEARCH.md, docs/BLEND_COMPARISON.md |
 | `data/signals/families.json` | Weekly per-family signals |
 | `data/headline_stats.json`, `data/occupations.json`, `data/emerging_skills.json` | Curated headline research (hand-sourced) |
 | Legacy (frozen shapes): `skills_export.json`, `skills_summary.json`, `risk_scoring_overlay.json`, `agentic_capabilities.json`, `robotics_capabilities.json`, `*.md` | Kept for existing UI code |
@@ -170,3 +171,9 @@ Layout: `scripts/` (refresh, skill-risk, verify-platforms, update, validate, bui
 
 ## App update after a refresh
 After pushing a weekly refresh to `main`, run `npm run notify-app`. It waits until raw.githubusercontent.com serves the new data, then calls `https://launchpad.smartpivot.xyz/api/revalidate` so every results page and PDF uses it immediately (secret from `$SMARTPIVOT_REVALIDATE_SECRET` or `/workspace/.smartpivot-secrets/revalidate`). Without it, the app still updates within an hour (ISR) and a daily Vercel cron re-checks the data repo's `main` SHA. The app uses: occupation shards, `agent_platforms.json` (verification status + facts), `headline_stats.json`, `emerging_skills.json`, `signals/families.json` and `history/changes.jsonl` (the "data as of" date). Keep appending a dated line to `changes.jsonl` on every refresh. `risk_scoring_overlay.json` is not used by the app (uncited legacy multipliers).
+
+### Multi-source attribution
+- ESCO: © European Union, https://esco.ec.europa.eu (reuse under Commission Decision 2011/833/EU).
+- ILO: Gmyrek et al. (2025), ILO Working Paper 140, © ILO, CC BY 4.0, https://doi.org/10.54394/HETP0387. *This is an adaptation of a copyrighted work of the International Labour Organization (ILO). This adaptation has not been prepared, reviewed or endorsed by the ILO and should not be considered an official ILO adaptation. The ILO disclaims all responsibility for its content and accuracy. Responsibility rests solely with the author(s) of the adaptation.*
+- OaSIS: contains information licensed under the Open Government Licence – Canada (ESDC). NOC/SOC concordances: Statistics Canada Open Licence.
+- NIST NICE Framework (SP 800-181r1, components v2.2.0): US Government work.

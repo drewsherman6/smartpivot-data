@@ -1,0 +1,8 @@
+{"$schema":"http://json-schema.org/draft-07/schema#","$id":"multisource.schema.json","type":"object",
+"required":["dataset","generated","code","title","crosswalk","summary","blend","statements"],
+"properties":{"dataset":{"const":"multisource_occupation"},"code":{"type":"string","pattern":"^\\d{2}-\\d{4}\\.\\d{2}$"},
+"blend":{"type":"object","required":["primary"],"properties":{"primary":{"const":"current"}}},
+"statements":{"type":"array","minItems":1,"items":{"type":"object","required":["id","text","kind","sources","n_sources","weight"],"properties":{"kind":{"enum":["task","skill","knowledge","duty"]},
+"sources":{"type":"array","minItems":1,"items":{"type":"object","required":["source","ref","via","match","w"],"properties":{"source":{"enum":["onet","esco","ilo","oasis","nice"]}}}},
+"ai":{"type":["object","null"],"required":["pct","basis"],"properties":{"pct":{"type":"number","minimum":0,"maximum":1},"basis":{"enum":["direct","transferred"]}}},
+"robotics":{"type":["object","null"],"required":["tier","score","basis"],"properties":{"tier":{"enum":["E0","E1","E2","E3"]},"basis":{"enum":["direct","transferred"]}}}}}}}}

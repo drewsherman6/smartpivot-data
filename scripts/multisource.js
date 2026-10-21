@@ -1,0 +1,284 @@
+#!/usr/bin/env node
+/**
+ * Multi-source work-statement layer (additive; legacy shapes untouched).
+ * For every O*NET-SOC occupation, merges work statements from:
+ *   onet  - O*NET 31.0 tasks already in data/occupations/<g>.json (with Anthropic AI penetration + robot tier)
+ *   esco  - ESCO v1.2.x essential/optional skills & knowledge, via the official ESCO-O*NET crosswalk (EC + US DOL, 2022)
+ *   ilo   - ISCO-08 task statements with ILO WP140 (2025) GenAI task scores, via BLS ISCO-08<->SOC 2010 + SOC 2010->2018
+ *   oasis - Canada OaSIS 2025 main duties, via StatCan NOC 2016 v1.3->SOC 2018 + NOC 2016->NOC 2021
+ *   nice  - NIST NICE Framework v2.x work-role tasks, via a curated title mapping (flagged; no official SOC crosswalk)
+ * Dedupe: ESCO skill URI identity, then normalized lexical token-set Jaccard >= DEDUPE_J within an occupation.
+ * Exposure: only published scores. Direct = O*NET task (Anthropic penetration / robot tier) or ILO task score.
+ *   Other statements inherit the score of their most lexically similar directly-scored statement in the same
+ *   occupation (Jaccard >= TRANSFER_J), recorded as basis "transferred" with the donor id and similarity; else null.
+ * Calibration: each direct source is mapped to its own percentile rank (mid-rank over all its statements), so ILO 0-1
+ *   scores and Anthropic penetration are on one scale (same approach as the existing composite).
+ * Blend: per source, weighted mean of statement percentiles; occupation blend = mean over sources with any score.
+ * Outputs: data/multisource/occ/<code>.json (one per occupation), data/multisource/index.json, docs/BLEND_COMPARISON.md
+ */
+const fs = require('fs'); const path = require('path');
+const XLSX = require('xlsx'); const { parse } = require('csv-parse/sync');
+const { ROOT, today } = require('./lib');
+const UA = 'smartpivot-data/2.0 (drewsherman6@gmail.com)';
+const CACHE = path.join(ROOT, '.cache/multisource');
+const DEDUPE_J = 0.6, TRANSFER_J = 0.34;
+const OASIS = 'https://open.canada.ca/data/dataset/10ce43bd-fb58-4969-806b-4bffebc87bec/resource/';
+const SRC = {
+  esco_onet: { name: 'ESCO-O*NET Crosswalk (Occupations), EC ESCO Secretariat + US DOL/ETA, v1 Sep-2022', url: 'https://esco.ec.europa.eu/system/files/2023-08/ONET_%28Occupations%29_0_updated.csv', page: 'https://esco.ec.europa.eu/en/use-esco/other-crosswalks', license: 'EC reuse (Decision 2011/833/EU), commercial use allowed with attribution', file: 'esco_onet.csv' },
+  esco_api: { name: 'ESCO API (occupation skill links)', url: 'https://ec.europa.eu/esco/api/resource/occupation', page: 'https://esco.ec.europa.eu/en/use-esco/use-esco-services-api', license: 'EC reuse (Decision 2011/833/EU)' },
+  isco_soc: { name: 'BLS ISCO-08 to 2010 SOC crosswalk (June 2015)', url: 'https://www.bls.gov/soc/ISCO_SOC_Crosswalk.xls', page: 'https://www.bls.gov/soc/soccrosswalks.htm', license: 'US public domain', file: 'isco_soc.xls' },
+  soc10_18: { name: 'BLS 2010 SOC to 2018 SOC crosswalk', url: 'https://www.bls.gov/soc/2018/soc_2010_to_2018_crosswalk.xlsx', page: 'https://www.bls.gov/soc/2018/crosswalks_used_by_agencies.htm', license: 'US public domain', file: 'soc10_18.xlsx' },
+  ilo: { name: 'ILO WP140 Gmyrek et al. (2025) GenAI task scores, ISCO-08', url: 'https://raw.githubusercontent.com/pgmyrek/2025_GenAI_scores_ISCO08/main/Final_Scores_ISCO08_Gmyrek_et_al_2025.xlsx', page: 'https://doi.org/10.54394/HETP0387', license: 'CC BY 4.0 (ILO); adaptation disclaimer required', file: 'ilo2025.xlsx' },
+  noc_soc: { name: 'StatCan NOC 2016 V1.3 to SOC 2018 (US) correspondence', url: 'https://www.statcan.gc.ca/en/statistical-programs/document/noc2016v1_3-soc2018us-eng.csv', page: 'https://www.statcan.gc.ca/en/statistical-programs/document/noc2016v1_3-soc2018US', license: 'Statistics Canada Open Licence', file: 'noc16_soc18.csv' },
+  noc16_21: { name: 'StatCan NOC 2016 V1.3 to NOC 2021 V1.0 correspondence', url: 'https://www.statcan.gc.ca/en/statistical-programs/document/noc2016v1_3-noc2021v1_0-eng.csv', page: 'https://www.statcan.gc.ca/en/statistical-programs/document/noc2016v1_3-noc2021v1_0', license: 'Statistics Canada Open Licence', file: 'noc16_21.csv' },
+  oasis: { name: 'ESDC OaSIS 2025 v1.0 Main Duties (NOC 2021)', url: OASIS + '92e4107e-a804-4126-85ec-1fca23b82d81/download/main-duties_oasis-2025_v1.1.csv', page: 'https://open.canada.ca/data/en/dataset/10ce43bd-fb58-4969-806b-4bffebc87bec', license: 'Open Government Licence - Canada', file: 'oasis_duties.csv' },
+  oasis_labels: { name: 'ESDC OaSIS 2025 v1.0 Labels', url: OASIS + 'af53ca1d-5efc-4e52-ad42-9b858a4507c6/download/labels_oasis_2025_v1.1.csv', page: 'https://open.canada.ca/data/en/dataset/10ce43bd-fb58-4969-806b-4bffebc87bec', license: 'Open Government Licence - Canada', file: 'oasis_labels.csv' },
+  nice: { name: 'NIST NICE Framework Components v2.2.0 (SP 800-181r1)', url: 'https://csrc.nist.gov/csrc/media/Projects/cprt/documents/nice/v2-2-0_nf_components.json', page: 'https://www.nist.gov/itl/applied-cybersecurity/nice/nice-framework-resource-center/nice-framework-current-versions', license: 'US public domain (NIST)', file: 'nice.json' },
+};
+// Curated NICE work role -> O*NET-SOC (no official crosswalk exists; title/definition match, weight 0.5, flagged)
+const NICE_MAP = {
+  '15-1212.00': ['PD-WRL-001', 'PD-WRL-003', 'PD-WRL-006', 'IO-WRL-006', 'OG-WRL-012'],
+  '15-1299.04': ['PD-WRL-007'], '15-1299.05': ['DD-WRL-001', 'DD-WRL-004'], '15-1299.06': ['PD-WRL-002', 'IN-WRL-002'],
+  '15-1244.00': ['IO-WRL-005', 'IO-WRL-004'], '15-1242.00': ['IO-WRL-002'], '15-1241.00': ['DD-WRL-001'],
+  '15-1299.08': ['DD-WRL-004', 'DD-WRL-002'], '15-1253.00': ['DD-WRL-007', 'DD-WRL-005'], '15-1252.00': ['DD-WRL-003'],
+  '11-3021.00': ['OG-WRL-014', 'OG-WRL-007'], '15-1232.00': ['IO-WRL-007'], '15-1231.00': ['IO-WRL-004'],
+};
+const MATCH_W = { exactMatch: 1, closeMatch: 0.8, narrowMatch: 0.6, broadMatch: 0.5 }; // relatedMatch excluded (not DOL-validated)
+const MISSING = []; // crosswalk ESCO concepts (built on v1.1.0) that the current ESCO release no longer has
+const r3 = (x) => (x == null ? null : Math.round(x * 1000) / 1000);
+
+async function fetchTo(file, url) {
+  const res = await fetch(url, { headers: { 'User-Agent': UA, From: 'drewsherman6@gmail.com' } });
+  if (!res.ok) throw new Error(`multisource: ${res.status} ${url}`);
+  const buf = Buffer.from(await res.arrayBuffer());
+  if (buf.length < 2000 || /Access Denied/.test(buf.slice(0, 2000).toString())) throw new Error('multisource: blocked ' + url);
+  fs.writeFileSync(path.join(CACHE, file), buf);
+}
+async function download(offline) {
+  fs.mkdirSync(path.join(CACHE, 'esco'), { recursive: true });
+  for (const s of Object.values(SRC)) if (s.file) {
+    const dest = path.join(CACHE, s.file);
+    if (!offline) { try { await fetchTo(s.file, s.url); } catch (e) { if (!fs.existsSync(dest)) throw e; console.warn(e.message, '(using cache)'); } }
+    s.retrieved_at = fs.statSync(dest).mtime.toLocaleDateString('en-CA');
+  }
+}
+async function escoVersion() {
+  try { const t = await (await fetch('https://esco.ec.europa.eu/en/use-esco/download', { headers: { 'User-Agent': UA } })).text(); return (t.match(/Current version:\s*ESCO (v[\d.]+)/) || [])[1] || null; } catch { return null; }
+}
+async function escoOccupations(uris, offline) {
+  const dir = path.join(CACHE, 'esco'); const verFile = path.join(dir, 'VERSION');
+  const ver = offline ? null : await escoVersion(); const prev = fs.existsSync(verFile) ? fs.readFileSync(verFile, 'utf8').trim() : null;
+  const stale = ver && prev && ver !== prev; // new ESCO release -> refetch everything
+  const todo = uris.filter((u) => stale || !fs.existsSync(path.join(dir, u.split('/').pop() + '.json')));
+  if (todo.length && !offline) {
+    console.log(`multisource: fetching ${todo.length} ESCO occupations (${ver || '?'})`);
+    let i = 0; const worker = async () => { while (i < todo.length) { const u = todo[i++]; for (let t = 0; t < 4; t++) { try {
+      const r = await fetch(`${SRC.esco_api.url}?uri=${encodeURIComponent(u)}&language=en`, { headers: { 'User-Agent': UA } }); if (r.status === 404) { fs.writeFileSync(path.join(dir, u.split('/').pop() + '.json'), JSON.stringify({ uri: u, missing: true })); break; } if (!r.ok) throw new Error(r.status);
+      const o = await r.json(); const L = o._links || {}; const pick = (a) => (a || []).map((x) => ({ uri: x.uri, title: x.title, skillType: x.skillType }));
+      fs.writeFileSync(path.join(dir, u.split('/').pop() + '.json'), JSON.stringify({ uri: u, title: o.title, code: o.code, status: o.status, isco: (L.broaderIscoGroup || []).map((x) => x.code), essential: pick(L.hasEssentialSkill), optional: pick(L.hasOptionalSkill) })); break;
+    } catch { await new Promise((z) => setTimeout(z, 1000 * (t + 1))); } } } };
+    await Promise.all(Array.from({ length: 8 }, worker));
+  }
+  if (ver) fs.writeFileSync(verFile, ver);
+  SRC.esco_api.version = ver || prev; SRC.esco_api.retrieved_at = today();
+  const m = new Map(); for (const u of uris) { const f = path.join(dir, u.split('/').pop() + '.json'); if (fs.existsSync(f)) { const d = JSON.parse(fs.readFileSync(f, 'utf8')); if (!d.missing) m.set(u, d); else MISSING.push(u); } }
+  return m;
+}
+
+// ---------- text normalization ----------
+const STOP = new Set('a an and or the of to in on for with by from as at into via using use their its it be is are other others such etc including include may e.g eg i.e ie all any each this that these those who which when where about'.split(' '));
+const stem = (w) => w.replace(/(ies)$/, 'y').replace(/(ing|ed|es|s)$/, (m, _p, off) => (off > 3 ? '' : m));
+const toks = (t) => new Set(String(t).toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').split(/\s+/).filter((w) => w && !STOP.has(w)).map(stem).filter((w) => w.length > 1));
+const jac = (a, b) => { if (!a.size || !b.size) return 0; let n = 0; for (const x of a) if (b.has(x)) n++; return n / (a.size + b.size - n); };
+const norm = (t) => [...toks(t)].sort().join(' ');
+
+function readCsv(f, opts = {}) { return parse(fs.readFileSync(path.join(CACHE, f), 'utf8').replace(/^\uFEFF/, ''), { relax_quotes: true, relax_column_count: true, skip_empty_lines: true, ...opts }); }
+function sheetRows(f, name) { const wb = XLSX.readFile(path.join(CACHE, f)); return XLSX.utils.sheet_to_json(wb.Sheets[name || wb.SheetNames[0]], { header: 1, defval: null }); }
+
+function crosswalks() {
+  // ESCO <-> O*NET
+  const rows = readCsv(SRC.esco_onet.file); const h = rows.findIndex((r) => r[0] === 'O*NET Id');
+  const escoByOnet = new Map(); const exactIsco = new Map(); let excluded = 0;
+  for (const r of rows.slice(h + 1)) { if (r[6] === 'exactISCO' && /\/isco\/C(\d{4})/.test(r[3] || '')) { (exactIsco.get(r[0]) || exactIsco.set(r[0], new Set()).get(r[0])).add(r[3].match(/C(\d{4})/)[1]); continue; } const w = MATCH_W[r[6]]; if (!r[3] || !/\/occupation\//.test(r[3])) continue; if (!w) { excluded++; continue; } (escoByOnet.get(r[0]) || escoByOnet.set(r[0], []).get(r[0])).push({ uri: r[3], title: r[4], match: r[6], w }); }
+  // SOC 2018 -> SOC 2010
+  const s1018 = sheetRows(SRC.soc10_18.file); const soc18to10 = new Map();
+  for (const r of s1018) if (/^\d{2}-\d{4}$/.test(String(r[0]).trim()) && /^\d{2}-\d{4}$/.test(String(r[2]).trim())) { const k = String(r[2]).trim(); (soc18to10.get(k) || soc18to10.set(k, new Set()).get(k)).add(String(r[0]).trim()); }
+  // SOC 2010 -> ISCO
+  const wb = XLSX.readFile(path.join(CACHE, SRC.isco_soc.file)); const sn = wb.SheetNames.find((n) => /SOC to ISCO/i.test(n));
+  const soc10toIsco = new Map();
+  for (const r of XLSX.utils.sheet_to_json(wb.Sheets[sn], { header: 1, defval: null })) { const s = String(r[0] || '').trim(), i = String(r[3] || '').trim(); if (/^\d{2}-\d{4}$/.test(s) && /^\d{4}$/.test(i)) (soc10toIsco.get(s) || soc10toIsco.set(s, new Set()).get(s)).add(i); }
+  // SOC 2018 -> NOC 2016 -> NOC 2021
+  const soc18toNoc16 = new Map();
+  for (const r of readCsv(SRC.noc_soc.file, { from_line: 2 })) { const n = String(r[0]).trim(), s = String(r[3]).trim(); if (/^\d{4}$/.test(n) && /^\d{2}-\d{4}$/.test(s)) (soc18toNoc16.get(s) || soc18toNoc16.set(s, new Set()).get(s)).add(n); }
+  const noc16to21 = new Map();
+  for (const r of readCsv(SRC.noc16_21.file, { from_line: 2 })) { const a = String(r[0]).trim(), b = String(r[3]).trim(); if (/^\d{4}$/.test(a) && /^\d{5}$/.test(b)) (noc16to21.get(a) || noc16to21.set(a, new Set()).get(a)).add(b); }
+  return { escoByOnet, exactIsco, excluded, soc18to10, soc10toIsco, soc18toNoc16, noc16to21 };
+}
+
+async function run(opts = {}) {
+  const offline = opts.offline ?? process.argv.includes('--offline');
+  await download(offline);
+  const X = crosswalks();
+  const escoUris = [...new Set([...X.escoByOnet.values()].flat().map((x) => x.uri))];
+  const esco = await escoOccupations(escoUris, offline);
+  // ILO tasks by ISCO
+  const iloRows = sheetRows(SRC.ilo.file); const ih = iloRows[0]; const col = (n) => ih.indexOf(n);
+  const iloByIsco = new Map();
+  for (const r of iloRows.slice(1)) { const isco = String(r[col('ISCO_08')]).padStart(4, '0'); const s = r[col('score_2025')]; if (s == null) continue; (iloByIsco.get(isco) || iloByIsco.set(isco, []).get(isco)).push({ id: `${isco}-${r[col('taskID')]}`, text: String(r[col('Task_ISCO')]).replace(/;\s*$/, ''), score: Number(s) }); }
+  // OaSIS duties by NOC 2021 unit
+  const duties = new Map();
+  for (const r of readCsv(SRC.oasis.file, { delimiter: ';', from_line: 2 })) { const noc = String(r[0]).slice(0, 5); (duties.get(noc) || duties.set(noc, []).get(noc)).push({ profile: r[0], text: String(r[1]).trim() }); }
+  // NICE
+  const nice = JSON.parse(fs.readFileSync(path.join(CACHE, SRC.nice.file), 'utf8'));
+  const el = new Map(nice.elements.map((e) => [e.element_identifier, e]));
+  const niceTasks = new Map();
+  for (const rel of nice.relationships) { const d = el.get(rel.dest_element_identifier); if (d?.element_type === 'task' && /WRL/.test(rel.source_element_identifier)) (niceTasks.get(rel.source_element_identifier) || niceTasks.set(rel.source_element_identifier, []).get(rel.source_element_identifier)).push(d); }
+  SRC.nice.version = nice.documents?.[0]?.version;
+
+  // ---------- per occupation ----------
+  const idx = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/occupations/index.json'), 'utf8')).occupations;
+  const shards = new Map();
+  for (const g of [...new Set(idx.map((o) => o.shard))]) for (const o of JSON.parse(fs.readFileSync(path.join(ROOT, g), 'utf8')).occupations) shards.set(o.code, o);
+  const occs = [];
+  for (const ix of idx) {
+    const o = shards.get(ix.code); const soc18 = o.code.slice(0, 7);
+    const st = []; // raw statements before dedupe
+    const maxTime = Math.max(0, ...o.tasks.map((t) => t.time_share || 0));
+    for (const t of o.tasks) st.push({ text: t.text, kind: 'task', src: { source: 'onet', ref: t.id, via: o.code, match: 'native', w: maxTime ? Math.max(t.time_share || 0, 0.001) / maxTime : 1 }, ai_direct: t.ai_task_penetration ?? null, rob_direct: t.robot_tier ? Number(String(t.robot_tier).slice(1)) / 3 : (t.robot_tier === null && t.time_share != null ? null : null), tier: t.robot_tier });
+    // ESCO
+    const escoOccs = (X.escoByOnet.get(o.code) || []).filter((m) => esco.has(m.uri));
+    const escoIsco = new Set();
+    for (const m of escoOccs) { const e = esco.get(m.uri); e.isco.forEach((c) => escoIsco.add(String(c).slice(0, 4)));
+      for (const [lst, ew] of [[e.essential, 1], [e.optional, 0.5]]) for (const s of lst) st.push({ text: s.title, kind: /knowledge/.test(s.skillType || '') ? 'knowledge' : 'skill', esco_uri: s.uri, src: { source: 'esco', ref: s.uri, via: m.uri, match: m.match, essential: ew === 1, w: m.w * ew } }); }
+    // ILO via ISCO
+    const soc10 = X.soc18to10.get(soc18) || new Set([soc18]);
+    let isco = new Set([...soc10].flatMap((s) => [...(X.soc10toIsco.get(s) || [])]));
+    const inter = [...isco].filter((c) => escoIsco.has(c)); let iscoBasis = inter.length ? 'bls_crosswalk∩esco_isco' : 'bls_crosswalk';
+    if (inter.length) isco = new Set(inter);
+    if (X.exactIsco.has(o.code)) { isco = X.exactIsco.get(o.code); iscoBasis = 'esco_onet_exactISCO'; }
+    for (const c of isco) for (const t of iloByIsco.get(c) || []) st.push({ text: t.text, kind: 'task', src: { source: 'ilo', ref: t.id, via: c, match: iscoBasis, w: 1 / isco.size }, ai_direct_ilo: t.score });
+    // OaSIS via NOC
+    const noc21 = new Set([...(X.soc18toNoc16.get(soc18) || [])].flatMap((n) => [...(X.noc16to21.get(n) || [])]));
+    for (const n of noc21) for (const d of duties.get(n) || []) st.push({ text: d.text, kind: 'duty', src: { source: 'oasis', ref: d.profile, via: n, match: 'statcan_concordance', w: 1 / noc21.size } });
+    // NICE
+    for (const wr of NICE_MAP[o.code] || []) for (const t of niceTasks.get(wr) || []) st.push({ text: t.text, kind: 'task', src: { source: 'nice', ref: t.element_identifier, via: wr, via_title: el.get(wr)?.title, match: 'curated_title', w: 0.5 } });
+    // ---- dedupe: ESCO URI, exact normalized text, then Jaccard within occupation ----
+    const merged = [];
+    const byKey = new Map();
+    for (const s of st) {
+      s.tok = toks(s.text); const key = s.esco_uri || norm(s.text);
+      let m = byKey.get(key);
+      if (!m) m = merged.find((x) => x.kind !== 'knowledge' && s.kind !== 'knowledge' && jac(x.tok, s.tok) >= DEDUPE_J);
+      if (m) { if (!m.sources.some((z) => z.source === s.src.source && z.ref === s.src.ref)) m.sources.push(s.src); else { const z = m.sources.find((q) => q.source === s.src.source && q.ref === s.src.ref); z.w = Math.max(z.w, s.src.w); }
+        if (s.ai_direct != null && m.ai_onet == null) m.ai_onet = s.ai_direct; if (s.ai_direct_ilo != null) m.ai_ilo = Math.max(m.ai_ilo ?? 0, s.ai_direct_ilo); if (s.tier && !m.tier) m.tier = s.tier; continue; }
+      m = { text: s.text, kind: s.kind, tok: s.tok, esco_uri: s.esco_uri || null, sources: [s.src], ai_onet: s.ai_direct ?? null, ai_ilo: s.ai_direct_ilo ?? null, tier: s.tier || null, onet_task: s.src.source === 'onet' };
+      merged.push(m); byKey.set(key, m);
+    }
+    occs.push({ o, merged, isco: [...isco], iscoBasis, noc21: [...noc21], escoOccs, soc10: [...soc10] });
+  }
+  // ---------- calibration: percentiles per direct source ----------
+  const all = occs.flatMap((x) => x.merged);
+  const pctOf = (vals) => { const s = vals.slice().sort((a, b) => a - b); return (v) => { let lo = 0, hi = s.length; while (lo < hi) { const m = (lo + hi) >> 1; if (s[m] < v) lo = m + 1; else hi = m; } return lo / s.length; }; }; // share of the source's statements scoring strictly lower (zero -> 0)
+  const pOnet = pctOf(all.filter((m) => m.ai_onet != null).map((m) => m.ai_onet));
+  const pIlo = pctOf(all.filter((m) => m.ai_ilo != null).map((m) => m.ai_ilo));
+  const SOURCES = ['onet', 'esco', 'ilo', 'oasis', 'nice'];
+  const out = []; const cov = Object.fromEntries(SOURCES.map((s) => [s, 0]));
+  for (const { o, merged, isco, iscoBasis, noc21, escoOccs, soc10 } of occs) {
+    const donorsAi = merged.filter((m) => m.ai_onet != null || m.ai_ilo != null); const donorsRob = merged.filter((m) => m.onet_task && m.tier);
+    const onetRated = merged.filter((m) => m.onet_task && (m.tier || o.tasks.find((t) => t.text === m.text)?.time_share != null));
+    let id = 0;
+    const stmts = merged.map((m) => {
+      let ai = null;
+      if (m.ai_onet != null || m.ai_ilo != null) { const ps = [m.ai_onet != null ? pOnet(m.ai_onet) : null, m.ai_ilo != null ? pIlo(m.ai_ilo) : null].filter((x) => x != null); ai = { pct: r3(ps.reduce((a, b) => a + b, 0) / ps.length), anthropic_penetration: m.ai_onet, ilo_2025: m.ai_ilo, basis: 'direct' }; }
+      else { let best = null, bj = 0; for (const d of donorsAi) { const j = jac(m.tok, d.tok); if (j > bj) { bj = j; best = d; } } if (best && bj >= TRANSFER_J) { const ps = [best.ai_onet != null ? pOnet(best.ai_onet) : null, best.ai_ilo != null ? pIlo(best.ai_ilo) : null].filter((x) => x != null); ai = { pct: r3(ps.reduce((a, b) => a + b, 0) / ps.length), anthropic_penetration: best.ai_onet, ilo_2025: best.ai_ilo, basis: 'transferred', from: best.text.slice(0, 120), similarity: r3(bj) }; } }
+      let rob = null;
+      if (m.onet_task) { const t = o.tasks.find((q) => q.text === m.text); if (t && (t.robot_tier || t.time_share != null)) rob = { tier: m.tier || 'E0', score: m.tier ? Number(m.tier.slice(1)) / 3 : 0, basis: 'direct' }; }
+      if (!rob && m.kind !== 'knowledge') { let best = null, bj = 0; for (const d of onetRated) { const j = jac(m.tok, d.tok); if (j > bj) { bj = j; best = d; } } if (best && bj >= TRANSFER_J) rob = { tier: best.tier || 'E0', score: best.tier ? Number(best.tier.slice(1)) / 3 : 0, basis: 'transferred', from: best.text.slice(0, 120), similarity: r3(bj) }; }
+      const w = Math.max(...m.sources.map((s) => s.w));
+      return { id: `${o.code}#${++id}`, text: m.text, kind: m.kind, esco_uri: m.esco_uri, sources: m.sources.map((s) => ({ ...s, w: r3(s.w) })), n_sources: new Set(m.sources.map((s) => s.source)).size, weight: r3(w), ai, robotics: rob };
+    });
+    const bySrc = {}; const blendParts = []; const robParts = [];
+    for (const s of SOURCES) {
+      const mine = stmts.filter((x) => x.sources.some((z) => z.source === s)); if (mine.length) cov[s]++;
+      const wOf = (x) => x.sources.filter((z) => z.source === s).reduce((a, z) => Math.max(a, z.w), 0);
+      const sa = mine.filter((x) => x.ai); const sr = mine.filter((x) => x.robotics);
+      const wm = (arr, f) => { const W = arr.reduce((a, x) => a + wOf(x), 0); return W ? arr.reduce((a, x) => a + wOf(x) * f(x), 0) / W : null; };
+      const aiv = wm(sa, (x) => x.ai.pct); const rv = wm(sr, (x) => x.robotics.score);
+      // blend uses directly-scored statements only (transferred scores repeat a donor and are display-only)
+      const dir = s === 'onet' ? sa.filter((x) => x.ai.basis === 'direct' && x.ai.anthropic_penetration != null) : s === 'ilo' ? sa.filter((x) => x.ai.basis === 'direct' && x.ai.ilo_2025 != null) : [];
+      const dv = s === 'onet' ? wm(dir, (x) => pOnet(x.ai.anthropic_penetration)) : s === 'ilo' ? wm(dir, (x) => pIlo(x.ai.ilo_2025)) : null;
+      const rdir = sr.filter((x) => x.robotics.basis === 'direct'); const drv = s === 'onet' ? wm(rdir, (x) => x.robotics.score) : null;
+      bySrc[s] = { statements: mine.length, ai_scored: sa.length, ai_direct: sa.filter((x) => x.ai.basis === 'direct').length, robotics_scored: sr.length, ai_pct_mean: r3(aiv), robotics_mean: r3(rv), ai_direct_pct_mean: r3(dv) };
+      if (dv != null) blendParts.push(dv); if (drv != null) robParts.push(drv);
+    }
+    const blendAi = blendParts.length ? r3(blendParts.reduce((a, b) => a + b, 0) / blendParts.length) : null;
+    const blendRob = robParts.length ? r3(robParts.reduce((a, b) => a + b, 0) / robParts.length) : null;
+    out.push({ code: o.code, title: o.title, crosswalk: { esco: escoOccs.map((m) => ({ uri: m.uri, title: m.title, match: m.match, weight: m.w })), soc2010: soc10, isco08: isco, isco_basis: iscoBasis, noc2021: noc21, nice_work_roles: NICE_MAP[o.code] || [] },
+      summary: { statements: stmts.length, by_source: bySrc, multi_source_statements: stmts.filter((x) => x.n_sources > 1).length, ai_scored: stmts.filter((x) => x.ai).length, robotics_scored: stmts.filter((x) => x.robotics).length },
+      blend: { ai_pct: blendAi, ai_sources: blendParts.length, robotics: blendRob, robotics_sources: robParts.length, current_ai_composite: o.exposure.ai.composite?.value ?? null, current_robot_index: o.exposure.robotics.anthropic_robot_exposure_index ?? null, primary: 'current' },
+      statements: stmts });
+  }
+  // ---------- write ----------
+  const meta = { dataset: 'multisource_statements', schema_version: '1.0.0', generated: today(), sources: SRC, esco_concepts_not_in_current_release: MISSING.length,
+    method: { dedupe: `ESCO skill URI identity; then identical normalized text (lowercase, punctuation/stopwords removed, light suffix stemming, sorted token set); then token-set Jaccard >= ${DEDUPE_J} within the occupation (knowledge items only merge by URI/text). Deterministic and offline; no embeddings.`,
+      crosswalk_weights: 'ESCO match type: exact 1.0, close 0.8, narrow 0.6, broad 0.5 (relatedMatch excluded: not validated by US DOL); ESCO optional skills x0.5. ILO/OaSIS: 1/n of mapped ISCO groups / NOC units. ISCO groups = BLS SOC2010->ISCO-08 list, intersected with the ISCO groups of the ESCO occupations mapped to this O*NET code when that intersection is non-empty. NICE: 0.5, curated title mapping (no official SOC crosswalk). O*NET tasks: Anthropic time share / the occupation max (equal weights when missing).',
+      exposure: `Only published scores. AI direct: Anthropic Economic Index task penetration (O*NET tasks) and ILO WP140 2025 task score (ISCO tasks). Robotics direct: Anthropic robot exposure tier E0-E3 on O*NET tasks (score = tier/3). Others inherit from the most lexically similar directly-scored statement in the same occupation when Jaccard >= ${TRANSFER_J} (basis "transferred", donor and similarity recorded); otherwise null. Calibration: each AI source -> its own percentile (share of that source's statements scoring strictly lower, so a zero score stays 0; statements with both: mean).`,
+      blend: 'AI: unweighted mean of two independent task-level sources, each weight-averaged over its directly-scored statements: O*NET tasks (Anthropic penetration percentile, time-share weights) and ISCO-08 tasks (ILO 2025 percentile, 1/n ISCO weights). ESCO/OaSIS/NICE statements carry transferred scores for display but do not vote (no published task score of their own). Robotics: only O*NET tasks carry a published robot tier, so the robotics blend equals the O*NET task mean. EXPERIMENTAL: the current O*NET composite stays primary until sign-off.' } };
+  const outDir = path.join(ROOT, 'data/multisource'); fs.mkdirSync(outDir, { recursive: true });
+  // one small file per occupation (the app fetches only the job it shows); sources/method live in index.json
+  const occDir = path.join(outDir, 'occ'); fs.rmSync(occDir, { recursive: true, force: true }); fs.mkdirSync(occDir, { recursive: true });
+  for (const x of out) fs.writeFileSync(path.join(occDir, `${x.code}.json`), JSON.stringify({ dataset: 'multisource_occupation', schema_version: '1.0.0', generated: meta.generated, index: 'data/multisource/index.json', ...x }));
+  for (const f of fs.readdirSync(outDir)) if (/^\d\d\.json$/.test(f)) fs.rmSync(path.join(outDir, f));
+  const counts = out.map((x) => x.summary.statements).sort((a, b) => a - b);
+  fs.writeFileSync(path.join(outDir, 'index.json'), JSON.stringify({ ...meta, count: out.length, coverage_by_source: cov, statements_per_occupation: { min: counts[0], median: counts[counts.length >> 1], max: counts[counts.length - 1], mean: r3(counts.reduce((a, b) => a + b, 0) / counts.length) },
+    occupations: out.map((x) => ({ code: x.code, title: x.title, file: `data/multisource/occ/${x.code}.json`, statements: x.summary.statements, sources: Object.entries(x.summary.by_source).filter(([, v]) => v.statements).map(([k]) => k), blend: x.blend })) }, null, 0));
+  writeComparison(out, cov, counts);
+  console.log(`multisource: ${out.length} occupations; statements min ${counts[0]} median ${counts[counts.length >> 1]} max ${counts[counts.length - 1]}; coverage ${JSON.stringify(cov)}`);
+  return out;
+}
+
+function writeComparison(out, cov, counts) {
+  const rank = (arr, f) => { const v = arr.filter((x) => f(x) != null).map(f).sort((a, b) => a - b); return (x) => (f(x) == null ? null : (v.filter((q) => q < f(x)).length + v.filter((q) => q === f(x)).length / 2) / v.length); };
+  const rc = rank(out, (x) => x.blend.current_ai_composite); const rb = rank(out, (x) => x.blend.ai_pct);
+  const rows = out.filter((x) => x.blend.ai_pct != null && x.blend.current_ai_composite != null).map((x) => ({ x, cur: rc(x), nb: rb(x), d: rb(x) - rc(x) }));
+  const n = rows.length; const mc = rows.reduce((a, r) => a + r.cur, 0) / n, mb = rows.reduce((a, r) => a + r.nb, 0) / n;
+  const corr = rows.reduce((a, r) => a + (r.cur - mc) * (r.nb - mb), 0) / Math.sqrt(rows.reduce((a, r) => a + (r.cur - mc) ** 2, 0) * rows.reduce((a, r) => a + (r.nb - mb) ** 2, 0));
+  const band = (p) => (p >= 2 / 3 ? 'High' : p >= 1 / 3 ? 'Moderate' : 'Low');
+  const moved = rows.filter((r) => band(r.cur) !== band(r.nb));
+  const robRows = out.filter((x) => x.blend.robotics != null && x.blend.current_robot_index != null);
+  const rr = robRows.map((x) => ({ x, d: x.blend.robotics - x.blend.current_robot_index / 3 }));
+  const fmt = (r) => `| ${r.x.code} | ${r.x.title} | ${(r.cur * 100).toFixed(0)} | ${(r.nb * 100).toFixed(0)} | ${r.d > 0 ? '+' : ''}${(r.d * 100).toFixed(0)} | ${Object.entries(r.x.summary.by_source).filter(([, v]) => v.ai_direct_pct_mean != null).map(([k, v]) => `${k} ${(v.ai_direct_pct_mean * 100).toFixed(0)}`).join(', ')} |`;
+  const top = rows.slice().sort((a, b) => b.d - a.d);
+  const md = `# Blended multi-source exposure vs current score (all ${out.length} occupations)
+
+Generated ${today()} by \`scripts/multisource.js\`. **Experimental. The current O*NET composite remains the primary score; nothing here changes the live risk level until Drew signs off.**
+
+- Statements per occupation: min ${counts[0]}, median ${counts[counts.length >> 1]}, max ${counts[counts.length - 1]}.
+- Coverage (occupations with at least one statement from the source): ${Object.entries(cov).map(([k, v]) => `${k} ${v}`).join(', ')}.
+- Compared on rank (percentile among ${n} occupations with both scores), since the blend is a mean of task percentiles and the composite a mean of occupation percentiles.
+- Rank correlation (Pearson on percentile ranks = Spearman): **${corr.toFixed(3)}**.
+- Mean absolute rank change: ${(rows.reduce((a, r) => a + Math.abs(r.d), 0) / n * 100).toFixed(1)} points; ${rows.filter((r) => Math.abs(r.d) >= 0.2).length} occupations move 20+ points.
+- Tercile band (Low/Moderate/High by rank) would change for ${moved.length} of ${n} occupations (${moved.filter((r) => r.nb > r.cur).length} up, ${moved.filter((r) => r.nb < r.cur).length} down).
+- Robotics: no added source publishes task-level robot scores (ILO WP140 is GenAI only), so the robotics value is the O*NET/Anthropic task mean and matches the current index (mean difference ${(rr.reduce((a, r) => a + r.d, 0) / rr.length).toFixed(3)} over ${robRows.length} occupations). ESCO/OaSIS/NICE statements show robot tiers transferred from the closest O*NET task for display only.
+- The two AI sources measure different things: Anthropic = observed Claude usage on O*NET tasks; ILO = expert/LLM-rated technical potential of ISCO-08 tasks. Large moves mostly come from jobs where they disagree (e.g. postal and gambling work: no observed AI use, but ILO rates the ISCO tasks as automatable), or from jobs with no ILO tasks where the blend is O*NET-task-only while the current composite also uses occupation-level Eloundou and Felten measures.
+- ESCO concepts in the 2022 crosswalk that the current ESCO release no longer contains (skipped): ${MISSING.length}.
+
+## Largest increases (blend ranks the job as more AI-exposed)
+| Code | Title | Current rank | Blend rank | Δ | Direct-source AI (pct) |
+|---|---|---|---|---|---|
+${top.slice(0, 25).map(fmt).join('\n')}
+
+## Largest decreases
+| Code | Title | Current rank | Blend rank | Δ | Direct-source AI (pct) |
+|---|---|---|---|---|---|
+${top.slice(-25).reverse().map(fmt).join('\n')}
+
+## Full table
+| Code | Title | Current rank | Blend rank | Δ | Direct-source AI (pct) |
+|---|---|---|---|---|---|
+${rows.slice().sort((a, b) => a.x.code.localeCompare(b.x.code)).map(fmt).join('\n')}
+${out.filter((x) => x.blend.ai_pct == null || x.blend.current_ai_composite == null).length ? `\nNot comparable (missing one score): ${out.filter((x) => x.blend.ai_pct == null || x.blend.current_ai_composite == null).map((x) => x.code).join(', ')}\n` : ''}`;
+  fs.writeFileSync(path.join(ROOT, 'docs/BLEND_COMPARISON.md'), md);
+}
+module.exports = { run, toks, jac, norm };
+if (require.main === module) run().catch((e) => { console.error(e); process.exit(1); });
