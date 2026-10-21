@@ -111,3 +111,14 @@ What improved and what didn't:
   - Truck Drivers lost Bus and Truck Mechanics from the top 5. The fit and hub factors favour other operator roles.
   - Cashier targets are low-paid and only moderately less exposed.
   - High-paid, low-exposure medical roles (Oral and Maxillofacial Surgeons 97, Prosthodontists 91, Optometrists 91) are now the biggest hubs. Most of their sources are engineering and science jobs (17-, 19-), helped by the pay boost.
+
+## Third pass (gating, pay cap 1.08, hub relief), 2026-10-20
+
+| Job | Before (fcb1500) | After |
+|---|---|---|
+| Software Developers | Computer Hardware Engineers, Computer Network Architects, Blockchain Engineers, Information Security Engineers, RFID Device Specialists | Information Security Engineers, Blockchain Engineers, Computer Hardware Engineers, Computer and Information Systems Managers, Data Scientists |
+| Truck Drivers | Crane and Tower Operators, Tank Car/Truck/Ship Loaders, Rail Yard Engineers, Welders, Continuous Mining Machine Operators | Crane and Tower Operators, Bus and Truck Mechanics, Railroad Brake/Signal/Switch Operators, Tank Car/Truck/Ship Loaders, Continuous Mining Machine Operators |
+| Accountants and Auditors | Budget Analysts, Logistics Analysts, Purchasing Agents, Project Management Specialists, Fundraising Managers | Budget Analysts, Financial Examiners, Compensation/Benefits/Job Analysis Specialists, Logistics Analysts, Project Management Specialists |
+| Mechanical Engineers | Solar Energy Systems Engineers, Orthotists and Prosthetists, Dentists, Veterinarians, Prosthodontists | Solar Energy Systems Engineers, Biofuels Production Managers, Landscape Architects, Air Traffic Controllers, Solar Energy Installation Managers |
+
+Remaining hubs are mechanic and technician roles (four of them at the 101 cap). They are plausible destinations for many trades, but they are still heavily repeated.

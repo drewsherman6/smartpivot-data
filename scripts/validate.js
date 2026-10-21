@@ -106,6 +106,9 @@ try {
       if (!b.pay_missing) { const pct = (b.target_median_wage / b.current_median_wage - 1) * 100; if ((pct < -5.5 && !/Pay cut/.test(p.reason)) || (pct > 5.5 && !/Pay rise/.test(p.reason))) errors.push(`${o.code}: pathway ${p.code} pay wording contradicts ${pct.toFixed(1)}%`); }
       for (const gp of p.skill_gaps) { const m = o.skills.find((s) => s.name === gp.skill); if (m && (m.level == null || gp.your_level !== Math.round(m.level * 1000) / 1000)) errors.push(`${o.code}: pathway ${p.code} gap ${gp.skill} ignores the user's own level`); }
       if (!p.growth_basis || p.growth_basis === 'detailed' || !p.task_shares?.target) errors.push(`${o.code}: pathway ${p.code} lacks growth_basis label or task_shares`);
+      { const G = PW.gated; const dh = p.code.startsWith(G.health_doctoral_prefix) && /doctoral|professional degree/i.test(t.bls.projections?.typical_education || '');
+        if ((dh || t.job_zone === G.zone) && !(o.job_zone >= G.min_source_zone && (o.code.slice(0, 2) === p.code.slice(0, 2) || ((dh || p.code.startsWith('29')) && G.health_science_families.includes(o.code.slice(0, 2)))))) errors.push(`${o.code}: gated move into ${p.code} (job zone 5 / doctoral health)`); }
+      if (b.pay_factor > PW.pay.max + 1e-9) errors.push(`${o.code}: pathway ${p.code} pay_factor above cap`);
       targetUse.set(p.code, (targetUse.get(p.code) || 0) + 1);
       const re = b.safe_overlap * b.exposure_factor * b.growth_factor * b.gap_factor * b.job_zone_factor * b.similarity_factor * b.onet_related_bonus * b.pay_factor * b.fit_factor * b.hub_factor;
       if (Math.abs(re - p.score) > 0.01) errors.push(`${o.code}: pathway ${p.code} score ${p.score} != product of breakdown ${re.toFixed(3)}`);
@@ -139,6 +142,7 @@ try {
   // No hub target: a job may be a future-proof pathway for at most ~10% of all occupations
   { const cap = Math.floor(recs.length * (PW.hub?.max_share ?? 0.1)) + 1; for (const [c, n] of targetUse) if (n > cap) errors.push(`${c} is a pathway for ${n} occupations (> ${cap}, ~10%)`); }
   try { const fam = readJson('data/signals/families.json'); fam.families.filter((f) => !f.title).forEach((f) => errors.push(`families.json: ${f.code} has no title`)); } catch (e) { errors.push(e.message); }
+  { const tr = byCode.get('53-3032.00'); const i = tr?.derived.future_proof_pathways.findIndex((p) => p.code === '49-3031.00'); if (!(i >= 0 && i < 3)) errors.push(`regression: Truck Drivers -> Bus and Truck Mechanics not in top 3 (rank ${i + 1})`); }
   if (!(PW.pay && PW.hub)) errors.push('skill_risk.json parameters lack pay/hub settings');
   // Safe overlap drives the ranking: of all multiplicative score factors it must have the largest spread (sd of ln factor)
   if (pathPairs.length > 100) {

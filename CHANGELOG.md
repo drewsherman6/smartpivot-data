@@ -2,6 +2,12 @@
 
 Machine-readable history: `data/history/changes.jsonl`. `scripts/update.js` appends entries here automatically.
 
+## 2026-10-20 (third pass) - Pathway gating, pay cap 1.08, hub relief
+- Job zone 5 / doctoral health targets are only reachable from job zone >= 4 sources in a related family (same major group; health or science sources for health targets). Surgeons, Prosthodontists and Optometrists are no longer hubs: they had 97 / 91 / 91 appearances and are now out of the top 10.
+- pay_factor capped at 1.08 (was 1.15).
+- Hub damping eased by skill-profile similarity, and O*NET related targets are exempt; the 10% per-target cap still applies. Truck Drivers -> Bus and Truck Mechanics is now #2.
+- Tests: no gated move, pay_factor <= cap, Truck Drivers -> Bus and Truck Mechanics in the top 3.
+
 ## 2026-10-20 (later) - Pathways: pay factor, hub damping, interest fit, reskilling routes
 - `future_proof_pathways` score adds `pay_factor` (log BLS median wage ratio, clamped 0.5-1.15; neutral + `pay_missing` when a wage is missing), `fit_factor` (O*NET RIASEC + specific interest areas; fit < 0.1 dropped) and `hub_factor` (IDF-style damping), plus a hard cap of 10% of occupations per target. Skill-profile similarity minimum raised from 0.30 to 0.35. Reasons now state pay. Top hubs before → after: Hearing Aid Specialists 220 → 57, Optometrists 185 → 91, Barbers 136 → <60 (not in top 10); the highest is now 97 (Oral and Maxillofacial Surgeons).
 - `skill_gaps` in pathways use the user's own level; suppressed levels are no longer treated as 0 (fixes "Programming level 0 to 3.38"); `already_strong` added.

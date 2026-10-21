@@ -249,3 +249,8 @@ This replaces the site's own skill-risk logic: the fixed 28-skill list, the "saf
   - The `reason` always starts with "Needs retraining".
   - Show these in a separate, clearly labelled "Reskilling routes" section. Never mix them into the future-proof list.
 - `families.json` and shard `major_group` for 55-0000 are now titled "Military Specific Occupations".
+
+### 8.2 Follow-up (2026-10-20, third pass): gating, pay cap, hub relief
+- **Gating:** a target in job zone 5, or a licensed doctoral health role (SOC 29-1xxx where BLS lists a doctoral or professional degree as typical education), is only eligible when the source job is job zone 4 or higher and in a related family. Related means the same SOC major group or, for health targets, a health (29) or science (19) source. This removes the surgeon, prosthodontist and optometrist hubs, which came from engineering jobs.
+- **Pay cap:** `pay_factor` is capped at 1.08 (it was 1.15). The floor stays at 0.5.
+- **Hub relief:** `hub_factor` = raw damping ^ (1 − 0.5 × skill-profile similarity), so a popular target is damped hard for unrelated sources and only lightly for closely related ones. O*NET related targets are exempt (`hub_factor` 1). The hard cap of 10% of jobs per target still applies. As a result, Truck Drivers now get Bus and Truck Mechanics at #2, and a test guards that it stays in the top 3.

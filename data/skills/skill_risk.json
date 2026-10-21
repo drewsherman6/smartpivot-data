@@ -63,7 +63,8 @@
   "bands": "safe: combined < 0.3; at_risk: combined >= 0.5; moderate otherwise. safe_skills / at_risk_skills list only skills with importance >= 2.5; the two lists are disjoint and contain skills only (never abilities or knowledge).",
   "exposure_vs_task_share_cards": "The pathway exposure (skill_risk_summary.occupation_combined, breakdown.target_combined_exposure) is the time-weighted average combined task risk: each task scores 0..1 for AI and robotics and is weighted by its time share. The task-share cards count tasks instead: exposure.ai.task_share.share = share of tasks with any Anthropic usage; exposure.robotics.exposed_task_share = share of tasks rated E1-E3. A job can have a high AI task share (many tasks touched) but lower combined risk (low penetration or little time on them), and vice versa. Each pathway carries task_shares.target / task_shares.current so both measures can be shown side by side.",
   "occupation_combined": "time-weighted mean of task combined risk (derived.skill_risk_summary.occupation_combined). This is the exposure figure used by the pathway search.",
-  "pathways": "Every occupation is a candidate (O*NET related gets a x1.1 bonus only). safe_overlap = importance x distinctiveness weighted share of the target's required skills (importance >= 2.5, at least the top 6) covered by the user's skills: credit 1 for safe, 0.5 for moderate, 0 for at_risk, times level match (1 at level >= target - 0.5, falling to 0 over 1.5 more points). score = safe_overlap x exposure_factor (1 - target combined exposure) x growth_factor (1 + min(growth%, 20)/40) x gap_factor (1 - 0.5 x min(1, mean level shortfall / 2)) x job_zone_factor x similarity_factor (0.5 + 0.5 x skill-profile cosine) x fit_factor (0.5 + 0.5 x mean of RIASEC-interest and specific-interest-area cosines) x pay_factor (clamp(1 + 0.4 x ln(target/current BLS median wage), 0.5, 1.15); 1 with pay_missing when a wage is missing) x hub_factor (max(0.5, 1 / (1 + 0.4 x ln(1 + appearances / 20))), appearances = sources with the target in their pre-damping top 30) x related_bonus. Eligible only if: target exposure <= source - 0.1 and <= 0.85 x source; BLS 2025-35 growth >= 0; safe_overlap >= 0.3; job zone within +2/-1; skill-profile similarity >= 0.35; interest fit >= 0.1 (when both jobs have interest data); not an \", All Other\" code. Slots are filled highest score first across all occupations and no target is kept for more than 10% of occupations. Top 10 kept.",
+  "pathways": "Every occupation is a candidate (O*NET related gets a x1.1 bonus only). safe_overlap = importance x distinctiveness weighted share of the target's required skills (importance >= 2.5, at least the top 6) covered by the user's skills: credit 1 for safe, 0.5 for moderate, 0 for at_risk, times level match (1 at level >= target - 0.5, falling to 0 over 1.5 more points). score = safe_overlap x exposure_factor (1 - target combined exposure) x growth_factor (1 + min(growth%, 20)/40) x gap_factor (1 - 0.5 x min(1, mean level shortfall / 2)) x job_zone_factor x similarity_factor (0.5 + 0.5 x skill-profile cosine) x fit_factor (0.5 + 0.5 x mean of RIASEC-interest and specific-interest-area cosines) x pay_factor (clamp(1 + 0.4 x ln(target/current BLS median wage), 0.5, 1.08); 1 with pay_missing when a wage is missing) x hub_factor (max(0.5, 1 / (1 + 0.4 x ln(1 + appearances / 20))) ^ (1 - 0.5 x skill-profile similarity), so a popular target is damped hard for unrelated sources and barely for closely related ones; O*NET related targets are exempt (hub_factor 1) because the related list is independent evidence the move is real; appearances = sources with the target in their pre-damping top 30) x related_bonus. Eligible only if: target exposure <= source - 0.1 and <= 0.85 x source; BLS 2025-35 growth >= 0; safe_overlap >= 0.3; job zone within +2/-1; skill-profile similarity >= 0.35; interest fit >= 0.1 (when both jobs have interest data); not an \", All Other\" code. Slots are filled highest score first across all occupations and no target is kept for more than 10% of occupations. Top 10 kept.",
+  "gating": "Targets in O*NET job zone 5, and licensed doctoral health roles (SOC 29-1xxx whose BLS typical education is a doctoral or professional degree), are only eligible when the source is job zone >= 4 AND in a related family: the same SOC major group, or, for health targets, a health (29) or science (19) source. Applies to future_proof and reskilling pathways.",
   "reskilling_pathways": "Only for occupations with fewer than 3 future_proof_pathways. Same eligibility, factors, hub damping and cap, but skill_fit credits every skill the user has at level (any risk band), needs skill_fit >= 0.4, and allows at most 4 new skills (target skills with a level gap >= 1). Each item has needs_retraining: true and new_skills[]; never mixed into future_proof_pathways. Top 5."
  },
  "parameters": {
@@ -96,14 +97,24 @@
    "pay": {
     "log_scale": 0.4,
     "min": 0.5,
-    "max": 1.15
+    "max": 1.08
    },
    "hub": {
     "top_k": 30,
     "df0": 20,
     "alpha": 0.4,
     "min": 0.5,
-    "max_share": 0.1
+    "max_share": 0.1,
+    "similarity_relief": 0.5
+   },
+   "gated": {
+    "zone": 5,
+    "health_doctoral_prefix": "29-1",
+    "health_science_families": [
+     "29",
+     "19"
+    ],
+    "min_source_zone": 4
    },
    "reskill": {
     "when_fewer_than": 3,
@@ -148,50 +159,50 @@
   "tasks_linked_to_skills": 21658,
   "occupations_with_safe_skills": 988,
   "occupations_with_at_risk_skills": 403,
-  "occupations_with_pathways": 833,
-  "occupations_with_3plus_pathways": 761,
-  "occupations_with_reskilling_pathways": 28,
-  "occupations_with_neither": 159,
+  "occupations_with_pathways": 815,
+  "occupations_with_3plus_pathways": 735,
+  "occupations_with_reskilling_pathways": 30,
+  "occupations_with_neither": 176,
   "top_hub_targets": [
    {
-    "title": "Oral and Maxillofacial Surgeons",
-    "appearances": 97
-   },
-   {
-    "title": "Prosthodontists",
-    "appearances": 91
-   },
-   {
-    "title": "Optometrists",
-    "appearances": 91
-   },
-   {
-    "title": "Wind Turbine Service Technicians",
-    "appearances": 81
-   },
-   {
-    "title": "Geothermal Technicians",
-    "appearances": 79
-   },
-   {
-    "title": "Diagnostic Medical Sonographers",
-    "appearances": 76
+    "title": "Motorboat Mechanics and Service Technicians",
+    "appearances": 101
    },
    {
     "title": "Bus and Truck Mechanics and Diesel Engine Specialists",
-    "appearances": 75
+    "appearances": 101
    },
    {
     "title": "Recreational Vehicle Service Technicians",
-    "appearances": 63
+    "appearances": 101
    },
    {
-    "title": "Motorboat Mechanics and Service Technicians",
-    "appearances": 60
+    "title": "Wind Turbine Service Technicians",
+    "appearances": 101
+   },
+   {
+    "title": "Industrial Machinery Mechanics",
+    "appearances": 83
+   },
+   {
+    "title": "Diagnostic Medical Sonographers",
+    "appearances": 81
+   },
+   {
+    "title": "Riggers",
+    "appearances": 80
    },
    {
     "title": "Segmental Pavers",
-    "appearances": 60
+    "appearances": 77
+   },
+   {
+    "title": "Rail Car Repairers",
+    "appearances": 74
+   },
+   {
+    "title": "Tree Trimmers and Pruners",
+    "appearances": 67
    }
   ],
   "occupations_inferred_tasks": 93
