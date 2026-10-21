@@ -107,7 +107,7 @@ for i,o in enumerate(A):
         if j is None: viol('pathway_target_unknown',f"{o['code']}->{p['code']}"); continue
         tag=f"{o['code']} {o['title'][:40]} -> {p['code']} {A[j]['title'][:40]} (tier {p['tier']})"
         if p['tier']==1: used[p['code']]+=1; listed[i].add(j)
-        if not (E[j]<E[i]-1e-9 or (p['tier']==3 and E[j]<=0.1+1e-9 and E[i]<=0.06+1e-9) or (p['tier']==3 and E[j]<=E[i]+1e-9)): viol('target_not_lower_exposure',tag+f" {E[i]:.3f}->{E[j]:.3f}")
+        if not (E[j]<E[i]-1e-9 or (p['tier']==3 and E[j]<=E[i]+0.1+1e-9 and E[i]<=sorted(E)[int(0.05*(len(E)-1))]+1e-9) or (p['tier']==3 and E[j]<=E[i]+1e-9)): viol('target_not_lower_exposure',tag+f" {E[i]:.3f}->{E[j]:.3f}")
         if np.isnan(G[j]) or G[j]<0: viol('target_growth_missing_or_negative',tag)
         if np.isnan(W[j]): viol('target_wage_missing',tag)
         if allother[j]: viol('target_is_All_Other',tag)

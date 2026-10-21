@@ -90,6 +90,9 @@ for c,o in occ.items():
     exp_t=S.get('ai_time',0)+S.get('robotics_time',0)
     C['band_'+band]+=1
     if exp_t>=0.5 and band!='at_risk': fail('headline_below_High_but_>=50pct_time_exposed',f"{c} {o['title']}: {exp_t:.0%} time exposed, combined {comb:.2f} ({band})")
+    tw=sm.get('time_weighted') or {}
+    if tw.get('combined') is not None and tw['combined']>=0.5 and band!='at_risk': fail('headline_below_High_but_time_weighted_graded_exposure_>=50pct',f"{c} {o['title']}: time-weighted {tw['combined']:.3f}, combined {comb:.3f} ({band})")
+    if tw.get('combined') is not None and tw['combined']<0.3 and band=='at_risk': fail('headline_High_but_time_weighted_graded_exposure_<30pct',f"{c} {o['title']}: time-weighted {tw['combined']:.3f}, combined {comb:.3f}")
     if exp_t<0.1 and band=='at_risk': fail('headline_High_but_<10pct_time_exposed',f"{c} {o['title']}: {exp_t:.0%} time exposed, combined {comb:.2f}")
     ix=IDX.get(c)
     if ix is None: fail('missing_from_index',c)

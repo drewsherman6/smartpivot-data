@@ -71,6 +71,7 @@ try {
   let SR = null; try { SR = readJson('data/skills/skill_risk.json'); } catch (e) { errors.push(e.message); }
   const PW = SR?.parameters?.pathways || {};
   // skills_to_develop never repeats a skill the occupation already has strongly (future/core); deepen items need a real gap
+  const NFv = recs.map((o) => o.derived?.skill_risk_summary?.occupation_combined).filter((v) => v != null).sort((a, b) => a - b); const NFq = (p) => NFv[Math.floor(p * (NFv.length - 1))]; // near-floor percentiles (skill-risk.js)
   for (const o of recs) {
     const d = o.derived; const strong = new Set([...d.future_skills, ...d.core_skills].map((x) => x.skill));
     const dup = d.skills_to_develop.filter((x) => strong.has(x.skill)).map((x) => x.skill);
@@ -105,7 +106,7 @@ try {
       if (tier > 1) {
         const R = FB['tier' + tier]; const ov = tier === 2 ? b.safe_overlap : b.skill_fit;
         if (!t || !(t.bls.projections?.change_percent >= 0) || !(b.target_median_wage > 0)) errors.push(`${o.code}: fallback ${p.code} lacks growth/pay data`);
-        const lower = tier === 2 ? b.target_combined_exposure <= E - R.min_exposure_drop + 1e-9 && b.target_combined_exposure <= E * R.max_exposure_ratio + 1e-9 : b.target_combined_exposure < E - 1e-9 || (E <= R.near_floor_band && b.target_combined_exposure <= R.near_floor_target_max);
+        const lower = tier === 2 ? b.target_combined_exposure <= E - R.min_exposure_drop + 1e-9 && b.target_combined_exposure <= E * R.max_exposure_ratio + 1e-9 : b.target_combined_exposure < E - 1e-9 || (E <= NFq(R.near_floor_band_pct) + 1e-9 && b.target_combined_exposure <= E + R.near_floor_max_rise + 1e-9);
         if (!lower) errors.push(`${o.code}: fallback ${p.code} exposure ${b.target_combined_exposure} not below source ${E}`);
         if (tier === 2 && !(ov >= R.min_safe_overlap)) errors.push(`${o.code}: tier 2 ${p.code} overlap below ${R.min_safe_overlap}`);
         if (!p.reason.startsWith(`Tier ${tier} (`)) errors.push(`${o.code}: fallback ${p.code} reason not labelled with its tier`);

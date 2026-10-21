@@ -168,3 +168,21 @@ Fixes #2–#6 applied to all 1,016 jobs; #1 (headline vs breakdown) untouched pe
 | #5 technology detection (3,000 sample) | 2,981 | 3,000 |
 | #6 near-duplicate pairs J≥0.6 left | 119 | 111 (40 true cross-source duplicates merged; statements 151,397 → 151,357). Remaining pairs are distinct official rows (e.g. two ESCO skills, "teach languages" vs "teach sign language") and are kept. |
 | Supabase vs repo (p4) | 0 mismatches | 0 mismatches |
+
+
+## Issue #1 resolved: time weighting (Oct 21, 2026)
+
+Drew's decision: the headline AI and robotics scores must be weighted by how much time each job spends on each task. Implemented in `scripts/time-weighted.js` + `scripts/blend.js` (method: docs/BLEND_COMPARISON.md "Time weighting"; site: /method#time-weighting).
+
+| | Before | After |
+|---|---|---|
+| Low / Moderate / High | 576 / 355 / 85 | 383 / 468 / 165 |
+| Issue #1 jobs (>=50% flagged time, below High) | 311 | 252 (59 now High) |
+| Jobs with graded time-weighted exposure >= 50% but below High | n/a | 8 (headline 0.486-0.497, T 0.500-0.511) |
+| Heavy truck drivers 53-3032.00 | 0.347 Moderate | 0.516 High (robot T 0.505: 63% of time driving, tier E2) |
+| Customer service reps 43-4051.00 | 0.487 Moderate | 0.733 High (AI T 0.753) |
+| Software developers 15-1252.00 | 0.407 Moderate | 0.539 High (AI T 0.545) |
+| Fine artists 27-1013.00 | 0.217 Low | 0.501 High (T AI 0.391, robots 0.212) |
+| Floor sanders 47-2043.00 | 0.235 Low | 0.328 Moderate (robot T 0.333: all flagged tasks are tier E1) |
+
+Why 252 remain: the audit's "flagged time" counts a task as fully exposed on *any* AI use or *any* robot tier E1-E3; the headline now uses each task's graded exposure. In 240 of the 252, most of the flagged time is robot tier E1 only ("robots can do parts of it", strength 1/3), so their graded time-weighted exposure is below 50%. 7 sit at the line (T 0.500-0.508, headline 0.486-0.497 because the other measures keep 10%), 5 have partial-strength tasks. Per-job reasons: `docs/audit/time_weighting/residual311.md` (script `residual311.py`). The audit script p1 now also checks the graded rule (`headline_below_High_but_time_weighted_graded_exposure_>=50pct`: 8, all within 0.02).

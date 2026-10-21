@@ -30,7 +30,7 @@ Base raw URL: `https://raw.githubusercontent.com/drewsherman6/smartpivot-data/ma
 | `data/robotics_manufacturers.json` | Major robot makers (industrial, cobot, humanoid, surgical, logistics, service, AV, ag, construction) |
 | `data/agent_platforms.json` | AI agent platforms; `onet_mapping.occupations[]` = every occupation the platform maps to (uncapped) |
 | `data/agents_by_occupation.json` | Reverse index: top 12 verified platforms per occupation |
-| `data/multisource/index.json`, `data/multisource/occ/<code>.json` | Multi-source work statements per occupation: O*NET tasks + ESCO skills (official ESCO-O*NET crosswalk) + ILO 2025 ISCO-08 tasks + Canada OaSIS/NOC 2021 duties + NIST NICE (curated), with source lists, crosswalk weights, dedupe and published AI/robot scores. Experimental blend (not primary). See docs/TAXONOMY_RESEARCH.md, docs/BLEND_COMPARISON.md |
+| `data/multisource/index.json`, `data/multisource/occ/<code>.json` | Multi-source work statements per occupation: O*NET tasks + ESCO skills (official ESCO-O*NET crosswalk) + ILO 2025 ISCO-08 tasks + Canada OaSIS/NOC 2021 duties + NIST NICE (curated), with source lists, crosswalk weights, dedupe and published AI/robot scores. Primary score: time-weighted multi-source headline (scripts/time-weighted.js, scripts/blend.js). See docs/TAXONOMY_RESEARCH.md, docs/BLEND_COMPARISON.md |
 | `data/signals/families.json` | Weekly per-family signals |
 | `data/headline_stats.json`, `data/occupations.json`, `data/emerging_skills.json` | Curated headline research (hand-sourced) |
 | Legacy (frozen shapes): `skills_export.json`, `skills_summary.json`, `risk_scoring_overlay.json`, `agentic_capabilities.json`, `robotics_capabilities.json`, `*.md` | Kept for existing UI code |

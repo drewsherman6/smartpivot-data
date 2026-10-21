@@ -295,6 +295,27 @@ Largest combined-risk changes:
 ${lv.slice().sort((a, b) => Math.abs(b.pb - b.pa) - Math.abs(a.pb - a.pa)).slice(0, 20).map((x) => `| ${x.c} | ${x.t} | ${x.pa} | ${x.pb} | ${x.a}${x.a !== x.b ? ' → ' + x.b : ''} |`).join('\n')}
 
 ` : '';
+  const tw = [...shards.values()].filter((o) => o.derived?.skill_risk_summary?.before_time_weighting).map((o) => { const S = o.derived.skill_risk_summary; return { c: o.code, t: o.title, a: bandOf(S.before_time_weighting.occupation_combined), b: bandOf(S.occupation_combined), pa: S.before_time_weighting.occupation_combined, pb: S.occupation_combined, twa: S.time_weighted?.ai, twr: S.time_weighted?.robotics, wa: S.time_weighted?.ai_weight, wr: S.time_weighted?.robotics_weight }; });
+  const twTrans = {}; for (const x of tw) if (x.a !== x.b) twTrans[`${x.a} → ${x.b}`] = (twTrans[`${x.a} → ${x.b}`] || 0) + 1;
+  const twSection = tw.length ? `## Time weighting (Drew, Oct 21, 2026)
+The headline AI and robotics scores are now weighted by **how much of the job's time each task takes**.
+
+1. **Time-weighted task exposure (T)**, AI and robotics separately: the sum over the job's tasks of *task time share × graded task exposure strength*. Time share = Anthropic Economic Index time share where published, otherwise 1/n, normalised to 100% (the same "% of time" shown in the task breakdown). Strength (0–1): AI = mean of Anthropic task penetration (observed use), Eloundou et al. task β (E1 = 1, E2 = 0.5) and verified-product targeting (1, only when the task has observed use); robotics = the larger of the Anthropic robot tier (E0–E3 → 0, ⅓, ⅔, 1) and the share of the task covered by commercial/deployed robots. Tasks with no evidence for a dimension are left out of it and their time is spread over the tasks that have evidence (never counted as 0); a job with no task evidence gets no T and uses the other measures alone. T is on the 0–1 "share of work exposed" scale the bands are defined on.
+2. **Every other measure is kept.** They are blended as before (percentiles, equal families, O*NET automation and Frey-Osborne at 0.5) and the blend is equipercentile-linked onto T's distribution (Kolen & Brennan, *Test Equating, Scaling, and Linking*, 2014), so both are on the same scale (O).
+3. **Headline = benefit-of-the-doubt weighting with weight restrictions** (Cherchye, Moesen, Rogge & Van Puyenbroeck 2007, *Social Indicators Research* 82:111–145; OECD/JRC *Handbook on Constructing Composite Indicators* 2008, §6.3): the weight on T is chosen between 0.5 and 0.9, whichever gives the job the higher score: headline = max(0.5·T + 0.5·O, 0.9·T + 0.1·O). Task evidence always has at least half the weight and dominates (90%) when it is stronger than the other measures; every other measure always keeps at least 10%. Combined = 1 − (1 − AI)(1 − robotics); bands unchanged (Low < 0.30, High ≥ 0.50); the market rule on the site is unchanged.
+
+| | Low | Moderate | High |
+|---|---|---|---|
+| Before time weighting (b37f3f7) | ${tw.filter((x) => x.a === 'Low').length} | ${tw.filter((x) => x.a === 'Moderate').length} | ${tw.filter((x) => x.a === 'High').length} |
+| Time-weighted (primary) | ${tw.filter((x) => x.b === 'Low').length} | ${tw.filter((x) => x.b === 'Moderate').length} | ${tw.filter((x) => x.b === 'High').length} |
+
+Level changed for **${tw.filter((x) => x.a !== x.b).length}** jobs: ${Object.entries(twTrans).map(([k, v]) => `${k} ${v}`).join(', ')}. T dominated (weight 0.9) for ${tw.filter((x) => x.wa === 0.9).length} AI and ${tw.filter((x) => x.wr === 0.9).length} robotics scores.
+
+| Code | Title | T AI | T robotics | Before | Now | Level |
+|---|---|---|---|---|---|---|
+${['53-3032.00', '43-4051.00', '15-1252.00', '27-1013.00', '47-2043.00', '29-1215.00', '25-2021.00'].map((c) => tw.find((x) => x.c === c)).filter(Boolean).map((x) => `| ${x.c} | ${x.t} | ${x.twa} | ${x.twr} | ${x.pa} | ${x.pb} | ${x.a}${x.a !== x.b ? ' → ' + x.b : ''} |`).join('\n')}
+
+` : '';
   const rankOf = (vals) => { const v = vals.filter((x) => x != null).sort((a, b) => a - b); return (x) => (x == null ? null : (v.filter((q) => q < x).length + (v.filter((q) => q === x).length) / 2) / v.length); };
   const ids = out.map((x) => x.code); const get = (c) => B.byCode.get(c);
   const band = (p) => (p >= 2 / 3 ? 'High' : p >= 1 / 3 ? 'Moderate' : 'Low');
@@ -319,9 +340,9 @@ ${lv.slice().sort((a, b) => Math.abs(b.pb - b.pa) - Math.abs(a.pb - a.pa)).slice
   const calR = Object.entries(B.calibration).filter(([k]) => /^(robot|onet_degree)[^~]*~(robot|onet_degree)/.test(k)).map(([k, v]) => `| ${k.replace('~', ' vs ')} | ${v.n} | ${v.rho.toFixed(2)} |`).join('\n');
   const md = `# Multi-source exposure score vs current score (all ${out.length} occupations)
 
-Generated ${today()} by \`scripts/multisource.js\` and \`scripts/blend.js\`. **The multi-source score is the PRIMARY score; Drew approved it on Oct 21, 2026.** "Current" in the tables below means the previous method (the O*NET composite and the Anthropic robot index), which is kept for comparison.
+Generated ${today()} by \`scripts/multisource.js\` and \`scripts/blend.js\`. **The multi-source score is the PRIMARY score; Drew approved it on Oct 21, 2026, and it is time-weighted since the same day (see below).** In the sections after "Time weighting", "multi-source" ranks refer to the full headline. "Current" in the tables below means the previous method (the O*NET composite and the Anthropic robot index), which is kept for comparison.
 
-${levelSection}
+${twSection}${levelSection}
 
 ## Method
 1. **Every available measure is used.** Each is converted to a mid-rank percentile across the ${out.length} occupations, so measures on different scales become comparable. That puts a β share, a 0–1 ILO score, an AIOE z-score, a 1–5 automation rating and a time share all on the same 0–1 scale.

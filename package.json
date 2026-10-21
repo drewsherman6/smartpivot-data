@@ -4,7 +4,7 @@
   "private": true,
   "description": "Versioned workforce x AI/robotics research datasets consumed by the SmartPivot frontend via raw GitHub URLs.",
   "scripts": {
-    "test": "node scripts/validate.js && node scripts/test-robot-links.js && node scripts/test-ai-links.js && node scripts/test-multisource.js",
+    "test": "node scripts/validate.js && node scripts/test-robot-links.js && node scripts/test-ai-links.js && node scripts/test-multisource.js && node scripts/test-time-weighted.js",
     "validate": "node scripts/validate.js",
     "update": "node scripts/update.js",
     "manifest": "node scripts/build-manifest.js",

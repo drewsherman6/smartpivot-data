@@ -14,6 +14,7 @@ const AdmZip = require('adm-zip');
 const { parse } = require('csv-parse/sync');
 const SRC = require('./sources');
 const { ROOT, today } = require('./lib');
+const TW = require('./time-weighted');
 
 const CACHE = path.join(ROOT, '.cache');
 const ROBOT_EXPOSED = new Set(['E1', 'E2', 'E3']);
@@ -81,10 +82,13 @@ function build() {
       // Display share: each task's weight / total weight, so per-task rows sum to 100% for every job (multi-donor "All Other"
       // jobs whose copied donor shares sum to 200-600%, and jobs where missing shares use the 1/n fallback). Raw time_share kept.
       for (const t of tasks) t.time_share_normalized = r3(weight(t) / W);
+      // graded exposure strength per task (0..1) and the job's time-weighted exposure (scripts/time-weighted.js)
+      const tr = new Map(TW.taskRows(o).map((r) => [r.id, r])); const twe = TW.twe(o);
+      for (const t of tasks) { const r = tr.get(t.id); t.ai_strength = r3(r?.ai ?? null); t.robotics_strength = r3(r?.robotics ?? null); t.ai_weighted = t.ai_strength == null ? null : r3(t.time_share_normalized * t.ai_strength); t.robotics_weighted = t.robotics_strength == null ? null : r3(t.time_share_normalized * t.robotics_strength); t.strength_evidence = r ? r.evidence : null; }
       const sumW = (pred) => r3(tasks.filter(pred).reduce((s, t) => s + weight(t), 0) / W);
       return { code: o.code, title: o.title, time_basis: tasks.every((t) => t.time_share != null) ? 'anthropic_time_share' : 'equal_weight_fallback',
         summary: { tasks: tasks.length, ai_tasks: tasks.filter((t) => t.ai_exposed).length, robotics_tasks: tasks.filter((t) => t.robotics_exposed).length, safe_tasks: tasks.filter((t) => t.group === 'safe').length, no_data_tasks: tasks.filter((t) => t.group === 'no_data').length,
-          ai_time: sumW((t) => t.ai_exposed), robotics_time: sumW((t) => t.robotics_exposed), safe_time: sumW((t) => t.group === 'safe'), tasks_with_dwa_links: tasks.filter((t) => t.dwas.length).length },
+          ai_time: sumW((t) => t.ai_exposed), robotics_time: sumW((t) => t.robotics_exposed), safe_time: sumW((t) => t.group === 'safe'), ai_time_weighted: twe.ai, robotics_time_weighted: twe.robotics, combined_time_weighted: twe.ai == null || twe.robotics == null ? null : r3(1 - (1 - twe.ai) * (1 - twe.robotics)), ai_evidence_time: twe.ai_coverage, robotics_evidence_time: twe.robotics_coverage, tasks_with_dwa_links: tasks.filter((t) => t.dwas.length).length },
         tasks,
         work_activities: list('gwa', (id) => gwaTitle.get(id), () => null),
         skills: list('skill', (id) => skills.get(id).name, (id) => skills.get(id).importance),
@@ -97,7 +101,7 @@ function build() {
   }
   return outs;
 }
-const METHOD = 'Per O*NET task: AI-exposed = Anthropic Economic Index task penetration > 0 (observed AI use); robotics-exposed = Anthropic robot exposure tier E1-E3; safe = rated in either source and neither; no_data = in neither source. Eloundou et al. (2023) GPT-4 label is shown as extra evidence (E1 direct, E2 with tools, E0 none). Time = Anthropic time_share (equal weights when missing). Work activities, skills and abilities are linked only through official O*NET 31.0 files: tasks_to_dwas, gwas_to_iwas_to_dwas, essential/transferable_skills_to_work_activities, abilities_to_work_activities; each element\'s ai_share / robotics_share / safe_share is the share of its linked task time in each group (a task\'s time is split evenly across its DWAs). Technology is occupation-level (O*NET has no task link).';
+const METHOD = 'Time weighting (drives the headline): each task has a time share (Anthropic time share where published, otherwise 1/n; normalised to sum to 100%) and a graded strength 0-1: AI = mean of Anthropic task penetration, Eloundou task beta (E1=1, E2=0.5) and verified-product targeting (1, only when the task has observed use); robotics = max of Anthropic robot tier (E0-E3 = 0, 1/3, 2/3, 1) and deployed-robot cover. ai_weighted / robotics_weighted = time share x strength; summary ai_time_weighted / robotics_time_weighted = their sum over tasks with evidence, divided by the time share of those tasks (tasks with no evidence are left out, not counted as 0). Per O*NET task: AI-exposed = Anthropic Economic Index task penetration > 0 (observed AI use); robotics-exposed = Anthropic robot exposure tier E1-E3; safe = rated in either source and neither; no_data = in neither source. Eloundou et al. (2023) GPT-4 label is shown as extra evidence (E1 direct, E2 with tools, E0 none). Time = Anthropic time_share (equal weights when missing). Work activities, skills and abilities are linked only through official O*NET 31.0 files: tasks_to_dwas, gwas_to_iwas_to_dwas, essential/transferable_skills_to_work_activities, abilities_to_work_activities; each element\'s ai_share / robotics_share / safe_share is the share of its linked task time in each group (a task\'s time is split evenly across its DWAs). Technology is occupation-level (O*NET has no task link).';
 function run() {
   const outDir = path.join(ROOT, 'data/exposure/task_breakdown'); fs.mkdirSync(outDir, { recursive: true });
   let n = 0;

@@ -53,7 +53,7 @@ const P = {
     fallback: {
       min_pathways: 3,
       tier2: { label: 'Relaxed thresholds', min_exposure_drop: 0.03, max_exposure_ratio: 0.95, min_safe_overlap: 0.15, min_similarity: 0.2, interest_fit_filter: false, require_wages: true },
-      tier3: { label: 'Broader move (retraining likely)', min_exposure_drop: 0, max_exposure_ratio: 1, min_skill_fit: 0, min_similarity: 0.1, similarity_percentile: 0.9, interest_fit_filter: false, require_wages: true, allow_equal_when_source_is_minimum: true, max_job_zone_drop: 2, near_floor_band: 0.06, near_floor_target_max: 0.1 }, // near_floor: only for sources at or below 6% exposure that still lack 3 pathways; targets under 10% exposure (similarly low, not necessarily lower), labelled
+      tier3: { label: 'Broader move (retraining likely)', min_exposure_drop: 0, max_exposure_ratio: 1, min_skill_fit: 0, min_similarity: 0.1, similarity_percentile: 0.9, interest_fit_filter: false, require_wages: true, allow_equal_when_source_is_minimum: true, max_job_zone_drop: 2, near_floor_band_pct: 0.05, near_floor_max_rise: 0.1 }, // near_floor (source cut-off is percentile-based since time weighting, so it does not depend on the scale of the bottom of the distribution; 5% = the share of jobs the old fixed 0.06 cut-off covered): only for sources in the least-exposed 5% of jobs that still lack 3 pathways; targets under 10% exposure (similarly low, not necessarily lower), labelled
     },
     exclude_target_title: /, All Other/i, // catch-all (incl. e.g. 'Dentists, All Other Specialists'; same rule as SQL title !~* ', all other') BLS residual codes are not shown as pathways
   },
@@ -165,37 +165,45 @@ function compute(all) {
     });
   }
 
-  // ---- PRIMARY = multi-source score (scripts/blend.js; approved Oct 21, 2026). Equipercentile linking: each job's
-  // multi-source AI (robotics) rank is mapped onto the distribution of the task-based occupation AI (robotics) risk, so the
-  // absolute 0..1 scale, the band thresholds (0.30 / 0.50) and their meaning are kept while the ORDER of jobs follows every
-  // measure. combined = 1 - (1 - ai)(1 - robotics). Skill risks are rescaled by the job's new/old ratio (within-job order kept).
-  // The previous task-only values stay in summary.previous_method.
+  // ---- PRIMARY = time-weighted multi-source score (scripts/blend.js; multi-source approved Oct 21, 2026; time weighting
+  // required by Drew Oct 21, 2026). Headline AI (robotics) = benefit-of-the-doubt mix of the time-weighted task exposure
+  // (share of work time x graded task strength) and every other measure linked onto the same share-of-work scale; bands
+  // 0.30 / 0.50 unchanged; combined = 1 - (1 - ai)(1 - robotics). Skill risks are rescaled by the job's new/old ratio
+  // (within-job order kept). summary.before_time_weighting and summary.previous_method keep the two earlier scores.
   {
     const msDir = path.join(ROOT, 'data/multisource/occ'); const msBy = new Map();
     if (fs.existsSync(msDir)) for (const o of all) { const f = path.join(msDir, o.code + '.json'); if (fs.existsSync(f)) msBy.set(o.code, JSON.parse(fs.readFileSync(f, 'utf8'))); }
     const B = require('./blend').compute(byCode, msBy); MULTI = B;
+    // headline = time-weighted, benefit-of-the-doubt multi-source score (scripts/blend.js). For comparison, the score
+    // before time weighting (b37f3f7: other-measures blend equipercentile-linked onto the task-only distribution) is kept.
     const link = (key, dim) => {
       const dist = all.map((o) => occOut.get(o.code).summary[key]).filter((v) => v != null).sort((a, b) => a - b);
-      const sc = all.map((o) => ({ c: o.code, v: B.byCode.get(o.code)?.[dim]?.score })).filter((x) => x.v != null).sort((a, b) => a.v - b.v);
+      const sc = all.map((o) => ({ c: o.code, v: B.byCode.get(o.code)?.[dim]?.schemes?.A_equal_families })).filter((x) => x.v != null).sort((a, b) => a.v - b.v);
       const out = new Map(); sc.forEach((x, i) => { const q = sc.length > 1 ? i / (sc.length - 1) : 0.5; const pos = q * (dist.length - 1); const lo = Math.floor(pos); out.set(x.c, dist[lo] + (dist[Math.min(lo + 1, dist.length - 1)] - dist[lo]) * (pos - lo)); });
       return out;
     };
-    const lAi = link('occupation_ai', 'ai'), lRob = link('occupation_robotics', 'robotics');
+    const oAi = link('occupation_ai', 'ai'), oRob = link('occupation_robotics', 'robotics');
     for (const o of all) {
       const x = occOut.get(o.code); const S = x.summary; const b = B.byCode.get(o.code);
       const prev = { occupation_ai: S.occupation_ai, occupation_robotics: S.occupation_robotics, occupation_combined: S.occupation_combined, band: S.occupation_combined < P.bands.safe_below ? 'safe' : S.occupation_combined >= P.bands.at_risk_from ? 'at_risk' : 'moderate' };
-      const ai = lAi.get(o.code) ?? S.occupation_ai, rob = lRob.get(o.code) ?? S.occupation_robotics;
+      const ai = b?.ai.headline.value ?? S.occupation_ai, rob = b?.robotics.headline.value ?? S.occupation_robotics;
+      const ba = oAi.get(o.code) ?? S.occupation_ai, br = oRob.get(o.code) ?? S.occupation_robotics, bc = 1 - (1 - ba) * (1 - br);
+      const beforeTW = { occupation_ai: r3(ba), occupation_robotics: r3(br), occupation_combined: r3(bc), band: bc < P.bands.safe_below ? 'safe' : bc >= P.bands.at_risk_from ? 'at_risk' : 'moderate', method: 'multi-source score without time weighting (Oct 21, 2026, smartpivot-data b37f3f7): all measures as percentiles, equipercentile-linked onto the task-only scale' };
       const fA = S.occupation_ai > 0 ? ai / S.occupation_ai : null, fR = S.occupation_robotics > 0 ? rob / S.occupation_robotics : null;
       for (const k of x.skillRisk) {
         k.ai_risk = r3(clamp(fA != null ? k.ai_risk * fA : ai)); k.robotics_risk = r3(clamp(fR != null ? k.robotics_risk * fR : rob));
         k.combined = r3(1 - (1 - k.ai_risk) * (1 - k.robotics_risk)); k.band = k.combined < P.bands.safe_below ? 'safe' : k.combined >= P.bands.at_risk_from ? 'at_risk' : 'moderate';
       }
       S.occupation_ai = r3(ai); S.occupation_robotics = r3(rob); S.occupation_combined = r3(1 - (1 - ai) * (1 - rob));
-      S.basis = 'multi_source'; S.multi_source = { ai_score: b?.ai.score ?? null, robotics_score: b?.robotics.score ?? null, ai_agreement: b?.ai.agreement.label ?? null, robotics_agreement: b?.robotics.agreement.label ?? null };
+      S.basis = 'multi_source_time_weighted'; S.multi_source = { ai_score: b?.ai.score ?? null, robotics_score: b?.robotics.score ?? null, ai_agreement: b?.ai.agreement.label ?? null, robotics_agreement: b?.robotics.agreement.label ?? null };
+      const tw = b?.time_weighted;
+      S.time_weighted = tw ? { ai: tw.ai, robotics: tw.robotics, combined: tw.ai == null || tw.robotics == null ? null : r3(1 - (1 - tw.ai) * (1 - tw.robotics)), ai_coverage: tw.ai_coverage, robotics_coverage: tw.robotics_coverage, time_basis: tw.time_basis,
+        ai_weight: b.ai.headline.weight_time_weighted, robotics_weight: b.robotics.headline.weight_time_weighted, ai_other_measures: b.ai.headline.other_measures_linked, robotics_other_measures: b.robotics.headline.other_measures_linked } : null;
+      S.before_time_weighting = beforeTW;
       S.previous_method = prev;
       // headline exposure fields used across the site
-      const comp = o.exposure.ai.composite; if (comp) { const pv = comp.previous_method ?? { value: comp.value, n_measures: comp.n_measures, method: comp.method }; o.exposure.ai.composite = { ...comp, value: b?.ai.score ?? comp.value, n_measures: b?.ai.agreement.families ?? comp.n_measures, method: 'multi-source score: weighted mean of available measure-family percentiles (scripts/blend.js, docs/BLEND_COMPARISON.md)', agreement: b?.ai.agreement ?? null, previous_method: pv }; }
-      o.exposure.robotics.multi_source = { value: b?.robotics.score ?? null, agreement: b?.robotics.agreement ?? null, method: 'multi-source score (scripts/blend.js)', previous_method: { anthropic_robot_exposure_index: o.exposure.robotics.anthropic_robot_exposure_index } };
+      const comp = o.exposure.ai.composite; if (comp) { const pv = comp.previous_method ?? { value: comp.value, n_measures: comp.n_measures, method: comp.method }; o.exposure.ai.composite = { ...comp, value: b?.ai.score ?? comp.value, n_measures: b?.ai.agreement.families ?? comp.n_measures, method: 'multi-source score, time-weighted: percentile rank of the headline AI score (time-weighted task exposure, benefit-of-the-doubt weight 0.5-0.9, with every other measure) (scripts/blend.js, docs/BLEND_COMPARISON.md)', agreement: b?.ai.agreement ?? null, previous_method: pv }; }
+      o.exposure.robotics.multi_source = { value: b?.robotics.score ?? null, agreement: b?.robotics.agreement ?? null, method: 'multi-source score, time-weighted (percentile rank of the headline robotics score; scripts/blend.js)', previous_method: { anthropic_robot_exposure_index: o.exposure.robotics.anthropic_robot_exposure_index } };
     }
   }
 
@@ -244,6 +252,7 @@ function compute(all) {
   const minExposure = Math.min(...all.filter((t) => (t.bls.projections?.change_percent ?? -1) >= PP.min_growth && wageOf(t) > 0 && !PP.exclude_target_title.test(t.title)).map((t) => occOut.get(t.code).summary.occupation_combined));
   // tier 3 similarity floor: min(0.10, the source's own 90th-percentile similarity to all occupations), i.e. the target is either
   // >= 0.10 similar or among the 10% of jobs most similar to the source (needed for flat skill profiles such as Dancers)
+  const NF = (() => { const v = all.map((o) => occOut.get(o.code).summary.occupation_combined).sort((a2, b2) => a2 - b2); const q = (p) => v[Math.floor(p * (v.length - 1))]; return { source: q(PP.fallback.tier3.near_floor_band_pct) }; })();
   const simPctMemo = new Map();
   const simPct = (c, q) => { const k = c + q; if (!simPctMemo.has(k)) { const xs = all.filter((t) => t.code !== c).map((t) => cos(c, t.code)).sort((a2, b2) => a2 - b2); simPctMemo.set(k, xs[Math.floor(q * (xs.length - 1))]); } return simPctMemo.get(k); };
   function evalCand(o, x, t, mode, R) {
@@ -253,7 +262,7 @@ function compute(all) {
     const E_T = occOut.get(t.code).summary.occupation_combined; const g = t.bls.projections?.change_percent;
     if (g == null || g < PP.min_growth) return null;
     if (R && R.require_wages && !(wageOf(t) > 0)) return null; // target needs a BLS wage; a source without one (e.g. military, some arts) gets pay_missing
-    if (R && R.near_floor) { if (!(E_S <= R.near_floor && E_T <= FB.tier3.near_floor_target_max)) return null; }
+    if (R && R.near_floor) { if (!(E_S <= NF.source + 1e-9 && E_T <= E_S + FB.tier3.near_floor_max_rise + 1e-9)) return null; }
     else if (R && R.allow_equal && E_S <= minExposure + 1e-9) { if (E_T > E_S + 1e-9) return null; }
     else if (R && R.min_exposure_drop === 0) { if (!(E_T < E_S - 1e-9)) return null; }
     else if (!(E_T <= E_S - minDrop + 1e-9 && E_T <= E_S * maxRatio + 1e-9)) return null; // 1e-9: float tolerance so an exact 0.100 drop qualifies (matches SQL numeric)
@@ -321,7 +330,7 @@ function compute(all) {
   for (const o of all) {
     const l = fpOut.get(o.code); if (l.length >= FB.min_pathways) continue;
     const x = occOut.get(o.code); const have = new Set(l.map((c) => c.t.code));
-    for (const [tier, mode, R] of [[2, 'future_proof', { ...FB.tier2, tier: 2 }], [3, 'broad', { ...FB.tier3, tier: 3, allow_equal: FB.tier3.allow_equal_when_source_is_minimum }], [3, 'broad', { ...FB.tier3, tier: 3, near_floor: FB.tier3.near_floor_band }]]) {
+    for (const [tier, mode, R] of [[2, 'future_proof', { ...FB.tier2, tier: 2 }], [3, 'broad', { ...FB.tier3, tier: 3, allow_equal: FB.tier3.allow_equal_when_source_is_minimum }], [3, 'broad', { ...FB.tier3, tier: 3, near_floor: true }]]) {
       if (l.length >= FB.min_pathways) break;
       const cs = all.filter((t) => !have.has(t.code)).map((t) => evalCand(o, x, t, mode, R)).filter(Boolean);
       for (const c of cs) { c.hubN = fpDf.get(c.t.code) || 0; c.hubF = c.rel > 1 ? 1 : Math.pow(Math.max(PP.hub.min, 1 / (1 + PP.hub.alpha * Math.log(1 + c.hubN / PP.hub.df0))), 1 - PP.hub.similarity_relief * Math.max(0, Math.min(1, c.sim))); c.score = c.base * c.hubF; }
@@ -336,7 +345,7 @@ function compute(all) {
   const rsOut = assign('reskilling', rsCands, rsDf, PP.reskill.top_n);
 
   const fmt = (o) => (c, i) => {
-    const tierTxt = c.tier === 2 ? 'Tier 2 (relaxed thresholds): fewer than 3 jobs met the strict pathway thresholds, so this one was found with a smaller required exposure drop (3 points), lower skill overlap (15%) and similarity (0.20), and no interest-fit cut. ' : c.tier === 3 ? (c.E_T >= c.E_S - 1e-9 ? `Tier 3 (broader move): your job is already among the least exposed (${fmtPct(c.E_S)}), and too few jobs are less exposed, so this is a similarly low-exposure job (under 10%) with growth and pay data, not a lower one. ` : 'Tier 3 (broader move): no strict or relaxed match existed, so this is the best-scoring less exposed job with non-negative growth and pay data; expect retraining. ') : '';
+    const tierTxt = c.tier === 2 ? 'Tier 2 (relaxed thresholds): fewer than 3 jobs met the strict pathway thresholds, so this one was found with a smaller required exposure drop (3 points), lower skill overlap (15%) and similarity (0.20), and no interest-fit cut. ' : c.tier === 3 ? (c.E_T >= c.E_S - 1e-9 ? `Tier 3 (broader move): your job is already among the least exposed (${fmtPct(c.E_S)}), and too few jobs are less exposed, so this is a similarly low-exposure job (at most 10 points more exposed) with growth and pay data, not a lower one. ` : 'Tier 3 (broader move): no strict or relaxed match existed, so this is the best-scoring less exposed job with non-negative growth and pay data; expect retraining. ') : '';
     const topCov = c.covered.sort((a2, b2) => b2.coverage - a2.coverage).slice(0, 4).map((q) => q.skill);
     const mainGaps = c.gaps.sort((a2, b2) => b2.gap - a2.gap).slice(0, 3);
     const gtxt = c.g > 0 ? `BLS projects ${c.g.toFixed(1)}% job growth for 2025-35` : 'BLS projects flat employment for 2025-35 (0.0%)';
@@ -402,7 +411,7 @@ const METHOD = {
   exposure_vs_task_share_cards: 'The pathway exposure (skill_risk_summary.occupation_combined, breakdown.target_combined_exposure) is the time-weighted average combined task risk: each task scores 0..1 for AI and robotics and is weighted by its time share. The task-share cards count tasks instead: exposure.ai.task_share.share = share of tasks with any Anthropic usage; exposure.robotics.exposed_task_share = share of tasks rated E1-E3. A job can have a high AI task share (many tasks touched) but lower combined risk (low penetration or little time on them), and vice versa. Each pathway carries task_shares.target / task_shares.current so both measures can be shown side by side.',
   occupation_combined: 'time-weighted mean of task combined risk (derived.skill_risk_summary.occupation_combined). This is the exposure figure used by the pathway search.',
   pathways: `Every occupation is a candidate (O*NET related gets a x${P.pathways.related_bonus} bonus only). safe_overlap = importance x distinctiveness weighted share of the target's required skills (importance >= ${P.pathways.required_importance}, at least the top ${P.pathways.min_required_skills}) covered by the user's skills: credit 1 for safe, ${P.pathways.moderate_credit} for moderate, 0 for at_risk, times level match (1 at level >= target - ${P.pathways.level_tolerance}, falling to 0 over ${P.pathways.partial_span} more points). score = safe_overlap x exposure_factor (1 - target combined exposure) x growth_factor (1 + min(growth%, 20)/40) x gap_factor (1 - 0.5 x min(1, mean level shortfall / 2)) x job_zone_factor x similarity_factor (0.5 + 0.5 x skill-profile cosine) x fit_factor (0.5 + 0.5 x mean of RIASEC-interest and specific-interest-area cosines) x pay_factor (clamp(1 + ${P.pathways.pay.log_scale} x ln(target/current BLS median wage), ${P.pathways.pay.min}, ${P.pathways.pay.max}); 1 with pay_missing when a wage is missing) x hub_factor (max(${P.pathways.hub.min}, 1 / (1 + ${P.pathways.hub.alpha} x ln(1 + appearances / ${P.pathways.hub.df0}))) ^ (1 - ${P.pathways.hub.similarity_relief} x skill-profile similarity), so a popular target is damped hard for unrelated sources and barely for closely related ones; O*NET related targets are exempt (hub_factor 1) because the related list is independent evidence the move is real; appearances = sources with the target in their pre-damping top ${P.pathways.hub.top_k}) x related_bonus. Eligible only if: target exposure <= source - ${P.pathways.min_exposure_drop} and <= ${P.pathways.max_exposure_ratio} x source; BLS 2025-35 growth >= 0; safe_overlap >= ${P.pathways.min_safe_overlap}; job zone within +${P.pathways.max_job_zone_jump}/-${P.pathways.max_job_zone_drop}; skill-profile similarity >= ${P.pathways.min_similarity}; interest fit >= ${P.pathways.min_interest_fit} (when both jobs have interest data); not an ", All Other" code. Slots are filled highest score first across all occupations and no target is kept for more than ${P.pathways.hub.max_share * 100}% of occupations. Top ${P.pathways.top_n} kept.`,
-  tiered_fallback: 'Every occupation gets at least 3 future_proof_pathways. Tier 1 (tier_label "Strict match") = the rules above. If fewer than 3 tier-1 pathways exist, the list is filled (never replaced) in order: tier 2 "Relaxed thresholds" = same scoring and safe-skill crediting, but exposure drop >= 0.03 and <= 95% of the source, safe_overlap >= 0.15, similarity >= 0.20, no interest-fit cut, target must have a BLS median wage; tier 3 "Broader move (retraining likely)" = any job with strictly lower combined exposure, non-negative BLS growth and a BLS median wage, job zone +2/-2, gating kept (and in tiers 2-3 a job zone 5 or doctoral health target needs a source that is itself job zone 5 or doctoral health), overlap credits every skill at level (breakdown.skill_fit, needs_retraining: true); only for sources at or below 6% exposure that still lack 3 is a target under 10% exposure allowed (similarly low, not necessarily lower, and the reason says so). Tier 3 similarity floor: min(0.10, the source own 90th-percentile similarity to all occupations). MD/DO, DDS/DMD, DC, OD, DPM and DVM practitioner targets (licensed_doctor) are only reachable from the same group, in every tier and in reskilling. Fallback items keep hub damping but not the 10% hard cap, are sorted by tier then score, and every reason starts with "Tier 2" / "Tier 3".',
+  tiered_fallback: 'Every occupation gets at least 3 future_proof_pathways. Tier 1 (tier_label "Strict match") = the rules above. If fewer than 3 tier-1 pathways exist, the list is filled (never replaced) in order: tier 2 "Relaxed thresholds" = same scoring and safe-skill crediting, but exposure drop >= 0.03 and <= 95% of the source, safe_overlap >= 0.15, similarity >= 0.20, no interest-fit cut, target must have a BLS median wage; tier 3 "Broader move (retraining likely)" = any job with strictly lower combined exposure, non-negative BLS growth and a BLS median wage, job zone +2/-2, gating kept (and in tiers 2-3 a job zone 5 or doctoral health target needs a source that is itself job zone 5 or doctoral health), overlap credits every skill at level (breakdown.skill_fit, needs_retraining: true); only for sources in the least-exposed 5% of jobs that still lack 3 is a target at most 10 points more exposed allowed (similarly low, not necessarily lower, and the reason says so). Tier 3 similarity floor: min(0.10, the source own 90th-percentile similarity to all occupations). MD/DO, DDS/DMD, DC, OD, DPM and DVM practitioner targets (licensed_doctor) are only reachable from the same group, in every tier and in reskilling. Fallback items keep hub damping but not the 10% hard cap, are sorted by tier then score, and every reason starts with "Tier 2" / "Tier 3".',
   gating: 'Targets in O*NET job zone 5, and licensed doctoral health roles (SOC 29-1xxx whose BLS typical education is a doctoral or professional degree), are only eligible when the source is job zone >= 4 AND in a related family: the same SOC major group, or, for health targets, a health (29) or science (19) source. Applies to future_proof and reskilling pathways.',
   reskilling_pathways: `Only for occupations with fewer than ${P.pathways.reskill.when_fewer_than} future_proof_pathways. Same eligibility, factors, hub damping and cap, but skill_fit credits every skill the user has at level (any risk band), needs skill_fit >= ${P.pathways.reskill.min_skill_fit}, and allows at most ${P.pathways.reskill.max_new_skills} new skills (target skills with a level gap >= ${P.pathways.reskill.new_skill_gap}). Each item has needs_retraining: true and new_skills[]; never mixed into future_proof_pathways. Top ${P.pathways.reskill.top_n}.`,
 };
