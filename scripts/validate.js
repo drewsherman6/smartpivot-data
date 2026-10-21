@@ -92,9 +92,25 @@ try {
     if (T) for (const n of riskN) if (!(band.get(n)?.combined >= T.at_risk_from)) errors.push(`${o.code}: at-risk skill ${n} below ${T.at_risk_from}`);
     const E = d.skill_risk_summary?.occupation_combined;
     if (o.inferred_from?.fields.includes('tasks') && d.skill_risk_summary?.inferred_from?.code !== o.inferred_from.code) errors.push(`${o.code}: inferred tasks but skill_risk_summary lacks inferred_from`);
-    let prevScore = Infinity;
-    for (const p of d.future_proof_pathways || []) {
-      const b = p.breakdown; const t = byCode.get(p.code);
+    let prevScore = Infinity, prevTier = 1; const FB = PW.fallback;
+    const fpl = d.future_proof_pathways || [];
+    if (FB && fpl.length < FB.min_pathways) errors.push(`${o.code}: only ${fpl.length} future_proof_pathways (tiered fallback must give >= ${FB.min_pathways})`);
+    for (const p of fpl) {
+      const b = p.breakdown; const t = byCode.get(p.code); const tier = p.tier ?? 1;
+      if (![1, 2, 3].includes(tier) || !p.tier_label) errors.push(`${o.code}: pathway ${p.code} lacks tier / tier_label`);
+      if (tier < prevTier) errors.push(`${o.code}: pathway tiers out of order`); if (tier !== prevTier) prevScore = Infinity; prevTier = tier;
+      if (tier > 1) {
+        const R = FB['tier' + tier]; const ov = tier === 2 ? b.safe_overlap : b.skill_fit;
+        if (!t || !(t.bls.projections?.change_percent >= 0) || !(b.target_median_wage > 0)) errors.push(`${o.code}: fallback ${p.code} lacks growth/pay data`);
+        const lower = tier === 2 ? b.target_combined_exposure <= E - R.min_exposure_drop + 1e-9 && b.target_combined_exposure <= E * R.max_exposure_ratio + 1e-9 : b.target_combined_exposure < E - 1e-9 || (E <= R.near_floor_band && b.target_combined_exposure <= R.near_floor_band);
+        if (!lower) errors.push(`${o.code}: fallback ${p.code} exposure ${b.target_combined_exposure} not below source ${E}`);
+        if (tier === 2 && !(ov >= R.min_safe_overlap)) errors.push(`${o.code}: tier 2 ${p.code} overlap below ${R.min_safe_overlap}`);
+        if (!p.reason.startsWith(`Tier ${tier} (`)) errors.push(`${o.code}: fallback ${p.code} reason not labelled with its tier`);
+        const re = ov * b.exposure_factor * b.growth_factor * b.gap_factor * b.job_zone_factor * b.similarity_factor * b.onet_related_bonus * b.pay_factor * b.fit_factor * b.hub_factor;
+        if (Math.abs(re - p.score) > 0.01) errors.push(`${o.code}: fallback ${p.code} score != product of breakdown`);
+        if (p.score > prevScore + 1e-9) errors.push(`${o.code}: pathways not sorted by score within tier`); prevScore = p.score;
+        continue;
+      }
       if (!t) { errors.push(`${o.code}: pathway to unknown ${p.code}`); continue; }
       if (p.code === o.code) errors.push(`${o.code}: pathway to itself`);
       if (!(b.target_combined_exposure <= E - PW.min_exposure_drop + 1e-9)) errors.push(`${o.code}: pathway ${p.code} exposure ${b.target_combined_exposure} not meaningfully below source ${E}`);
@@ -118,7 +134,7 @@ try {
       pathPairs.push(b);
     }
     const fpCodes = new Set((d.future_proof_pathways || []).map((p) => p.code));
-    if ((d.reskilling_pathways || []).length && (d.future_proof_pathways || []).length >= (PW.reskill?.when_fewer_than ?? 3)) errors.push(`${o.code}: reskilling_pathways present although future_proof list is full`);
+    if ((d.reskilling_pathways || []).length && fpl.filter((p) => (p.tier ?? 1) === 1).length >= (PW.reskill?.when_fewer_than ?? 3)) errors.push(`${o.code}: reskilling_pathways present although future_proof list is full`);
     for (const p of d.reskilling_pathways || []) {
       const b = p.breakdown; const t = byCode.get(p.code);
       if (p.needs_retraining !== true || p.future_proof || fpCodes.has(p.code)) errors.push(`${o.code}: reskilling ${p.code} not labelled/kept separate`);

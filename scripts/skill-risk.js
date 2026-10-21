@@ -48,6 +48,12 @@ const P = {
     distinctiveness: 'weight = importance x (0.5 + min(2, max(0, importance - mean importance of that skill across all occupations)) / 2)',
     job_zone_drop_free: 1, job_zone_drop_penalty: 0.25, job_zone_factor_min: 0.5, max_job_zone_drop: 1, // zone_factor = max(0.5, 1 - 0.25 x max(0, source zone - target zone - 1))
     top_n: 10,
+    // Tiered fallback (only when fewer than min_pathways strict pathways): every job gets >= 3 lower-exposure pathways, each labelled with its tier.
+    fallback: {
+      min_pathways: 3,
+      tier2: { label: 'Relaxed thresholds', min_exposure_drop: 0.03, max_exposure_ratio: 0.95, min_safe_overlap: 0.15, min_similarity: 0.2, interest_fit_filter: false, require_wages: true },
+      tier3: { label: 'Broader move (retraining likely)', min_exposure_drop: 0, max_exposure_ratio: 1, min_skill_fit: 0, min_similarity: 0, interest_fit_filter: false, require_wages: true, allow_equal_when_source_is_minimum: true, max_job_zone_drop: 2, near_floor_band: 0.05 }, // near_floor: only for sources at or below 5% exposure that still lack 3 pathways; targets also at or below 5% (similarly low, not lower), labelled,
+    },
     exclude_target_title: /, All Other$/, // catch-all BLS residual codes are not shown as pathways
   },
 };
@@ -197,19 +203,25 @@ function compute(all) {
 
   // Evaluate one source -> target candidate. mode 'future_proof': overlap counts only not-at-risk skills;
   // mode 'reskilling': overlap counts every skill the user has at level, and the new skills needed must be bounded.
-  function evalCand(o, x, t, mode) {
+  const minExposure = Math.min(...all.filter((t) => (t.bls.projections?.change_percent ?? -1) >= PP.min_growth && wageOf(t) > 0 && !PP.exclude_target_title.test(t.title)).map((t) => occOut.get(t.code).summary.occupation_combined));
+  function evalCand(o, x, t, mode, R) {
     const E_S = x.summary.occupation_combined;
+    const minDrop = R ? R.min_exposure_drop : PP.min_exposure_drop, maxRatio = R ? R.max_exposure_ratio : PP.max_exposure_ratio, minSim = R ? R.min_similarity : PP.min_similarity;
     if (t.code === o.code || PP.exclude_target_title.test(t.title)) return null;
     const E_T = occOut.get(t.code).summary.occupation_combined; const g = t.bls.projections?.change_percent;
     if (g == null || g < PP.min_growth) return null;
-    if (!(E_T <= E_S - PP.min_exposure_drop && E_T <= E_S * PP.max_exposure_ratio)) return null;
-    if (o.job_zone != null && t.job_zone != null && (t.job_zone > o.job_zone + PP.max_job_zone_jump || t.job_zone < o.job_zone - PP.max_job_zone_drop)) return null;
+    if (R && R.require_wages && !(wageOf(t) > 0)) return null; // target needs a BLS wage; a source without one (e.g. military, some arts) gets pay_missing
+    if (R && R.near_floor) { if (!(E_S <= R.near_floor && E_T <= R.near_floor)) return null; }
+    else if (R && R.allow_equal && E_S <= minExposure + 1e-9) { if (E_T > E_S + 1e-9) return null; }
+    else if (R && R.min_exposure_drop === 0) { if (!(E_T < E_S - 1e-9)) return null; }
+    else if (!(E_T <= E_S - minDrop && E_T <= E_S * maxRatio)) return null;
+    if (o.job_zone != null && t.job_zone != null && (t.job_zone > o.job_zone + PP.max_job_zone_jump || t.job_zone < o.job_zone - ((R && R.max_job_zone_drop) ?? PP.max_job_zone_drop))) return null;
     if (gatedBlocked(o, t)) return null;
-    const sim = cos(o.code, t.code); if (sim < PP.min_similarity) return null;
+    const sim = cos(o.code, t.code); if (sim < minSim) return null;
     const ri = vecFor(RIASEC, o) && vecFor(RIASEC, t) ? dot(vecFor(RIASEC, o), vecFor(RIASEC, t)) : null;
     const di = vecFor(DOMAIN, o) && vecFor(DOMAIN, t) ? dot(vecFor(DOMAIN, o), vecFor(DOMAIN, t)) : null;
     const fits = [ri, di].filter((v) => v != null); const fit = fits.length ? fits.reduce((a2, b2) => a2 + b2, 0) / fits.length : null;
-    if (fit != null && fit < PP.min_interest_fit) return null;
+    if (fit != null && fit < PP.min_interest_fit && !(R && R.interest_fit_filter === false)) return null;
     const fitF = fit == null ? 1 : PP.fit_floor + (1 - PP.fit_floor) * Math.max(0, fit);
     const ts = t.skills.filter((q) => q.kind === 'skill').sort((a2, b2) => b2.importance - a2.importance);
     let req = ts.filter((q) => q.importance >= PP.required_importance); if (req.length < PP.min_required_skills) req = ts.slice(0, PP.min_required_skills);
@@ -222,14 +234,15 @@ function compute(all) {
       const known = m && m.level != null && q.level != null; const tl = q.level ?? null; const ul = m ? m.level ?? null : 0;
       const lvl = !m ? 0 : known ? (ul >= tl - PP.level_tolerance ? 1 : clamp(1 - (tl - PP.level_tolerance - ul) / PP.partial_span)) : clamp(1 - Math.max(0, q.importance - PP.level_tolerance - m.importance) / PP.partial_span);
       const strong = !!m && m.importance >= 3.5;
-      const credit = !u ? 0 : mode === 'reskilling' ? 1 : u.band === 'safe' ? 1 : u.band === 'moderate' ? PP.moderate_credit : 0;
+      const credit = !u ? 0 : mode === 'reskilling' || mode === 'broad' ? 1 : u.band === 'safe' ? 1 : u.band === 'moderate' ? PP.moderate_credit : 0;
       const cc = lvl * credit; cov += wt * cc; if (cc > 0) covered.push({ skill: q.name, band: u.band, your_level: ul == null ? null : r3(ul), target_level: tl, coverage: r3(cc) });
       const sf = m && !known ? 0 : Math.max(0, (tl ?? 0) - (ul ?? 0)); short += sf;
       if (sf >= PP.level_tolerance) gaps.push({ skill: q.name, your_level: r3(ul), target_level: tl, gap: r3(sf), already_strong: strong, you_have_it_safely: !!u && u.band !== 'at_risk' });
       if (sf >= PP.reskill.new_skill_gap && !strong) newSkills.push({ skill: q.name, your_level: r3(ul), target_level: tl, gap: r3(sf) });
     }
     const overlap = cov / tot;
-    if (mode === 'future_proof' && overlap < PP.min_safe_overlap) return null;
+    if (mode === 'future_proof' && overlap < (R ? R.min_safe_overlap : PP.min_safe_overlap)) return null;
+    if (mode === 'broad' && overlap < R.min_skill_fit) return null;
     if (mode === 'reskilling' && (overlap < PP.reskill.min_skill_fit || newSkills.length > PP.reskill.max_new_skills)) return null;
     const meanShort = short / req.length; const gapF = 1 - PP.gap_max_penalty * Math.min(1, meanShort / PP.gap_scale);
     const gF = PP.growth_factor(g); const rel = x.related.has(t.code) ? PP.related_bonus : 1;
@@ -238,7 +251,7 @@ function compute(all) {
     const wS = wageOf(o), wT = wageOf(t); const payMissing = !(wS > 0 && wT > 0); const ratio = payMissing ? null : wT / wS;
     const payF = payMissing ? 1 : clamp(1 + PP.pay.log_scale * Math.log(ratio), PP.pay.min, PP.pay.max);
     const base = overlap * (1 - E_T) * gF * gapF * zF * sF * rel * payF * fitF;
-    return { t, E_T, E_S, g, overlap, gapF, gF, zF, sim, sF, rel, payF, payMissing, ratio, wS, wT, ri, di, fit, fitF, base, covered, gaps, newSkills, meanShort, mode };
+    return { tier: R ? R.tier : 1, t, E_T, E_S, g, overlap, gapF, gF, zF, sim, sF, rel, payF, payMissing, ratio, wS, wT, ri, di, fit, fitF, base, covered, gaps, newSkills, meanShort, mode };
   }
   for (const o of all) {
     const x = occOut.get(o.code);
@@ -259,12 +272,27 @@ function compute(all) {
   const fpCands = new Map(all.map((o) => { const x = occOut.get(o.code); const cs = x.hasSafe ? all.map((t) => evalCand(o, x, t, 'future_proof')).filter(Boolean).sort((a2, b2) => b2.base - a2.base) : []; return [o.code, cs]; }));
   const fpDf = hubCount('future_proof', (o) => fpCands.get(o.code));
   const fpOut = assign('future_proof', fpCands, fpDf, PP.top_n);
-  const needReskill = all.filter((o) => fpOut.get(o.code).length < PP.reskill.when_fewer_than);
+  // Tiered fallback: fill to FB.min_pathways with tier 2 (relaxed), then tier 3 (broader). Hub damping applies (no hard cap).
+  const FB = PP.fallback;
+  for (const o of all) {
+    const l = fpOut.get(o.code); if (l.length >= FB.min_pathways) continue;
+    const x = occOut.get(o.code); const have = new Set(l.map((c) => c.t.code));
+    for (const [tier, mode, R] of [[2, 'future_proof', { ...FB.tier2, tier: 2 }], [3, 'broad', { ...FB.tier3, tier: 3, allow_equal: FB.tier3.allow_equal_when_source_is_minimum }], [3, 'broad', { ...FB.tier3, tier: 3, near_floor: FB.tier3.near_floor_band }]]) {
+      if (l.length >= FB.min_pathways) break;
+      const cs = all.filter((t) => !have.has(t.code)).map((t) => evalCand(o, x, t, mode, R)).filter(Boolean);
+      for (const c of cs) { c.hubN = fpDf.get(c.t.code) || 0; c.hubF = c.rel > 1 ? 1 : Math.pow(Math.max(PP.hub.min, 1 / (1 + PP.hub.alpha * Math.log(1 + c.hubN / PP.hub.df0))), 1 - PP.hub.similarity_relief * Math.max(0, Math.min(1, c.sim))); c.score = c.base * c.hubF; }
+      cs.sort((a2, b2) => b2.score - a2.score);
+      for (const c of cs) { if (l.length >= FB.min_pathways) break; l.push(c); have.add(c.t.code); }
+    }
+    const t1 = l.filter((c) => c.tier === 1); const rest = l.filter((c) => c.tier > 1).sort((a2, b2) => a2.tier - b2.tier || b2.score - a2.score); l.length = 0; l.push(...t1, ...rest);
+  }
+  const needReskill = all.filter((o) => fpOut.get(o.code).filter((c) => c.tier === 1).length < PP.reskill.when_fewer_than);
   const rsCands = new Map(needReskill.map((o) => { const x = occOut.get(o.code); const have = new Set(fpOut.get(o.code).map((c) => c.t.code)); return [o.code, all.map((t) => (have.has(t.code) ? null : evalCand(o, x, t, 'reskilling'))).filter(Boolean).sort((a2, b2) => b2.base - a2.base)]; }));
   const rsDf = hubCount('reskilling', (o) => rsCands.get(o.code) || []);
   const rsOut = assign('reskilling', rsCands, rsDf, PP.reskill.top_n);
 
   const fmt = (o) => (c, i) => {
+    const tierTxt = c.tier === 2 ? 'Tier 2 (relaxed thresholds): fewer than 3 jobs met the strict pathway thresholds, so this one was found with a smaller required exposure drop (3 points), lower skill overlap (15%) and similarity (0.20), and no interest-fit cut. ' : c.tier === 3 ? (c.E_T >= c.E_S - 1e-9 ? `Tier 3 (broader move): your job is already among the least exposed (${fmtPct(c.E_S)}), and too few jobs are less exposed, so this is a similarly low-exposure job (at or below 5%) with growth and pay data, not a lower one. ` : 'Tier 3 (broader move): no strict or relaxed match existed, so this is the best-scoring less exposed job with non-negative growth and pay data; expect retraining. ') : '';
     const topCov = c.covered.sort((a2, b2) => b2.coverage - a2.coverage).slice(0, 4).map((q) => q.skill);
     const mainGaps = c.gaps.sort((a2, b2) => b2.gap - a2.gap).slice(0, 3);
     const gtxt = c.g > 0 ? `BLS projects ${c.g.toFixed(1)}% job growth for 2025-35` : 'BLS projects flat employment for 2025-35 (0.0%)';
@@ -273,16 +301,16 @@ function compute(all) {
       : Math.abs(pct) <= 5 ? `Similar pay (median ${fmtUsd(c.wT)} vs ${fmtUsd(c.wS)}).`
       : pct < 0 ? `Pay cut of ${-pct}% (median ${fmtUsd(c.wT)} vs ${fmtUsd(c.wS)}).` : `Pay rise of ${pct}% (median ${fmtUsd(c.wT)} vs ${fmtUsd(c.wS)}).`;
     const reusedAtRisk = c.covered.filter((q) => q.band === 'at_risk').slice(0, 3).map((q) => q.skill);
-    const lead = c.mode === 'reskilling'
+    const lead = tierTxt + (c.mode === 'reskilling' || c.mode === 'broad'
       ? (c.newSkills.length ? `Needs retraining: ${c.newSkills.length} new skill${c.newSkills.length === 1 ? '' : 's'} to learn (${c.newSkills.map((q) => q.skill).join(', ')}). ` : `Needs retraining: no large skill gaps, but expect role-specific training or certification. `)
         + `Your current skills cover ${fmtPct(c.overlap)} of what this role needs${reusedAtRisk.length ? `, including ${reusedAtRisk.join(', ')}, which are at risk in your current job but used in a less exposed way here` : ''}. `
-      : `Your skills that are not at risk cover ${fmtPct(c.overlap)} of what this role needs (${topCov.join(', ')}). `;
+      : `Your skills that are not at risk cover ${fmtPct(c.overlap)} of what this role needs (${topCov.join(', ')}). `);
     const reason = lead + `Its tasks are about ${fmtPct(c.E_T)} exposed to AI and robots, versus ${fmtPct(c.E_S)} in your current job. ${gtxt}. ${ptxt}`
-      + (c.mode === 'future_proof' ? (mainGaps.length ? ` To close: ${mainGaps.map((gp) => `${gp.skill} (${gp.already_strong ? 'deepen, ' : ''}level ${gp.your_level} to ${gp.target_level})`).join(', ')}.` : ' No significant skill gaps.') : '');
+      + (c.mode !== 'reskilling' ? (mainGaps.length ? ` To close: ${mainGaps.map((gp) => `${gp.skill} (${gp.already_strong ? 'deepen, ' : ''}level ${gp.your_level} to ${gp.target_level})`).join(', ')}.` : ' No significant skill gaps.') : '');
     return {
       rank: i + 1, code: c.t.code, title: c.t.title, score: r3(c.score),
-      breakdown: { [c.mode === 'reskilling' ? 'skill_fit' : 'safe_overlap']: r3(c.overlap), target_combined_exposure: r3(c.E_T), source_combined_exposure: r3(c.E_S), exposure_drop: r3(c.E_S - c.E_T), exposure_factor: r3(1 - c.E_T), growth_percent: c.g, growth_factor: r3(c.gF), mean_level_shortfall: r3(c.meanShort), gap_factor: r3(c.gapF), job_zone_factor: r3(c.zF), profile_similarity: r3(c.sim), similarity_factor: r3(c.sF), interest_fit: r3(c.ri), domain_fit: r3(c.di), fit_factor: r3(c.fitF), current_median_wage: c.wS ?? null, target_median_wage: c.wT ?? null, pay_ratio: r3(c.ratio), pay_factor: r3(c.payF), pay_missing: c.payMissing, hub_appearances: c.hubN, hub_factor: r3(c.hubF), onet_related_bonus: r3(c.rel) },
-      ...(c.mode === 'reskilling' ? { needs_retraining: true, new_skills: c.newSkills } : { future_proof: true }), onet_related: c.rel > 1,
+      breakdown: { [c.mode === 'reskilling' || c.mode === 'broad' ? 'skill_fit' : 'safe_overlap']: r3(c.overlap), target_combined_exposure: r3(c.E_T), source_combined_exposure: r3(c.E_S), exposure_drop: r3(c.E_S - c.E_T), exposure_factor: r3(1 - c.E_T), growth_percent: c.g, growth_factor: r3(c.gF), mean_level_shortfall: r3(c.meanShort), gap_factor: r3(c.gapF), job_zone_factor: r3(c.zF), profile_similarity: r3(c.sim), similarity_factor: r3(c.sF), interest_fit: r3(c.ri), domain_fit: r3(c.di), fit_factor: r3(c.fitF), current_median_wage: c.wS ?? null, target_median_wage: c.wT ?? null, pay_ratio: r3(c.ratio), pay_factor: r3(c.payF), pay_missing: c.payMissing, hub_appearances: c.hubN, hub_factor: r3(c.hubF), onet_related_bonus: r3(c.rel) },
+      ...(c.mode === 'reskilling' ? { needs_retraining: true, new_skills: c.newSkills } : { future_proof: true, tier: c.tier, tier_label: c.tier === 1 ? 'Strict match' : PP.fallback['tier' + c.tier].label, ...(c.mode === 'broad' ? { needs_retraining: true, new_skills: c.newSkills } : {}) }), onet_related: c.rel > 1,
       covered_safe_skills: c.covered.slice(0, 8), skill_gaps: mainGaps,
       median_annual_wage: c.wT ?? null, job_zone: c.t.job_zone ?? null,
       growth_basis: c.t.bls.projections?.inferred_from ? `Group estimate (BLS projections for ${c.t.bls.projections.inferred_from.title || c.t.bls.projections.inferred_from.code}, 2025-35)` : c.t.bls.projections?.shared_soc ? c.t.bls.projections.shared_soc.label : `BLS projection for this occupation (${c.t.bls.projections.title || c.t.title}, ${c.t.bls.projections.period || '2025-35'})`,
@@ -297,11 +325,13 @@ function compute(all) {
     x.reskilling = (rsOut.get(o.code) || []).map(fmt(o));
     const nonRisk = x.skillRisk.filter((q) => q.importance >= P.min_importance_for_lists && q.band !== 'at_risk').length, relN = x.skillRisk.filter((q) => q.importance >= P.min_importance_for_lists).length;
     const rsTxt = x.reskilling.length ? ` See reskilling_pathways (${x.reskilling.length}) for less exposed jobs that need a bounded amount of retraining.` : '';
-    x.pathwayNote = x.pathways.length ? null
-      : relN && nonRisk / relN < 0.35 ? `Most of this job's skills are at risk (${relN - nonRisk} of ${relN} relevant skills), so no lower-exposure job is mostly covered by the skills that are not.${rsTxt || ' A move will need retraining; see at_risk_skills and transitions.'}`
+    const strictN = x.pathways.filter((q) => q.tier === 1).length;
+    const fbTxt = strictN < PP.fallback.min_pathways && x.pathways.length > strictN ? ` ${x.pathways.length - strictN} broader pathway${x.pathways.length - strictN === 1 ? ' is' : 's are'} shown from the tiered fallback (tier 2 relaxed thresholds, tier 3 broader move), each labelled.` : '';
+    x.pathwayNote = strictN >= PP.fallback.min_pathways ? null : strictN ? `Only ${strictN} job${strictN === 1 ? '' : 's'} met the strict thresholds.${fbTxt}` : (
+      relN && nonRisk / relN < 0.35 ? `Most of this job's skills are at risk (${relN - nonRisk} of ${relN} relevant skills), so no lower-exposure job is mostly covered by the skills that are not.${rsTxt || ' A move will need retraining; see at_risk_skills and transitions.'}`
       : !x.hasSafe ? `No skills in this job fall below the at-risk band, so no pathway can be built from them.${rsTxt}`
-      : E_S < P.bands.safe_below + PP.min_exposure_drop ? 'This job is already among the least exposed: no other job with non-negative growth is meaningfully less exposed.'
-      : `No occupation met all the thresholds (skill overlap, lower exposure, non-negative growth, job zone, skill and interest fit).${rsTxt}`;
+      : E_S < P.bands.safe_below + PP.min_exposure_drop ? 'This job is already among the least exposed: no other job with non-negative growth is meaningfully less exposed (by the strict 10-point margin).'
+      : `No occupation met all the thresholds (skill overlap, lower exposure, non-negative growth, job zone, skill and interest fit).${rsTxt}`) + fbTxt;
   }
   x0.hubStats = { future_proof: [...fpOut.values()].flat().reduce((m, c) => m.set(c.t.title, (m.get(c.t.title) || 0) + 1), new Map()), reskilling: [...rsOut.values()].flat().reduce((m, c) => m.set(c.t.title, (m.get(c.t.title) || 0) + 1), new Map()) };
 
@@ -328,6 +358,7 @@ const METHOD = {
   exposure_vs_task_share_cards: 'The pathway exposure (skill_risk_summary.occupation_combined, breakdown.target_combined_exposure) is the time-weighted average combined task risk: each task scores 0..1 for AI and robotics and is weighted by its time share. The task-share cards count tasks instead: exposure.ai.task_share.share = share of tasks with any Anthropic usage; exposure.robotics.exposed_task_share = share of tasks rated E1-E3. A job can have a high AI task share (many tasks touched) but lower combined risk (low penetration or little time on them), and vice versa. Each pathway carries task_shares.target / task_shares.current so both measures can be shown side by side.',
   occupation_combined: 'time-weighted mean of task combined risk (derived.skill_risk_summary.occupation_combined). This is the exposure figure used by the pathway search.',
   pathways: `Every occupation is a candidate (O*NET related gets a x${P.pathways.related_bonus} bonus only). safe_overlap = importance x distinctiveness weighted share of the target's required skills (importance >= ${P.pathways.required_importance}, at least the top ${P.pathways.min_required_skills}) covered by the user's skills: credit 1 for safe, ${P.pathways.moderate_credit} for moderate, 0 for at_risk, times level match (1 at level >= target - ${P.pathways.level_tolerance}, falling to 0 over ${P.pathways.partial_span} more points). score = safe_overlap x exposure_factor (1 - target combined exposure) x growth_factor (1 + min(growth%, 20)/40) x gap_factor (1 - 0.5 x min(1, mean level shortfall / 2)) x job_zone_factor x similarity_factor (0.5 + 0.5 x skill-profile cosine) x fit_factor (0.5 + 0.5 x mean of RIASEC-interest and specific-interest-area cosines) x pay_factor (clamp(1 + ${P.pathways.pay.log_scale} x ln(target/current BLS median wage), ${P.pathways.pay.min}, ${P.pathways.pay.max}); 1 with pay_missing when a wage is missing) x hub_factor (max(${P.pathways.hub.min}, 1 / (1 + ${P.pathways.hub.alpha} x ln(1 + appearances / ${P.pathways.hub.df0}))) ^ (1 - ${P.pathways.hub.similarity_relief} x skill-profile similarity), so a popular target is damped hard for unrelated sources and barely for closely related ones; O*NET related targets are exempt (hub_factor 1) because the related list is independent evidence the move is real; appearances = sources with the target in their pre-damping top ${P.pathways.hub.top_k}) x related_bonus. Eligible only if: target exposure <= source - ${P.pathways.min_exposure_drop} and <= ${P.pathways.max_exposure_ratio} x source; BLS 2025-35 growth >= 0; safe_overlap >= ${P.pathways.min_safe_overlap}; job zone within +${P.pathways.max_job_zone_jump}/-${P.pathways.max_job_zone_drop}; skill-profile similarity >= ${P.pathways.min_similarity}; interest fit >= ${P.pathways.min_interest_fit} (when both jobs have interest data); not an ", All Other" code. Slots are filled highest score first across all occupations and no target is kept for more than ${P.pathways.hub.max_share * 100}% of occupations. Top ${P.pathways.top_n} kept.`,
+  tiered_fallback: 'Every occupation gets at least 3 future_proof_pathways. Tier 1 (tier_label "Strict match") = the rules above. If fewer than 3 tier-1 pathways exist, the list is filled (never replaced) in order: tier 2 "Relaxed thresholds" = same scoring and safe-skill crediting, but exposure drop >= 0.03 and <= 95% of the source, safe_overlap >= 0.15, similarity >= 0.20, no interest-fit cut, target must have a BLS median wage; tier 3 "Broader move (retraining likely)" = any job with strictly lower combined exposure, non-negative BLS growth and a BLS median wage, job zone +2/-2, gating kept, overlap credits every skill at level (breakdown.skill_fit, needs_retraining: true); only for sources at or below 5% exposure that still lack 3 is a target also at or below 5% allowed (similarly low, not lower, and the reason says so). Fallback items keep hub damping but not the 10% hard cap, are sorted by tier then score, and every reason starts with "Tier 2" / "Tier 3".',
   gating: 'Targets in O*NET job zone 5, and licensed doctoral health roles (SOC 29-1xxx whose BLS typical education is a doctoral or professional degree), are only eligible when the source is job zone >= 4 AND in a related family: the same SOC major group, or, for health targets, a health (29) or science (19) source. Applies to future_proof and reskilling pathways.',
   reskilling_pathways: `Only for occupations with fewer than ${P.pathways.reskill.when_fewer_than} future_proof_pathways. Same eligibility, factors, hub damping and cap, but skill_fit credits every skill the user has at level (any risk band), needs skill_fit >= ${P.pathways.reskill.min_skill_fit}, and allows at most ${P.pathways.reskill.max_new_skills} new skills (target skills with a level gap >= ${P.pathways.reskill.new_skill_gap}). Each item has needs_retraining: true and new_skills[]; never mixed into future_proof_pathways. Top ${P.pathways.reskill.top_n}.`,
 };

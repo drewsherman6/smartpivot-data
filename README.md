@@ -106,6 +106,12 @@ Drew's method, computed for all 1,016 occupations. It runs inside `npm run refre
    - it isn't an ", All Other" code
 
    Every pathway carries a `breakdown`, the covered skills, the gaps and a plain-language `reason`. If an occupation gets no pathways, `derived.future_proof_note` says why. `derived.transitions` is unchanged.
+   **Tiered fallback (at least 3 pathways for every job).** Each pathway has `tier` and `tier_label`. Tier 1 ("Strict match") is the rule set above. When a job gets fewer than 3 tier-1 pathways, the list is filled, never replaced:
+   - **Tier 2 ("Relaxed thresholds"):** the same scoring and safe-skill crediting, but the exposure drop only has to be at least 0.03 and at most 95% of the source. It also needs safe_overlap ≥ 0.15 and similarity ≥ 0.20, applies no interest-fit cut, and requires a BLS median wage.
+   - **Tier 3 ("Broader move, retraining likely"):** any job with strictly lower exposure, BLS growth ≥ 0 and a BLS wage, with job zone +2/−2 and gating kept. Overlap credits every skill the user has at level (`breakdown.skill_fit`, `needs_retraining: true`).
+   - **Very low-exposure jobs:** only for jobs at or below 5% exposure that still lack 3 pathways, a target also at or below 5% is allowed. The reason then says "similarly low, not lower".
+
+   Fallback items keep hub damping but not the 10% cap. Every reason starts with "Tier 2" or "Tier 3". Before this change (8d4a5eb), 201 jobs had no future-proof pathways and 281 had fewer than 3; now all 1,016 have at least 3. The 201 empty jobs were either already at most 0.40 exposed, where the strict 10-point drop leaves almost nothing (177), or had mostly at-risk skills, so safe_overlap stayed below 0.30 (24). `npm test` enforces at least 3 pathways per job and the per-tier thresholds.
 6. **Inferred occupations** compute from their borrowed tasks; `derived.skill_risk_summary.inferred_from` names the source.
 
 ### Inferred data (occupations O*NET hasn't rated) — `inferred_from`
