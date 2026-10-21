@@ -340,12 +340,12 @@ function compute(all) {
   for (const o of all) {
     const l = fpOut.get(o.code); if (l.length >= FB.min_pathways) continue;
     const x = occOut.get(o.code); const have = new Set(l.map((c) => c.t.code));
-    for (const [tier, mode, R] of [[2, 'future_proof', { ...FB.tier2, tier: 2 }], [3, 'broad', { ...FB.tier3, tier: 3, allow_equal: FB.tier3.allow_equal_when_source_is_minimum }], [3, 'broad', { ...FB.tier3, tier: 3, near_floor: true }]]) {
+    for (const [tier, mode, R] of [[2, 'future_proof', { ...FB.tier2, tier: 2 }], [3, 'broad', { ...FB.tier3, tier: 3, allow_equal: FB.tier3.allow_equal_when_source_is_minimum }], [3, 'broad', { ...FB.tier3, tier: 3, min_similarity: 0, similarity_percentile: null, any_lower: true }], [3, 'broad', { ...FB.tier3, tier: 3, near_floor: true }]]) { // any_lower: every job must get 3 LOWER-risk pathways when lower jobs exist, so before the near-floor pass (similar, not necessarily lower) any strictly lower-risk target that passes growth, wage, job-zone and doctor/gating rules is eligible, ranked by the same score (similarity still weighs in); the similarity floor was what excluded them
       if (l.length >= FB.min_pathways) break;
       const cs = all.filter((t) => !have.has(t.code)).map((t) => evalCand(o, x, t, mode, R)).filter(Boolean);
       for (const c of cs) { c.hubN = fpDf.get(c.t.code) || 0; c.hubF = c.rel > 1 ? 1 : Math.pow(Math.max(PP.hub.min, 1 / (1 + PP.hub.alpha * Math.log(1 + c.hubN / PP.hub.df0))), 1 - PP.hub.similarity_relief * Math.max(0, Math.min(1, c.sim))); c.score = c.base * c.hubF; }
       cs.sort((a2, b2) => b2.score - a2.score);
-      for (const c of cs) { if (l.length >= FB.min_pathways) break; l.push(c); have.add(c.t.code); }
+      for (const c of cs) { if (l.length >= FB.min_pathways) break; if (R.near_floor && c.E_T >= c.E_S - 1e-9) c.equalLow = true; l.push(c); have.add(c.t.code); }
     }
     const t1 = l.filter((c) => c.tier === 1); const rest = l.filter((c) => c.tier > 1).sort((a2, b2) => a2.tier - b2.tier || b2.score - a2.score); l.length = 0; l.push(...t1, ...rest);
   }
@@ -373,7 +373,7 @@ function compute(all) {
     return {
       rank: i + 1, code: c.t.code, title: c.t.title, score: r3(c.score),
       breakdown: { [c.mode === 'reskilling' || c.mode === 'broad' ? 'skill_fit' : 'safe_overlap']: r3(c.overlap), target_combined_exposure: r3(c.E_T), source_combined_exposure: r3(c.E_S), target_ai_agent_share: MULTI?.byCode.get(c.t.code)?.time_weighted?.ai ?? null, source_ai_agent_share: MULTI?.byCode.get(o.code)?.time_weighted?.ai ?? null, exposure_drop: r3(c.E_S - c.E_T), exposure_factor: r3(1 - c.E_T), growth_percent: c.g, growth_factor: r3(c.gF), mean_level_shortfall: r3(c.meanShort), gap_factor: r3(c.gapF), job_zone_factor: r3(c.zF), profile_similarity: r3(c.sim), similarity_factor: r3(c.sF), interest_fit: r3(c.ri), domain_fit: r3(c.di), fit_factor: r3(c.fitF), current_median_wage: c.wS ?? null, target_median_wage: c.wT ?? null, pay_ratio: r3(c.ratio), pay_factor: r3(c.payF), pay_missing: c.payMissing, hub_appearances: c.hubN, hub_factor: r3(c.hubF), onet_related_bonus: r3(c.rel) },
-      ...(c.mode === 'reskilling' ? { needs_retraining: true, new_skills: c.newSkills } : { future_proof: true, tier: c.tier, tier_label: c.tier === 1 ? 'Strict match' : PP.fallback['tier' + c.tier].label, ...(c.mode === 'broad' ? { needs_retraining: true, new_skills: c.newSkills } : {}) }), onet_related: c.rel > 1,
+      ...(c.mode === 'reskilling' ? { needs_retraining: true, new_skills: c.newSkills } : { future_proof: true, tier: c.tier, tier_label: c.tier === 1 ? 'Strict match' : c.equalLow ? 'Equally low risk' : PP.fallback['tier' + c.tier].label, ...(c.equalLow ? { equally_low_risk: true } : {}), ...(c.mode === 'broad' ? { needs_retraining: true, new_skills: c.newSkills } : {}) }), onet_related: c.rel > 1,
       covered_safe_skills: c.covered.slice(0, 8), skill_gaps: mainGaps,
       median_annual_wage: c.wT ?? null, job_zone: c.t.job_zone ?? null,
       growth_basis: c.t.bls.projections?.inferred_from ? `Group estimate (BLS projections for ${c.t.bls.projections.inferred_from.title || c.t.bls.projections.inferred_from.code}, 2025-35)` : c.t.bls.projections?.shared_soc ? c.t.bls.projections.shared_soc.label : `BLS projection for this occupation (${c.t.bls.projections.title || c.t.title}, ${c.t.bls.projections.period || '2025-35'})`,

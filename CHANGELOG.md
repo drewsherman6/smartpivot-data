@@ -2,6 +2,10 @@
 
 Machine-readable history: `data/history/changes.jsonl`. `scripts/update.js` appends entries here automatically.
 
+## 2026-10-21 - Every job gets 3 lower-risk pathways where they exist; 'Equally low risk' for the 4 least exposed
+- `scripts/skill-risk.js` fallback: new pass before near-floor: any strictly lower-risk target passing growth, wage, job-zone, gating and doctor rules, with no similarity floor (similarity still in the score). Root cause: the tier-3 similarity floor excluded the ~20 lower jobs for Embalmers (39-4011.00), so near-floor filled with higher ones. Embalmers now 3 lower.
+- Near-floor picks at >= source risk get `tier_label: 'Equally low risk'`, `equally_low_risk: true` (site and PDF show the label). Only 49-3022.00, 29-1022.00, 49-3052.00, 47-2132.00 use it (all targets <= source + 0.10). Doctor rule unchanged.
+
 ## 2026-10-21 - Quality pass: scale linking, same-setting robot pooling, crosswalk cache, resume tie-break
 - `scripts/blend.js`: other measures are equipercentile-linked onto the task-level score distribution before blending (rank from 1-(1-O_ai)(1-O_rob); AI:robot ratio kept; `other_measures_unlinked` kept). Max effect 0.012.
 - `scripts/time-weighted.js`: robot DWA pool = jobs in the same SOC minor group plus jobs in other groups whose O*NET 31.0 Work Context (CX) profile has cosine similarity >= the median same-group pair (0.536); tasks copied from a source job use the source job's setting (53-7199.00 now 0.373 vs 47-5022.00 0.372, was 0.468 vs 0.312). Source tag `+same_work_context`.
