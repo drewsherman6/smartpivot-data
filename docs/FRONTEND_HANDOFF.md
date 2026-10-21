@@ -264,3 +264,7 @@ This replaces the site's own skill-risk logic: the fixed 28-skill list, the "saf
 ## % automatable per task (Oct 21, 2026, branch tw-automatable-fraction)
 - `data/exposure/task_breakdown/*.json` tasks: `ai_automatable` / `robotics_automatable` (0..1), `*_basis` (`continuous`, `tier`, `mixed`, `not_physical`), `ai_automatable_sources` (list) / `robotics_automatable_source`, `ai_points` / `robotics_points` (time share x fraction / evidence time; they add up to `summary.ai_time_weighted` / `robotics_time_weighted`). Legacy `ai_strength` = `ai_automatable`. Summary: `ai_basis_time`, `robotics_basis_time`.
 - Occupation shards tasks: `robot_physical`, `robot_automatable_share`.
+
+## One risk score (Oct 21, 2026, shipped)
+- `skill_risk_summary.occupation_combined` = the one score; `occupation_ai` + `occupation_robotics` = its AI / robot points; `ai_share`, `robotics_share`; `ai_agents.task_time_share` (share of task time AI can carry out: employer "agents" = share of workforce hours, worker "AI tools could do"); `two_scores_time_weighted` = earlier model.
+- Breakdown tasks: `automatable`, `points`, `points_ai`, `points_robotics`; summary `combined_time_weighted`, `combined_ai_share`, `combined_robotics_share`. Pathway breakdown: `target_ai_agent_share`, `source_ai_agent_share`.

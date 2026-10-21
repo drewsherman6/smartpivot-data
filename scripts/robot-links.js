@@ -50,6 +50,21 @@ exports.instanceFeasible = (instances) => {
   return total > 0 ? Math.round((ok / total) * 1000) / 1000 : null;
 };
 
+// Driving tasks (Drew, Oct 21, 2026, approved): a driving instance counts as automatable wherever a deployed or commercial
+// driverless system already operates in that kind of setting, in any vehicle class (e.g. Waymo on city streets, Aurora on
+// highways, Gatik regional box trucks, Komatsu/Caterpillar haulage, Outrider yards). Operationally: instance tier above E0
+// with at least one cited deployed/commercial source. Demo-only instances and E0 instances (e.g. tow/wrecker response) do not
+// count. This reflects current driverless capability, not adoption.
+exports.DRIVING_TASK = /^(Drive|Operate|Pilot)\b.*\b(truck|trucks|vehicle|vehicles|bus|buses|busses|taxi|taxicabs|cab|van|vans|car|cars|automobile|limousine|limousines|tractor|tractors|ambulance|shuttle)\b/i;
+exports.isDrivingTask = (text) => exports.DRIVING_TASK.test(text || '') && !/^Operate idle/i.test(text || '');
+exports.instanceDriverless = (instances, sources) => {
+  const bySrc = new Map((sources || []).map((s, i) => [String(s.source ?? i), s])); let total = 0, ok = 0;
+  for (const inst of instances || []) { const w = Number(inst.weight_pct) || 0; total += w; if ((RANK[inst.tier] ?? 0) <= 0) continue;
+    const srcs = String(inst.sources || '').split(',').map((x) => x.trim()).filter(Boolean).map((k) => bySrc.get(k));
+    if (srcs.some((z) => z && (z.maturity === 'deployed' || z.maturity === 'commercial'))) ok += w; }
+  return total > 0 ? Math.round((ok / total) * 1000) / 1000 : null;
+};
+
 // task_citations for one occupation: one row per task with any coverage.
 exports.taskCitations = (tasks, covByKey, codeOf) => tasks.map((t) => {
   const c = covByKey.get(codeOf(t) + '|' + t.id); if (!c || !(c.covered_share > 0)) return null;

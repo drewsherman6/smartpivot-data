@@ -172,7 +172,7 @@ async function main() {
     const parser = fs.createReadStream(path.join(CACHE, SRC.robot_tasks.file)).pipe(parseStream({ columns: true, relax_quotes: true }));
     for await (const r of parser) {
       { let inst0 = []; try { inst0 = JSON.parse(r.instances || '[]'); } catch { /* none */ }
-        robotTask.set(r.onetsoc_code + '|' + r.task_id, { tier: r.exposure_tier || null, time_share: num(r.time_share), physical: r.physical === 'Yes', automatable: r.physical === 'Yes' ? RL.instanceFeasible(inst0) : 0 }); }
+        robotTask.set(r.onetsoc_code + '|' + r.task_id, { tier: r.exposure_tier || null, time_share: num(r.time_share), physical: r.physical === 'Yes', ...(() => { let s0 = []; try { s0 = JSON.parse(r.sources || '[]'); } catch { /* none */ } const dr = r.physical === 'Yes' && RL.isDrivingTask(r.task_statement) ? RL.instanceDriverless(inst0, s0) : null; return { automatable: r.physical === 'Yes' ? Math.max(RL.instanceFeasible(inst0) ?? 0, dr ?? 0) : 0, driving: dr != null }; })() }); }
       if (!r.sources || r.sources === '[]') continue;
       let srcs; try { srcs = JSON.parse(r.sources); } catch { continue; }
       { let inst = []; try { inst = JSON.parse(r.instances || '[]'); } catch { /* none */ } robotCov.set(r.onetsoc_code + '|' + r.task_id, RL.instanceCoverage(inst, srcs)); }
@@ -199,7 +199,7 @@ async function main() {
         composite: parts.length ? { value: r2(parts.reduce((s, x) => s + x, 0) / parts.length), n_measures: parts.length, method: 'mean percentile rank of available measures (eloundou.dv_beta, felten_aioe, anthropic_observed_exposure); derived' } : null },
       robotics: { anthropic_robot_exposure_index: robotIdx.get(o.code) ?? null, onet_degree_of_automation: r2(automation.get(o.code) ?? null) },
     };
-    for (const t of o.tasks) { const p = taskPen.get(t.text.trim()); if (p != null) t.ai_task_penetration = r2(p); const rt = robotTask.get((t.source_code || o.code) + '|' + t.id); if (rt) { t.robot_tier = rt.tier; t.time_share = rt.time_share; t.robot_physical = rt.physical; t.robot_automatable_share = rt.automatable; } }
+    for (const t of o.tasks) { const p = taskPen.get(t.text.trim()); if (p != null) t.ai_task_penetration = r2(p); const rt = robotTask.get((t.source_code || o.code) + '|' + t.id); if (rt) { t.robot_tier = rt.tier; t.time_share = rt.time_share; t.robot_physical = rt.physical; t.robot_automatable_share = rt.automatable; t.robot_driving_rule = rt.driving; } }
     const cites = isInf(o, 'tasks') ? o.inferred_from.sources.flatMap((x) => robotByOcc.get(x.code) || []) : robotByOcc.get(o.code) || []; const seen = new Set();
     // Task-level linkage (scripts/robot-links.js): task_citations = per task, share of its instances a commercial/deployed autonomous
     // system covers in the setting where the work happens, plus those systems. cited_systems keeps its legacy shape as a 10-item

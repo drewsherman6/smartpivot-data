@@ -86,7 +86,7 @@ for c,o in occ.items():
     sm=o['derived']['skill_risk_summary']; comb=sm['occupation_combined']
     band='safe' if comb<0.3 else 'at_risk' if comb>=0.5 else 'moderate'
     ai,rb=sm['occupation_ai'],sm['occupation_robotics']
-    if abs(1-(1-ai)*(1-rb)-comb)>0.002: fail('combined_formula_off',c)
+    if abs(ai+rb-comb)>0.002: fail("combined_formula_off",c)  # one score (Oct 21, 2026): AI points + robot points = occupation_combined
     exp_t=S.get('ai_time',0)+S.get('robotics_time',0)
     C['band_'+band]+=1
     if exp_t>=0.5 and band!='at_risk': fail('headline_below_High_but_>=50pct_time_exposed',f"{c} {o['title']}: {exp_t:.0%} time exposed, combined {comb:.2f} ({band})")

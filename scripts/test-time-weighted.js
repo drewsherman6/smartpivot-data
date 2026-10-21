@@ -16,9 +16,12 @@ for (const o of all) {
   for (const t of b.tasks) { if (t.ai_automatable != null) assert(['continuous', 'tier', 'mixed'].includes(t.ai_automatable_basis) && t.ai_automatable_sources.length, `${o.code}/${t.id}: AI basis + source`); if (t.robotics_automatable != null) assert(['continuous', 'tier', 'not_physical'].includes(t.robotics_automatable_basis) && t.robotics_automatable_source, `${o.code}/${t.id}: robot basis + source`); }
   for (const [k, w, oth] of [['occupation_ai', 'ai_weight', 'ai_other_measures'], ['occupation_robotics', 'robotics_weight', 'robotics_other_measures']]) {
     const t = T[k === 'occupation_ai' ? 'ai' : 'robotics']; const O = T[oth];
-    if (t != null && O != null) { const h = Math.max(0.5 * t + 0.5 * O, 0.9 * t + 0.1 * O); assert(near(S[k], h, 0.002), `${o.code}: ${k} = benefit-of-the-doubt mix (${S[k]} vs ${h})`); assert([0.5, 0.9].includes(T[w]), `${o.code}: weight`); assert(S[k] >= Math.min(t, O) - 0.002 && S[k] <= Math.max(t, O) + 0.002, `${o.code}: ${k} between T and O`); }
+    if (t != null && O != null) { const h = Math.max(0.5 * t + 0.5 * O, 0.9 * t + 0.1 * O); assert(near(S.two_scores_time_weighted[k], h, 0.002), `${o.code}: ${k} = benefit-of-the-doubt mix (${S[k]} vs ${h})`); assert([0.5, 0.9].includes(T[w]), `${o.code}: weight`);  }
   }
-  assert(near(S.occupation_combined, 1 - (1 - S.occupation_ai) * (1 - S.occupation_robotics), 0.002), `${o.code}: combined formula`);
+  assert(near(S.occupation_combined, S.occupation_ai + S.occupation_robotics, 0.002), `${o.code}: AI + robot points = the one score`);
+  if (b.summary.combined_time_weighted != null) assert(near(b.tasks.reduce((s, t) => s + (t.points ?? 0), 0), b.summary.combined_time_weighted, 0.002), `${o.code}: task points add up to T`);
+  for (const t of b.tasks) if (t.automatable != null) { const a = t.ai_automatable ?? 0, r = t.robotics_automatable ?? 0; assert(near(t.automatable, 1 - (1 - a) * (1 - r), 0.0015), `${o.code}/${t.id}: 1-(1-ai)(1-robot)`); assert(near(t.points, t.points_ai + t.points_robotics, 0.00002), `${o.code}/${t.id}: point split`); }
+  { const C = T.combined; if (C != null && T.combined_other_measures != null) assert(near(S.occupation_combined, Math.max(0.5 * C + 0.5 * T.combined_other_measures, 0.9 * C + 0.1 * T.combined_other_measures), 0.002), `${o.code}: one score = benefit-of-the-doubt mix`); }
   assert(S.before_time_weighting && S.previous_method, `${o.code}: comparison scores kept`);
   n++;
 }

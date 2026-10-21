@@ -159,6 +159,16 @@ function compute(shards, msByCode) {
     for (const [c, x] of out) { const T = x.time_weighted[tk]; const O = lk.get(c) ?? null; const h = headline(T, O); x[dim].headline = { value: r3(h.value), time_weighted_tasks: T, other_measures_pct: x[dim].schemes.A_equal_families, other_measures_linked: r3(O), weight_time_weighted: h.w, weight_other_measures: h.w == null ? null : r3(1 - h.w) }; }
     const hv = pctFn([...out.values()].map((x) => x[dim].headline.value)); for (const x of out.values()) x[dim].score = r3(hv(x[dim].headline.value));
   }
+  // ---- ONE job score (Drew, Oct 21, 2026): task-level combined T_c = sum(time x (1-(1-ai)(1-robot))); other measures
+  // O_c = 1-(1-O_ai)(1-O_rob) on the same scale (each linked as above); headline = benefit of the doubt on (T_c, O_c).
+  // AI/robot split: T_c part by the task attribution, O_c part in proportion O_ai : O_rob, mixed by the same weights.
+  for (const x of out.values()) {
+    const T = x.time_weighted.combined; const Oa = x.ai.headline.other_measures_linked, Or = x.robotics.headline.other_measures_linked;
+    const Oc = Oa == null && Or == null ? null : 1 - (1 - (Oa ?? 0)) * (1 - (Or ?? 0)); const h = headline(T, Oc);
+    const sT = x.time_weighted.ai_share, sO = Oc ? ((Oa ?? 0) + (Or ?? 0) > 0 ? (Oa ?? 0) / ((Oa ?? 0) + (Or ?? 0)) : 0) : null;
+    const w = h.w ?? 0; const aiPart = h.value == null ? null : w * (T ?? 0) * (sT ?? sO ?? 0) + (1 - w) * (Oc ?? 0) * (sO ?? sT ?? 0);
+    x.combined = { value: r3(h.value), time_weighted_tasks: T, other_measures_linked: r3(Oc), weight_time_weighted: h.w, ai_points: r3(aiPart), robotics_points: h.value == null ? null : r3(h.value - aiPart), ai_share: h.value ? r3(aiPart / h.value) : null, robotics_share: h.value ? r3(1 - aiPart / h.value) : null };
+  }
   // calibration: pairwise Spearman (Pearson on percentiles) between measures
   const cal = {}; const ms = Object.keys(MEASURE_LABEL);
   for (const a of ms) for (const b of ms) if (a < b) { const xs = [...out.values()].map((x) => [pick(x, a), pick(x, b)]).filter(([u, v]) => u != null && v != null); if (xs.length > 30) cal[`${a}~${b}`] = { n: xs.length, rho: r3(pear(xs)) }; }

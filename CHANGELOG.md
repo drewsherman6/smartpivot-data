@@ -2,7 +2,14 @@
 
 Machine-readable history: `data/history/changes.jsonl`. `scripts/update.js` appends entries here automatically.
 
-## 2026-10-21 - Points = % of time x % automatable (Drew: "a task that is 20% automatable gets a 20% weighting") - BRANCH, pending sign-off
+## 2026-10-21 - ONE task-level risk score, AI capability rule, driverless settings (Drew, approved)
+- `scripts/time-weighted.js`: per task automatable = 1-(1-AI)(1-robot); T = sum(time x that); points split AI:robot in proportion to the two fractions. AI fraction = strongest real capability evidence (max of Eloundou label score with E1 = 1, E2 = 1 only where observed use or a verified product shows software exists, E0 = 0; Anthropic task penetration; ILO 2025 score). No evidence = no AI.
+- Driving tasks (`robot-links.js` isDrivingTask/instanceDriverless, `task-fractions.js`, refresh.js): instances count where a deployed/commercial driverless system operates, any vehicle class (capability, not adoption).
+- `blend.js`: one headline = benefit of the doubt on (T, O_c = 1-(1-O_ai)(1-O_rob)); `skill_risk_summary.occupation_combined` = it, `occupation_ai` + `occupation_robotics` = its AI / robot points, `ai_share`, `robotics_share`, `ai_agents` (task_time_share = sum time x AI fraction), `two_scores_time_weighted` kept for comparison. Pathways: `target_ai_agent_share`, `source_ai_agent_share`.
+- Breakdown tasks: `automatable`, `points`, `points_ai`, `points_robotics`; summary `combined_time_weighted` (task-level score), `combined_ai_share`, `combined_robotics_share`.
+- Effect vs c35f88a (raw bands): 383/468/165 -> 328/327/361.
+
+## 2026-10-21 - Points = % of time x % automatable (superseded the same day by the entry above)
 - `scripts/time-weighted.js` v2: each task's strength is now the fraction of the task that can be automated. AI = mean of Anthropic task penetration (continuous), ILO 2025 task score for same-statement ISCO tasks (continuous, 339 O*NET tasks) and the Eloundou label (tier-based: E1 = 0.5, E2 = 0.25 from the paper's ">= 50% time saved" definition and its half weight for E2). Verified-product targeting no longer counts as 1 in the task (it stays in the market family and the market rule). Robotics = weight_pct share of the task's Anthropic robot instances a cited robot can do in that instance's own setting (new per-task `robot_automatable_share`, `robot_physical` from `scripts/task-fractions.js` / refresh.js), never below deployed cover; 0 for non-physical tasks. Replaces tier/3.
 - Breakdown tasks: `ai_automatable`, `ai_automatable_basis`, `ai_automatable_sources`, `ai_points`, `robotics_automatable`, `robotics_automatable_basis`, `robotics_automatable_source`, `robotics_points` (points add up to the job's T); summary `ai_basis_time`, `robotics_basis_time`.
 - Effect vs c35f88a: Low/Moderate/High 383/468/165 -> 753/235/28; 506 level changes (505 down, 1 up). Of the 311 audit jobs, 11 are High. Truck drivers 51.6% High -> 24.0% Low (driving is 63% of time and 25% automatable in its real setting per Anthropic's instances).

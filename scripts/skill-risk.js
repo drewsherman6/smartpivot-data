@@ -173,7 +173,7 @@ function compute(all) {
   {
     const msDir = path.join(ROOT, 'data/multisource/occ'); const msBy = new Map();
     if (fs.existsSync(msDir)) for (const o of all) { const f = path.join(msDir, o.code + '.json'); if (fs.existsSync(f)) msBy.set(o.code, JSON.parse(fs.readFileSync(f, 'utf8'))); }
-    const B = require('./blend').compute(byCode, msBy); MULTI = B;
+    const B = require('./blend').compute(byCode, msBy); MULTI = B; const TWM = require('./time-weighted'); const twCache = new Map(); const TWrows = (oo) => { if (!twCache.has(oo.code)) twCache.set(oo.code, new Map(TWM.taskRows(oo).map((r) => [r.id, r]))); return twCache.get(oo.code); };
     // headline = time-weighted, benefit-of-the-doubt multi-source score (scripts/blend.js). For comparison, the score
     // before time weighting (b37f3f7: other-measures blend equipercentile-linked onto the task-only distribution) is kept.
     const link = (key, dim) => {
@@ -194,11 +194,21 @@ function compute(all) {
         k.ai_risk = r3(clamp(fA != null ? k.ai_risk * fA : ai)); k.robotics_risk = r3(clamp(fR != null ? k.robotics_risk * fR : rob));
         k.combined = r3(1 - (1 - k.ai_risk) * (1 - k.robotics_risk)); k.band = k.combined < P.bands.safe_below ? 'safe' : k.combined >= P.bands.at_risk_from ? 'at_risk' : 'moderate';
       }
-      S.occupation_ai = r3(ai); S.occupation_robotics = r3(rob); S.occupation_combined = r3(1 - (1 - ai) * (1 - rob));
+      // ONE score (Drew, Oct 21, 2026): occupation_combined = task-level combined headline (blend.js x.combined);
+      // occupation_ai + occupation_robotics = its AI / robot points (they add up to occupation_combined).
+      const C = b?.combined; const comb = C?.value ?? (1 - (1 - ai) * (1 - rob));
+      S.occupation_combined = r3(comb); S.occupation_ai = C?.ai_points ?? r3(ai); S.occupation_robotics = C ? r3(comb - C.ai_points) : r3(rob);
+      S.ai_share = C?.ai_share ?? null; S.robotics_share = C?.robotics_share ?? null; S.score_model = 'one_task_level_score';
+      S.two_scores_time_weighted = { occupation_ai: r3(ai), occupation_robotics: r3(rob), occupation_combined: r3(1 - (1 - ai) * (1 - rob)), method: 'separate AI and robotics time-weighted headlines combined as 1-(1-AI)(1-robotics), same evidence (for comparison)' };
       S.basis = 'multi_source_time_weighted'; S.multi_source = { ai_score: b?.ai.score ?? null, robotics_score: b?.robotics.score ?? null, ai_agreement: b?.ai.agreement.label ?? null, robotics_agreement: b?.robotics.agreement.label ?? null };
       const tw = b?.time_weighted;
-      S.time_weighted = tw ? { ai: tw.ai, robotics: tw.robotics, combined: tw.ai == null || tw.robotics == null ? null : r3(1 - (1 - tw.ai) * (1 - tw.robotics)), ai_coverage: tw.ai_coverage, robotics_coverage: tw.robotics_coverage, time_basis: tw.time_basis,
+      S.time_weighted = tw ? { ai: tw.ai, robotics: tw.robotics, combined: tw.combined, ai_share: tw.ai_share, robotics_share: tw.robotics_share, combined_weight: C?.weight_time_weighted ?? null, combined_other_measures: C?.other_measures_linked ?? null, ai_coverage: tw.ai_coverage, robotics_coverage: tw.robotics_coverage, time_basis: tw.time_basis,
         ai_weight: b.ai.headline.weight_time_weighted, robotics_weight: b.robotics.headline.weight_time_weighted, ai_other_measures: b.ai.headline.other_measures_linked, robotics_other_measures: b.robotics.headline.other_measures_linked } : null;
+      // AI agents (same task evidence, two framings): share of the job's task time AI can carry out = sum(time x AI fraction)
+      // (= time_weighted.ai); employer side = share of workforce hours agents can take over, worker side = share of your
+      // task time AI tools could do. Products = weekly-verified platforms matched to the job's tasks.
+      { const vp = (o.agents?.platforms || []).filter((p) => p.status === 'verified' && (p.relevance === 'high' || p.relevance === 'medium'));
+        S.ai_agents = { task_time_share: tw?.ai ?? null, tasks_ai_can_do: (o.tasks || []).filter((t) => { const r = TWrows(o).get(String(t.id)); return r && r.ai > 0; }).length, verified_products: vp.length, products_with_task_matches: vp.filter((p) => (p.matched_task_ids || []).length).length }; }
       S.before_time_weighting = beforeTW;
       S.previous_method = prev;
       // headline exposure fields used across the site
@@ -362,7 +372,7 @@ function compute(all) {
       + (c.mode !== 'reskilling' ? (mainGaps.length ? ` To close: ${mainGaps.map((gp) => `${gp.skill} (${gp.already_strong ? 'deepen, ' : ''}level ${gp.your_level} to ${gp.target_level})`).join(', ')}.` : ' No significant skill gaps.') : '');
     return {
       rank: i + 1, code: c.t.code, title: c.t.title, score: r3(c.score),
-      breakdown: { [c.mode === 'reskilling' || c.mode === 'broad' ? 'skill_fit' : 'safe_overlap']: r3(c.overlap), target_combined_exposure: r3(c.E_T), source_combined_exposure: r3(c.E_S), exposure_drop: r3(c.E_S - c.E_T), exposure_factor: r3(1 - c.E_T), growth_percent: c.g, growth_factor: r3(c.gF), mean_level_shortfall: r3(c.meanShort), gap_factor: r3(c.gapF), job_zone_factor: r3(c.zF), profile_similarity: r3(c.sim), similarity_factor: r3(c.sF), interest_fit: r3(c.ri), domain_fit: r3(c.di), fit_factor: r3(c.fitF), current_median_wage: c.wS ?? null, target_median_wage: c.wT ?? null, pay_ratio: r3(c.ratio), pay_factor: r3(c.payF), pay_missing: c.payMissing, hub_appearances: c.hubN, hub_factor: r3(c.hubF), onet_related_bonus: r3(c.rel) },
+      breakdown: { [c.mode === 'reskilling' || c.mode === 'broad' ? 'skill_fit' : 'safe_overlap']: r3(c.overlap), target_combined_exposure: r3(c.E_T), source_combined_exposure: r3(c.E_S), target_ai_agent_share: MULTI?.byCode.get(c.t.code)?.time_weighted?.ai ?? null, source_ai_agent_share: MULTI?.byCode.get(o.code)?.time_weighted?.ai ?? null, exposure_drop: r3(c.E_S - c.E_T), exposure_factor: r3(1 - c.E_T), growth_percent: c.g, growth_factor: r3(c.gF), mean_level_shortfall: r3(c.meanShort), gap_factor: r3(c.gapF), job_zone_factor: r3(c.zF), profile_similarity: r3(c.sim), similarity_factor: r3(c.sF), interest_fit: r3(c.ri), domain_fit: r3(c.di), fit_factor: r3(c.fitF), current_median_wage: c.wS ?? null, target_median_wage: c.wT ?? null, pay_ratio: r3(c.ratio), pay_factor: r3(c.payF), pay_missing: c.payMissing, hub_appearances: c.hubN, hub_factor: r3(c.hubF), onet_related_bonus: r3(c.rel) },
       ...(c.mode === 'reskilling' ? { needs_retraining: true, new_skills: c.newSkills } : { future_proof: true, tier: c.tier, tier_label: c.tier === 1 ? 'Strict match' : PP.fallback['tier' + c.tier].label, ...(c.mode === 'broad' ? { needs_retraining: true, new_skills: c.newSkills } : {}) }), onet_related: c.rel > 1,
       covered_safe_skills: c.covered.slice(0, 8), skill_gaps: mainGaps,
       median_annual_wage: c.wT ?? null, job_zone: c.t.job_zone ?? null,

@@ -23,7 +23,7 @@
  */
 const fs = require('fs'); const path = require('path'); const { parse } = require('csv-parse/sync'); const { ROOT } = require('./lib');
 const TIER = { E0: 0, E1: 1 / 3, E2: 2 / 3, E3: 1 }; // legacy tier score (kept for the job-level robot_task_tier measure)
-const ELOUNDOU_FRACTION = { E0: 0, E1: 0.5, E2: 0.25 };
+const ELOUNDOU_FRACTION = { E0: 0, E1: 1 }; // E2 handled by labelScore (1 with software evidence)
 const ROBOT_TIER_FRACTION = { E0: 0, E1: 0.5, E2: 0.5, E3: 0.5 };
 const r3 = (x) => (x == null || !Number.isFinite(x) ? null : Math.round(x * 1000) / 1000);
 const mean = (a) => (a.length ? a.reduce((s, x) => s + x, 0) / a.length : null);
@@ -31,11 +31,17 @@ let ET = null;
 function eloundouTasks() {
   if (ET) return ET; ET = new Map();
   const f = path.join(ROOT, '.cache/eloundou_tasks.tsv'); if (!fs.existsSync(f)) return ET;
-  for (const r of parse(fs.readFileSync(f, 'utf8'), { columns: true, delimiter: '\t', relax_quotes: true, skip_empty_lines: true })) {
-    const id = String(r['Task ID']).replace(/\.0$/, ''); const xs = [ELOUNDOU_FRACTION[r.gpt4_exposure], ELOUNDOU_FRACTION[r.human_exposure_agg]].filter((x) => x != null);
-    if (xs.length) ET.set(id, mean(xs));
-  }
+  for (const r of parse(fs.readFileSync(f, 'utf8'), { columns: true, delimiter: '\t', relax_quotes: true, skip_empty_lines: true }))
+    ET.set(String(r['Task ID']).replace(/\.0$/, ''), [r.gpt4_exposure, r.human_exposure_agg].filter((x) => x in ELOUNDOU_FRACTION || x === 'E2'));
   return ET;
+}
+// Capability rule (Drew, Oct 21, 2026, approved): a task is AI-automatable if AI can perform it at all (cost, not speed).
+// Per Eloundou rater label: E1 (LLM alone can do it) = 1; E2 (LLM + software) = 1 when software for the task is shown to
+// exist (observed Anthropic use > 0 or a weekly-verified AI product targets the task), otherwise the label is not used and
+// the task's other evidence decides; E0 = 0. Label score = mean over the raters (GPT-4, human) that give a usable label.
+function labelScore(labels, softwareExists) {
+  const xs = (labels || []).map((l) => (l === 'E1' ? 1 : l === 'E0' ? 0 : l === 'E2' ? (softwareExists ? 1 : null) : null)).filter((x) => x != null);
+  return xs.length ? mean(xs) : null;
 }
 let ILO = null; // O*NET task id -> ILO 2025 score, from the committed multi-source shards (same-statement merges only)
 function iloTasks() {
@@ -56,29 +62,40 @@ function taskRows(o) {
   const targeted = new Set((o.agents?.targeted_task_ids || []).map(String));
   const cover = new Map((o.exposure?.robotics?.task_citations || []).map((c) => [String(c.task_id), Math.max(0, Math.min(1, c.covered_share || 0))]));
   return tasks.map((t, i) => {
-    const id = String(t.id); const pen = t.ai_task_penetration ?? null; const ilo = I.has(id) ? I.get(id) : null; const elo = E.has(id) ? E.get(id) : null;
+    const id = String(t.id); const pen = t.ai_task_penetration ?? null; const ilo = I.has(id) ? I.get(id) : null;
+    const tgt = targeted.has(id); const soft = (pen != null && pen > 0) || tgt; const elo = E.has(id) ? labelScore(E.get(id), soft) : null;
+    // AI automatable fraction = the strongest real capability evidence the task has (any one source showing AI can do it):
+    // max of the Eloundou label score, Anthropic task penetration and the ILO 2025 task score; no evidence -> null.
     const aiParts = []; if (pen != null) aiParts.push(['anthropic_task_penetration', pen, 'continuous']); if (ilo != null) aiParts.push(['ilo_2025_task_score', ilo, 'continuous']); if (elo != null) aiParts.push(['eloundou_2023_label', elo, 'tier']);
-    const aiKinds = new Set(aiParts.map((p) => p[2]));
-    const ai = aiParts.length ? mean(aiParts.map((p) => p[1])) : null;
+    const ai = aiParts.length ? Math.max(...aiParts.map((p) => p[1])) : null;
+    const top = aiParts.filter((p) => ai != null && p[1] === ai); const aiKinds = new Set(top.map((p) => p[2]));
     const cov = cover.has(id) ? cover.get(id) : null; let rob = null, robBasis = null, robSrc = null;
-    if (t.robot_automatable_share != null && t.robot_physical) { rob = Math.max(t.robot_automatable_share, cov ?? 0); robBasis = 'continuous'; robSrc = 'anthropic_robot_task_instances'; }
+    if (t.robot_automatable_share != null && t.robot_physical) { rob = Math.max(t.robot_automatable_share, cov ?? 0); robBasis = 'continuous'; robSrc = t.robot_driving_rule ? 'driverless_settings_rule' : 'anthropic_robot_task_instances'; }
     else if (t.robot_physical === false) { rob = 0; robBasis = 'not_physical'; robSrc = 'anthropic_robot_not_physical'; }
     else if (t.robot_tier && t.robot_tier in ROBOT_TIER_FRACTION) { rob = Math.max(ROBOT_TIER_FRACTION[t.robot_tier], cov ?? 0); robBasis = 'tier'; robSrc = 'anthropic_robot_tier'; }
     else if (t.time_share != null && pen != null) { rob = cov ?? 0; robBasis = 'not_physical'; robSrc = 'anthropic_robot_not_physical'; }
     return { id, share: raw[i] / W, time_basis: t.time_share != null ? 'anthropic' : 'equal_share',
-      ai, ai_basis: aiKinds.size === 2 ? 'mixed' : aiKinds.size ? [...aiKinds][0] : null, ai_sources: aiParts.map((p) => p[0]),
+      ai, ai_basis: aiKinds.size === 2 ? 'mixed' : aiKinds.size ? [...aiKinds][0] : null, ai_sources: top.map((p) => p[0]), ai_evidence_sources: aiParts.map((p) => p[0]),
       robotics: rob, robotics_basis: robBasis, robotics_source: robSrc,
-      evidence: { aei_penetration: pen, ilo_2025: ilo, eloundou_fraction: elo, verified_product: pen != null && pen > 0 && targeted.has(id), robot_tier: t.robot_tier ?? null, robot_automatable_share: t.robot_automatable_share ?? null, deployed_cover: cov } };
+      evidence: { aei_penetration: pen, ilo_2025: ilo, eloundou_labels: E.get(id) ?? null, eloundou_score: elo, verified_product: tgt, robot_tier: t.robot_tier ?? null, robot_automatable_share: t.robot_automatable_share ?? null, deployed_cover: cov } };
   });
 }
+// One task-level score (Drew, Oct 21, 2026): per task combined = 1 - (1 - ai)(1 - robot) (AI and robots usually automate
+// different parts of a task; independence = the same rule used to combine any two exposures; max would assume full
+// overlap and is only a lower bound). A dimension a task has no evidence for counts 0 in the combination if the other
+// dimension is rated; tasks rated in neither are left out. Attribution: each task's points are split AI : robot in
+// proportion to its AI and robot fractions (overlap split the same way).
+function combine(r) { if (r.ai == null && r.robotics == null) return null; const a = r.ai ?? 0, b = r.robotics ?? 0; const c = 1 - (1 - a) * (1 - b); return { c, aiPart: a + b > 0 ? c * (a / (a + b)) : 0 }; }
 function twe(o) {
   const rows = taskRows(o);
   const dim = (k) => { let s = 0, w = 0; for (const r of rows) { if (r[k] == null) continue; s += r.share * r[k]; w += r.share; } return { value: w > 0 ? s / w : null, coverage: w }; };
   const a = dim('ai'), b = dim('robotics');
+  let cs = 0, cw = 0, ca = 0; for (const r of rows) { const x = combine(r); if (!x) continue; cs += r.share * x.c; cw += r.share; ca += r.share * x.aiPart; }
   const basisTime = (k) => { const out = {}; for (const r of rows) { const kb = r[k + '_basis']; if (kb) out[kb] = (out[kb] || 0) + r.share; } for (const x in out) out[x] = r3(out[x]); return out; };
   return { ai: r3(a.value), ai_coverage: r3(a.coverage), robotics: r3(b.value), robotics_coverage: r3(b.coverage),
+    combined: cw > 0 ? r3(cs / cw) : null, combined_coverage: r3(cw), ai_share: cs > 0 ? r3(ca / cs) : null, robotics_share: cs > 0 ? r3(1 - ca / cs) : null,
     ai_basis_time: basisTime('ai'), robotics_basis_time: basisTime('robotics'),
     time_basis: rows.every((r) => r.time_basis === 'anthropic') ? 'anthropic_time_share' : rows.some((r) => r.time_basis === 'anthropic') ? 'mixed' : 'equal_weight_fallback',
     tasks: rows.map((r) => ({ id: r.id, time_share: r3(r.share), ai: r3(r.ai), robotics: r3(r.robotics) })) };
 }
-module.exports = { twe, taskRows, TIER, ELOUNDOU_FRACTION, ROBOT_TIER_FRACTION };
+module.exports = { twe, taskRows, combine, labelScore, TIER, ELOUNDOU_FRACTION, ROBOT_TIER_FRACTION };
