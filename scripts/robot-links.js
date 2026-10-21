@@ -57,6 +57,21 @@ exports.instanceFeasible = (instances) => {
 // count. This reflects current driverless capability, not adoption.
 exports.DRIVING_TASK = /^(Drive|Operate|Pilot)\b.*\b(truck|trucks|vehicle|vehicles|bus|buses|busses|taxi|taxicabs|cab|van|vans|car|cars|automobile|limousine|limousines|tractor|tractors|ambulance|shuttle)\b/i;
 exports.isDrivingTask = (text) => exports.DRIVING_TASK.test(text || '') && !/^Operate idle/i.test(text || '');
+// Vehicle-operation tasks worded without "Drive/Operate ... vehicle" (Oct 21, 2026): a task also counts as driving when
+// O*NET links it to a vehicle-driving Detailed Work Activity (Drive passenger vehicles / trucks or truck-mounted equipment /
+// trucks or other vehicles to or at work sites / vehicles to transport individuals or equipment / vehicles to transport
+// patrons) AND its wording is moving a vehicle or its riders (drive, pick up, park, tow, transport ... a vehicle/passengers).
+// E.g. school bus "Pick up and drop off students at regularly scheduled neighborhood locations", taxi "Pick up passengers".
+exports.VEHICLE_DWAS = new Set(['4.A.3.a.4.a.14', '4.A.3.a.4.a.10', '4.A.3.a.4.a.12', '4.A.3.a.4.a.3', '4.A.3.a.4.a.9']);
+const VEH_OBJ = /\b(vehicles?|trucks?|vans?|cars?|automobiles|buses|busses|bus|taxicabs?|hearses?|ambulances?|limousines|crew carriers|intensive care unit|aircraft|tractors?|subways|trains|passengers|students)\b/i;
+const VEH_ACT = /^(drive|pilot|escort or drive|clean and drive|transfer or transport|transport|pick up|park|tow|regulate vehicle speed)\b/i;
+exports.isVehicleTask = (text, dwaIds) => exports.isDrivingTask(text) || ([...(dwaIds || [])].some((d) => exports.VEHICLE_DWAS.has(d)) && VEH_ACT.test(text || '') && VEH_OBJ.test(text || '') && !/^transport machines/i.test(text || ''));
+let T2D = null; // task id -> Set of DWA ids (O*NET tasks_to_dwas.csv, cached by time-weighted.js / refresh)
+exports.taskDwas = (taskId) => {
+  if (!T2D) { T2D = new Map(); try { const f = require('path').join(__dirname, '..', '.cache/tasks_to_dwas.csv'); const { parse } = require('csv-parse/sync');
+    for (const r of parse(require('fs').readFileSync(f, 'utf8'), { columns: true, relax_quotes: true })) { const k = String(r['Task ID']); if (!T2D.has(k)) T2D.set(k, new Set()); T2D.get(k).add(r['DWA Element ID']); } } catch { /* no cache: wording rule only */ } }
+  return T2D.get(String(taskId)) || new Set();
+};
 exports.instanceDriverless = (instances, sources) => {
   const bySrc = new Map((sources || []).map((s, i) => [String(s.source ?? i), s])); let total = 0, ok = 0;
   for (const inst of instances || []) { const w = Number(inst.weight_pct) || 0; total += w; if ((RANK[inst.tier] ?? 0) <= 0) continue;

@@ -172,7 +172,7 @@ async function main() {
     const parser = fs.createReadStream(path.join(CACHE, SRC.robot_tasks.file)).pipe(parseStream({ columns: true, relax_quotes: true }));
     for await (const r of parser) {
       { let inst0 = []; try { inst0 = JSON.parse(r.instances || '[]'); } catch { /* none */ }
-        robotTask.set(r.onetsoc_code + '|' + r.task_id, { tier: r.exposure_tier || null, time_share: num(r.time_share), physical: r.physical === 'Yes', ...(() => { let s0 = []; try { s0 = JSON.parse(r.sources || '[]'); } catch { /* none */ } const dr = r.physical === 'Yes' && RL.isDrivingTask(r.task_statement) ? RL.instanceDriverless(inst0, s0) : null; return { automatable: r.physical === 'Yes' ? Math.max(RL.instanceFeasible(inst0) ?? 0, dr ?? 0) : 0, driving: dr != null }; })() }); }
+        robotTask.set(r.onetsoc_code + '|' + r.task_id, { tier: r.exposure_tier || null, time_share: num(r.time_share), physical: r.physical === 'Yes', ...(() => { let s0 = []; try { s0 = JSON.parse(r.sources || '[]'); } catch { /* none */ } const dr = r.physical === 'Yes' && RL.isVehicleTask(r.task_statement, RL.taskDwas(r.task_id)) ? RL.instanceDriverless(inst0, s0) : null; return { automatable: r.physical === 'Yes' ? Math.max(RL.instanceFeasible(inst0) ?? 0, dr ?? 0) : 0, driving: dr != null }; })() }); }
       if (!r.sources || r.sources === '[]') continue;
       let srcs; try { srcs = JSON.parse(r.sources); } catch { continue; }
       { let inst = []; try { inst = JSON.parse(r.instances || '[]'); } catch { /* none */ } robotCov.set(r.onetsoc_code + '|' + r.task_id, RL.instanceCoverage(inst, srcs)); }

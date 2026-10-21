@@ -8,7 +8,7 @@ async function run() {
   const { parse } = require('csv-parse'); const m = new Map();
   const p = fs.createReadStream(path.join(ROOT, '.cache/robot_tasks.csv')).pipe(parse({ columns: true, relax_quotes: true }));
   for await (const r of p) { let inst = []; try { inst = JSON.parse(r.instances || '[]'); } catch { /* none */ } let srcs = []; try { srcs = JSON.parse(r.sources || '[]'); } catch { /* none */ }
-    const drive = r.physical === 'Yes' && RL.isDrivingTask(r.task_statement) ? RL.instanceDriverless(inst, srcs) : null;
+    const drive = r.physical === 'Yes' && RL.isVehicleTask(r.task_statement, RL.taskDwas(r.task_id)) ? RL.instanceDriverless(inst, srcs) : null;
     m.set(r.onetsoc_code + '|' + r.task_id, { physical: r.physical === 'Yes', automatable: r.physical === 'Yes' ? Math.max(RL.instanceFeasible(inst) ?? 0, drive ?? 0) : 0, driving: drive != null }); }
   const dir = path.join(ROOT, 'data/occupations'); let n = 0, hit = 0;
   for (const f of fs.readdirSync(dir).filter((x) => /^\d\d\.json$/.test(x))) {

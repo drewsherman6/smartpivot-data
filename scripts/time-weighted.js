@@ -97,14 +97,21 @@ function dwaLinks() {
   return m;
 }
 function pool() {
-  if (POOL) return POOL; const links = dwaLinks(); const seen = new Map(); const dir = path.join(ROOT, 'data/occupations');
-  for (const f of fs.readdirSync(dir).filter((x) => /^\d\d\.json$/.test(x))) for (const o of JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')).occupations) for (const r of ownTaskRows(o)) {
-    const k = r.id; const prev = seen.get(k) || { ai: [], rob: [] }; if (r.ai != null) prev.ai.push(r.ai); if (r.robotics != null) prev.rob.push(r.robotics); seen.set(k, prev); }
+  if (POOL) return POOL; const links = dwaLinks(); const seen = new Map(); const seenR = new Map(); const dir = path.join(ROOT, 'data/occupations');
+  for (const f of fs.readdirSync(dir).filter((x) => /^\d\d\.json$/.test(x))) for (const o of JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')).occupations) {
+    const drive = new Set((o.tasks || []).filter((t) => t.robot_driving_rule).map((t) => String(t.id)));
+    for (const r of ownTaskRows(o)) {
+      const k = r.id; const prev = seen.get(k) || { ai: [], rob: [] }; if (r.ai != null) prev.ai.push(r.ai); if (r.robotics != null) prev.rob.push(r.robotics); seen.set(k, prev);
+      if (r.robotics != null && !drive.has(k)) { const g = minor(o.code); const kk = g + '|' + k; const pr = seenR.get(kk) || { g, id: k, v: [] }; pr.v.push(r.robotics); seenR.set(kk, pr); }
+    } }
   const acc = new Map(); // dwa -> {ai:[...], rob:[...]} one value per task id (mean over the jobs listing it)
   for (const [id, v] of seen) { const ds = links.get(id); if (!ds) continue; for (const d of ds) { const a = acc.get(d) || { ai: [], rob: [] }; if (v.ai.length) a.ai.push(mean(v.ai)); if (v.rob.length) a.rob.push(mean(v.rob)); acc.set(d, a); } }
   const dwa = new Map(); for (const [d, a] of acc) dwa.set(d, { ai: mean(a.ai), ai_n: a.ai.length, rob: mean(a.rob), rob_n: a.rob.length });
-  POOL = { links, dwa }; return POOL;
+  const accR = new Map(); for (const { g, id, v } of seenR.values()) for (const d of links.get(id) || []) { const kk = g + '|' + d; if (!accR.has(kk)) accR.set(kk, []); accR.get(kk).push(mean(v)); }
+  const dwaMinor = new Map(); for (const [kk, v] of accR) dwaMinor.set(kk, { rob: mean(v), rob_n: v.length });
+  POOL = { links, dwa, dwaMinor }; return POOL;
 }
+const minor = (code) => String(code).slice(0, 4); // SOC minor group (e.g. 51-4 metal and plastic workers): same kind of work setting
 function taskRows(o) {
   const own = ownTaskRows(o); const P = pool();
   return own.map((r) => {
@@ -112,7 +119,13 @@ function taskRows(o) {
     const ai = ds.filter((d) => d.ai != null); const rb = ds.filter((d) => d.rob != null);
     const out = { ...r, ai_own: r.ai, robotics_own: r.robotics, dwa_ids: [...(P.links.get(r.id) || [])], ai_dwa_tasks: ai.reduce((s, d) => s + d.ai_n, 0), robotics_dwa_tasks: rb.reduce((s, d) => s + d.rob_n, 0) };
     if (ai.length) { out.ai = mean(ai.map((d) => d.ai)); out.ai_basis = 'dwa_pooled'; out.ai_sources = [...new Set([...(r.ai_sources || []), 'onet_dwa_pool'])]; }
-    if (rb.length && r.robotics == null) { out.robotics = mean(rb.map((d) => d.rob)); out.robotics_basis = 'dwa_pooled'; out.robotics_source = r.robotics_source ? r.robotics_source + '+onet_dwa_pool' : 'onet_dwa_pool'; }
+    // Robotics (Oct 21, 2026, pass 2): robot instance ratings are setting-specific, so they are pooled per DWA *within the
+    // job's SOC minor group* (same kind of workplace); driving-rule tasks keep their own rating (approved driving rule) and
+    // are not pooled. Unrated tasks are filled from the same pool, else from the all-jobs DWA pool.
+    const drive = (o.tasks || []).find((t) => String(t.id) === r.id)?.robot_driving_rule;
+    const rm = drive ? [] : out.dwa_ids.map((d) => P.dwaMinor.get(minor(o.code) + '|' + d)).filter(Boolean);
+    if (rm.length) { out.robotics = mean(rm.map((d) => d.rob)); out.robotics_basis = 'dwa_pooled'; out.robotics_source = r.robotics_source ? r.robotics_source + '+onet_dwa_pool_minor_group' : 'onet_dwa_pool_minor_group'; out.robotics_dwa_tasks = rm.reduce((s2, d) => s2 + d.rob_n, 0); }
+    else if (rb.length && r.robotics == null) { out.robotics = mean(rb.map((d) => d.rob)); out.robotics_basis = 'dwa_pooled'; out.robotics_source = 'onet_dwa_pool'; }
     return out;
   });
 }
