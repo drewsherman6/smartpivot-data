@@ -268,3 +268,6 @@ This replaces the site's own skill-risk logic: the fixed 28-skill list, the "saf
 ## One risk score (Oct 21, 2026, shipped)
 - `skill_risk_summary.occupation_combined` = the one score; `occupation_ai` + `occupation_robotics` = its AI / robot points; `ai_share`, `robotics_share`; `ai_agents.task_time_share` (share of task time AI can carry out: employer "agents" = share of workforce hours, worker "AI tools could do"); `two_scores_time_weighted` = earlier model.
 - Breakdown tasks: `automatable`, `points`, `points_ai`, `points_robotics`; summary `combined_time_weighted`, `combined_ai_share`, `combined_robotics_share`. Pathway breakdown: `target_ai_agent_share`, `source_ai_agent_share`.
+
+## Agentic skills (Oct 21, 2026)
+- `data/agentic_skills.json` `occupations[code]` = `{matched: [{skill, description, platforms[{name,url}], task_time_share, tasks[{id,text,time_share,ai_automatable,matched_phrase}]}], skills_to_build: [{id, skill, combined_risk, importance}]}`. Display only; no score uses it.

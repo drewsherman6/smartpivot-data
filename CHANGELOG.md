@@ -2,6 +2,9 @@
 
 Machine-readable history: `data/history/changes.jsonl`. `scripts/update.js` appends entries here automatically.
 
+## 2026-10-21 - Agentic skills catalog matched to tasks (Drew)
+- New `data/agentic_skills.json` (`scripts/agentic-skills.js`, `npm run agentic-skills`): for each job, the `agentic_capabilities.json` catalog skills (15, sourced platforms) whose phrase rule (written from the skill's own description/use cases) appears in a task with AI % automatable > 0, with the matched tasks, platforms and task time share; plus `skills_to_build` = the job's O*NET skills rated Low risk by the skill-risk model, by importance. 340 of 1,016 jobs have at least one match. No score changes.
+
 ## 2026-10-21 - ONE task-level risk score, AI capability rule, driverless settings (Drew, approved)
 - `scripts/time-weighted.js`: per task automatable = 1-(1-AI)(1-robot); T = sum(time x that); points split AI:robot in proportion to the two fractions. AI fraction = strongest real capability evidence (max of Eloundou label score with E1 = 1, E2 = 1 only where observed use or a verified product shows software exists, E0 = 0; Anthropic task penetration; ILO 2025 score). No evidence = no AI.
 - Driving tasks (`robot-links.js` isDrivingTask/instanceDriverless, `task-fractions.js`, refresh.js): instances count where a deployed/commercial driverless system operates, any vehicle class (capability, not adoption).

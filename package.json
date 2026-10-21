@@ -13,7 +13,8 @@
     "skill-risk": "node scripts/skill-risk.js",
     "notify-app": "node scripts/notify-app.js",
     "multisource": "node scripts/multisource.js",
-    "multisource-sync": "node scripts/multisource-sync.js"
+    "multisource-sync": "node scripts/multisource-sync.js",
+    "agentic-skills": "node scripts/agentic-skills.js"
   },
   "devDependencies": {
     "ajv": "^8.17.1",
