@@ -244,7 +244,7 @@ This replaces the site's own skill-risk logic: the fixed 28-skill list, the "saf
   - `exposure.robotics.exposed_task_share`: the share of tasks rated E1–E3
 
   The two measure different things and won't match. Each pathway now has `task_shares.target` and `task_shares.current` with the card figures, so you can show both on the same basis. Label the pathway figure "task-weighted AI + robotics risk".
-- **New `derived.reskilling_pathways[]`** (up to 5), only for jobs with fewer than 3 future-proof pathways (28 jobs, including Customer Service Representatives):
+- **New `derived.reskilling_pathways[]`** (up to 5), only for jobs with fewer than 3 future-proof pathways (30 jobs as of 441a907, including Customer Service Representatives; 281 jobs have fewer than 3 future-proof pathways, and the other 251 have no reskilling target that passes the rules. The live count is `coverage.occupations_with_reskilling_pathways` in `data/skills/skill_risk.json`):
   - Each item has `needs_retraining: true`, `new_skills[]` (at most 4), and `breakdown.skill_fit` in place of `safe_overlap`.
   - The `reason` always starts with "Needs retraining".
   - Show these in a separate, clearly labelled "Reskilling routes" section. Never mix them into the future-proof list.
