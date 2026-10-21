@@ -2,6 +2,9 @@
 
 Machine-readable history: `data/history/changes.jsonl`. `scripts/update.js` appends entries here automatically.
 
+## 2026-10-21 - Breakdown groups by main driver
+- `scripts/task-breakdown.js`: each task with points is listed once, under its main driver (AI or robots, whichever adds more of its points); `ai_exposed`/`robotics_exposed`/`group` follow it, `main_driver`, `any_ai`, `any_robotics` added; summary `ai_group_points` + `robotics_group_points` = `combined_time_weighted`. Truck drivers: AI group 13% of time / 7 pts, robots 83% / 64 pts (was 83% AI by the any-fraction rule).
+
 ## 2026-10-21 - "What is exposed" uses the score's pooled per-task fractions
 - `scripts/task-breakdown.js`: `ai_exposed` / `robotics_exposed` / `group` now = AI % / robot % > 0 from the same pooled per-task fractions as the score (`ai_automatable`, `robotics_automatable`), so the card, PDF and CSV task groups, times and points add up to the headline inputs. Own-wording flags kept as `own_statement_ai_exposed` / `own_statement_robotics_exposed` (these still match the "N of M O*NET tasks show AI usage" tiles). p1: exposed time = the pooled task-level score; 'High but <10% time exposed' 51 -> 0.
 
