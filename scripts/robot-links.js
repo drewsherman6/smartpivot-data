@@ -41,6 +41,15 @@ exports.displaySample = (cites, cov, timeShare, n = 10) => {
   return out;
 };
 
+// Automatable share of a task (Legate-Yang & Massenkoff 2026, robot_exposure_tasks.csv `instances`): weight_pct share of the
+// task's instances that a cited robot (any maturity) can complete in the instance's own setting (instance tier above E0 and
+// at least setting_tier). Continuous 0..1 in 5% steps. Deployed/commercial-only coverage is instanceCoverage above.
+exports.instanceFeasible = (instances) => {
+  let total = 0, ok = 0;
+  for (const inst of instances || []) { const w = Number(inst.weight_pct) || 0; total += w; const t = RANK[inst.tier] ?? 0, st = RANK[inst.setting_tier] ?? 3; if (t > 0 && t >= st) ok += w; }
+  return total > 0 ? Math.round((ok / total) * 1000) / 1000 : null;
+};
+
 // task_citations for one occupation: one row per task with any coverage.
 exports.taskCitations = (tasks, covByKey, codeOf) => tasks.map((t) => {
   const c = covByKey.get(codeOf(t) + '|' + t.id); if (!c || !(c.covered_share > 0)) return null;

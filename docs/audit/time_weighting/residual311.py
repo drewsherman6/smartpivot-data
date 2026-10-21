@@ -14,16 +14,15 @@ for c,o in sorted(new.items()):
     if now=='High': fixed+=1; continue
     T=S['time_weighted']; ex=[t for t in b['tasks'] if t['ai_exposed'] or t['robotics_exposed']]
     et=sum(t['time_share_normalized'] for t in ex) or 1
-    e1=sum(t['time_share_normalized'] for t in ex if t['robotics_exposed'] and not t['ai_exposed'] and t['evidence']['robot_tier']=='E1')/et
-    aiw=sum(t['time_share_normalized'] for t in ex if t['ai_exposed'] and (t['ai_strength'] or 0)<0.5+1e-9 and not t['robotics_exposed'])/et
-    if T['combined']>=0.5: why=f"Time-weighted task exposure is {T['combined']:.0%}, right at the line; the other measures (10% weight) put the headline {S['occupation_combined']:.1%}, just under High."
-    else:
-        parts=[]
-        if e1>=0.05: parts.append(f"{e1:.0%} of the flagged time is robot tier E1 only (Anthropic's lowest tier, strength 1/3)")
-        if aiw>=0.05: parts.append(f"{aiw:.0%} is AI tasks whose graded strength is 0.5 or less (observed use but rated not exposed, E0, by Eloundou et al.)")
-        if not parts: parts.append("the flagged tasks have partial graded strength")
-        why=f"Graded, time-weighted exposure is {T['combined']:.0%} (AI {T['ai']:.0%}, robotics {T['robotics']:.0%}), below 50%: "+'; '.join(parts)+'.'
+    ra=[t for t in ex if t['robotics_exposed']]; rt=sum(t['time_share_normalized'] for t in ra)
+    aa=[t for t in ex if t['ai_exposed']]; at=sum(t['time_share_normalized'] for t in aa)
+    rf=sum(t['time_share_normalized']*(t.get('robotics_automatable') or 0) for t in ra)/rt if rt else None
+    af=sum(t['time_share_normalized']*(t.get('ai_automatable') or 0) for t in aa)/at if at else None
+    parts=[]
+    if rf is not None: parts.append(f"robot-flagged tasks ({rt:.0%} of time) are on average {rf:.0%} automatable in their real settings (Anthropic robot task instances)")
+    if af is not None: parts.append(f"AI-flagged tasks ({at:.0%} of time) are on average {af:.0%} automatable (Anthropic penetration, ILO, Eloundou label)")
+    why=f"% of time x % automatable gives {T['combined']:.0%} (AI {T['ai']:.0%}, robotics {T['robotics']:.0%}); "+'; '.join(parts)+'.'
     rows.append((c,o['title'],exp,T['ai'],T['robotics'],T['combined'],S['before_time_weighting']['occupation_combined'],S['occupation_combined'],now,why))
-print(f"# Issue #1 re-check after time weighting\n\n311 jobs had >=50% of their time on tasks flagged exposed (any use) and were below High before time weighting. **{fixed} are now High; {len(rows)} remain** (listed with the reason). \"Flagged time\" counts a task as fully exposed on any AI use or any robot tier E1-E3; the headline uses the graded strength of each task.\n")
+print(f"# Issue #1 re-check after time weighting\n\n311 jobs had >=50% of their time on tasks flagged exposed (any use) and were below High before time weighting. **{fixed} are now High; {len(rows)} remain** (listed with the reason). \"Flagged time\" counts a task as fully exposed on any AI use or any robot tier E1-E3; the headline uses % of time x % of each task that can be automated.\n")
 print('| Code | Title | Flagged time | T AI | T robotics | T combined | Before | Now | Level | Why it is not High |\n|---|---|---|---|---|---|---|---|---|---|')
 for r in rows: print(f"| {r[0]} | {r[1]} | {r[2]:.0%} | {r[3]} | {r[4]} | {r[5]} | {r[6]} | {r[7]} | {r[8]} | {r[9]} |")

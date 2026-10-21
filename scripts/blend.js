@@ -1,7 +1,7 @@
 /**
  * Multi-source exposure score (PRIMARY since Oct 21, 2026), time-weighted (Drew, Oct 21, 2026).
- * 1. Time-weighted task exposure T (scripts/time-weighted.js): sum over the job's tasks of task time share x graded task
- *    exposure strength, AI and robotics separately, on the 0..1 "share of work exposed" scale the bands are defined on.
+ * 1. Time-weighted task exposure T (scripts/time-weighted.js): sum over the job's tasks of task time share x % of the task
+  *    that can be automated, AI and robotics separately, on the 0..1 "share of work exposed" scale the bands are defined on.
  * 2. Every other measure is put on a common scale as its mid-rank percentile across the 1,016 occupations, grouped into
  *    independent families; family = mean of available members; other-measures blend O = weighted mean of available
  *    families (missing re-weighted away, never 0; O*NET automation and Frey-Osborne at half weight) (OECD/JRC Handbook on
@@ -23,7 +23,7 @@ const sd = (a) => { const v = a.filter((x) => x != null); if (v.length < 2) retu
 const TW = require('./time-weighted');
 const TW_BOUNDS = { min: 0.5, max: 0.9 }; // weight restriction on the time-weighted task exposure (benefit of the doubt)
 const AI_FAMILIES = {
-  time_weighted: { label: 'Time-weighted task exposure (share of work time x graded task exposure)', measures: ['twe_ai'], dominant: true },
+  time_weighted: { label: 'Time-weighted task exposure (% of work time x % automatable)', measures: ['twe_ai'], dominant: true },
   observed_use: { label: 'Observed AI use (Anthropic Economic Index)', measures: ['aei_observed_exposure', 'aei_task_penetration'] },
   rated_potential: { label: 'Rated LLM exposure (Eloundou et al. 2023)', measures: ['eloundou_gpt4_beta', 'eloundou_human_beta', 'eloundou_task_beta'] },
   ability_based: { label: 'Ability-based AI exposure (Felten, Raj & Seamans AIOE)', measures: ['felten_aioe'] },
@@ -32,14 +32,14 @@ const AI_FAMILIES = {
   frey_osborne: { label: 'Frey & Osborne (2013) probability of computerisation (supporting, half weight)', measures: ['frey_osborne_ai'], weight: 0.5 },
 };
 const ROB_FAMILIES = {
-  time_weighted: { label: 'Time-weighted task exposure (share of work time x graded task exposure)', measures: ['twe_rob'], dominant: true },
+  time_weighted: { label: 'Time-weighted task exposure (% of work time x % automatable)', measures: ['twe_rob'], dominant: true },
   anthropic_robot: { label: 'Anthropic robot exposure', measures: ['robot_index', 'robot_task_tier'] },
   onet_automation: { label: 'O*NET Degree of Automation (work context, half weight)', measures: ['onet_degree_of_automation'], weight: 0.5 },
   deployed: { label: 'Work covered by commercial/deployed robots (SmartPivot weekly)', measures: ['robot_targeted_share'] },
   frey_osborne: { label: 'Frey & Osborne (2013) probability of computerisation (supporting, half weight)', measures: ['frey_osborne_rob'], weight: 0.5 },
 };
 const MEASURE_LABEL = {
-  twe_ai: 'Time-weighted AI task exposure: sum of task time share x graded task strength (Anthropic use, Eloundou beta, verified products)', twe_rob: 'Time-weighted robot task exposure: sum of task time share x graded task strength (Anthropic robot tier, deployed robots)',
+  twe_ai: 'Time-weighted AI task exposure: sum of task time share x % of the task automatable (Anthropic task penetration, ILO 2025 task score: continuous; Eloundou label: tier-based E1 0.5, E2 0.25)', twe_rob: 'Time-weighted robot task exposure: sum of task time share x % of the task robots can do in its own setting (Anthropic robot task instances, continuous; deployed-robot cover as floor)',
   aei_observed_exposure: 'Anthropic observed exposure (job)', aei_task_penetration: 'Anthropic task penetration, time-weighted (tasks)',
   eloundou_gpt4_beta: 'Eloundou β, GPT-4 rated (job)', eloundou_human_beta: 'Eloundou β, human rated (job)', eloundou_task_beta: 'Eloundou β from task labels, E1=1, E2=0.5 (tasks)',
   felten_aioe: 'Felten AIOE (job)', ilo_task_score: 'ILO 2025 mean task score via ISCO-08 (tasks)', ai_targeted_share: 'Share of work time in AI-used tasks targeted by verified products',

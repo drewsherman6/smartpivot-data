@@ -12,7 +12,7 @@ for (run,rid,s),rs in by.items():
         C['rows_'+run]+=1; j=ix[r['target_code']]; tier=r['tier']; tag=f"[{run}{'' if rid is None else '#'+str(rid)}] {s} {A[i]['title'][:35]} -> {r['target_code']} {A[j]['title'][:35]} t{tier}"
         Es_,Et_=float(r['source_combined']),float(r['target_combined'])
         if abs(Es_-E[i])>0.0015 or abs(Et_-E[j])>0.0015: v('exposure_differs_from_repo',tag)
-        if not (Et_<Es_ or (Es_<=sorted(E)[int(0.05*(len(E)-1))]+1e-9 and Et_<=Es_+0.10+1e-9)): v('target_not_lower',tag)  # near-floor: least-exposed 5%, target <= source + 0.10 (Oct 21, 2026)
+        if not (Et_<Es_ or (Es_<=max(sorted(E)[int(0.05*(len(E)-1))],0.06)+1e-9 and Et_<=Es_+0.10+1e-9)): v('target_not_lower',tag)  # near-floor: least-exposed 5%, target <= source + 0.10 (Oct 21, 2026)
         if np.isnan(G[j]) or G[j]<0: v('growth_missing_or_negative',tag)
         if allother[j]: v('all_other_target',tag)
         if not gate_ok[i,j]: v('gate_violated',tag)

@@ -106,7 +106,7 @@ try {
       if (tier > 1) {
         const R = FB['tier' + tier]; const ov = tier === 2 ? b.safe_overlap : b.skill_fit;
         if (!t || !(t.bls.projections?.change_percent >= 0) || !(b.target_median_wage > 0)) errors.push(`${o.code}: fallback ${p.code} lacks growth/pay data`);
-        const lower = tier === 2 ? b.target_combined_exposure <= E - R.min_exposure_drop + 1e-9 && b.target_combined_exposure <= E * R.max_exposure_ratio + 1e-9 : b.target_combined_exposure < E - 1e-9 || (E <= NFq(R.near_floor_band_pct) + 1e-9 && b.target_combined_exposure <= E + R.near_floor_max_rise + 1e-9);
+        const lower = tier === 2 ? b.target_combined_exposure <= E - R.min_exposure_drop + 1e-9 && b.target_combined_exposure <= E * R.max_exposure_ratio + 1e-9 : b.target_combined_exposure < E - 1e-9 || (E <= Math.max(NFq(R.near_floor_band_pct), R.near_floor_abs ?? 0) + 1e-9 && b.target_combined_exposure <= E + R.near_floor_max_rise + 1e-9);
         if (!lower) errors.push(`${o.code}: fallback ${p.code} exposure ${b.target_combined_exposure} not below source ${E}`);
         if (tier === 2 && !(ov >= R.min_safe_overlap)) errors.push(`${o.code}: tier 2 ${p.code} overlap below ${R.min_safe_overlap}`);
         if (!p.reason.startsWith(`Tier ${tier} (`)) errors.push(`${o.code}: fallback ${p.code} reason not labelled with its tier`);

@@ -53,7 +53,7 @@ const P = {
     fallback: {
       min_pathways: 3,
       tier2: { label: 'Relaxed thresholds', min_exposure_drop: 0.03, max_exposure_ratio: 0.95, min_safe_overlap: 0.15, min_similarity: 0.2, interest_fit_filter: false, require_wages: true },
-      tier3: { label: 'Broader move (retraining likely)', min_exposure_drop: 0, max_exposure_ratio: 1, min_skill_fit: 0, min_similarity: 0.1, similarity_percentile: 0.9, interest_fit_filter: false, require_wages: true, allow_equal_when_source_is_minimum: true, max_job_zone_drop: 2, near_floor_band_pct: 0.05, near_floor_max_rise: 0.1 }, // near_floor (source cut-off is percentile-based since time weighting, so it does not depend on the scale of the bottom of the distribution; 5% = the share of jobs the old fixed 0.06 cut-off covered): only for sources in the least-exposed 5% of jobs that still lack 3 pathways; targets under 10% exposure (similarly low, not necessarily lower), labelled
+      tier3: { label: 'Broader move (retraining likely)', min_exposure_drop: 0, max_exposure_ratio: 1, min_skill_fit: 0, min_similarity: 0.1, similarity_percentile: 0.9, interest_fit_filter: false, require_wages: true, allow_equal_when_source_is_minimum: true, max_job_zone_drop: 2, near_floor_band_pct: 0.05, near_floor_abs: 0.06, near_floor_max_rise: 0.1 }, // near_floor (source cut-off is percentile-based since time weighting, so it does not depend on the scale of the bottom of the distribution; 5% = the share of jobs the old fixed 0.06 cut-off covered): only for sources in the least-exposed 5% of jobs or below the original fixed 0.06 cut-off (whichever is wider) that still lack 3 pathways; targets under 10% exposure (similarly low, not necessarily lower), labelled
     },
     exclude_target_title: /, All Other/i, // catch-all (incl. e.g. 'Dentists, All Other Specialists'; same rule as SQL title !~* ', all other') BLS residual codes are not shown as pathways
   },
@@ -252,7 +252,7 @@ function compute(all) {
   const minExposure = Math.min(...all.filter((t) => (t.bls.projections?.change_percent ?? -1) >= PP.min_growth && wageOf(t) > 0 && !PP.exclude_target_title.test(t.title)).map((t) => occOut.get(t.code).summary.occupation_combined));
   // tier 3 similarity floor: min(0.10, the source's own 90th-percentile similarity to all occupations), i.e. the target is either
   // >= 0.10 similar or among the 10% of jobs most similar to the source (needed for flat skill profiles such as Dancers)
-  const NF = (() => { const v = all.map((o) => occOut.get(o.code).summary.occupation_combined).sort((a2, b2) => a2 - b2); const q = (p) => v[Math.floor(p * (v.length - 1))]; return { source: q(PP.fallback.tier3.near_floor_band_pct) }; })();
+  const NF = (() => { const v = all.map((o) => occOut.get(o.code).summary.occupation_combined).sort((a2, b2) => a2 - b2); const q = (p) => v[Math.floor(p * (v.length - 1))]; return { source: Math.max(q(PP.fallback.tier3.near_floor_band_pct), PP.fallback.tier3.near_floor_abs ?? 0) }; })(); // least-exposed 5% or the original fixed 0.06 cut-off, whichever is wider
   const simPctMemo = new Map();
   const simPct = (c, q) => { const k = c + q; if (!simPctMemo.has(k)) { const xs = all.filter((t) => t.code !== c).map((t) => cos(c, t.code)).sort((a2, b2) => a2 - b2); simPctMemo.set(k, xs[Math.floor(q * (xs.length - 1))]); } return simPctMemo.get(k); };
   function evalCand(o, x, t, mode, R) {

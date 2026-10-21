@@ -260,3 +260,7 @@ This replaces the site's own skill-risk logic: the fixed 28-skill list, the "saf
 - `derived.skill_risk_summary.occupation_ai/robotics/combined` = time-weighted headline (`basis: "multi_source_time_weighted"`). New: `time_weighted` {ai, robotics, combined, ai_coverage, robotics_coverage, time_basis, ai_weight, robotics_weight (0.5 or 0.9), ai_other_measures, robotics_other_measures}; `before_time_weighting` {occupation_ai, occupation_robotics, occupation_combined, band, method}; `previous_method` unchanged.
 - `data/exposure/task_breakdown/*.json` tasks: `ai_strength`, `robotics_strength` (0..1 graded), `ai_weighted`, `robotics_weighted` (time share x strength, 5 decimals), `strength_evidence`; summary: `ai_time_weighted`, `robotics_time_weighted`, `combined_time_weighted`, `ai_evidence_time`, `robotics_evidence_time`.
 - Supabase `sp.occupations`: `tw_ai`, `tw_robotics`, `tw_combined`, `before_tw_combined`.
+
+## % automatable per task (Oct 21, 2026, branch tw-automatable-fraction)
+- `data/exposure/task_breakdown/*.json` tasks: `ai_automatable` / `robotics_automatable` (0..1), `*_basis` (`continuous`, `tier`, `mixed`, `not_physical`), `ai_automatable_sources` (list) / `robotics_automatable_source`, `ai_points` / `robotics_points` (time share x fraction / evidence time; they add up to `summary.ai_time_weighted` / `robotics_time_weighted`). Legacy `ai_strength` = `ai_automatable`. Summary: `ai_basis_time`, `robotics_basis_time`.
+- Occupation shards tasks: `robot_physical`, `robot_automatable_share`.
