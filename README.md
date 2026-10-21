@@ -116,6 +116,15 @@ Drew's method, computed for all 1,016 occupations. It runs inside `npm run refre
    Fallback items keep hub damping but not the 10% cap. Every reason starts with "Tier 2" or "Tier 3". Before this change (8d4a5eb), 201 jobs had no future-proof pathways and 281 had fewer than 3; now all 1,016 have at least 3. The 201 empty jobs were either already at most 0.40 exposed, where the strict 10-point drop leaves almost nothing (177), or had mostly at-risk skills, so safe_overlap stayed below 0.30 (24). `npm test` enforces at least 3 pathways per job and the per-tier thresholds.
 6. **Inferred occupations** compute from their borrowed tasks; `derived.skill_risk_summary.inferred_from` names the source.
 
+### Task exposure breakdown (`scripts/task-breakdown.js`)
+`data/exposure/task_breakdown/{GG}.json` lists, for every one of the 1,016 jobs, each O*NET task with:
+- its time share and O*NET importance
+- its group: AI-exposed (AEI penetration above 0), robotics-exposed (robot tier E1–E3), both, safe, or no data
+- its evidence: AEI penetration, the Eloundou GPT-4 label and the robot tier
+- its DWA, IWA and GWA links
+
+For the work activities, skills and abilities linked to the tasks, it gives the share of each one's linked task time that falls in the AI, robotics and safe groups. Only official O*NET 31.0 linkage files are used (`tasks_to_dwas`, `gwas_to_iwas_to_dwas`, `*_skills_to_work_activities`, `abilities_to_work_activities`). Technology is listed per job, because O*NET does not link technology to tasks. The weekly refresh rebuilds these files.
+
 ### Industry staffing patterns (`scripts/industry-staffing.js`)
 `data/industries/oews_staffing.json` comes from the BLS OEWS national industry-specific estimates for May 2025 (`oesm25in4.zip`, https://www.bls.gov/oes/tables.htm). It covers every NAICS sector, 3-digit and 4-digit industry (352 in all, including BLS aggregates such as 3250A1). For each one it lists the top 40 detailed occupations by `pct_of_industry` (BLS PCT_TOTAL), along with employment, the industry-specific median wage, and the mapped O*NET-SOC code. Suppressed BLS cells are null, and those occupations are skipped. The weekly refresh rebuilds it from the cached zip. The app's `/employers` page uses it to prefill typical roles.
 

@@ -435,4 +435,4 @@ async function main() {
   console.log(written.length ? 'changed:\n  ' + written.join('\n  ') : 'no data changes');
   fs.writeFileSync(path.join(CACHE, 'last-refresh.json'), JSON.stringify({ date: TODAY, changed: written }, null, 1));
 }
-(process.argv.includes('--no-verify') ? Promise.resolve() : require('./verify-platforms').run()).then(main).then(() => require('./industry-staffing').run()).then(() => require('./build-manifest')).catch((e) => { console.error(e); process.exit(1); });
+(process.argv.includes('--no-verify') ? Promise.resolve() : require('./verify-platforms').run()).then(main).then(() => require('./task-breakdown').run()).then(() => require('./industry-staffing').run()).then(() => require('./build-manifest')).catch((e) => { console.error(e); process.exit(1); });

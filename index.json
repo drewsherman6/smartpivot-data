@@ -1,6 +1,6 @@
 {
   "manifest_version": "1.0.0",
-  "generated": "2026-10-20",
+  "generated": "2026-10-21",
   "base_raw_url": "https://raw.githubusercontent.com/drewsherman6/smartpivot-data/main/",
   "datasets": [
     {
@@ -352,6 +352,236 @@
       "legacy": false,
       "record_count": 352,
       "description": "BLS OEWS May 2025 industry staffing patterns (NAICS sector/3-/4-digit): top 40 detailed occupations by share of industry employment, mapped to O*NET-SOC codes"
+    },
+    {
+      "name": "task_breakdown_11",
+      "path": "data/exposure/task_breakdown/11.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 59,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 11"
+    },
+    {
+      "name": "task_breakdown_13",
+      "path": "data/exposure/task_breakdown/13.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 50,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 13"
+    },
+    {
+      "name": "task_breakdown_15",
+      "path": "data/exposure/task_breakdown/15.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 38,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 15"
+    },
+    {
+      "name": "task_breakdown_17",
+      "path": "data/exposure/task_breakdown/17.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 59,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 17"
+    },
+    {
+      "name": "task_breakdown_19",
+      "path": "data/exposure/task_breakdown/19.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 66,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 19"
+    },
+    {
+      "name": "task_breakdown_21",
+      "path": "data/exposure/task_breakdown/21.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 18,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 21"
+    },
+    {
+      "name": "task_breakdown_23",
+      "path": "data/exposure/task_breakdown/23.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 8,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 23"
+    },
+    {
+      "name": "task_breakdown_25",
+      "path": "data/exposure/task_breakdown/25.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 68,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 25"
+    },
+    {
+      "name": "task_breakdown_27",
+      "path": "data/exposure/task_breakdown/27.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 45,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 27"
+    },
+    {
+      "name": "task_breakdown_29",
+      "path": "data/exposure/task_breakdown/29.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 96,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 29"
+    },
+    {
+      "name": "task_breakdown_31",
+      "path": "data/exposure/task_breakdown/31.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 20,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 31"
+    },
+    {
+      "name": "task_breakdown_33",
+      "path": "data/exposure/task_breakdown/33.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 28,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 33"
+    },
+    {
+      "name": "task_breakdown_35",
+      "path": "data/exposure/task_breakdown/35.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 18,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 35"
+    },
+    {
+      "name": "task_breakdown_37",
+      "path": "data/exposure/task_breakdown/37.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 10,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 37"
+    },
+    {
+      "name": "task_breakdown_39",
+      "path": "data/exposure/task_breakdown/39.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 34,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 39"
+    },
+    {
+      "name": "task_breakdown_41",
+      "path": "data/exposure/task_breakdown/41.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 23,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 41"
+    },
+    {
+      "name": "task_breakdown_43",
+      "path": "data/exposure/task_breakdown/43.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 55,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 43"
+    },
+    {
+      "name": "task_breakdown_45",
+      "path": "data/exposure/task_breakdown/45.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 14,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 45"
+    },
+    {
+      "name": "task_breakdown_47",
+      "path": "data/exposure/task_breakdown/47.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 65,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 47"
+    },
+    {
+      "name": "task_breakdown_49",
+      "path": "data/exposure/task_breakdown/49.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 52,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 49"
+    },
+    {
+      "name": "task_breakdown_51",
+      "path": "data/exposure/task_breakdown/51.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 114,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 51"
+    },
+    {
+      "name": "task_breakdown_53",
+      "path": "data/exposure/task_breakdown/53.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 57,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 53"
+    },
+    {
+      "name": "task_breakdown_55",
+      "path": "data/exposure/task_breakdown/55.json",
+      "schema": "schemas/task_breakdown.schema.json",
+      "schema_version": "1.0.0",
+      "last_updated": "2026-10-21",
+      "legacy": false,
+      "record_count": 19,
+      "description": "Per-task AI/robotics exposure with O*NET DWA/IWA/GWA, skill and ability linkages, SOC group 55"
     },
     {
       "name": "family_signals",
