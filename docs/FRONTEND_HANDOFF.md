@@ -254,3 +254,9 @@ This replaces the site's own skill-risk logic: the fixed 28-skill list, the "saf
 - **Gating:** a target in job zone 5, or a licensed doctoral health role (SOC 29-1xxx where BLS lists a doctoral or professional degree as typical education), is only eligible when the source job is job zone 4 or higher and in a related family. Related means the same SOC major group or, for health targets, a health (29) or science (19) source. This removes the surgeon, prosthodontist and optometrist hubs, which came from engineering jobs.
 - **Pay cap:** `pay_factor` is capped at 1.08 (it was 1.15). The floor stays at 0.5.
 - **Hub relief:** `hub_factor` = raw damping ^ (1 − 0.5 × skill-profile similarity), so a popular target is damped hard for unrelated sources and only lightly for closely related ones. O*NET related targets are exempt (`hub_factor` 1). The hard cap of 10% of jobs per target still applies. As a result, Truck Drivers now get Bus and Truck Mechanics at #2, and a test guards that it stays in the top 3.
+
+
+## Time weighting (Oct 21, 2026)
+- `derived.skill_risk_summary.occupation_ai/robotics/combined` = time-weighted headline (`basis: "multi_source_time_weighted"`). New: `time_weighted` {ai, robotics, combined, ai_coverage, robotics_coverage, time_basis, ai_weight, robotics_weight (0.5 or 0.9), ai_other_measures, robotics_other_measures}; `before_time_weighting` {occupation_ai, occupation_robotics, occupation_combined, band, method}; `previous_method` unchanged.
+- `data/exposure/task_breakdown/*.json` tasks: `ai_strength`, `robotics_strength` (0..1 graded), `ai_weighted`, `robotics_weighted` (time share x strength, 5 decimals), `strength_evidence`; summary: `ai_time_weighted`, `robotics_time_weighted`, `combined_time_weighted`, `ai_evidence_time`, `robotics_evidence_time`.
+- Supabase `sp.occupations`: `tw_ai`, `tw_robotics`, `tw_combined`, `before_tw_combined`.
