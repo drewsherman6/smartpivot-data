@@ -55,7 +55,7 @@ const P = {
       tier2: { label: 'Relaxed thresholds', min_exposure_drop: 0.03, max_exposure_ratio: 0.95, min_safe_overlap: 0.15, min_similarity: 0.2, interest_fit_filter: false, require_wages: true },
       tier3: { label: 'Broader move (retraining likely)', min_exposure_drop: 0, max_exposure_ratio: 1, min_skill_fit: 0, min_similarity: 0.1, similarity_percentile: 0.9, interest_fit_filter: false, require_wages: true, allow_equal_when_source_is_minimum: true, max_job_zone_drop: 2, near_floor_band: 0.06, near_floor_target_max: 0.1 }, // near_floor: only for sources at or below 6% exposure that still lack 3 pathways; targets under 10% exposure (similarly low, not necessarily lower), labelled
     },
-    exclude_target_title: /, All Other$/, // catch-all BLS residual codes are not shown as pathways
+    exclude_target_title: /, All Other/i, // catch-all (incl. e.g. 'Dentists, All Other Specialists'; same rule as SQL title !~* ', all other') BLS residual codes are not shown as pathways
   },
 };
 
@@ -256,7 +256,7 @@ function compute(all) {
     if (R && R.near_floor) { if (!(E_S <= R.near_floor && E_T <= FB.tier3.near_floor_target_max)) return null; }
     else if (R && R.allow_equal && E_S <= minExposure + 1e-9) { if (E_T > E_S + 1e-9) return null; }
     else if (R && R.min_exposure_drop === 0) { if (!(E_T < E_S - 1e-9)) return null; }
-    else if (!(E_T <= E_S - minDrop && E_T <= E_S * maxRatio)) return null;
+    else if (!(E_T <= E_S - minDrop + 1e-9 && E_T <= E_S * maxRatio + 1e-9)) return null; // 1e-9: float tolerance so an exact 0.100 drop qualifies (matches SQL numeric)
     if (o.job_zone != null && t.job_zone != null && (t.job_zone > o.job_zone + PP.max_job_zone_jump || t.job_zone < o.job_zone - ((R && R.max_job_zone_drop) ?? PP.max_job_zone_drop))) return null;
     if (gatedBlocked(o, t)) return null;
     if (licDoc(t) && !licDoc(o)) return null;

@@ -170,7 +170,7 @@
      "near_floor_target_max": 0.1
     }
    },
-   "exclude_target_title": "/, All Other$/"
+   "exclude_target_title": "/, All Other/i"
   }
  },
  "coverage": {
@@ -197,7 +197,7 @@
   "top_hub_targets": [
    {
     "title": "Recreation Workers",
-    "appearances": 112
+    "appearances": 111
    },
    {
     "title": "Septic Tank Servicers and Sewer Pipe Cleaners",
@@ -209,31 +209,31 @@
    },
    {
     "title": "Recreational Vehicle Service Technicians",
-    "appearances": 91
+    "appearances": 95
    },
    {
     "title": "Motorboat Mechanics and Service Technicians",
-    "appearances": 90
+    "appearances": 89
    },
    {
     "title": "Mobile Heavy Equipment Mechanics, Except Engines",
-    "appearances": 84
-   },
-   {
-    "title": "Physical Therapist Assistants",
-    "appearances": 81
+    "appearances": 83
    },
    {
     "title": "Automotive Body and Related Repairers",
+    "appearances": 81
+   },
+   {
+    "title": "Physical Therapist Assistants",
     "appearances": 80
    },
    {
     "title": "Paramedics",
-    "appearances": 79
+    "appearances": 80
    },
    {
     "title": "Automotive Glass Installers and Repairers",
-    "appearances": 74
+    "appearances": 75
    }
   ],
   "occupations_inferred_tasks": 93

@@ -78,6 +78,9 @@ function build() {
         ai_share: r3(e.ai / e.total), robotics_share: r3(e.robotics / e.total), safe_share: r3(e.safe / e.total), linked_weight: r3(e.total),
         ai_tasks: [...e.tasks.ai], robotics_tasks: [...e.tasks.robotics], safe_tasks: [...e.tasks.safe] })).sort((a, b) => (b.importance ?? 0) - (a.importance ?? 0) || b.linked_weight - a.linked_weight);
       const W = tasks.reduce((s, t) => s + weight(t), 0) || 1;
+      // Display share: each task's weight / total weight, so per-task rows sum to 100% for every job (multi-donor "All Other"
+      // jobs whose copied donor shares sum to 200-600%, and jobs where missing shares use the 1/n fallback). Raw time_share kept.
+      for (const t of tasks) t.time_share_normalized = r3(weight(t) / W);
       const sumW = (pred) => r3(tasks.filter(pred).reduce((s, t) => s + weight(t), 0) / W);
       return { code: o.code, title: o.title, time_basis: tasks.every((t) => t.time_share != null) ? 'anthropic_time_share' : 'equal_weight_fallback',
         summary: { tasks: tasks.length, ai_tasks: tasks.filter((t) => t.ai_exposed).length, robotics_tasks: tasks.filter((t) => t.robotics_exposed).length, safe_tasks: tasks.filter((t) => t.group === 'safe').length, no_data_tasks: tasks.filter((t) => t.group === 'no_data').length,

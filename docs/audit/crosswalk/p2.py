@@ -51,7 +51,8 @@ G=np.array([(o['bls'].get('projections') or {}).get('change_percent',np.nan) if 
 W=np.array([(o['bls'].get('oews') or {}).get('median_annual') or np.nan for o in A],float)
 JZ=np.array([o.get('job_zone') if o.get('job_zone') is not None else np.nan for o in A],float)
 edu=[(o['bls'].get('projections') or {}).get('typical_education') or '' for o in A]
-allother=np.array([bool(re.search(r', All Other$',o['title'])) for o in A])
+# fix #3: All Other anywhere in title, same rule as JS /, All Other/i and SQL title !~* , all other
+allother=np.array([bool(re.search(r', All Other',o['title'],re.I)) for o in A])
 dh=np.array([c.startswith('29-1') and bool(re.search('doctoral|professional degree',e,re.I)) for c,e in zip(codes,edu)])
 LD=np.array([bool(re.match(r'^29-(1011|102\d|1041|1081|1131|12\d\d)',c)) and bool(re.search('doctoral|professional degree',e,re.I)) for c,e in zip(codes,edu)])
 fam=np.array([c[:2] for c in codes])

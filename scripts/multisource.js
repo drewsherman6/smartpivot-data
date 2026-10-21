@@ -91,6 +91,23 @@ const stem = (w) => w.replace(/(ies)$/, 'y').replace(/(ing|ed|es|s)$/, (m, _p, o
 const toks = (t) => new Set(String(t).toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').split(/\s+/).filter((w) => w && !STOP.has(w)).map(stem).filter((w) => w.length > 1));
 const jac = (a, b) => { if (!a.size || !b.size) return 0; let n = 0; for (const x of a) if (b.has(x)) n++; return n / (a.size + b.size - n); };
 const norm = (t) => [...toks(t)].sort().join(' ');
+// Second-pass duplicate test (audit 2026-10-21 #6): symmetric stem so "-ing"/"-e"/plural forms collapse
+// ("Preparing estimates" = "Prepare estimate"); "may" dropped (OaSIS phrasing).
+const STOP2 = new Set([...STOP, 'may']);
+const stem2 = (w) => { w = w.replace(/ies$/, 'y'); for (let i = 0; i < 2; i++) w = w.replace(/(ing|ed|es|s|e)$/, (m, _p, off) => (off > 3 ? '' : m)); return w; };
+const toks2 = (t) => new Set(String(t).toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').split(/\s+/).filter((w) => w && !STOP2.has(w)).map(stem2).filter((w) => w.length > 1));
+const DUP2_J = 0.75, DUP2_MAXDIFF = 2;
+// True duplicate: different official sources (two rows of one source are distinct by definition), not two distinct ESCO
+// skills, both non-knowledge, stem2-Jaccard >= 0.75 and at most 2 tokens differ. Merged into the best (highest-J) match.
+function dupScore(a, b) {
+  if (a.kind === 'knowledge' || b.kind === 'knowledge') return 0;
+  if (a.esco_uri && b.esco_uri && a.esco_uri !== b.esco_uri) return 0;
+  const sa = new Set(a.sources.map((z) => z.source)), sb = new Set(b.sources.map((z) => z.source));
+  for (const x of sa) if (sb.has(x)) return 0;
+  const A = a.tok2 || (a.tok2 = toks2(a.text)), B = b.tok2 || (b.tok2 = toks2(b.text));
+  let n = 0; for (const x of A) if (B.has(x)) n++; const u = A.size + B.size - n; if (!u) return 0;
+  return (u - n) <= DUP2_MAXDIFF && n / u >= DUP2_J ? n / u : 0;
+}
 
 function readCsv(f, opts = {}) { return parse(fs.readFileSync(path.join(CACHE, f), 'utf8').replace(/^\uFEFF/, ''), { relax_quotes: true, relax_column_count: true, skip_empty_lines: true, ...opts }); }
 function sheetRows(f, name) { const wb = XLSX.readFile(path.join(CACHE, f)); return XLSX.utils.sheet_to_json(wb.Sheets[name || wb.SheetNames[0]], { header: 1, defval: null }); }
@@ -174,6 +191,14 @@ async function run(opts = {}) {
       m = { text: s.text, kind: s.kind, tok: s.tok, esco_uri: s.esco_uri || null, sources: [s.src], ai_onet: s.ai_direct ?? null, ai_ilo: s.ai_direct_ilo ?? null, tier: s.tier || null, onet_task: s.src.source === 'onet' };
       merged.push(m); byKey.set(key, m);
     }
+    // second pass: fold remaining true duplicates into their best match (earlier statement kept as the text)
+    for (let i = merged.length - 1; i > 0; i--) {
+      let bj = -1, bs = 0; for (let j = 0; j < i; j++) { const v = dupScore(merged[j], merged[i]); if (v > bs) { bs = v; bj = j; } }
+      if (bj < 0) continue; const m = merged[bj], s = merged[i];
+      for (const z of s.sources) if (!m.sources.some((q) => q.source === z.source && q.ref === z.ref)) m.sources.push(z);
+      if (m.ai_onet == null) m.ai_onet = s.ai_onet; if (s.ai_ilo != null) m.ai_ilo = Math.max(m.ai_ilo ?? 0, s.ai_ilo); if (!m.tier) m.tier = s.tier; if (!m.esco_uri) m.esco_uri = s.esco_uri; m.onet_task = m.onet_task || s.onet_task;
+      m.tok2 = null; merged.splice(i, 1);
+    }
     occs.push({ o, merged, isco: [...isco], iscoBasis, noc21: [...noc21], escoOccs, soc10: [...soc10] });
   }
   // ---------- calibration: percentiles per direct source ----------
@@ -224,7 +249,7 @@ async function run(opts = {}) {
     x.blend = { ai_pct: b.ai.score, ai_sources: b.ai.agreement.families, robotics: b.robotics.score, robotics_sources: b.robotics.agreement.families, current_ai_composite: b.current_ai_composite, current_robot_index: b.current_robot_index, primary: 'multi_source', inferred_from: b.inferred, ai: b.ai, robotics_detail: b.robotics }; }
   // ---------- write ----------
   const meta = { dataset: 'multisource_statements', schema_version: '1.0.0', generated: today(), sources: SRC, esco_concepts_not_in_current_release: MISSING.length,
-    method: { dedupe: `ESCO skill URI identity; then identical normalized text (lowercase, punctuation/stopwords removed, light suffix stemming, sorted token set); then token-set Jaccard >= ${DEDUPE_J} within the occupation (knowledge items only merge by URI/text). Deterministic and offline; no embeddings.`,
+    method: { dedupe: `ESCO skill URI identity; then identical normalized text (lowercase, punctuation/stopwords removed, light suffix stemming, sorted token set); then token-set Jaccard >= ${DEDUPE_J} within the occupation (knowledge items only merge by URI/text); then a second pass folds true cross-source duplicates (symmetric -ing/-e/plural stemming, Jaccard >= ${DUP2_J}, at most ${DUP2_MAXDIFF} differing tokens, never two rows of the same source or two distinct ESCO skills) into their best match. Deterministic and offline; no embeddings.`,
       crosswalk_weights: 'ESCO match type: exact 1.0, close 0.8, narrow 0.6, broad 0.5 (relatedMatch excluded: not validated by US DOL); ESCO optional skills x0.5. ILO/OaSIS: 1/n of mapped ISCO groups / NOC units. ISCO groups = BLS SOC2010->ISCO-08 list, intersected with the ISCO groups of the ESCO occupations mapped to this O*NET code when that intersection is non-empty. NICE: 0.5, curated title mapping (no official SOC crosswalk). O*NET tasks: Anthropic time share / the occupation max (equal weights when missing).',
       exposure: `Only published scores. AI direct: Anthropic Economic Index task penetration (O*NET tasks) and ILO WP140 2025 task score (ISCO tasks). Robotics direct: Anthropic robot exposure tier E0-E3 on O*NET tasks (score = tier/3). Others inherit from the most lexically similar directly-scored statement in the same occupation when Jaccard >= ${TRANSFER_J} (basis "transferred", donor and similarity recorded); otherwise null. Calibration: each AI source -> its own percentile (share of that source's statements scoring strictly lower, so a zero score stays 0; statements with both: mean).`,
       blend_full: 'See scripts/blend.js and docs/BLEND_COMPARISON.md: every available measure as a percentile across occupations, grouped into independent families (AI: observed use, rated LLM exposure, ability-based, ILO tasks, market targeting; robotics: Anthropic robot, O*NET degree of automation, deployed robots); family = mean of available members; blend = mean of available families (missing re-weighted, never zero).',

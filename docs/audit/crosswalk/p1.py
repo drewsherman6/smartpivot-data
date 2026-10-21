@@ -77,7 +77,7 @@ for c,o in occ.items():
         gs=['ai','robotics'] if t['group']=='both' else [t['group']]
         for x in gs: g[x]+=1; tm[x]+=w/tot
     C['both_tasks']+=sum(t['group']=='both' for t in T)
-    disp=sum(t['time_share'] or 0 for t in T)
+    disp=sum((t['time_share_normalized'] if t.get('time_share_normalized') is not None else (t['time_share'] or 0)) for t in T)  # site shows time_share_normalized (fix #4)
     if T and abs(disp-1)>0.02: fail('breakdown_displayed_task_time_not_100pct',f"{c} {o['title']}: rows sum {disp:.0%}")
     for grp,k1,k2 in [('ai','ai_tasks','ai_time'),('robotics','robotics_tasks','robotics_time'),('safe','safe_tasks','safe_time')]:
         if g.get(grp,0)!=S.get(k1): fail('breakdown_group_count_mismatch',f"{c}:{grp} {g.get(grp,0)} vs {S.get(k1)}")
