@@ -31,13 +31,13 @@ exports.mapAgents = (occs, onetGet, sources) => {
     const tsum = o.tasks.reduce((s, t) => s + (t.time_share || 0), 0);
     const w = (t) => (tsum > 0.5 ? (t.time_share || 0) / tsum : 1 / n);
     const techText = o.technology.map((t) => t.category).join(' ').toLowerCase();
-    const catScore = {}; const catTasks = {}; const taskOnly = {};
+    const catScore = {}; const catTasks = {}; const catIds = {}; const taskOnly = {};
     for (const c of cats) {
       const re = C.categoryPatterns[c];
       const hits = o.tasks.filter((t) => re.test((t.text + ' ' + (dwa.get((t.source_code || o.code) + '|' + t.id) || '')).toLowerCase()));
       taskOnly[c] = hits.reduce((s, t) => s + w(t), 0);
       catScore[c] = Math.min(1, taskOnly[c] + (re.test(techText) ? 0.05 : 0));
-      catTasks[c] = hits.sort((a, b) => w(b) - w(a)).slice(0, 3).map((t) => ({ id: t.id, text: t.text }));
+      const sorted = hits.sort((a, b) => w(b) - w(a)); catTasks[c] = sorted.slice(0, 3).map((t) => ({ id: t.id, text: t.text })); catIds[c] = sorted.map((t) => String(t.id));
     }
     const ai = o.exposure.ai.composite?.value ?? 0.5;
     const list = [];
@@ -47,7 +47,7 @@ exports.mapAgents = (occs, onetGet, sources) => {
       pc.forEach((c, i) => { const v = (catScore[c] || 0) * (i === 0 ? 1 : 0.8) * (C.genericCategories[c] || 1); if (v > best) { best = v; bestCat = c; } });
       if (!bestCat || taskOnly[bestCat] < THRESHOLD) continue;
       const score = r3(best * (0.5 + 0.5 * ai));
-      list.push({ id: p.id, name: p.name, url: p.url, status: p.status, category: bestCat, score, relevance: taskOnly[bestCat] >= 0.3 ? 'high' : taskOnly[bestCat] >= 0.15 ? 'medium' : 'low', matched_tasks: catTasks[bestCat], confidence: p.confidence });
+      list.push({ id: p.id, name: p.name, url: p.url, status: p.status, category: bestCat, score, relevance: taskOnly[bestCat] >= 0.3 ? 'high' : taskOnly[bestCat] >= 0.15 ? 'medium' : 'low', matched_tasks: catTasks[bestCat], matched_task_ids: catIds[bestCat], confidence: p.confidence });
       forward.get(p.id).push({ code: o.code, score });
     }
     list.sort((a, b) => b.score - a.score || CONF[a.confidence] - CONF[b.confidence] || a.name.localeCompare(b.name));

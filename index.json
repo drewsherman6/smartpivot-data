@@ -38,7 +38,7 @@
       "path": "data/agent_platforms.json",
       "schema": "schemas/agent_platforms.schema.json",
       "schema_version": "1.0.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 129,
       "description": "AI agent platforms with sourced facts (incl. restored July-8 list marked restored_unverified)"
@@ -48,7 +48,7 @@
       "path": "data/robotics_manufacturers.json",
       "schema": "schemas/robotics_manufacturers.schema.json",
       "schema_version": "1.0.0",
-      "last_updated": "2026-10-19",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 56,
       "description": "Robot makers with sourced facts"
@@ -318,7 +318,7 @@
       "path": "data/exposure/robot_exposure.json",
       "schema": "schemas/exposure_table.schema.json",
       "schema_version": "1.0.0",
-      "last_updated": "2026-10-15",
+      "last_updated": "2026-10-20",
       "legacy": false,
       "record_count": 1016,
       "description": "Per-occupation robot exposure (Anthropic index, O*NET degree of automation)"

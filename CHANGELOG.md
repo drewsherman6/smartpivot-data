@@ -2,6 +2,14 @@
 
 Machine-readable history: `data/history/changes.jsonl`. `scripts/update.js` appends entries here automatically.
 
+## 2026-10-20 (fourth pass) - Robot and AI product to task links: full, in-setting coverage
+- Root cause (mapping error): `exposure.robotics.cited_systems` kept only the first 10 unique system names per occupation in source-file order (task-id order), so later, high-time core tasks lost their links. For 53-3032.00 Heavy truck drivers, Aurora and Kodiak survived only on 10635 (hazmat safety, 1% of time), and the 10641 "Drive trucks" links (63% of time) were dropped. AI products had the same problem: `agents.platforms[].matched_tasks` kept only the top 3 matched tasks while the score used all of them.
+- New `exposure.robotics.task_citations` (all 1,016 jobs): for each task, `covered_share` is the weight_pct share of the Anthropic robot-exposure task instances that a commercial or deployed, autonomous system can do in the setting where the work actually happens (instance tier above E0 and at least the instance setting_tier), plus those systems with their evidence URL, maturity and date. This also drops wrong links: a robot that only works in a purpose-built cell (E1) no longer counts for work done in a kitchen, a store or on a public road (E2/E3), and demo, teleoperated or unclear systems never count. Source: Anthropic robot exposure tasks file (instances, sources).
+- New `agents.platforms[].matched_task_ids`: every task the product matched (the legacy `matched_tasks`, top 3 with text, is unchanged).
+- Legacy shapes kept: `cited_systems` keeps the same fields and 10-item cap but is now ranked by covered task time; it is deprecated for coverage math (use `task_citations`).
+- Effect: 14,683 counted robot links in task_citations; 749 jobs had robot links added or removed; 31,959 AI product task links restored in 592 jobs. Whole-role exposure (`derived.skill_risk_summary.occupation_combined`) is unchanged for every job. "Work already targeted" changed for 864 jobs (543 up, 321 down) and the market-raised risk level changed for 26 jobs; these are corrections of the mapping error. Heavy truck drivers: 1% -> 22% (High, unchanged).
+- Tests: `scripts/test-robot-links.js` (in-setting coverage rules, legacy display shape, every job has task_citations on its own tasks, Aurora on the drive-trucks task).
+
 ## 2026-10-20 (third pass) - Pathway gating, pay cap 1.08, hub relief
 - Job zone 5 / doctoral health targets are only reachable from job zone >= 4 sources in a related family (same major group; health or science sources for health targets). Surgeons, Prosthodontists and Optometrists are no longer hubs: they had 97 / 91 / 91 appearances and are now out of the top 10.
 - pay_factor capped at 1.08 (was 1.15).

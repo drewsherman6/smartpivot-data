@@ -166,7 +166,7 @@ async function main() {
   const taskPen = new Map(csvFile(SRC.aei_task.file).map((r) => [r.task.trim(), num(r.penetration)]));
   const robotIdx = new Map(csvFile(SRC.robot_occ.file).map((r) => [r.onetsoc_code, r2(num(r.robot_exposure_index))]));
   // robot task file is ~100 MB: stream-parse line by line through csv-parse
-  const robotTask = new Map(); const robotByOcc = new Map(); const devs = new Map();
+  const robotTask = new Map(); const robotByOcc = new Map(); const devs = new Map(); const robotCov = new Map(); const RL = require('./robot-links');
   {
     const { parse: parseStream } = require('csv-parse');
     const parser = fs.createReadStream(path.join(CACHE, SRC.robot_tasks.file)).pipe(parseStream({ columns: true, relax_quotes: true }));
@@ -174,6 +174,7 @@ async function main() {
       robotTask.set(r.onetsoc_code + '|' + r.task_id, { tier: r.exposure_tier || null, time_share: num(r.time_share) });
       if (!r.sources || r.sources === '[]') continue;
       let srcs; try { srcs = JSON.parse(r.sources); } catch { continue; }
+      { let inst = []; try { inst = JSON.parse(r.instances || '[]'); } catch { /* none */ } robotCov.set(r.onetsoc_code + '|' + r.task_id, RL.instanceCoverage(inst, srcs)); }
       const list = robotByOcc.get(r.onetsoc_code) || []; 
       for (const s of srcs) {
         if (!s.system || !s.url) continue;
@@ -199,7 +200,16 @@ async function main() {
     };
     for (const t of o.tasks) { const p = taskPen.get(t.text.trim()); if (p != null) t.ai_task_penetration = r2(p); const rt = robotTask.get((t.source_code || o.code) + '|' + t.id); if (rt) { t.robot_tier = rt.tier; t.time_share = rt.time_share; } }
     const cites = isInf(o, 'tasks') ? o.inferred_from.sources.flatMap((x) => robotByOcc.get(x.code) || []) : robotByOcc.get(o.code) || []; const seen = new Set();
-    o.exposure.robotics.cited_systems = cites.filter((x) => { const k = x.system; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 10);
+    // Task-level linkage (scripts/robot-links.js): task_citations = per task, share of its instances a commercial/deployed autonomous
+    // system covers in the setting where the work happens, plus those systems. cited_systems keeps its legacy shape as a 10-item
+    // display sample, now ranked by covered task time; before 2026-10-20 it kept the first 10 unique names in file order, which dropped
+    // core-task links (e.g. Aurora/Kodiak on 53-3032.00 "Drive trucks"). cited_systems is deprecated for coverage math.
+    const tsById = new Map(o.tasks.map((t) => [String(t.id), t.time_share || 0]));
+    const covT = new Map(o.tasks.map((t) => [String(t.id), robotCov.get((t.source_code || o.code) + '|' + t.id)]).filter((x) => x[1]));
+    o.exposure.robotics.task_citations = RL.taskCitations(o.tasks, robotCov, (t) => t.source_code || o.code);
+    o.exposure.robotics.task_citations_method = 'Per O*NET task: covered_share = weight_pct share of Anthropic robot-exposure task instances whose tier is above E0 and at least the instance setting_tier, and that cite at least one commercial or deployed, autonomous system; systems = those systems with evidence URL. Source: Anthropic robot exposure tasks file.';
+    o.exposure.robotics.cited_systems = RL.displaySample(cites, covT, tsById, 10);
+    void seen;
     o.exposure.robotics.exposed_tasks = o.tasks.filter((t) => ['E1', 'E2', 'E3'].includes(t.robot_tier)).sort((a, b) => (b.time_share || 0) - (a.time_share || 0)).slice(0, 8).map((t) => ({ id: t.id, text: t.text, tier: t.robot_tier }));
     {
       const rated = o.tasks.filter((t) => t.robot_tier !== undefined);
