@@ -27,7 +27,7 @@ async function download() {
   const meta = {};
   for (const [k, s] of Object.entries(SRC)) {
     const dest = path.join(CACHE, s.file);
-    if (!OFFLINE) {
+    if (!OFFLINE || !fs.existsSync(dest)) { // offline runs still fetch a source whose cache file is missing (e.g. the O*NET 2010-2019 crosswalk)
       const res = await fetch(s.url, { headers: { 'User-Agent': UA, From: 'drewsherman6@gmail.com' } });
       if (!res.ok) throw new Error(`download failed ${res.status} ${s.url}`);
       fs.writeFileSync(dest, Buffer.from(await res.arrayBuffer()));

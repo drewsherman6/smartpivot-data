@@ -183,58 +183,58 @@
    "low": 13124
   },
   "skill_scores_by_band": {
-   "safe": 15988,
-   "moderate": 10108,
-   "at_risk": 9464
+   "safe": 15995,
+   "moderate": 10112,
+   "at_risk": 9453
   },
   "tasks": 21658,
   "tasks_linked_to_skills": 21658,
   "occupations_with_safe_skills": 896,
-  "occupations_with_at_risk_skills": 766,
+  "occupations_with_at_risk_skills": 768,
   "occupations_with_pathways": 1016,
   "occupations_with_3plus_pathways": 1016,
-  "occupations_with_reskilling_pathways": 144,
+  "occupations_with_reskilling_pathways": 145,
   "occupations_with_neither": 0,
   "top_hub_targets": [
    {
-    "title": "Bus and Truck Mechanics and Diesel Engine Specialists",
-    "appearances": 115
+    "title": "Rock Splitters, Quarry",
+    "appearances": 117
    },
    {
-    "title": "Rock Splitters, Quarry",
-    "appearances": 114
+    "title": "Bus and Truck Mechanics and Diesel Engine Specialists",
+    "appearances": 113
    },
    {
     "title": "Insulation Workers, Floor, Ceiling, and Wall",
-    "appearances": 111
+    "appearances": 106
    },
    {
     "title": "Automotive Glass Installers and Repairers",
-    "appearances": 94
+    "appearances": 98
    },
    {
     "title": "Motorcycle Mechanics",
-    "appearances": 91
+    "appearances": 94
    },
    {
     "title": "Surgical Assistants",
-    "appearances": 90
+    "appearances": 91
    },
    {
     "title": "Automotive Body and Related Repairers",
-    "appearances": 87
-   },
-   {
-    "title": "Medical Dosimetrists",
-    "appearances": 78
+    "appearances": 81
    },
    {
     "title": "Wind Turbine Service Technicians",
     "appearances": 77
    },
    {
-    "title": "Home Health Aides",
-    "appearances": 71
+    "title": "Medical Dosimetrists",
+    "appearances": 77
+   },
+   {
+    "title": "Morticians, Undertakers, and Funeral Arrangers",
+    "appearances": 75
    }
   ],
   "occupations_inferred_tasks": 93
@@ -254,7 +254,7 @@
    "occupations_at_risk": 145,
    "p10": 0,
    "median": 0.215,
-   "p90": 0.59
+   "p90": 0.589
   },
   {
    "id": "2.B.3.l",
@@ -262,11 +262,11 @@
    "kind": "skill",
    "ai_risk": 0.199,
    "robotics_risk": 0.083,
-   "combined": 0.274,
+   "combined": 0.275,
    "band": "safe",
    "occupations": 1016,
-   "occupations_safe": 449,
-   "occupations_at_risk": 295,
+   "occupations_safe": 450,
+   "occupations_at_risk": 297,
    "p10": 0,
    "median": 0.344,
    "p90": 0.686
@@ -280,8 +280,8 @@
    "combined": 0.277,
    "band": "safe",
    "occupations": 1016,
-   "occupations_safe": 449,
-   "occupations_at_risk": 295,
+   "occupations_safe": 450,
+   "occupations_at_risk": 297,
    "p10": 0,
    "median": 0.344,
    "p90": 0.686
@@ -291,7 +291,7 @@
    "skill": "Management of Personnel Resources",
    "kind": "skill",
    "ai_risk": 0.238,
-   "robotics_risk": 0.055,
+   "robotics_risk": 0.054,
    "combined": 0.283,
    "band": "safe",
    "occupations": 1016,
@@ -299,7 +299,7 @@
    "occupations_at_risk": 157,
    "p10": 0,
    "median": 0.242,
-   "p90": 0.594
+   "p90": 0.592
   },
   {
    "id": "2.B.3.c",
@@ -310,8 +310,8 @@
    "combined": 0.289,
    "band": "safe",
    "occupations": 1016,
-   "occupations_safe": 449,
-   "occupations_at_risk": 295,
+   "occupations_safe": 450,
+   "occupations_at_risk": 297,
    "p10": 0,
    "median": 0.344,
    "p90": 0.686
@@ -326,7 +326,7 @@
    "band": "safe",
    "occupations": 1016,
    "occupations_safe": 615,
-   "occupations_at_risk": 179,
+   "occupations_at_risk": 180,
    "p10": 0,
    "median": 0.245,
    "p90": 0.619
@@ -344,7 +344,7 @@
    "occupations_at_risk": 164,
    "p10": 0.017,
    "median": 0.248,
-   "p90": 0.621
+   "p90": 0.62
   },
   {
    "id": "2.B.1.f",
@@ -358,7 +358,7 @@
    "occupations_safe": 597,
    "occupations_at_risk": 177,
    "p10": 0.015,
-   "median": 0.251,
+   "median": 0.252,
    "p90": 0.639
   },
   {
@@ -366,22 +366,22 @@
    "skill": "Troubleshooting",
    "kind": "skill",
    "ai_risk": 0.202,
-   "robotics_risk": 0.117,
-   "combined": 0.307,
+   "robotics_risk": 0.116,
+   "combined": 0.306,
    "band": "moderate",
    "occupations": 1016,
-   "occupations_safe": 479,
-   "occupations_at_risk": 305,
+   "occupations_safe": 480,
+   "occupations_at_risk": 298,
    "p10": 0.024,
    "median": 0.323,
-   "p90": 0.701
+   "p90": 0.702
   },
   {
    "id": "2.B.1.a",
    "skill": "Social Perceptiveness",
    "kind": "skill",
    "ai_risk": 0.274,
-   "robotics_risk": 0.045,
+   "robotics_risk": 0.044,
    "combined": 0.313,
    "band": "moderate",
    "occupations": 1016,
@@ -419,7 +419,7 @@
    "occupations_at_risk": 190,
    "p10": 0,
    "median": 0.266,
-   "p90": 0.683
+   "p90": 0.684
   },
   {
    "id": "2.B.1.e",
@@ -431,7 +431,7 @@
    "band": "moderate",
    "occupations": 1016,
    "occupations_safe": 569,
-   "occupations_at_risk": 209,
+   "occupations_at_risk": 210,
    "p10": 0,
    "median": 0.272,
    "p90": 0.694
@@ -441,12 +441,12 @@
    "skill": "Monitoring",
    "kind": "skill",
    "ai_risk": 0.258,
-   "robotics_risk": 0.074,
+   "robotics_risk": 0.073,
    "combined": 0.321,
    "band": "moderate",
    "occupations": 1016,
    "occupations_safe": 539,
-   "occupations_at_risk": 194,
+   "occupations_at_risk": 193,
    "p10": 0.068,
    "median": 0.286,
    "p90": 0.635
@@ -460,8 +460,8 @@
    "combined": 0.322,
    "band": "moderate",
    "occupations": 1016,
-   "occupations_safe": 563,
-   "occupations_at_risk": 191,
+   "occupations_safe": 564,
+   "occupations_at_risk": 192,
    "p10": 0.03,
    "median": 0.269,
    "p90": 0.64
@@ -472,14 +472,14 @@
    "kind": "skill",
    "ai_risk": 0.225,
    "robotics_risk": 0.113,
-   "combined": 0.325,
+   "combined": 0.324,
    "band": "moderate",
    "occupations": 1016,
-   "occupations_safe": 479,
-   "occupations_at_risk": 305,
+   "occupations_safe": 480,
+   "occupations_at_risk": 298,
    "p10": 0.024,
    "median": 0.323,
-   "p90": 0.701
+   "p90": 0.702
   },
   {
    "id": "2.B.5.a",
@@ -490,7 +490,7 @@
    "combined": 0.33,
    "band": "moderate",
    "occupations": 1016,
-   "occupations_safe": 525,
+   "occupations_safe": 526,
    "occupations_at_risk": 213,
    "p10": 0.008,
    "median": 0.294,
@@ -501,15 +501,15 @@
    "skill": "Operations Monitoring",
    "kind": "skill",
    "ai_risk": 0.2,
-   "robotics_risk": 0.145,
-   "combined": 0.333,
+   "robotics_risk": 0.144,
+   "combined": 0.332,
    "band": "moderate",
    "occupations": 1016,
-   "occupations_safe": 487,
-   "occupations_at_risk": 263,
+   "occupations_safe": 489,
+   "occupations_at_risk": 256,
    "p10": 0.05,
    "median": 0.311,
-   "p90": 0.708
+   "p90": 0.71
   },
   {
    "id": "2.B.3.h",
@@ -521,10 +521,10 @@
    "band": "moderate",
    "occupations": 1016,
    "occupations_safe": 354,
-   "occupations_at_risk": 355,
-   "p10": 0.101,
-   "median": 0.403,
-   "p90": 0.71
+   "occupations_at_risk": 356,
+   "p10": 0.102,
+   "median": 0.397,
+   "p90": 0.712
   },
   {
    "id": "2.B.4.e",
@@ -532,13 +532,13 @@
    "kind": "skill",
    "ai_risk": 0.316,
    "robotics_risk": 0.069,
-   "combined": 0.373,
+   "combined": 0.372,
    "band": "moderate",
    "occupations": 1016,
-   "occupations_safe": 457,
-   "occupations_at_risk": 259,
+   "occupations_safe": 456,
+   "occupations_at_risk": 258,
    "p10": 0.077,
-   "median": 0.329,
+   "median": 0.328,
    "p90": 0.751
   },
   {
@@ -565,8 +565,8 @@
    "combined": 0.378,
    "band": "moderate",
    "occupations": 1016,
-   "occupations_safe": 458,
-   "occupations_at_risk": 257,
+   "occupations_safe": 456,
+   "occupations_at_risk": 256,
    "p10": 0.043,
    "median": 0.327,
    "p90": 0.788
@@ -581,10 +581,10 @@
    "band": "moderate",
    "occupations": 1016,
    "occupations_safe": 319,
-   "occupations_at_risk": 333,
+   "occupations_at_risk": 334,
    "p10": 0.155,
-   "median": 0.392,
-   "p90": 0.686
+   "median": 0.39,
+   "p90": 0.688
   },
   {
    "id": "2.A.2.a",
@@ -595,10 +595,10 @@
    "combined": 0.394,
    "band": "moderate",
    "occupations": 1016,
-   "occupations_safe": 418,
-   "occupations_at_risk": 267,
+   "occupations_safe": 417,
+   "occupations_at_risk": 268,
    "p10": 0.131,
-   "median": 0.354,
+   "median": 0.353,
    "p90": 0.726
   },
   {
@@ -613,7 +613,7 @@
    "occupations_safe": 413,
    "occupations_at_risk": 287,
    "p10": 0.076,
-   "median": 0.353,
+   "median": 0.352,
    "p90": 0.765
   },
   {
@@ -626,7 +626,7 @@
    "band": "moderate",
    "occupations": 1016,
    "occupations_safe": 387,
-   "occupations_at_risk": 304,
+   "occupations_at_risk": 302,
    "p10": 0.133,
    "median": 0.358,
    "p90": 0.751
@@ -641,7 +641,7 @@
    "band": "moderate",
    "occupations": 1016,
    "occupations_safe": 387,
-   "occupations_at_risk": 304,
+   "occupations_at_risk": 302,
    "p10": 0.133,
    "median": 0.358,
    "p90": 0.751
@@ -656,10 +656,10 @@
    "band": "moderate",
    "occupations": 1016,
    "occupations_safe": 319,
-   "occupations_at_risk": 333,
+   "occupations_at_risk": 334,
    "p10": 0.155,
-   "median": 0.392,
-   "p90": 0.686
+   "median": 0.39,
+   "p90": 0.688
   },
   {
    "id": "2.B.3.a",
@@ -671,10 +671,10 @@
    "band": "moderate",
    "occupations": 1016,
    "occupations_safe": 319,
-   "occupations_at_risk": 333,
+   "occupations_at_risk": 334,
    "p10": 0.155,
-   "median": 0.392,
-   "p90": 0.686
+   "median": 0.39,
+   "p90": 0.688
   },
   {
    "id": "2.B.4.g",
@@ -686,9 +686,9 @@
    "band": "moderate",
    "occupations": 1016,
    "occupations_safe": 396,
-   "occupations_at_risk": 316,
+   "occupations_at_risk": 317,
    "p10": 0.098,
-   "median": 0.363,
+   "median": 0.361,
    "p90": 0.86
   },
   {
@@ -700,7 +700,7 @@
    "combined": 0.438,
    "band": "moderate",
    "occupations": 1016,
-   "occupations_safe": 350,
+   "occupations_safe": 351,
    "occupations_at_risk": 328,
    "p10": 0.153,
    "median": 0.378,
@@ -716,9 +716,9 @@
    "band": "moderate",
    "occupations": 1016,
    "occupations_safe": 364,
-   "occupations_at_risk": 341,
+   "occupations_at_risk": 342,
    "p10": 0.141,
-   "median": 0.385,
+   "median": 0.382,
    "p90": 0.894
   },
   {
@@ -730,7 +730,7 @@
    "combined": 0.466,
    "band": "moderate",
    "occupations": 1016,
-   "occupations_safe": 283,
+   "occupations_safe": 284,
    "occupations_at_risk": 409,
    "p10": 0.132,
    "median": 0.432,
@@ -746,10 +746,10 @@
    "band": "moderate",
    "occupations": 1016,
    "occupations_safe": 304,
-   "occupations_at_risk": 359,
+   "occupations_at_risk": 360,
    "p10": 0.156,
-   "median": 0.406,
-   "p90": 0.746
+   "median": 0.405,
+   "p90": 0.747
   },
   {
    "id": "2.A.1.c",

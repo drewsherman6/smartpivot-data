@@ -162,12 +162,20 @@ function compute(shards, msByCode) {
   // ---- ONE job score (Drew, Oct 21, 2026): task-level combined T_c = sum(time x (1-(1-ai)(1-robot))); other measures
   // O_c = 1-(1-O_ai)(1-O_rob) on the same scale (each linked as above); headline = benefit of the doubt on (T_c, O_c).
   // AI/robot split: T_c part by the task attribution, O_c part in proportion O_ai : O_rob, mixed by the same weights.
-  for (const x of out.values()) {
+  // O_c is itself equipercentile-linked onto the distribution of T_c (Oct 21, 2026 quality pass): combining the two
+  // separately linked dimensions with 1-(1-a)(1-b) put O_c on a different scale from the task-level score (the robot
+  // T distribution is mostly 0), which pulled jobs just above 50% task-level below High when the other measures ranked
+  // them as highly. Ranks come from O_c^raw = 1-(1-O_ai)(1-O_rob); the AI : robot ratio of O is unchanged.
+  const ocRaw = new Map(); for (const [c, x] of out) { const Oa = x.ai.headline.other_measures_linked, Or = x.robotics.headline.other_measures_linked; if (Oa != null || Or != null) ocRaw.set(c, 1 - (1 - (Oa ?? 0)) * (1 - (Or ?? 0))); }
+  const distC = [...out.values()].map((x) => x.time_weighted.combined).filter((v) => v != null).sort((a, b) => a - b);
+  const scC = [...ocRaw.entries()].sort((a, b) => a[1] - b[1]); const lkC = new Map();
+  scC.forEach(([c], i) => { const q = scC.length > 1 ? i / (scC.length - 1) : 0.5; const pos = q * (distC.length - 1); const lo = Math.floor(pos); lkC.set(c, distC[lo] + (distC[Math.min(lo + 1, distC.length - 1)] - distC[lo]) * (pos - lo)); });
+  for (const [c, x] of out) {
     const T = x.time_weighted.combined; const Oa = x.ai.headline.other_measures_linked, Or = x.robotics.headline.other_measures_linked;
-    const Oc = Oa == null && Or == null ? null : 1 - (1 - (Oa ?? 0)) * (1 - (Or ?? 0)); const h = headline(T, Oc);
+    const Oc = lkC.get(c) ?? null; const h = headline(T, Oc);
     const sT = x.time_weighted.ai_share, sO = Oc ? ((Oa ?? 0) + (Or ?? 0) > 0 ? (Oa ?? 0) / ((Oa ?? 0) + (Or ?? 0)) : 0) : null;
     const w = h.w ?? 0; const aiPart = h.value == null ? null : w * (T ?? 0) * (sT ?? sO ?? 0) + (1 - w) * (Oc ?? 0) * (sO ?? sT ?? 0);
-    x.combined = { value: r3(h.value), time_weighted_tasks: T, other_measures_linked: r3(Oc), weight_time_weighted: h.w, ai_points: r3(aiPart), robotics_points: h.value == null ? null : r3(h.value - aiPart), ai_share: h.value ? r3(aiPart / h.value) : null, robotics_share: h.value ? r3(1 - aiPart / h.value) : null };
+    x.combined = { value: r3(h.value), time_weighted_tasks: T, other_measures_linked: r3(Oc), other_measures_unlinked: r3(ocRaw.get(c) ?? null), weight_time_weighted: h.w, ai_points: r3(aiPart), robotics_points: h.value == null ? null : r3(h.value - aiPart), ai_share: h.value ? r3(aiPart / h.value) : null, robotics_share: h.value ? r3(1 - aiPart / h.value) : null };
   }
   // calibration: pairwise Spearman (Pearson on percentiles) between measures
   const cal = {}; const ms = Object.keys(MEASURE_LABEL);

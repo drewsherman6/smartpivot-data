@@ -100,9 +100,10 @@ function pool() {
   if (POOL) return POOL; const links = dwaLinks(); const seen = new Map(); const seenR = new Map(); const dir = path.join(ROOT, 'data/occupations');
   for (const f of fs.readdirSync(dir).filter((x) => /^\d\d\.json$/.test(x))) for (const o of JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')).occupations) {
     const drive = new Set((o.tasks || []).filter((t) => t.robot_driving_rule).map((t) => String(t.id)));
+    const home = new Map((o.tasks || []).map((t) => [String(t.id), t.source_code || o.code])); // a task copied from another job keeps that job's setting
     for (const r of ownTaskRows(o)) {
       const k = r.id; const prev = seen.get(k) || { ai: [], rob: [] }; if (r.ai != null) prev.ai.push(r.ai); if (r.robotics != null) prev.rob.push(r.robotics); seen.set(k, prev);
-      if (r.robotics != null && !drive.has(k)) { const g = minor(o.code); const kk = g + '|' + k; const pr = seenR.get(kk) || { g, id: k, v: [] }; pr.v.push(r.robotics); seenR.set(kk, pr); }
+      if (r.robotics != null && !drive.has(k)) { const g = minor(home.get(k) || o.code); const kk = g + '|' + k; const pr = seenR.get(kk) || { g, id: k, v: [] }; pr.v.push(r.robotics); seenR.set(kk, pr); }
     } }
   const acc = new Map(); // dwa -> {ai:[...], rob:[...]} one value per task id (mean over the jobs listing it)
   for (const [id, v] of seen) { const ds = links.get(id); if (!ds) continue; for (const d of ds) { const a = acc.get(d) || { ai: [], rob: [] }; if (v.ai.length) a.ai.push(mean(v.ai)); if (v.rob.length) a.rob.push(mean(v.rob)); acc.set(d, a); } }
@@ -123,7 +124,8 @@ function taskRows(o) {
     // job's SOC minor group* (same kind of workplace); driving-rule tasks keep their own rating (approved driving rule) and
     // are not pooled. Unrated tasks are filled from the same pool, else from the all-jobs DWA pool.
     const drive = (o.tasks || []).find((t) => String(t.id) === r.id)?.robot_driving_rule;
-    const rm = drive ? [] : out.dwa_ids.map((d) => P.dwaMinor.get(minor(o.code) + '|' + d)).filter(Boolean);
+    const src = (o.tasks || []).find((t) => String(t.id) === r.id)?.source_code || o.code; // same statement, same setting, same evidence (tasks an O*NET-unrated job takes from its source job)
+    const rm = drive ? [] : out.dwa_ids.map((d) => P.dwaMinor.get(minor(src) + '|' + d)).filter(Boolean);
     if (rm.length) { out.robotics = mean(rm.map((d) => d.rob)); out.robotics_basis = 'dwa_pooled'; out.robotics_source = r.robotics_source ? r.robotics_source + '+onet_dwa_pool_minor_group' : 'onet_dwa_pool_minor_group'; out.robotics_dwa_tasks = rm.reduce((s2, d) => s2 + d.rob_n, 0); }
     else if (rb.length && r.robotics == null) { out.robotics = mean(rb.map((d) => d.rob)); out.robotics_basis = 'dwa_pooled'; out.robotics_source = 'onet_dwa_pool'; }
     return out;

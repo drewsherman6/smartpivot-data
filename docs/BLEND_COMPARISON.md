@@ -12,19 +12,19 @@ The headline AI and robotics scores are now weighted by **how much of the job's 
 | | Low | Moderate | High |
 |---|---|---|---|
 | Before time weighting (b37f3f7) | 576 | 355 | 85 |
-| Time-weighted (primary) | 316 | 367 | 333 |
+| Time-weighted (primary) | 307 | 376 | 333 |
 
-Level changed for **572** jobs: Low → Moderate 239, Moderate → High 169, Low → High 88, Moderate → Low 67, High → Moderate 9. T dominated (weight 0.9) for 483 AI and 460 robotics scores.
+Level changed for **567** jobs: Low → Moderate 241, Moderate → High 169, Low → High 88, Moderate → Low 60, High → Moderate 9. T dominated (weight 0.9) for 483 AI and 461 robotics scores.
 
 | Code | Title | T AI | T robotics | Before | Now | Level |
 |---|---|---|---|---|---|---|
-| 53-3032.00 | Heavy and Tractor-Trailer Truck Drivers | 0.082 | 0.635 | 0.347 | 0.663 | Moderate → High |
+| 53-3032.00 | Heavy and Tractor-Trailer Truck Drivers | 0.082 | 0.635 | 0.347 | 0.665 | Moderate → High |
 | 43-4051.00 | Customer Service Representatives | 0.785 | 0.028 | 0.487 | 0.79 | Moderate → High |
-| 15-1252.00 | Software Developers | 0.793 | 0 | 0.407 | 0.782 | Moderate → High |
-| 27-1013.00 | Fine Artists, Including Painters, Sculptors, and Illustrators | 0.294 | 0.03 | 0.217 | 0.368 | Low → Moderate |
-| 47-2043.00 | Floor Sanders and Finishers | 0 | 0.122 | 0.235 | 0.12 | Low |
-| 29-1215.00 | Family Medicine Physicians | 0.389 | 0.012 | 0.223 | 0.434 | Low → Moderate |
-| 25-2021.00 | Elementary School Teachers, Except Special Education | 0.424 | 0.02 | 0.15 | 0.432 | Low → Moderate |
+| 15-1252.00 | Software Developers | 0.793 | 0 | 0.407 | 0.783 | Moderate → High |
+| 27-1013.00 | Fine Artists, Including Painters, Sculptors, and Illustrators | 0.294 | 0.03 | 0.217 | 0.372 | Low → Moderate |
+| 47-2043.00 | Floor Sanders and Finishers | 0 | 0.122 | 0.235 | 0.122 | Low |
+| 29-1215.00 | Family Medicine Physicians | 0.389 | 0.012 | 0.223 | 0.442 | Low → Moderate |
+| 25-2021.00 | Elementary School Teachers, Except Special Education | 0.424 | 0.02 | 0.15 | 0.433 | Low → Moderate |
 
 ## Primary switch (approved by Drew, Oct 21, 2026)
 The multi-source score is now the **primary** score. It drives the headline AI and robotics figures, the risk-level bands, skill risks, pathways, reskilling routes, the employer brief, the PDF and CSV, and Supabase. The previous task-only method is kept as `previous_method` in each record and is shown on /method.
@@ -34,10 +34,10 @@ The multi-source score is now the **primary** score. It drives the headline AI a
 | | Low | Moderate | High |
 |---|---|---|---|
 | Previous method | 564 | 374 | 78 |
-| Multi-source (primary) | 316 | 367 | 333 |
+| Multi-source (primary) | 307 | 376 | 333 |
 
-- **Combined risk level** changed for **615** of 1016 jobs: Low → Moderate 242, Low → High 102, Moderate → High 165, Moderate → Low 94, High → Moderate 10, High → Low 2.
-- **AI component band** changed for 451 jobs, and the **robotics component band** for 142.
+- **Combined risk level** changed for **613** of 1016 jobs: Low → Moderate 245, Low → High 103, Moderate → High 164, Moderate → Low 89, High → Moderate 10, High → Low 2.
+- **AI component band** changed for 454 jobs, and the **robotics component band** for 142.
 - The site can still raise a level when products already on the market cover more of the work. That rule is unchanged.
 
 Largest combined-risk changes:
@@ -46,21 +46,21 @@ Largest combined-risk changes:
 |---|---|---|---|---|
 | 15-2051.00 | Data Scientists | 0.223 | 0.809 | Low → High |
 | 13-1041.07 | Regulatory Affairs Specialists | 0.213 | 0.798 | Low → High |
-| 15-1299.07 | Blockchain Engineers | 0.247 | 0.81 | Low → High |
+| 15-1299.07 | Blockchain Engineers | 0.247 | 0.811 | Low → High |
 | 13-2031.00 | Budget Analysts | 0.178 | 0.73 | Low → High |
-| 19-2041.03 | Industrial Ecologists | 0.145 | 0.685 | Low → High |
+| 19-2041.03 | Industrial Ecologists | 0.145 | 0.686 | Low → High |
 | 15-1299.04 | Penetration Testers | 0.224 | 0.761 | Low → High |
 | 23-2093.00 | Title Examiners, Abstractors, and Searchers | 0.174 | 0.701 | Low → High |
-| 23-2099.00 | Legal Support Workers, All Other | 0.171 | 0.696 | Low → High |
+| 23-2099.00 | Legal Support Workers, All Other | 0.171 | 0.698 | Low → High |
 | 15-1255.01 | Video Game Designers | 0.226 | 0.732 | Low → High |
+| 13-2081.00 | Tax Examiners and Collectors, and Revenue Agents | 0.179 | 0.679 | Low → High |
 | 15-2041.01 | Biostatisticians | 0.285 | 0.785 | Low → High |
-| 13-2081.00 | Tax Examiners and Collectors, and Revenue Agents | 0.179 | 0.678 | Low → High |
 | 15-1299.05 | Information Security Engineers | 0.191 | 0.69 | Low → High |
 | 43-6012.00 | Legal Secretaries and Administrative Assistants | 0.323 | 0.821 | Moderate → High |
-| 13-2041.00 | Credit Analysts | 0.32 | 0.803 | Moderate → High |
-| 43-4061.00 | Eligibility Interviewers, Government Programs | 0.22 | 0.701 | Low → High |
-| 19-1099.00 | Life Scientists, All Other | 0.146 | 0.624 | Low → High |
-| 19-1011.00 | Animal Scientists | 0.146 | 0.621 | Low → High |
+| 13-2041.00 | Credit Analysts | 0.32 | 0.801 | Moderate → High |
+| 43-4061.00 | Eligibility Interviewers, Government Programs | 0.22 | 0.7 | Low → High |
+| 19-1099.00 | Life Scientists, All Other | 0.146 | 0.625 | Low → High |
+| 19-1011.00 | Animal Scientists | 0.146 | 0.622 | Low → High |
 | 13-2082.00 | Tax Preparers | 0.267 | 0.741 | Low → High |
 | 15-1299.02 | Geographic Information Systems Technologists and Technicians | 0.346 | 0.818 | Moderate → High |
 | 55-1015.00 | Command and Control Center Officers | 0.104 | 0.571 | Low → High |
@@ -98,17 +98,17 @@ Largest combined-risk changes:
 
 ## Headline (scheme A vs current)
 - **AI:** rank correlation with the current composite **0.947** (Spearman). Mean absolute rank change 7 points; 46 jobs move 20 or more points. The Low/Moderate/High tercile changes for **170** of 1016 jobs (84 up, 86 down).
-- **Robotics:** rank correlation with the current Anthropic robot index **0.905**. The tercile changes for 215 jobs (107 up, 108 down). Many jobs share the robot index value 0, so tercile moves at the low end are partly tie-breaking.
+- **Robotics:** rank correlation with the current Anthropic robot index **0.904**. The tercile changes for 216 jobs (113 up, 103 down). Many jobs share the robot index value 0, so tercile moves at the low end are partly tie-breaking.
 - Statements per job (the work-statement layer): min 23, median 136, max 742. Coverage: onet 1016, esco 935, ilo 987, oasis 1016, nice 13.
 
 ## Sensitivity to the weighting scheme
 | Scheme | AI ρ vs current | AI ρ vs scheme A | AI tercile changes vs current | Robotics ρ vs current | Robotics tercile changes |
 |---|---|---|---|---|---|
 | A. Other measures (all except time-weighted tasks): equal family weights; O*NET automation and Frey-Osborne at 0.5 (O in the headline) | 0.945 | 0.952 | 184 (90 up / 94 down) | 0.920 | 193 |
-| B. Equal weight per measure | 0.959 | 0.974 | 161 (79 up / 82 down) | 0.927 | 182 |
+| B. Equal weight per measure | 0.959 | 0.974 | 161 (79 up / 82 down) | 0.927 | 181 |
 | C. Final weights without the market signals | 0.958 | 0.962 | 149 (74 up / 75 down) | 0.880 | 250 |
-| D. Every family at full weight | 0.940 | 0.961 | 184 (91 up / 93 down) | 0.885 | 238 |
-| F. Time-weighted task family as one equal family (no dominance) | 0.954 | 0.974 | 162 (80 up / 82 down) | 0.928 | 180 |
+| D. Every family at full weight | 0.940 | 0.961 | 184 (91 up / 93 down) | 0.886 | 237 |
+| F. Time-weighted task family as one equal family (no dominance) | 0.954 | 0.974 | 162 (80 up / 82 down) | 0.928 | 176 |
 
 ## Calibration: how the AI measures agree with each other (Spearman on percentiles)
 | Pair | n | ρ |
@@ -178,7 +178,7 @@ Largest combined-risk changes:
 | eloundou_human_beta vs twe_rob | 989 | -0.65 |
 | eloundou_task_beta vs twe_rob | 1016 | -0.67 |
 | twe_ai vs twe_rob | 1016 | -0.68 |
-| felten_aioe vs twe_rob | 860 | -0.71 |
+| felten_aioe vs twe_rob | 860 | -0.70 |
 
 | Robotics pair | n | ρ |
 |---|---|---|
@@ -273,15 +273,15 @@ Current composite rank 67, multi-source rank 73 (+6; the first version of the bl
 | 29-1011.00 | Chiropractors | 14 | 69 | +55 | time weighted (74), frey osborne (16) | sources agree |
 | 17-1022.01 | Geodetic Surveyors | 14 | 69 | +55 | onet automation (92), time weighted (73) | sources partly agree |
 | 29-1041.00 | Optometrists | 14 | 64 | +50 | deployed (73), onet automation (71) | sources agree |
-| 41-9012.00 | Models | 14 | 62 | +48 | frey osborne (97), time weighted (65) | sources agree |
+| 41-9012.00 | Models | 14 | 61 | +48 | frey osborne (97), time weighted (65) | sources agree |
 | 49-3022.00 | Automotive Glass Installers and Repairers | 71 | 25 | -45 | onet automation (1), deployed (16) | sources agree |
 | 33-9031.00 | Gambling Surveillance Officers and Gambling Investigators | 14 | 56 | +42 | frey osborne (89), onet automation (61) | sources agree |
-| 47-4099.00 | Construction and Related Workers, All Other | 67 | 27 | -40 | deployed (16), time weighted (26) | sources agree |
-| 47-4099.03 | Weatherization Installers and Technicians | 67 | 27 | -40 | deployed (16), time weighted (26) | sources agree |
+| 47-4099.00 | Construction and Related Workers, All Other | 67 | 27 | -40 | deployed (16), time weighted (25) | sources agree |
+| 47-4099.03 | Weatherization Installers and Technicians | 67 | 27 | -40 | deployed (16), time weighted (25) | sources agree |
 | 43-3011.00 | Bill and Account Collectors | 14 | 53 | +39 | onet automation (93), frey osborne (89) | sources agree |
+| 17-2111.02 | Fire-Prevention and Protection Engineers | 14 | 53 | +39 | time weighted (58), onet automation (31) | sources disagree |
 | 27-1012.00 | Craft Artists | 71 | 32 | -39 | onet automation (14), deployed (16) | sources partly agree |
 | 27-1019.00 | Artists and Related Workers, All Other | 71 | 32 | -39 | onet automation (14), deployed (16) | sources agree; inferred from 27-1012.00 |
-| 17-2111.02 | Fire-Prevention and Protection Engineers | 14 | 53 | +39 | time weighted (58), onet automation (31) | sources disagree |
 | 47-2072.00 | Pile Driver Operators | 43 | 80 | +37 | deployed (83), time weighted (82) | sources agree |
 | 39-5092.00 | Manicurists and Pedicurists | 44 | 78 | +34 | frey osborne (89), time weighted (81) | sources partly agree |
 | 19-1023.00 | Zoologists and Wildlife Biologists | 35 | 68 | +34 | deployed (75), time weighted (72) | sources partly agree |
