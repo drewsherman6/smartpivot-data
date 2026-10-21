@@ -87,7 +87,7 @@ for c,o in occ.items():
     band='safe' if comb<0.3 else 'at_risk' if comb>=0.5 else 'moderate'
     ai,rb=sm['occupation_ai'],sm['occupation_robotics']
     if abs(ai+rb-comb)>0.002: fail("combined_formula_off",c)  # one score (Oct 21, 2026): AI points + robot points = occupation_combined
-    exp_t=S.get('ai_time',0)+S.get('robotics_time',0)
+    exp_t=S.get('combined_time_weighted') if S.get('combined_time_weighted') is not None else S.get('ai_time',0)+S.get('robotics_time',0)  # Oct 21, 2026: exposed time = the pooled task-level score (sum of time x automatable), the same per-task fractions as the card; binary 'any AI %' time is no longer a measure
     C['band_'+band]+=1
     if exp_t>=0.5 and band!='at_risk': fail('headline_below_High_but_>=50pct_time_exposed',f"{c} {o['title']}: {exp_t:.0%} time exposed, combined {comb:.2f} ({band})")
     tw=sm.get('time_weighted') or {}

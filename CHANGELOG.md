@@ -2,6 +2,9 @@
 
 Machine-readable history: `data/history/changes.jsonl`. `scripts/update.js` appends entries here automatically.
 
+## 2026-10-21 - "What is exposed" uses the score's pooled per-task fractions
+- `scripts/task-breakdown.js`: `ai_exposed` / `robotics_exposed` / `group` now = AI % / robot % > 0 from the same pooled per-task fractions as the score (`ai_automatable`, `robotics_automatable`), so the card, PDF and CSV task groups, times and points add up to the headline inputs. Own-wording flags kept as `own_statement_ai_exposed` / `own_statement_robotics_exposed` (these still match the "N of M O*NET tasks show AI usage" tiles). p1: exposed time = the pooled task-level score; 'High but <10% time exposed' 51 -> 0.
+
 ## 2026-10-21 - Driving tasks by work activity; robot evidence pooled by activity within SOC minor group
 - `robot-links.js` `isVehicleTask`: the approved driving rule also applies to tasks O*NET links to a vehicle-driving DWA (Drive passenger vehicles / trucks or truck-mounted equipment / trucks or other vehicles to or at work sites / vehicles to transport individuals or equipment / vehicles to transport patrons) whose wording moves a vehicle or its riders (15 more tasks, e.g. school bus "Pick up and drop off students...", taxi "Pick up passengers..."). Used by task-fractions.js and refresh.js.
 - `time-weighted.js`: a task's robot fraction = mean over its DWAs of the own-statement robot fractions of tasks linked to that DWA within the job's SOC minor group (same kind of workplace); driving-rule tasks keep their own rating and are not pooled. Every one of the 21,658 tasks has a DWA link, so no IWA fallback is needed.
