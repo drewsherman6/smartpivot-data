@@ -348,7 +348,7 @@
       "path": "data/industries/oews_staffing.json",
       "schema": "schemas/industry_staffing.schema.json",
       "schema_version": "1.0.0",
-      "last_updated": "2026-10-20",
+      "last_updated": "2026-10-21",
       "legacy": false,
       "record_count": 352,
       "description": "BLS OEWS May 2025 industry staffing patterns (NAICS sector/3-/4-digit): top 40 detailed occupations by share of industry employment, mapped to O*NET-SOC codes"

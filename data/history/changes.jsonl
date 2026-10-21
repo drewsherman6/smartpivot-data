@@ -7,3 +7,4 @@
 {"date":"2026-10-19","dataset":"headline_stats","note":"Weekly research 2026-10-19: IFR World Robotics 2026 (published 2026-09-24) supersedes WR 2025 figures; new NBER and IMF research.","op":"add","id":"nber-w35859-ai-dissertations"}
 {"date":"2026-10-19","dataset":"headline_stats","note":"Weekly research 2026-10-19: IFR World Robotics 2026 (published 2026-09-24) supersedes WR 2025 figures; new NBER and IMF research.","op":"add","id":"imf-wp-2026-ai-exposed-demand"}
 {"date":"2026-10-19","dataset":"headline_stats","note":"Weekly research 2026-10-19: IFR World Robotics 2026 (published 2026-09-24) supersedes WR 2025 figures; new NBER and IMF research.","op":"add","id":"imf-2026-jobs-exposed"}
+{"date":"2026-10-21","dataset":"occupations","note":"AI task evidence pooled by O*NET Detailed Work Activity so identical work gets identical evidence across jobs; 328/327/361 -> 304/360/352","op":"update","id":"dwa-pooled-ai-evidence"}

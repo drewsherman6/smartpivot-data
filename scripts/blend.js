@@ -39,7 +39,7 @@ const ROB_FAMILIES = {
   frey_osborne: { label: 'Frey & Osborne (2013) probability of computerisation (supporting, half weight)', measures: ['frey_osborne_rob'], weight: 0.5 },
 };
 const MEASURE_LABEL = {
-  twe_ai: 'Time-weighted AI task exposure: sum of task time share x % of the task automatable (Anthropic task penetration, ILO 2025 task score: continuous; Eloundou label: tier-based E1 0.5, E2 0.25)', twe_rob: 'Time-weighted robot task exposure: sum of task time share x % of the task robots can do in its own setting (Anthropic robot task instances, continuous; deployed-robot cover as floor)',
+  twe_ai: 'Time-weighted AI task exposure: sum of task time share x % of the task automatable (strongest of Anthropic task penetration, ILO 2025 task score and Eloundou label, pooled over the task\'s O*NET Detailed Work Activities across all jobs)', twe_rob: 'Time-weighted robot task exposure: sum of task time share x % of the task robots can do in its own setting (Anthropic robot task instances, continuous; deployed-robot cover as floor)',
   aei_observed_exposure: 'Anthropic observed exposure (job)', aei_task_penetration: 'Anthropic task penetration, time-weighted (tasks)',
   eloundou_gpt4_beta: 'Eloundou β, GPT-4 rated (job)', eloundou_human_beta: 'Eloundou β, human rated (job)', eloundou_task_beta: 'Eloundou β from task labels, E1=1, E2=0.5 (tasks)',
   felten_aioe: 'Felten AIOE (job)', ilo_task_score: 'ILO 2025 mean task score via ISCO-08 (tasks)', ai_targeted_share: 'Share of work time in AI-used tasks targeted by verified products',

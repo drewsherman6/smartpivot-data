@@ -56,7 +56,7 @@ function iloTasks() {
   }
   return ILO;
 }
-function taskRows(o) {
+function ownTaskRows(o) {
   const tasks = o.tasks || []; const n = tasks.length || 1; const E = eloundouTasks(); const I = iloTasks();
   const raw = tasks.map((t) => t.time_share ?? 1 / n); const W = raw.reduce((a, b) => a + b, 0) || 1;
   const targeted = new Set((o.agents?.targeted_task_ids || []).map(String));
@@ -80,6 +80,42 @@ function taskRows(o) {
       evidence: { aei_penetration: pen, ilo_2025: ilo, eloundou_labels: E.get(id) ?? null, eloundou_score: elo, verified_product: tgt, robot_tier: t.robot_tier ?? null, robot_automatable_share: t.robot_automatable_share ?? null, deployed_cover: cov } };
   });
 }
+// DWA pooling (Oct 21, 2026; Drew: near-identical jobs must score alike). Each source rates O*NET task *statements*, and
+// the same work is worded differently in different jobs (e.g. Elementary "Instruct students individually and in groups,
+// using ... lectures, discussions, and demonstrations" has 0 observed Claude use while Middle/Secondary "Instruct through
+// lectures, discussions, and demonstrations in one or more subjects" has 0.853), and the E2 "software exists" test
+// depends on job-specific product targeting. So a task's AI and robot fractions are taken at the level of the work it
+// performs: O*NET's own task -> Detailed Work Activity links (tasks_to_dwas.csv). For each DWA, pooled fraction = mean of
+// the own-statement fractions of every O*NET task linked to it (all 1,016 jobs, each task once). A task's fraction =
+// mean over its DWAs of the pooled fraction. Tasks without a DWA link (or whose DWAs have no rated task) keep their own
+// statement evidence. Nothing is filled in where no source rated any task of that activity.
+let POOL = null;
+function dwaLinks() {
+  const f = path.join(ROOT, '.cache/tasks_to_dwas.csv'); const m = new Map();
+  if (!fs.existsSync(f)) { const z = path.join(ROOT, '.cache/onet.zip'); if (!fs.existsSync(z)) return m; const AdmZip = require('adm-zip'); const e = new AdmZip(z).getEntries().find((x) => /tasks_to_dwas\.csv$/.test(x.entryName)); if (!e) return m; fs.writeFileSync(f, e.getData()); }
+  for (const r of parse(fs.readFileSync(f, 'utf8'), { columns: true, relax_quotes: true, skip_empty_lines: true })) { const k = String(r['Task ID']); if (!m.has(k)) m.set(k, new Set()); m.get(k).add(r['DWA Element ID']); }
+  return m;
+}
+function pool() {
+  if (POOL) return POOL; const links = dwaLinks(); const seen = new Map(); const dir = path.join(ROOT, 'data/occupations');
+  for (const f of fs.readdirSync(dir).filter((x) => /^\d\d\.json$/.test(x))) for (const o of JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')).occupations) for (const r of ownTaskRows(o)) {
+    const k = r.id; const prev = seen.get(k) || { ai: [], rob: [] }; if (r.ai != null) prev.ai.push(r.ai); if (r.robotics != null) prev.rob.push(r.robotics); seen.set(k, prev); }
+  const acc = new Map(); // dwa -> {ai:[...], rob:[...]} one value per task id (mean over the jobs listing it)
+  for (const [id, v] of seen) { const ds = links.get(id); if (!ds) continue; for (const d of ds) { const a = acc.get(d) || { ai: [], rob: [] }; if (v.ai.length) a.ai.push(mean(v.ai)); if (v.rob.length) a.rob.push(mean(v.rob)); acc.set(d, a); } }
+  const dwa = new Map(); for (const [d, a] of acc) dwa.set(d, { ai: mean(a.ai), ai_n: a.ai.length, rob: mean(a.rob), rob_n: a.rob.length });
+  POOL = { links, dwa }; return POOL;
+}
+function taskRows(o) {
+  const own = ownTaskRows(o); const P = pool();
+  return own.map((r) => {
+    const ds = [...(P.links.get(r.id) || [])].map((d) => P.dwa.get(d)).filter(Boolean);
+    const ai = ds.filter((d) => d.ai != null); const rb = ds.filter((d) => d.rob != null);
+    const out = { ...r, ai_own: r.ai, robotics_own: r.robotics, dwa_ids: [...(P.links.get(r.id) || [])], ai_dwa_tasks: ai.reduce((s, d) => s + d.ai_n, 0), robotics_dwa_tasks: rb.reduce((s, d) => s + d.rob_n, 0) };
+    if (ai.length) { out.ai = mean(ai.map((d) => d.ai)); out.ai_basis = 'dwa_pooled'; out.ai_sources = [...new Set([...(r.ai_sources || []), 'onet_dwa_pool'])]; }
+    if (rb.length && r.robotics == null) { out.robotics = mean(rb.map((d) => d.rob)); out.robotics_basis = 'dwa_pooled'; out.robotics_source = r.robotics_source ? r.robotics_source + '+onet_dwa_pool' : 'onet_dwa_pool'; }
+    return out;
+  });
+}
 // One task-level score (Drew, Oct 21, 2026): per task combined = 1 - (1 - ai)(1 - robot) (AI and robots usually automate
 // different parts of a task; independence = the same rule used to combine any two exposures; max would assume full
 // overlap and is only a lower bound). A dimension a task has no evidence for counts 0 in the combination if the other
@@ -98,4 +134,4 @@ function twe(o) {
     time_basis: rows.every((r) => r.time_basis === 'anthropic') ? 'anthropic_time_share' : rows.some((r) => r.time_basis === 'anthropic') ? 'mixed' : 'equal_weight_fallback',
     tasks: rows.map((r) => ({ id: r.id, time_share: r3(r.share), ai: r3(r.ai), robotics: r3(r.robotics) })) };
 }
-module.exports = { twe, taskRows, combine, labelScore, TIER, ELOUNDOU_FRACTION, ROBOT_TIER_FRACTION };
+module.exports = { twe, taskRows, ownTaskRows, pool, combine, labelScore, TIER, ELOUNDOU_FRACTION, ROBOT_TIER_FRACTION };
