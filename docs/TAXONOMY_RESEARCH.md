@@ -1,46 +1,55 @@
-# Taxonomy research: building a multi-source skills crosswalk (Oct 21, 2026)
+# Taxonomy research: multi-source skills crosswalk
 
-Status: research only, no live-site changes. ESCO numbers below were computed live from the ESCO API (scripts/esco_sample_counts.py); other facts are from publisher pages listed, and should be re-verified at ingest time.
+Verified against live primary pages on **Oct 21, 2026**, and superseding the first draft from earlier the same day. Every row below was checked by downloading the file or reading the publisher page. The implementation is in `scripts/multisource.js`, its output is `data/multisource/`, and the score comparison is in `docs/BLEND_COMPARISON.md`.
 
-## Candidates
+## Verified sources
 
-| Source | Owner | License / commercial | Size | Format / URL | Cadence | Crosswalk to O*NET-SOC |
-|---|---|---|---|---|---|---|
-| **ESCO v1.2** | European Commission | Free incl. commercial (EC reuse decision 2011/833/EU, attribution) | ~3,039 occupations, ~13,939 skills/competences, essential vs optional links per occupation, 28 languages | CSV/RDF download + REST API https://esco.ec.europa.eu/en/use-esco/download , https://ec.europa.eu/esco/api | ~yearly minor versions | **Yes – official ESCO–O*NET crosswalk** (EC, 2022) https://esco.ec.europa.eu/en/about-esco/data-science-and-esco/crosswalk-between-esco-and-onet ; also ISCO-08 codes on every occupation |
-| **ISCO-08** | ILO | Free | 436 unit groups, task descriptions per group | https://ilostat.ilo.org/methods/concepts-and-definitions/classification-occupation/ | static | **BLS ISCO-08↔SOC 2018 crosswalk** https://www.bls.gov/soc/soccrosswalks.htm |
-| **ILO GenAI exposure (2023, refined 2025 index)** | ILO | Free (research) | ~3,000+ ISCO-08 task scores, 4-digit ISCO exposure gradients | https://www.ilo.org/publications (WP 96 2023; WP 140 2025 "Generative AI and Jobs: A Refined Global Index") | ad hoc | via ISCO→SOC |
-| **Canada OaSIS / NOC 2021** | ESDC / StatCan | Open Government Licence – Canada (commercial OK) | 516 NOC unit groups, ~900 OaSIS profiles; skills, abilities, work activities, main duties, interests (O*NET-derived structure) | CSV at open.canada.ca; https://noc.esdc.gc.ca/Oasis | yearly | StatCan NOC 2021↔SOC 2018 concordance; OaSIS descriptors modeled on O*NET |
-| **Canada Skills & Competencies Taxonomy** | ESDC | OGL-Canada | ~ skills, work activities, knowledge, tools, linked to NOC | open.canada.ca | periodic | via NOC |
-| **Australia OSCA 2024 / ANZSCO + ASC** | ABS / Jobs and Skills Australia | CC BY 4.0 | ~1,000+ occupations; ASC: ~2,000 specialist tasks, ~15,000 occupation-task links, core competencies, technology tools | https://www.jobsandskills.gov.au/data/australian-skills-classification | yearly | ANZSCO/OSCA↔ISCO-08 concordance (ABS) → SOC; JSA also published a GenAI exposure study (2025) on ASC tasks |
-| **UK SOC 2020 + ONS / NOS** | ONS; Skills England | OGL v3 (commercial OK) | 412 unit groups; NOS ~20k standards | https://www.ons.gov.uk/methodology/classificationsandstandards ; https://www.ukstandards.org.uk | SOC decennial | ONS SOC2020↔ISCO-08 |
-| **Singapore Skills Framework / Jobs-Skills Map** | SkillsFuture SG | SG Open Data Licence (commercial OK) | ~1,600+ job roles across 38 sectors, ~2,500 TSCs, critical work functions & key tasks | https://www.skillsfuture.gov.sg/skills-framework (Excel) | yearly | none official |
-| **Lightcast Open Skills** | Lightcast (private) | Free API but **license restricts redistribution / commercial resale; needs agreement** | ~33k skills | https://lightcast.io/open-skills | 2-week | Lightcast SOC mappings (proprietary) |
-| **US DOL Competency Models** | DOL ETA | public domain | ~25 industry models | careeronestop.org/CompetencyModel | stale | sector-level only |
-| **NICE Framework (cyber)** | NIST | public domain | ~41 work roles, ~2,000 TKS statements | https://www.nist.gov/itl/applied-cybersecurity/nice | yearly | DoD/NICE→SOC informal |
-| RAPIDS / apprenticeship work processes | DOL OA | public domain | per-program work-process lists | apprenticeship.gov | ad hoc | RAPIDS codes ~SOC |
-| Eurofound / OECD | EU / OECD | free research | task-content indices, AI exposure by ISCO-2/3 digit | eurofound.europa.eu, oecd.org | ad hoc | via ISCO |
+| Source | Owner | Licence (commercial use?) | Verified size | Format / URL | Cadence | Path to O*NET-SOC | Status |
+|---|---|---|---|---|---|---|---|
+| **ESCO** | European Commission (DG EMPL) | EC reuse policy (Decision 2011/833/EU): free, commercial use allowed with attribution | Current version **v1.2.1** (portal: "Last update 10/12/2025"). About 3,000 occupations and 13,900 skills. Each occupation has essential and optional skill/knowledge links. | Download form: https://esco.ec.europa.eu/en/use-esco/download (CSV/RDF/TTL by emailed link). REST API: https://ec.europa.eu/esco/api/resource/occupation (used here, no key) | Minor releases roughly yearly | Official crosswalk, see next row | **Ingested** (via API, cached and refetched when the portal version changes) |
+| **ESCO–O*NET crosswalk** | ESCO Secretariat with US DOL/ETA | Same as ESCO | v1, Sep 2022. **4,253 rows**: 2,053 broadMatch, 1,432 closeMatch, 498 exactMatch, 227 narrowMatch, 43 exactISCO. Covers 940 O*NET-SOC 2019 codes and 2,652 ESCO concepts. Built against ESCO v1.1.0. | CSV: https://esco.ec.europa.eu/system/files/2023-08/ONET_%28Occupations%29_0_updated.csv (page: https://esco.ec.europa.eu/en/use-esco/other-crosswalks; mirrored as XLSX at https://www.onetcenter.org/crosswalks.html) | Ad hoc | Direct | **Ingested.** The version with "related" matches is excluded because DOL did not validate it. |
+| **ILO GenAI exposure index 2025** (WP140, Gmyrek et al.) | ILO, with NASK-PIB | **CC BY 4.0**. Must credit the ILO and add the ILO adaptation disclaimer; ILO logo may not be used. | **3,265 ISCO-08 task statements** across **427** 4-digit groups, each with `score_2025` from 0 to 1 (3,219 predicted, 46 expert-reconciled) | https://github.com/pgmyrek/2025_GenAI_scores_ISCO08 (`Final_Scores_ISCO08_Gmyrek_et_al_2025.xlsx`). Paper: https://doi.org/10.54394/HETP0387 | Ad hoc (2023, 2025) | ISCO-08 → BLS crosswalk | **Ingested.** This is the second independent task-level AI score. |
+| **BLS ISCO-08 ↔ 2010 SOC crosswalk** | BLS for the SOC Policy Committee | US public domain | Aug 2012, updated Jun 2015. 1,125 SOC→ISCO rows. | https://www.bls.gov/soc/ISCO_SOC_Crosswalk.xls (page: https://www.bls.gov/soc/soccrosswalks.htm). Requires a contact User-Agent. | Static | SOC 2010, then the **BLS 2010→2018 SOC crosswalk** (https://www.bls.gov/soc/2018/soc_2010_to_2018_crosswalk.xlsx) | **Ingested** |
+| **Canada OaSIS 2025 v1.0** (NOC 2021) | ESDC | **Open Government Licence – Canada** (confirmed via the CKAN API) | **900 profiles**. Main Duties has 4,991 statements. Also skills, abilities, work activities and work context, rated on O*NET-style scales. | https://open.canada.ca/data/en/dataset/10ce43bd-fb58-4969-806b-4bffebc87bec (semicolon-delimited CSV). Data corrected Mar 20, 2026; metadata updated Oct 4, 2026. | Yearly | NOC 2021 ← NOC 2016 ← SOC 2018, see next row | **Ingested** (main duties) |
+| **StatCan NOC 2016 V1.3 ↔ SOC 2018 (US)**, plus **NOC 2016 V1.3 → NOC 2021 V1.0** | Statistics Canada | Statistics Canada Open Licence | 1,250 and 587 rows | https://www.statcan.gc.ca/en/statistical-programs/document/noc2016v1_3-soc2018us-eng.csv, https://www.statcan.gc.ca/en/statistical-programs/document/noc2016v1_3-noc2021v1_0-eng.csv | Static | Official. There is **no direct NOC 2021↔SOC table**, so it is bridged through NOC 2016. | **Ingested** |
+| **NIST NICE Framework v2.2.0** (SP 800-181r1) | NIST | US Government work, not subject to US copyright | 42 work roles, 962 tasks, 693 knowledge and 556 skill statements, 11 competency areas, 40 OPM codes | JSON: https://csrc.nist.gov/csrc/media/Projects/cprt/documents/nice/v2-2-0_nf_components.json (page: https://www.nist.gov/itl/applied-cybersecurity/nice/nice-framework-resource-center/nice-framework-current-versions) | About yearly | **No official SOC crosswalk** (maps to OPM federal codes only) | **Ingested, with a curated mapping to 13 O*NET codes** (weight 0.5, labelled "curated"). **Needs sign-off.** |
+| **Australian Skills Classification (ASC)** | Jobs and Skills Australia | Was CC BY 4.0 | Last version Dec 2023 | **Decommissioned.** JSA removed it from its website in Jan 2025 (https://www.jobsandskills.gov.au/legacy/AustralianSkillsClassification). Access is now for research only, under a data access agreement (nationalskillstaxonomy@jobsandskills.gov.au). The successor, the National Skills Taxonomy, is still in development. | None | ANZSCO→ISCO (ABS) | **Not ingested.** Third-party mirrors exist (Kaggle, `strayr`), but none is an official download. **Needs sign-off** to request access or to use a CC BY 2023 mirror. The ABS ANZSCO→ISCO concordance is therefore also not needed yet. |
+| UK SOC 2020 / NOS | ONS / Skills England | OGL v3 | 412 unit groups | ons.gov.uk, ukstandards.org.uk | Decennial | ONS SOC2020↔ISCO-08 | Later phase |
+| Singapore Skills Framework | SkillsFuture SG | SG Open Data Licence | About 38 sectors | skillsfuture.gov.sg | Yearly | None official | Later phase |
+| Lightcast Open Skills | Lightcast (private) | Free API, but redistribution is restricted | About 33k skills | lightcast.io/open-skills | Biweekly | Proprietary | **Skip** unless licensed |
 
-## Measured ESCO density (live API, Oct 21 2026; ISCO children only)
+## What was built (phase 2)
+`scripts/multisource.js` is self-contained and runs at the end of `scripts/refresh.js` every Monday. Downloads are cached in `.cache/multisource/`.
 
-| SOC | ISCO | ESCO occupations | avg skills/occ | skill links total |
-|---|---|---|---|---|
-| 43-4051 customer service | 4222 | 1 | 29 | 29 |
-| 15-1252 software devs | 2512 | 4 | 88 | 353 |
-| 53-3032 heavy truck | 8332 | 8 | 28 | 223 |
-| 29-1141 registered nurse | 2221 | 3 | 77 | 232 |
-| 47-2111 electrician | 7411 | 1 | 52 | 52 |
+**Crosswalk chain and weights for each O*NET-SOC code:**
+- **ESCO:** occupations come from the official crosswalk. Weights by match type: exact 1.0, close 0.8, narrow 0.6, broad 0.5. Optional skills count ×0.5.
+- **ILO:** 2018 SOC → 2010 SOC (BLS) → ISCO-08 (BLS). That ISCO list is intersected with the ISCO groups of the mapped ESCO occupations when the overlap is non-empty. The crosswalk's `exactISCO` rows override both. Weight is 1/n of the ISCO groups.
+- **OaSIS:** SOC 2018 → NOC 2016 → NOC 2021 (StatCan). Weight is 1/n of the NOC units.
+- **NICE:** curated mapping, weight 0.5.
+- **O*NET:** tasks are weighted by Anthropic time share divided by the occupation's maximum.
 
-Using the official ESCO–O*NET crosswalk (which maps directly, not just via ISCO), a typical job gains ~30–90 ESCO skill statements vs ~15–25 O*NET tasks. Adding Australia ASC (~15 specialist tasks/occupation) and Canada OaSIS main duties (~10–15) gives an estimated **70–150 de-duplicated task/skill statements per job** before dedupe of ~20–30%.
+**Removing duplicates.** The method is deterministic, runs offline and uses no embeddings.
+1. Match on ESCO skill URI.
+2. Match on identical normalized text. Normalizing means lowercasing, removing punctuation and stopwords, light suffix stemming, and sorting the token set.
+3. Merge statements in the same occupation whose token-set Jaccard similarity is 0.6 or higher. Knowledge items merge only by URI or identical text.
 
-## Recommendation – add first
-1. **ESCO + official ESCO↔O*NET crosswalk** (best size, license, direct SOC mapping).
-2. **ILO 2025 GenAI exposure index** via BLS ISCO↔SOC (second independent, task-level AI exposure source).
-3. **Australia ASC specialist tasks** (CC BY; task-level, technology tools; JSA GenAI study).
-4. **Canada OaSIS** (OGL; O*NET-like descriptors, NOC↔SOC concordance).
-5. **NICE** for cyber roles (vertical depth). Skip Lightcast unless a license is signed.
+**Exposure.** Only published values are used.
+- **Direct AI scores** are the Anthropic Economic Index task penetration (on O*NET tasks) and the ILO 2025 task score (on ISCO tasks).
+- **Direct robotics scores** are the Anthropic robot tier E0–E3 on O*NET tasks.
+- **Transferred scores:** an ESCO, OaSIS or NICE statement takes the score of the most similar directly scored statement in the same job, if their Jaccard similarity is 0.34 or higher. It records the donor text and the similarity. Otherwise its score is null.
+- **Calibration:** each AI source is converted to its own percentile (the share of that source's statements scoring strictly lower).
 
-## Merge plan
-- Crosswalk chain: SOC ⇄ (ESCO crosswalk direct) ; SOC ⇄ ISCO (BLS) ⇄ ANZSCO/OSCA (ABS) ; SOC ⇄ NOC (StatCan). Store crosswalk weight (1.0 direct, split evenly for many-to-many).
-- Dedupe: embed every statement, cluster at cosine ≥0.85 within a job, keep one canonical statement with `sources[]`; cross-job canonical skill IDs map to ESCO skill URIs where possible.
-- Supabase schema: `taxonomy_source(id, name, version, license, url)`, `source_occupation(id, source_id, code, title)`, `occupation_crosswalk(soc_code, source_occupation_id, weight, method)`, `work_statement(id, canonical_text, kind task|skill|knowledge|tool, esco_uri)`, `statement_source(statement_id, source_occupation_id, original_text, importance, essential bool)`, `occupation_statement(soc_code, statement_id, weight, n_sources)`, `statement_exposure(statement_id, method eloundou|aioe|aei|ilo|robotics, score, version)`.
-- Exposure: score each canonical statement (LLM rubric like Eloundou, calibrated against ILO task scores where they overlap; robotics rubric reused); job exposure = weighted mean over statements (importance × crosswalk weight × source agreement). Results page lists the actual exposed statements grouped by AI vs robotics, with source badges. Keep O*NET-only score as a reference during rollout and report deltas for all 1,016 jobs.
+**Blend (experimental).** It averages two independent task-level AI sources, O*NET/Anthropic and ISCO/ILO, each weighted over its directly scored statements. Transferred scores are shown in the app but do not count toward the blend. The current O*NET composite stays the primary score.
+
+**Supabase (phase 3):** all tables are in the `sp` schema.
+- `ms_source`
+- `ms_occupation_crosswalk`
+- `ms_statement`
+- `ms_statement_source`
+- `ms_statement_exposure`
+- `ms_occupation_blend`
+
+## Remaining sign-offs
+1. Whether to switch the primary score to the blend. See `docs/BLEND_COMPARISON.md`.
+2. The curated NICE mapping, which has no official crosswalk.
+3. Australia's ASC: email JSA for a data agreement, use the CC BY 2023 mirror, or skip it.
