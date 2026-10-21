@@ -153,3 +153,18 @@ Each title was fed on its own as a one-line resume against the full `sp.onet_tit
 7. **Transferred exposure:** raise `TRANSFER_J` to 0.5, or label transfers under 0.5 as "weak match" in the UI. This drops about 70% of transfers.
 8. **Traceability:** store the OaSIS duty index in refs. Add ISCO groups for 19-2099.00, 19-2099.01 and 53-2022.00 from ESCO `exactISCO`, or from the 2-digit SOC fallback with a flag. Re-download the one empty ESCO cache file.
 9. Optional: require a BLS wage for tier-1 targets too (5 pathways), for consistency with tiers 2 and 3.
+
+## Fix results (Oct 21, 2026, data e975a25, app 71be3ff)
+
+Fixes #2–#6 applied to all 1,016 jobs; #1 (headline vs breakdown) untouched pending Drew. Headline AI/robotics/combined values and risk levels unchanged for all 1,016 jobs (576/355/85).
+
+| Issue | Before | After |
+|---|---|---|
+| #2 float boundary: strictly eligible pairs missing | 15 | 0 (tier 1: 6,957 → 6,969; listed pathways 7,693 → 7,698) |
+| #3 "All Other" filter: repo vs `sp_pathways_for_skills` | 10 physician jobs differ (29-1029.00) | 0 (JS now `/, All Other/i`, same as SQL) |
+| #4 breakdown per-task rows not summing to 100% | 45 jobs (15 at 200–600%, rest 92–97%) | 0 (`time_share_normalized`; raw `time_share` kept) |
+| #5 resume: official titles top-1 / no match | 961 / 49 | 1,016 / 0 |
+| #5 resume: alternate top-1 any valid / reported | 58,452 / 8,181 | 58,532 / 8,189 |
+| #5 technology detection (3,000 sample) | 2,981 | 3,000 |
+| #6 near-duplicate pairs J≥0.6 left | 119 | 111 (40 true cross-source duplicates merged; statements 151,397 → 151,357). Remaining pairs are distinct official rows (e.g. two ESCO skills, "teach languages" vs "teach sign language") and are kept. |
+| Supabase vs repo (p4) | 0 mismatches | 0 mismatches |
